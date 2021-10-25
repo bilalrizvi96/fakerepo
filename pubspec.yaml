@@ -40,6 +40,8 @@ dependencies:
   dots_indicator: ^2.0.0
   camera: ^0.9.4+3
   flutter_otp_text_field: ^1.0.0
+  delayed_display: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

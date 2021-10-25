@@ -1,4 +1,9 @@
+import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Component/SideDrawer.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,220 +13,159 @@ class HomeScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Container(
-        width: width,
-        height: height,
-        color: Colors.grey[350],
-        child: Stack(
-          children: [
-            Container(
-              width: width,
-              height: height / 3,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Color(0xFFB92E34),
-                      Color(0xFFB31B1B),
-                      Color(0xFFFF2400),
+      drawer: Drawers().drawers(context),
+      body: SafeArea(
+        child: Container(
+            width: width,
+            height: height,
+            color: Colors.white,
+            child: Stack(
+              children: [
+                Container(
+                  width: width,
+                  height: height / 3.5,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Color(0xFFFFFFFF),
+                        Color(0xFFFFFFFF),
+                        Color(0xFFFFFFFF),
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        spreadRadius: 3,
+                        blurRadius: 10,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
                     ],
                   ),
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(100.0),
-                      bottomLeft: Radius.circular(100.0))),
-            ),
-            Positioned(
-              top: height / 8.6,
-              left: width / 10,
-              child: Text(
-                'Dashboard',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: width / 15,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Positioned(
-              top: height / 4.6,
-              left: width / 12,
-              child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: width / 1.2,
-                  height: height / 1.2,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0)),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage('assets/person.jpeg'),
-                      ),
-                      SizedBox(
-                        height: height / 50,
-                      ),
-                      Text(
-                        'Emad Khan',
-                        style: TextStyle(
-                            color: Colors.black, fontSize: width / 25),
-                      ),
-                      SizedBox(
-                        height: height / 100,
-                      ),
-                      Text(
-                        'EMP ID - 32',
-                        style:
-                            TextStyle(color: Colors.grey, fontSize: width / 30),
-                      ),
-                      SizedBox(
-                        height: height / 100,
-                      ),
-                      Text(
-                        'CTO',
-                        style: TextStyle(
-                            color: Colors.black, fontSize: width / 28),
-                      ),
-                      SizedBox(
-                        height: height / 60,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFFB92E34).withOpacity(0.5),
-                                    spreadRadius: 3,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [
-                                    Color(0xFFB92E34),
-                                    Color(0xFFB31B1B),
-                                    Color(0xFFFF2400),
-                                  ],
-                                )),
-                            child: Icon(
-                              Icons.receipt,
-                              color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.all(22.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.grey[300],
                             ),
-                          ),
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [
-                                    Color(0xFFB92E34),
-                                    Color(0xFFB31B1B),
-                                    Color(0xFFFF2400),
-                                  ],
+                            SizedBox(
+                              width: width / 20,
+                            ),
+                            Text(
+                              'Dashboard',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: width / 16),
+                            ),
+                            Spacer(),
+                            Builder(builder: (context) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Scaffold.of(context).openDrawer();
+                                },
+                                child: Icon(
+                                  Icons.menu,
+                                  size: width / 13,
+                                  color: DynamicColor().primarycolor,
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFFB92E34).withOpacity(0.5),
-                                    spreadRadius: 3,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ]),
-                            child: Icon(
-                              Icons.receipt,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: height / 50,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFFB92E34).withOpacity(0.5),
-                                    spreadRadius: 3,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [
-                                    Color(0xFFB92E34),
-                                    Color(0xFFB31B1B),
-                                    Color(0xFFFF2400),
-                                  ],
-                                )),
-                            child: Icon(
-                              Icons.receipt,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [
-                                    Color(0xFFB92E34),
-                                    Color(0xFFB31B1B),
-                                    Color(0xFFFF2400),
-                                  ],
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFFB92E34).withOpacity(0.5),
-                                    spreadRadius: 3,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ]),
-                            child: Icon(
-                              Icons.receipt,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
+                              );
+                            }),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
+                DelayedDisplay(
+                  fadeIn: true,
+                  fadingDuration: Duration(milliseconds: 800),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.offNamed('/faceverfication');
+                    },
+                    child: Container(
+                      width: width / 1.2,
+                      height: height / 15,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: DynamicColor().white),
+                          // color: DynamicColor().primarycolor,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                          child: Text(
+                        'Begin Verification',
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            color: DynamicColor().white),
+                      )),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Stack(
+                    children: [
+                      DelayedDisplay(
+                        fadeIn: true,
+                        fadingDuration: Duration(milliseconds: 400),
+                        child: Container(
+                          height: height / 3.5,
+                          width: width,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20.0),
+                                  topLeft: Radius.circular(20.0)),
+                              color: DynamicColor().primarycolor),
+                        ),
+                      ),
+                      Positioned(
+                        top: height / 35,
+                        right: width / 12,
+                        left: width / 12,
+                        child: DelayedDisplay(
+                          fadeIn: true,
+                          fadingDuration: Duration(milliseconds: 800),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Get.offNamed('/faceverfication');
+                            },
+                            child: Center(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Punch your Attendance',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: width / 20,
+                                      color: DynamicColor()
+                                          .white
+                                          .withOpacity(0.44)),
+                                ),
+                                SizedBox(
+                                  height: height / 8,
+                                ),
+                                Text(
+                                  'Scan QR code',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: width / 20,
+                                      color: DynamicColor().white),
+                                ),
+                              ],
+                            )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }

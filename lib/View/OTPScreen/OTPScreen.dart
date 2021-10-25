@@ -1,6 +1,7 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OTPScreen extends StatelessWidget {
@@ -103,20 +104,25 @@ class OTPScreen extends StatelessWidget {
                 top: height / 1.5,
                 right: width / 12,
                 left: width / 12,
-                child: Container(
-                  width: width / 1.2,
-                  height: height / 15,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: DynamicColor().black),
-                      // color: DynamicColor().primarycolor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                      child: Text(
-                    'Sign In',
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        color: DynamicColor().black),
-                  )),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.offNamed('/facerule');
+                  },
+                  child: Container(
+                    width: width / 1.2,
+                    height: height / 15,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: DynamicColor().white),
+                        // color: DynamicColor().primarycolor,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                        child: Text(
+                      'Sign In',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          color: DynamicColor().white),
+                    )),
+                  ),
                 ),
               ),
             ],

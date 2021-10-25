@@ -1,5 +1,6 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SigninController.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,24 +27,28 @@ class SigninScreenHr extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 30.0),
-                      child: Row(
-                        children: [
-                          Spacer(),
-                          Text(
-                            'Sign in',
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: width / 14,
-                                color: DynamicColor().black),
-                          ),
-                          Spacer(),
-                          Image.asset(
-                            'assets/signinclock.png',
-                            fit: BoxFit.cover,
-                            height: height / 8,
-                          ),
-                          Spacer(),
-                        ],
+                      child: DelayedDisplay(
+                        delay: Duration(milliseconds: 800),
+                        slidingCurve: Curves.decelerate,
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Text(
+                              'Sign in',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: width / 14,
+                                  color: DynamicColor().black),
+                            ),
+                            Spacer(),
+                            Image.asset(
+                              'assets/signinclock.png',
+                              fit: BoxFit.cover,
+                              height: height / 8,
+                            ),
+                            Spacer(),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
