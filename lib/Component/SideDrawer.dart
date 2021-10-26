@@ -223,7 +223,9 @@ class Drawers {
                       focusColor: Colors.black,
                       highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.offNamed('/summary');
+                      },
                       child: Row(
                         children: [
                           SizedBox(

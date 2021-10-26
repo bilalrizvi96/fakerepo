@@ -13,6 +13,7 @@ import 'View/FaceIDRuleScreen/FaceIDRuleScreen.dart';
 import 'View/FaceVerificationScreen/FaceVerificationScreen.dart';
 import 'View/SigninScreen/SigninEmployeeScreen.dart';
 import 'View/SigninScreen/SigninScreen.dart';
+import 'View/SummaryScreen/SummaryScreen.dart';
 import 'View/test.dart';
 
 void main() {
@@ -79,6 +80,11 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: "/faceverfication",
             page: () => FaceVerficationScreen(),
+            transition: Transition.rightToLeft,
+            curve: Curves.easeInQuart),
+        GetPage(
+            name: "/summary",
+            page: () => SummaryScreen(),
             transition: Transition.rightToLeft,
             curve: Curves.easeInQuart),
       ],
