@@ -68,104 +68,122 @@ class SummaryScreen extends StatelessWidget {
                 DelayedDisplay(
                   fadeIn: true,
                   fadingDuration: Duration(milliseconds: 800),
-                  child: GestureDetector(
-                    onTap: () {
-                      DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(2021, 3, 5),
-                          maxTime: DateTime(2019, 6, 7), onChanged: (date) {
-                        print('change $date');
-                      }, onConfirm: (date) {
-                        print('confirm $date');
-                      }, currentTime: DateTime.now(), locale: LocaleType.en);
-                    },
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: Image.asset(
-                            'assets/summarybg.png',
-                            fit: BoxFit.contain,
-                            width: width / 1.1,
-                          ),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          'assets/summarybg.png',
+                          fit: BoxFit.contain,
+                          width: width / 1.1,
                         ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: width / 10,
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: width / 10,
+                          ),
+                          Text('Summary',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: width / 21,
+                                  color: DynamicColor().white)),
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Image.asset(
+                              'assets/summarycalendar.png',
+                              height: height / 13,
                             ),
-                            Text('Summary',
+                          ),
+                          SizedBox(
+                            width: width / 10,
+                          ),
+                        ],
+                      ),
+                      Positioned(
+                        top: height / 12,
+                        left: width / 10,
+                        right: width / 20,
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                DatePicker.showDatePicker(context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(2018, 3, 5),
+                                    maxTime: DateTime(2019, 6, 7),
+                                    onChanged: (date) {
+                                  print('change $date');
+                                }, onConfirm: (date) {
+                                  print('confirm $date');
+                                },
+                                    currentTime: DateTime.now(),
+                                    locale: LocaleType.en);
+                              },
+                              child: Container(
+                                height: height / 22,
+                                width: width / 7,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    color: DynamicColor()
+                                        .primarycolor
+                                        .withOpacity(0.40)),
+                                child: Center(
+                                  child: Text('24/5',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: width / 21,
+                                          color: DynamicColor().white)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: width / 20,
+                            ),
+                            Text('to',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w300,
                                     fontSize: width / 21,
                                     color: DynamicColor().white)),
-                            Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Image.asset(
-                                'assets/summarycalendar.png',
-                                height: height / 13,
+                            SizedBox(
+                              width: width / 20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                DatePicker.showDatePicker(context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(2018, 3, 5),
+                                    maxTime: DateTime(2019, 6, 7),
+                                    onChanged: (date) {
+                                  print('change $date');
+                                }, onConfirm: (date) {
+                                  print('confirm $date');
+                                },
+                                    currentTime: DateTime.now(),
+                                    locale: LocaleType.en);
+                              },
+                              child: Container(
+                                height: height / 22,
+                                width: width / 7,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    color: DynamicColor()
+                                        .primarycolor
+                                        .withOpacity(0.40)),
+                                child: Center(
+                                  child: Text('24/5',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: width / 21,
+                                          color: DynamicColor().white)),
+                                ),
                               ),
                             ),
-                            SizedBox(
-                              width: width / 10,
-                            ),
+                            Spacer(),
                           ],
                         ),
-                        Positioned(
-                          top: height / 12,
-                          left: width / 10,
-                          right: width / 20,
-                          child: Row(
-                            children: [
-                              Container(
-                                height: height / 22,
-                                width: width / 7,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: DynamicColor()
-                                        .primarycolor
-                                        .withOpacity(0.40)),
-                                child: Center(
-                                  child: Text('24/5',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: width / 21,
-                                          color: DynamicColor().white)),
-                                ),
-                              ),
-                              SizedBox(
-                                width: width / 20,
-                              ),
-                              Text('to',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: width / 21,
-                                      color: DynamicColor().white)),
-                              SizedBox(
-                                width: width / 20,
-                              ),
-                              Container(
-                                height: height / 22,
-                                width: width / 7,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: DynamicColor()
-                                        .primarycolor
-                                        .withOpacity(0.40)),
-                                child: Center(
-                                  child: Text('24/5',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: width / 21,
-                                          color: DynamicColor().white)),
-                                ),
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
                 SizedBox(
