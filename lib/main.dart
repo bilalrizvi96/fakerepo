@@ -9,8 +9,11 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'Component/TabViewProfile.dart';
+import 'View/AttendenceScreen/AttendanceScreen.dart';
 import 'View/FaceIDRuleScreen/FaceIDRuleScreen.dart';
 import 'View/FaceVerificationScreen/FaceVerificationScreen.dart';
+import 'View/ManageSitesScreen/ManageSitesScreen.dart';
 import 'View/SigninScreen/SigninEmployeeScreen.dart';
 import 'View/SigninScreen/SigninScreen.dart';
 import 'View/SummaryScreen/SummaryScreen.dart';
@@ -85,6 +88,21 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: "/summary",
             page: () => SummaryScreen(),
+            transition: Transition.rightToLeft,
+            curve: Curves.easeInQuart),
+        GetPage(
+            name: "/attendance",
+            page: () => AttendanceScreen(),
+            transition: Transition.rightToLeft,
+            curve: Curves.easeInQuart),
+        GetPage(
+            name: "/profiletab",
+            page: () => ProfileTabViewScreen(),
+            transition: Transition.rightToLeft,
+            curve: Curves.easeInQuart),
+        GetPage(
+            name: "/managesites",
+            page: () => ManageSitesScreen(),
             transition: Transition.rightToLeft,
             curve: Curves.easeInQuart),
       ],

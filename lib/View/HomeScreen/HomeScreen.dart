@@ -254,7 +254,21 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: height / 35,
+                      top: height / 20,
+                      right: width / 12,
+                      left: width / 12,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed('/attendance');
+                        },
+                        child: Image.asset(
+                          'assets/qrdashboard.png',
+                          height: height / 5,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: height / 30,
                       right: width / 12,
                       left: width / 12,
                       child: DelayedDisplay(

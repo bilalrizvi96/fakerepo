@@ -134,7 +134,9 @@ class Drawers {
                       highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
-                        {}
+                        {
+                          Get.toNamed('/profiletab');
+                        }
                       },
                       child: Row(
                         children: [
@@ -164,7 +166,9 @@ class Drawers {
                       highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
-                        {}
+                        {
+                          Get.toNamed('/managesites');
+                        }
                       },
                       child: Row(
                         children: [
