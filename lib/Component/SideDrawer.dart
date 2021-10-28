@@ -190,6 +190,7 @@ class Drawers {
                         ],
                       ),
                     ),
+                    // SizedBox(height: height / 50),
                     SizedBox(height: height / 50),
                     FlatButton(
                       padding: EdgeInsets.zero,
@@ -198,7 +199,42 @@ class Drawers {
                       highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
-                        {}
+                        {
+                          Get.toNamed('/reports');
+                          Get.toNamed('/reports');
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 50,
+                          ),
+                          Image.asset(
+                            'assets/sites.png',
+                            height: height / 45,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 20,
+                          ),
+                          Text("Reports",
+                              style: GoogleFonts.poppins(
+                                  fontSize: width / 28,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black.withOpacity(0.40))),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: height / 50),
+                    FlatButton(
+                      padding: EdgeInsets.zero,
+                      hoverColor: Colors.black,
+                      focusColor: Colors.black,
+                      highlightColor: Colors.black,
+                      disabledColor: Colors.black.withOpacity(0.40),
+                      onPressed: () {
+                        {
+                          Get.toNamed('/setting');
+                        }
                       },
                       child: Row(
                         children: [
@@ -242,7 +278,7 @@ class Drawers {
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 15,
                           ),
-                          Text("Reports",
+                          Text("Summary",
                               style: GoogleFonts.poppins(
                                   fontSize: width / 28,
                                   fontWeight: FontWeight.w400,

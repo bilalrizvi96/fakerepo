@@ -150,12 +150,11 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: height / 100,
+                  height: height / 500,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(18.0),
                   child: Container(
-                    padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.0),
                       gradient: LinearGradient(

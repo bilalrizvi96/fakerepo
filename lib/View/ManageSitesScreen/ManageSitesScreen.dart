@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Component/SideDrawer.dart';
 import 'package:attendencesystem/Controller/SigninController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class ManageSitesScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      drawer: Drawers().drawers(context),
       body: SafeArea(
         child: Container(
           width: width,
@@ -31,30 +33,57 @@ class ManageSitesScreen extends StatelessWidget {
                         slidingCurve: Curves.decelerate,
                         child: Row(
                           children: [
-                            Spacer(),
+                            SizedBox(
+                              width: width / 20,
+                            ),
+                            Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.grey[300],
+                            ),
+                            SizedBox(
+                              width: width / 25,
+                            ),
                             Container(
                               width: width / 3,
                               child: Text(
                                 'Manage Sites',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: width / 14,
+                                    fontSize: width / 20,
                                     color: DynamicColor().black),
                               ),
                             ),
                             Spacer(),
                             Image.asset(
-                              'assets/signinclock.png',
+                              'assets/managesites.png',
                               fit: BoxFit.cover,
                               height: height / 8,
                             ),
-                            Spacer(),
+                            SizedBox(
+                              width: width / 10,
+                            ),
+                            Builder(builder: (context) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Scaffold.of(context).openDrawer();
+                                },
+                                child: Icon(
+                                  Icons.menu,
+                                  size: width / 13,
+                                  color: DynamicColor().primarycolor,
+                                ),
+                              );
+                            }),
+                            SizedBox(
+                              width: width / 50,
+                            ),
+                            // Spacer(),
                           ],
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 120.0),
+                      padding: const EdgeInsets.only(top: 130.0),
                       child: Container(
                         height: height / 500,
                         width: width / 1.65,
@@ -64,7 +93,7 @@ class ManageSitesScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 120.0, left: 330),
+                      padding: const EdgeInsets.only(top: 130.0, left: 330),
                       child: Container(
                         height: height / 500,
                         width: width / 8,
@@ -74,7 +103,7 @@ class ManageSitesScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 120.0, left: 390),
+                      padding: const EdgeInsets.only(top: 130.0, left: 390),
                       child: Container(
                         height: height / 500,
                         width: width / 16,
@@ -98,19 +127,22 @@ class ManageSitesScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: height / 3.5,
+                            height: height / 4,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 35.0),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Employee Id',
+                                  'Site Name',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
                                       fontSize: width / 30,
                                       color: DynamicColor().black),
                                 )),
+                          ),
+                          SizedBox(
+                            height: height / 70,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +161,7 @@ class ManageSitesScreen extends StatelessWidget {
                                       color: DynamicColor().primarycolor,
                                       fontWeight: FontWeight.w600),
                                   decoration: new InputDecoration(
-                                      hintText: 'Enter Your Employee ID',
+                                      hintText: '',
                                       focusColor: DynamicColor().primarycolor,
                                       hoverColor: DynamicColor().primarycolor,
 
@@ -154,12 +186,15 @@ class ManageSitesScreen extends StatelessWidget {
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Pin Code',
+                                  'Address',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
                                       fontSize: width / 30,
                                       color: DynamicColor().black),
                                 )),
+                          ),
+                          SizedBox(
+                            height: height / 70,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -179,13 +214,9 @@ class ManageSitesScreen extends StatelessWidget {
                                       color: DynamicColor().primarycolor,
                                       fontWeight: FontWeight.w600),
                                   decoration: new InputDecoration(
-                                      hintText: 'Enter your pin code',
+                                      hintText: '',
                                       focusColor: DynamicColor().primarycolor,
                                       hoverColor: DynamicColor().primarycolor,
-                                      suffixIcon: Icon(
-                                        Icons.lock_open,
-                                        color: DynamicColor().primarycolor,
-                                      ),
                                       fillColor: Colors.white,
                                       filled: true,
                                       border: InputBorder.none),
@@ -195,39 +226,149 @@ class ManageSitesScreen extends StatelessWidget {
                             ],
                           ),
                           SizedBox(
-                            height: height / 4,
+                            height: height / 30,
                           ),
-                          Container(
-                            width: width / 1.2,
-                            height: height / 15,
-                            decoration: BoxDecoration(
-                                color: DynamicColor().primarycolor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
+                          Padding(
+                            padding: const EdgeInsets.only(left: 35.0),
+                            child: Align(
+                                alignment: Alignment.topLeft,
                                 child: Text(
-                              'Submit',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  color: DynamicColor().white),
-                            )),
+                                  'City',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: width / 30,
+                                      color: DynamicColor().black),
+                                )),
+                          ),
+                          SizedBox(
+                            height: height / 70,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: width / 80,
+                                height: height / 18,
+                                color: DynamicColor().primarycolor,
+                              ),
+                              Container(
+                                width: width / 1.22,
+                                child: TextFormField(
+                                  cursorColor: DynamicColor().primarycolor,
+                                  style: GoogleFonts.poppins(
+                                      color: DynamicColor().primarycolor,
+                                      fontWeight: FontWeight.w600),
+                                  decoration: new InputDecoration(
+                                      hintText: '',
+                                      focusColor: DynamicColor().primarycolor,
+                                      hoverColor: DynamicColor().primarycolor,
+
+                                      // labelText: "Enter Employee ID",
+                                      // labelStyle: ,
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      border: InputBorder.none
+
+                                      //fillColor: Colors.green
+                                      ),
+                                  // keyboardType: TextInputType.none,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: height / 40,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 35.0),
+                            child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'Type',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: width / 30,
+                                      color: DynamicColor().black),
+                                )),
+                          ),
+                          SizedBox(
+                            height: height / 70,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: width / 80,
+                                height: height / 18,
+                                color: DynamicColor().primarycolor,
+                              ),
+                              Container(
+                                width: width / 1.22,
+                                child: TextFormField(
+                                  obscureText: true,
+                                  cursorColor: DynamicColor().primarycolor,
+                                  style: GoogleFonts.poppins(
+                                      color: DynamicColor().primarycolor,
+                                      fontWeight: FontWeight.w600),
+                                  decoration: new InputDecoration(
+                                      hintText: '',
+                                      focusColor: DynamicColor().primarycolor,
+                                      hoverColor: DynamicColor().primarycolor,
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                      border: InputBorder.none),
+                                  // keyboardType: TextInputType.none,
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: height / 30,
                           ),
-                          Container(
-                            width: width / 1.2,
-                            height: height / 15,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: DynamicColor().black),
-                                // color: DynamicColor().primarycolor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Text(
-                              'View Sites',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  color: DynamicColor().black),
-                            )),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed('/genrateqr');
+                            },
+                            child: Container(
+                              width: width / 1.2,
+                              height: height / 15,
+                              decoration: BoxDecoration(
+                                  color: DynamicColor().primarycolor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                  child: Text(
+                                'Submit',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: DynamicColor().white),
+                              )),
+                            ),
+                          ),
+                          SizedBox(
+                            height: height / 30,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed('/viewsites');
+                            },
+                            child: Container(
+                              width: width / 1.2,
+                              height: height / 15,
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: DynamicColor().black),
+                                  // color: DynamicColor().primarycolor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                  child: Text(
+                                'View Sites',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: DynamicColor().black),
+                              )),
+                            ),
                           ),
                         ],
                       ),
