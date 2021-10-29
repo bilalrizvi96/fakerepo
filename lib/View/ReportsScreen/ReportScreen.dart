@@ -19,8 +19,6 @@ class ReportScreen extends StatelessWidget {
         child: Container(
           width: width,
           height: height,
-          // padding: EdgeInsets.only(right: 5, left: 10),
-          // color: DynamicColor().white,
           child: GetBuilder(
             init: signinController,
             builder: (_) {
@@ -36,10 +34,7 @@ class ReportScreen extends StatelessWidget {
                           SizedBox(
                             width: width / 20,
                           ),
-                          Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.grey[300],
-                          ),
+
                           SizedBox(
                             width: width / 25,
                           ),
@@ -49,7 +44,7 @@ class ReportScreen extends StatelessWidget {
                               'Reports',
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: width / 20,
+                                  fontSize: width / 16,
                                   color: DynamicColor().black),
                             ),
                           ),

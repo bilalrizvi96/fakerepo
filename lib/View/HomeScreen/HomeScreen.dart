@@ -5,18 +5,15 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeScreen extends StatelessWidget {
-  // const HomeScreen({Key? key}) : super(key: key);
+  int selectedyear = DateTime.now().year;
+  int selectedmonth = DateTime.now().month;
 
   @override
   Widget build(BuildContext context) {
-    List<AttendanceChartModel> chart = [
-      AttendanceChartModel(title: 'Present Days', value: 30),
-      AttendanceChartModel(title: 'Absents Days', value: 12),
-      AttendanceChartModel(title: 'Working Hours/wk', value: 40),
-    ];
+    var current = selectedmonth.toString() + "-" + selectedyear.toString();
+
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -25,7 +22,6 @@ class HomeScreen extends StatelessWidget {
         child: Container(
             width: width,
             height: height,
-            color: Colors.white,
             child: Column(
               children: [
                 Padding(
@@ -33,10 +29,6 @@ class HomeScreen extends StatelessWidget {
                       const EdgeInsets.only(right: 22.0, left: 22.0, top: 22.0),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.grey[300],
-                      ),
                       SizedBox(
                         width: width / 20,
                       ),
@@ -61,179 +53,185 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Container(
-                        width: width / 1.8,
-                        child: SfCircularChart(
-                            // title: ChartTitle(text: "Summary"),
-                            palette: [
-                              Color.fromRGBO(47, 50, 203, 1.0),
-                              Color.fromRGBO(186, 40, 83, 1.0),
-                              Color.fromRGBO(23, 135, 79, 1.0),
-                            ],
-                            legend: Legend(
-                              image: AssetImage('assets/per.jpg'),
-                            ),
-                            tooltipBehavior: TooltipBehavior(enable: true),
-
-                            // backgroundImage: AssetImage('assets/per.jpg'),
-                            series: <CircularSeries>[
-                              // Renders radial bar chart
-                              RadialBarSeries<AttendanceChartModel, String>(
-                                  gap: "6",
-                                  cornerStyle: CornerStyle.endCurve,
-                                  opacity: 0.75,
-                                  enableTooltip: true,
-                                  dataLabelSettings: DataLabelSettings(
-                                      isVisible: true,
-                                      labelIntersectAction:
-                                          LabelIntersectAction.shift),
-                                  innerRadius: '40%',
-                                  dataSource: chart,
-                                  maximumValue: 40,
-                                  xValueMapper:
-                                      (AttendanceChartModel data, _) =>
-                                          data.title,
-                                  yValueMapper:
-                                      (AttendanceChartModel data, _) =>
-                                          data.value)
-                            ])),
-                    Column(
+                SizedBox(
+                  height: height / 50,
+                ),
+                DelayedDisplay(
+                  fadeIn: true,
+                  fadingDuration: Duration(milliseconds: 400),
+                  child: Container(
+                    width: width / 1.2,
+                    height: height / 6,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      image: DecorationImage(
+                          alignment: Alignment.center,
+                          image: AssetImage("assets/summarybg.png"),
+                          fit: BoxFit.contain),
+                    ),
+                    padding: EdgeInsets.only(left: 30, right: 30),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 15,
-                              height: 15,
-                              color: Color.fromRGBO(47, 50, 203, 1.0),
-                            ),
-                            Text(' Present Day')
-                          ],
+                        Text(
+                          "Hey Haris Sonija ,",
+                          style: GoogleFonts.poppins(
+                              color: DynamicColor().white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: width / 20),
                         ),
-                        SizedBox(
-                          height: height / 60,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 15,
-                              height: 15,
-                              color: Color.fromRGBO(186, 40, 83, 1.0),
-                            ),
-                            SizedBox(
-                              width: width / 60,
-                            ),
-                            Text('Absents Days')
-                          ],
-                        ),
-                        SizedBox(
-                          height: height / 60,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 15,
-                              height: 15,
-                              color: Color.fromRGBO(23, 135, 79, 1.0),
-                            ),
-                            SizedBox(
-                              width: width / 60,
-                            ),
-                            Text('Present Day')
-                          ],
+                        Text(
+                          "Welcome back, Let's get some stuff rolling!,",
+                          style: GoogleFonts.poppins(
+                              color: DynamicColor().white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: width / 30),
                         ),
                       ],
-                    )
-                  ],
+                    ),
+                    // child:
+                  ),
                 ),
                 SizedBox(
-                  height: height / 500,
+                  height: height / 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(18.0),
+                  padding:
+                      const EdgeInsets.only(right: 280.0, left: 30, top: 5),
+                  child: Text(
+                    'Month: ${current}',
+                    style: GoogleFonts.poppins(
+                        color: DynamicColor().black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: width / 30),
+                  ),
+                ),
+                DelayedDisplay(
+                  fadeIn: true,
+                  fadingDuration: Duration(milliseconds: 400),
                   child: Container(
+                    width: width / 1.2,
+                    height: height / 8,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Color(0xFFFFFFFF),
-                          Color(0xFFFFFFFF),
-                          Color(0xFFFFFFFF),
-                        ],
-                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: Offset(0, 3), // changes position of shadow
+                          color: Colors.grey.withOpacity(0.15),
+                          spreadRadius: 1,
+                          blurRadius: 20,
+                          offset: Offset(0, 20), // changes position of shadow
                         ),
                       ],
+                      image: DecorationImage(
+                          alignment: Alignment.center,
+                          image: AssetImage("assets/absentbg.png"),
+                          fit: BoxFit.contain),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        // Spacer(),
+                        SizedBox(
                           width: width / 80,
-                          height: height / 12,
-                          color: DynamicColor().primarycolor,
+                        ),
+                        Image.asset(
+                          'assets/absenticon.png',
+                          fit: BoxFit.contain,
+                          width: width / 7,
                         ),
                         SizedBox(
-                          width: width / 30,
+                          width: width / 20,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'Shift Type :',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.black.withOpacity(0.77),
-                                      fontSize: width / 25),
-                                ),
-                                SizedBox(
-                                  width: width / 40,
-                                ),
-                                Text('Morning',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: width / 25)),
-                              ],
-                            ),
-                            SizedBox(
-                              height: height / 200,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Present Days :',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w200,
-                                      color: Colors.black.withOpacity(0.77),
-                                      fontSize: width / 25),
-                                ),
-                                SizedBox(
-                                  width: width / 40,
-                                ),
-                                Text('30',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: width / 23)),
-                              ],
-                            ),
-                          ],
+                        Text(
+                          "4",
+                          style: GoogleFonts.poppins(
+                              color: DynamicColor().black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: width / 14),
+                        ),
+                        SizedBox(
+                          width: width / 40,
+                        ),
+                        Text(
+                          "Total Absents",
+                          style: GoogleFonts.poppins(
+                              color: DynamicColor().black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: width / 20),
+                        ),
+                        SizedBox(
+                          width: width / 8,
                         ),
                       ],
                     ),
+                    // child:
+                  ),
+                ),
+                SizedBox(
+                  height: height / 100,
+                ),
+                DelayedDisplay(
+                  fadeIn: true,
+                  fadingDuration: Duration(milliseconds: 400),
+                  child: Container(
+                    width: width / 1.2,
+                    height: height / 9,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.15),
+                          spreadRadius: 1,
+                          blurRadius: 20,
+                          offset: Offset(0, 20), // changes position of shadow
+                        ),
+                      ],
+                      image: DecorationImage(
+                          alignment: Alignment.center,
+                          image: AssetImage("assets/presentbg.png"),
+                          fit: BoxFit.contain),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Spacer(),
+                        SizedBox(
+                          width: width / 80,
+                        ),
+                        Image.asset(
+                          'assets/presenticon.png',
+                          fit: BoxFit.contain,
+                          width: width / 7,
+                        ),
+                        SizedBox(
+                          width: width / 20,
+                        ),
+                        Text(
+                          "4",
+                          style: GoogleFonts.poppins(
+                              color: DynamicColor().black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: width / 14),
+                        ),
+                        SizedBox(
+                          width: width / 40,
+                        ),
+                        Text(
+                          "Total Present",
+                          style: GoogleFonts.poppins(
+                              color: DynamicColor().black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: width / 20),
+                        ),
+                        SizedBox(
+                          width: width / 8,
+                        ),
+                      ],
+                    ),
+                    // child:
                   ),
                 ),
                 Spacer(),
@@ -268,7 +266,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Positioned(
                       top: height / 30,
-                      right: width / 12,
+                      right: width / 14,
                       left: width / 12,
                       child: DelayedDisplay(
                         fadeIn: true,

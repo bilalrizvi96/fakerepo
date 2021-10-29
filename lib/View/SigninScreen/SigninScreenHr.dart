@@ -129,9 +129,12 @@ class SigninScreenHr extends StatelessWidget {
                                   'Employee Id',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: width / 30,
+                                      fontSize: width / 29,
                                       color: DynamicColor().black),
                                 )),
+                          ),
+                          SizedBox(
+                            height: height / 80,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -178,9 +181,12 @@ class SigninScreenHr extends StatelessWidget {
                                   'Pin Code',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: width / 30,
+                                      fontSize: width / 29,
                                       color: DynamicColor().black),
                                 )),
+                          ),
+                          SizedBox(
+                            height: height / 80,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -216,39 +222,26 @@ class SigninScreenHr extends StatelessWidget {
                             ],
                           ),
                           SizedBox(
-                            height: height / 4,
+                            height: height / 3,
                           ),
-                          Container(
-                            width: width / 1.2,
-                            height: height / 15,
-                            decoration: BoxDecoration(
-                                color: DynamicColor().primarycolor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Text(
-                              'Next',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  color: DynamicColor().white),
-                            )),
-                          ),
-                          SizedBox(
-                            height: height / 30,
-                          ),
-                          Container(
-                            width: width / 1.2,
-                            height: height / 15,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: DynamicColor().black),
-                                // color: DynamicColor().primarycolor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Text(
-                              'Register',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  color: DynamicColor().black),
-                            )),
+                          GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/home');
+                            },
+                            child: Container(
+                              width: width / 1.2,
+                              height: height / 15,
+                              decoration: BoxDecoration(
+                                  color: DynamicColor().primarycolor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                  child: Text(
+                                'Next'.toUpperCase(),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: DynamicColor().white),
+                              )),
+                            ),
                           ),
                         ],
                       ),

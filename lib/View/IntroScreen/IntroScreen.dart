@@ -102,8 +102,9 @@ class _IntroScreenState extends State<IntroScreen>
                                               'Emerging as one of the fastest-growing professional marketing concerns of Pakistan, Star Marketing (Pvt.) Ltd. is now considered the true market leader of innovative real-estate marketing',
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w300,
-                                                  fontSize: width / 30,
-                                                  color: Color(0xFFF7F7F7)),
+                                                  fontSize: width / 29,
+                                                  color: Color(0xFFF7F7F7)
+                                                      .withOpacity(0.59)),
                                             )),
                                       ],
                                     ),
@@ -178,7 +179,8 @@ class _IntroScreenState extends State<IntroScreen>
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w300,
                                                 fontSize: width / 30,
-                                                color: Color(0xFFF7F7F7)),
+                                                color: Color(0xFFF7F7F7)
+                                                    .withOpacity(0.59)),
                                           ),
                                         ),
                                         GestureDetector(

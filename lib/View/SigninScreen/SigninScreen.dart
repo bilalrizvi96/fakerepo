@@ -47,8 +47,8 @@ class SigninScreen extends StatelessWidget {
                           Spacer(),
                           Image.asset(
                             'assets/signinclock.png',
-                            fit: BoxFit.cover,
-                            height: height / 8,
+                            fit: BoxFit.contain,
+                            width: width / 4,
                           ),
                           Spacer(),
                         ],
@@ -170,7 +170,7 @@ class SigninScreen extends StatelessWidget {
                                             Text(
                                               'HR',
                                               style: GoogleFonts.poppins(
-                                                  fontSize: width / 15,
+                                                  fontSize: width / 12.5,
                                                   fontWeight: FontWeight.w500,
                                                   color: signinController
                                                               .values.value ==
@@ -187,7 +187,9 @@ class SigninScreen extends StatelessWidget {
                                                   color: signinController
                                                               .values.value ==
                                                           0
-                                                      ? DynamicColor().white
+                                                      ? DynamicColor()
+                                                          .white
+                                                          .withOpacity(0.59)
                                                       : DynamicColor()
                                                           .primarycolor),
                                             ),
@@ -268,7 +270,7 @@ class SigninScreen extends StatelessWidget {
                                             Text(
                                               'Employee',
                                               style: GoogleFonts.poppins(
-                                                  fontSize: width / 15,
+                                                  fontSize: width / 12.5,
                                                   fontWeight: FontWeight.w500,
                                                   color: signinController
                                                               .values.value ==
@@ -285,7 +287,9 @@ class SigninScreen extends StatelessWidget {
                                                   color: signinController
                                                               .values.value ==
                                                           1
-                                                      ? DynamicColor().white
+                                                      ? DynamicColor()
+                                                          .white
+                                                          .withOpacity(0.59)
                                                       : DynamicColor()
                                                           .primarycolor),
                                             ),
@@ -310,7 +314,7 @@ class SigninScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: height / 60,
+                          height: height / 20,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -328,7 +332,7 @@ class SigninScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10)),
                               child: Center(
                                   child: Text(
-                                'Next',
+                                'Next'.toUpperCase(),
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     color: DynamicColor().white),

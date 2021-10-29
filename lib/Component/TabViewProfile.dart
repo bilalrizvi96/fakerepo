@@ -34,15 +34,6 @@ class ProfileTabViewScreen extends StatelessWidget {
                               top: 8.0, left: 20, bottom: 8.0),
                           child: Row(
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  Get.back();
-                                },
-                                child: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: DynamicColor().black.withOpacity(0.35),
-                                ),
-                              ),
                               SizedBox(
                                 width: width / 20,
                               ),

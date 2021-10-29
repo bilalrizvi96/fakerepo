@@ -34,19 +34,16 @@ class SettingScreen extends StatelessWidget {
                           SizedBox(
                             width: width / 20,
                           ),
-                          Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.grey[300],
-                          ),
+
                           SizedBox(
                             width: width / 40,
                           ),
                           // Spacer(),
                           Text(
-                            'Sign in',
+                            'Settings',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w500,
-                                fontSize: width / 18,
+                                fontSize: width / 16,
                                 color: DynamicColor().black),
                           ),
                           SizedBox(width: width / 3.9),

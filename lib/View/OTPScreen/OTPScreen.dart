@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
@@ -30,11 +31,15 @@ class OTPScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 100.0),
-                child: Image.asset(
-                  'assets/otpbg.png',
-                  fit: BoxFit.cover,
-                  width: width,
-                  height: height,
+                child: DelayedDisplay(
+                  delay: Duration(milliseconds: 400),
+                  slidingCurve: Curves.decelerate,
+                  child: Image.asset(
+                    'assets/otpbg.png',
+                    fit: BoxFit.cover,
+                    width: width,
+                    height: height,
+                  ),
                 ),
               ),
               Positioned(
@@ -117,7 +122,7 @@ class OTPScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10)),
                     child: Center(
                         child: Text(
-                      'Sign In',
+                      'Sign In'.toUpperCase(),
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w600,
                           color: DynamicColor().white),

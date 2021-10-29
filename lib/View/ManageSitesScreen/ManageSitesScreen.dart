@@ -36,10 +36,7 @@ class ManageSitesScreen extends StatelessWidget {
                             SizedBox(
                               width: width / 20,
                             ),
-                            Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.grey[300],
-                            ),
+
                             SizedBox(
                               width: width / 25,
                             ),
@@ -49,7 +46,7 @@ class ManageSitesScreen extends StatelessWidget {
                                 'Manage Sites',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: width / 20,
+                                    fontSize: width / 16,
                                     color: DynamicColor().black),
                               ),
                             ),
@@ -339,7 +336,7 @@ class ManageSitesScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10)),
                               child: Center(
                                   child: Text(
-                                'Submit',
+                                'Submit'.toUpperCase(),
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     color: DynamicColor().white),
@@ -363,7 +360,7 @@ class ManageSitesScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10)),
                               child: Center(
                                   child: Text(
-                                'View Sites',
+                                'View Sites'.toUpperCase(),
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     color: DynamicColor().black),

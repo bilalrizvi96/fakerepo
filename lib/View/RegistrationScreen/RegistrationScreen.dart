@@ -1,5 +1,6 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SigninController.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,27 +27,31 @@ class RegistrationScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 40.0),
-                      child: Row(
-                        children: [
-                          Spacer(),
-                          Container(
-                            width: width / 3.8,
-                            child: Text(
-                              'Register Now',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: width / 14,
-                                  color: DynamicColor().black),
+                      child: DelayedDisplay(
+                        delay: Duration(milliseconds: 800),
+                        slidingCurve: Curves.decelerate,
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Container(
+                              width: width / 3.8,
+                              child: Text(
+                                'Register Now',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: width / 14,
+                                    color: DynamicColor().black),
+                              ),
                             ),
-                          ),
-                          Spacer(),
-                          Image.asset(
-                            'assets/signinclock.png',
-                            fit: BoxFit.cover,
-                            height: height / 8,
-                          ),
-                          Spacer(),
-                        ],
+                            Spacer(),
+                            Image.asset(
+                              'assets/signinclock.png',
+                              fit: BoxFit.cover,
+                              height: height / 8,
+                            ),
+                            Spacer(),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -112,6 +117,9 @@ class RegistrationScreen extends StatelessWidget {
                                       color: DynamicColor().black),
                                 )),
                           ),
+                          SizedBox(
+                            height: height / 80,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -154,12 +162,15 @@ class RegistrationScreen extends StatelessWidget {
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Email Addresse',
+                                  'Email Address',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: width / 30,
+                                      fontSize: width / 29,
                                       color: DynamicColor().black),
                                 )),
+                          ),
+                          SizedBox(
+                            height: height / 80,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -206,7 +217,7 @@ class RegistrationScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10)),
                               child: Center(
                                   child: Text(
-                                'Next',
+                                'Submit'.toUpperCase(),
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     color: DynamicColor().white),
@@ -216,20 +227,26 @@ class RegistrationScreen extends StatelessWidget {
                           SizedBox(
                             height: height / 30,
                           ),
-                          Container(
-                            width: width / 1.2,
-                            height: height / 15,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: DynamicColor().black),
-                                // color: DynamicColor().primarycolor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Text(
-                              'Sign In',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  color: DynamicColor().black),
-                            )),
+                          GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              width: width / 1.2,
+                              height: height / 15,
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: DynamicColor().black),
+                                  // color: DynamicColor().primarycolor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                  child: Text(
+                                'Sign In'.toUpperCase(),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: DynamicColor().black),
+                              )),
+                            ),
                           ),
                         ],
                       ),

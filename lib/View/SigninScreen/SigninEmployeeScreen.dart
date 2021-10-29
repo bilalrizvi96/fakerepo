@@ -1,5 +1,6 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SigninController.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,24 +26,28 @@ class SiginEmployeeScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 30.0),
-                      child: Row(
-                        children: [
-                          Spacer(),
-                          Text(
-                            'Sign in',
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: width / 14,
-                                color: DynamicColor().black),
-                          ),
-                          Spacer(),
-                          Image.asset(
-                            'assets/signinclock.png',
-                            fit: BoxFit.cover,
-                            height: height / 8,
-                          ),
-                          Spacer(),
-                        ],
+                      child: DelayedDisplay(
+                        delay: Duration(milliseconds: 800),
+                        slidingCurve: Curves.decelerate,
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Text(
+                              'Sign in',
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: width / 14,
+                                  color: DynamicColor().black),
+                            ),
+                            Spacer(),
+                            Image.asset(
+                              'assets/signinclock.png',
+                              fit: BoxFit.cover,
+                              height: height / 8,
+                            ),
+                            Spacer(),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -104,9 +109,12 @@ class SiginEmployeeScreen extends StatelessWidget {
                                   'Employee Id',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: width / 30,
+                                      fontSize: width / 29,
                                       color: DynamicColor().black),
                                 )),
+                          ),
+                          SizedBox(
+                            height: height / 80,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -169,30 +177,32 @@ class SiginEmployeeScreen extends StatelessWidget {
                                       height: height / 10,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 130.0, right: 25, left: 35),
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: DynamicColor()
-                                                  .titletextcolor
-                                                  .withOpacity(0.5),
-                                              spreadRadius: 3,
-                                              blurRadius: 10,
-                                              offset: Offset(0,
-                                                  3), // changes position of shadow
-                                            ),
-                                          ],
-                                          color: DynamicColor().primarycolor),
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.white,
+                                  Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 130.0, right: 40, left: 40),
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: DynamicColor()
+                                                    .titletextcolor
+                                                    .withOpacity(0.5),
+                                                spreadRadius: 3,
+                                                blurRadius: 10,
+                                                offset: Offset(0,
+                                                    3), // changes position of shadow
+                                              ),
+                                            ],
+                                            color: DynamicColor().primarycolor),
+                                        child: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   )
@@ -221,7 +231,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 130.0, right: 25, left: 35),
+                                        top: 130.0, right: 40, left: 40),
                                     child: Container(
                                       width: 50,
                                       height: 50,
@@ -254,19 +264,24 @@ class SiginEmployeeScreen extends StatelessWidget {
                           SizedBox(
                             height: height / 8,
                           ),
-                          Container(
-                            width: width / 1.2,
-                            height: height / 15,
-                            decoration: BoxDecoration(
-                                color: DynamicColor().primarycolor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Text(
-                              'Next',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  color: DynamicColor().white),
-                            )),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed('/home');
+                            },
+                            child: Container(
+                              width: width / 1.2,
+                              height: height / 15,
+                              decoration: BoxDecoration(
+                                  color: DynamicColor().primarycolor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                  child: Text(
+                                'Next'.toUpperCase(),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: DynamicColor().white),
+                              )),
+                            ),
                           ),
                           SizedBox(
                             height: height / 30,
@@ -285,7 +300,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10)),
                               child: Center(
                                   child: Text(
-                                'Register',
+                                'Register'.toUpperCase(),
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     color: DynamicColor().black),

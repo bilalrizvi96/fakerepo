@@ -82,7 +82,7 @@ class FaceIDRuleScreen extends StatelessWidget {
                         fadingDuration: Duration(milliseconds: 800),
                         child: GestureDetector(
                           onTap: () {
-                            Get.offNamed('/faceverfication');
+                            Get.offNamed('/home');
                           },
                           child: Container(
                             width: width / 1.2,
@@ -93,7 +93,7 @@ class FaceIDRuleScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
                                 child: Text(
-                              'Begin Verification',
+                              'Begin Verification'.toUpperCase(),
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   color: DynamicColor().white),

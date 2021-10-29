@@ -6,18 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SummaryScreen extends StatelessWidget {
-  // const HomeScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    // List<AttendanceChartModel> chart = [
-    //   AttendanceChartModel(title: 'Present Days', value: 30),
-    //   AttendanceChartModel(title: 'Absents Days', value: 12),
-    //   AttendanceChartModel(title: 'Working Hours/wk', value: 40),
-    // ];
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -34,10 +26,6 @@ class SummaryScreen extends StatelessWidget {
                       const EdgeInsets.only(right: 22.0, left: 22.0, top: 22.0),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.grey[300],
-                      ),
                       SizedBox(
                         width: width / 20,
                       ),
@@ -197,7 +185,7 @@ class SummaryScreen extends StatelessWidget {
                           fadeIn: true,
                           fadingDuration: Duration(milliseconds: 800),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(18.0),
                             child: Container(
                               padding: const EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
@@ -211,15 +199,6 @@ class SummaryScreen extends StatelessWidget {
                                     Color(0xFFFFFFFF),
                                   ],
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.25),
-                                    spreadRadius: 1.2,
-                                    blurRadius: 5,
-                                    offset: Offset(
-                                        0, 2), // changes position of shadow
-                                  ),
-                                ],
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
