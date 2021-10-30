@@ -8,7 +8,9 @@ class FaceVerificationController extends GetxController {
   // List<CameraDescription> cameras = await availableCameras();
   CameraController? camera;
   var check = false.obs;
+  var _isRecordingInProgress = false.obs;
   var isDetecting = false.obs;
+  var btnvissiblity = false.obs;
   CameraLensDirection _direction = CameraLensDirection.front;
 
   @override
@@ -29,6 +31,32 @@ class FaceVerificationController extends GetxController {
         (CameraDescription camera) => camera.lensDirection == dir,
       ),
     );
+  }
+
+  void buttonpress() async {
+    btnvissiblity.value = true;
+    if (btnvissiblity == true) {
+      await startVideoRecording();
+    }
+    update();
+  }
+
+  Future<void> startVideoRecording() async {
+    final CameraController? cameraController = camera;
+    if (camera!.value.isRecordingVideo) {
+      print('sa');
+      // A recording has already started, do nothing.
+      return;
+    }
+    try {
+      await cameraController!.startVideoRecording();
+
+      _isRecordingInProgress.value = true;
+      print(_isRecordingInProgress);
+      update();
+    } on CameraException catch (e) {
+      print('Error starting to record video: $e');
+    }
   }
 
   void _initializeCamera() async {

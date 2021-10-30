@@ -165,7 +165,7 @@ class SettingScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
                                 child: Text(
-                              'Submit',
+                              'Submit'.toUpperCase(),
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   color: DynamicColor().white),

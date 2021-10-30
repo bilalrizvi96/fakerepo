@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.native,
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/faceverfication',
       getPages: [
         GetPage(
             name: '/', page: () => SplashScreen(), transition: Transition.zoom),
