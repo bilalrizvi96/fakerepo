@@ -4,10 +4,12 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 class GenrateQrScreen extends StatelessWidget {
-  const GenrateQrScreen({Key? key}) : super(key: key);
-
+  // const GenrateQrScreen({Key? key}) : super(key: key);
+  var data = Get.parameters['data'];
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -65,18 +67,23 @@ class GenrateQrScreen extends StatelessWidget {
                     SizedBox(
                       height: height / 9,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          border: Border.all(color: Colors.black),
-                          color: Colors.white),
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.qr_code_sharp,
-                        color: Colors.black.withOpacity(0.75),
-                        size: width / 3,
-                      ),
+                    QrImage(
+                      data: data!,
+                      version: QrVersions.auto,
+                      size: 200.0,
                     ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5.0),
+                    //       border: Border.all(color: Colors.black),
+                    //       color: Colors.white),
+                    //   padding: EdgeInsets.all(8.0),
+                    //   child: Icon(
+                    //     Icons.qr_code_sharp,
+                    //     color: Colors.black.withOpacity(0.75),
+                    //     size: width / 3,
+                    //   ),
+                    // ),
                     Spacer(),
                     Container(
                       height: height / 3.2,
@@ -93,24 +100,28 @@ class GenrateQrScreen extends StatelessWidget {
                         children: [
                           Spacer(),
                           Spacer(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/share.png",
-                                width: width / 6,
-                              ),
-                              SizedBox(
-                                height: height / 50,
-                              ),
-                              Text(
-                                'Share',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: width / 20,
-                                    color: DynamicColor().white),
-                              ),
-                            ],
+                          GestureDetector(
+                            onTap: () => Share.share(
+                                'check out my website https://example.com'),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/share.png",
+                                  width: width / 6,
+                                ),
+                                SizedBox(
+                                  height: height / 50,
+                                ),
+                                Text(
+                                  'Share',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: width / 20,
+                                      color: DynamicColor().white),
+                                ),
+                              ],
+                            ),
                           ),
                           Spacer(),
                           Image.asset(

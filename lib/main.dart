@@ -5,6 +5,7 @@ import 'package:attendencesystem/View/RegistrationScreen/RegistrationScreen.dart
 import 'package:attendencesystem/View/SigninScreen/SigninScreenHr.dart';
 import 'package:attendencesystem/View/SplashScreen/SplashScreen.dart';
 import 'package:attendencesystem/View/facetest.dart';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,13 +17,22 @@ import 'View/FaceIDRuleScreen/FaceIDRuleScreen.dart';
 import 'View/FaceVerificationScreen/FaceVerificationScreen.dart';
 import 'View/GenrateQrScreen/GenrateQrScreen.dart';
 import 'View/ManageSitesScreen/ManageSitesScreen.dart';
+import 'View/QrScanScreen/QrScanScreen.dart';
 import 'View/ReportsScreen/ReportScreen.dart';
 import 'View/SettingScreen/SettingScreen.dart';
 import 'View/SigninScreen/SigninEmployeeScreen.dart';
 import 'View/SigninScreen/SigninScreen.dart';
 import 'View/SummaryScreen/SummaryScreen.dart';
+import 'dart:developer' as developer;
 
-void main() {
+List<CameraDescription> cameras = [];
+Future<void> main() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    cameras = await availableCameras();
+  } on CameraException catch (e) {
+    developer.log(e.code, name: e.description.toString());
+  }
   runApp(const MyApp());
 }
 
@@ -33,14 +43,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       defaultTransition: Transition.native,
+      title: 'Attendence',
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/faceverfication',
+      initialRoute: '/managesites',
       getPages: [
         GetPage(
             name: '/', page: () => SplashScreen(), transition: Transition.zoom),
@@ -126,6 +136,11 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: "/genrateqr",
             page: () => GenrateQrScreen(),
+            transition: Transition.rightToLeft,
+            curve: Curves.easeInQuart),
+        GetPage(
+            name: "/scanqr",
+            page: () => QrScanScreen(),
             transition: Transition.rightToLeft,
             curve: Curves.easeInQuart),
       ],
