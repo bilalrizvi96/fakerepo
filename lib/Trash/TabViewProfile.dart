@@ -1,6 +1,7 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Component/SideDrawer.dart';
-import 'package:attendencesystem/View/CredentialsScreen/CredentialsScreen.dart';
+import 'package:attendencesystem/Trash/CredentialsScreen/CredentialsScreen.dart';
+
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -63,6 +63,32 @@ class API {
     }
   }
 
+  Future Registration({
+    var email_address,
+    var employee_Id,
+  }) async {
+    try {
+      Map data = {
+        'code': employee_Id,
+        'email': email_address,
+      };
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        baseurl_backend + 'register',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        var status = response.data.toString();
+        return status;
+      } else {
+        return "error";
+      }
+    } catch (e) {
+      onError(e);
+    }
+  }
+
   Future SiteCreation({
     var sitename,
     var city,

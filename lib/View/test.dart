@@ -1,3 +1,5 @@
+// Finger print and face for local auth.
+
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -73,7 +75,8 @@ class _MyAppState extends State<MyApps> {
       authenticated = await auth.authenticate(
           localizedReason: 'Let OS determine authentication method',
           useErrorDialogs: true,
-          stickyAuth: true);
+          biometricOnly: true,
+          stickyAuth: false);
       setState(() {
         _isAuthenticating = false;
       });

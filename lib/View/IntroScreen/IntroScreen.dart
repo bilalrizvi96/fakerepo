@@ -86,7 +86,7 @@ class _IntroScreenState extends State<IntroScreen>
                                           padding: const EdgeInsets.only(
                                               top: 80.0, left: 70),
                                           child: Text(
-                                            'Digital Attendace',
+                                            'Digital Attendance',
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: width / 14,
@@ -164,7 +164,7 @@ class _IntroScreenState extends State<IntroScreen>
                                           padding: const EdgeInsets.only(
                                               top: 80.0, left: 70),
                                           child: Text(
-                                            'Digital Attendace',
+                                            'Digital Attendance',
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: width / 14,
@@ -185,7 +185,7 @@ class _IntroScreenState extends State<IntroScreen>
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            Get.toNamed('/signin');
+                                            Get.toNamed('/signinemp');
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.only(
