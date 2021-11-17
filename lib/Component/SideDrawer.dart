@@ -1,3 +1,5 @@
+import 'package:attendencesystem/API/API.dart';
+
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -292,7 +294,10 @@ class Drawers {
                       focusColor: Colors.black,
                       highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
-                      onPressed: () {},
+                      onPressed: () {
+                        API().storage.erase();
+                        Get.offAllNamed('/signinemp');
+                      },
                       child: Row(
                         children: [
                           SizedBox(

@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Controller/OTPController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -6,8 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OTPScreen extends StatelessWidget {
-  const OTPScreen({Key? key}) : super(key: key);
-
+  OTPController otpController = Get.put(OTPController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -63,14 +63,17 @@ class OTPScreen extends StatelessWidget {
                   showFieldAsBox: true,
                   cursorColor: Colors.white,
                   filled: true,
+
                   fillColor: Colors.white,
                   borderWidth: 4.0,
                   //runs when a code is typed in
                   onCodeChanged: (String code) {
-                    //handle validation or checks here if necessary
+                    // otpController.submit(int.parse(code));
                   },
-                  //runs when every textfield is filled
-                  onSubmit: (String verificationCode) {},
+
+                  onSubmit: (String verificationCode) {
+                    otpController.submit(int.parse(verificationCode));
+                  },
                 ),
               ),
               Positioned(

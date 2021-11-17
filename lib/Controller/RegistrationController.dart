@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +7,7 @@ class RegistrationController extends GetxController {
   var employee_IdController = new TextEditingController();
   var emailController = new TextEditingController();
   final registrationFormKey = GlobalKey<FormState>();
+
   String? validators(var values) {
     if (values.isEmpty) {
       return "Please this field must be filled";
@@ -20,10 +22,13 @@ class RegistrationController extends GetxController {
         employee_Id: employee_IdController.text.toString(),
         email_address: emailController.text.toString(),
       );
-      if (response != null && response != 'error') {
+      if (response.statusCode == 200) {
         print(response);
         Get.snackbar("Registration ", "Register Successfully");
-      } else {}
+        Get.offAllNamed('/OTP');
+      } else {
+        Get.snackbar("Registration ", response.toString());
+      }
     }
   }
 }

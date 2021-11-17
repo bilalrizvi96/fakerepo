@@ -82,7 +82,7 @@ class FaceIDRuleScreen extends StatelessWidget {
                         fadingDuration: Duration(milliseconds: 800),
                         child: GestureDetector(
                           onTap: () {
-                            Get.offNamed('/home');
+                            Get.offAllNamed('/faceverfication');
                           },
                           child: Container(
                             width: width / 1.2,
@@ -135,55 +135,18 @@ class FaceIDRuleScreen extends StatelessWidget {
                           SizedBox(
                             width: height / 32,
                           ),
-                          Container(
-                              width: width / 4,
-                              height: height / 8,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.25),
-                                      spreadRadius: 3,
-                                      blurRadius: 10,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    colors: [
-                                      Color(0xFFFFFFFF),
-                                      Color(0xFFFFFFFF),
-                                      Color(0xFFFFFFFF),
-                                    ],
-                                  )),
-                              child: Image.asset('assets/person.png')),
-                          Spacer(),
-                          Container(
+                          Image.asset(
+                            'assets/facemask.png',
+                            fit: BoxFit.contain,
                             width: width / 4,
                             height: height / 8,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.25),
-                                    spreadRadius: 3,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [
-                                    Color(0xFFFFFFFF),
-                                    Color(0xFFFFFFFF),
-                                    Color(0xFFFFFFFF),
-                                  ],
-                                )),
-                            child: Image.asset('assets/person.png'),
+                          ),
+                          Spacer(),
+                          Image.asset(
+                            'assets/sunglasses.png',
+                            fit: BoxFit.contain,
+                            width: width / 4,
+                            height: height / 8,
                           ),
                           SizedBox(
                             width: height / 32,
@@ -203,14 +166,14 @@ class FaceIDRuleScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Avoid wearing hats',
+                            'Avoid wearing mask',
                             style: GoogleFonts.poppins(
                                 color: DynamicColor().black.withOpacity(0.5),
                                 fontWeight: FontWeight.w400,
                                 fontSize: width / 28),
                           ),
                           Text(
-                            'Avoid wearing hats',
+                            'Avoid wearing glasses',
                             style: GoogleFonts.poppins(
                                 color: DynamicColor().black.withOpacity(0.5),
                                 fontWeight: FontWeight.w400,
@@ -232,59 +195,20 @@ class FaceIDRuleScreen extends StatelessWidget {
                         DelayedDisplay(
                           fadeIn: true,
                           fadingDuration: Duration(milliseconds: 800),
-                          child: Container(
-                              width: width / 4,
-                              height: height / 8,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.25),
-                                      spreadRadius: 3,
-                                      blurRadius: 10,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    colors: [
-                                      Color(0xFFFFFFFF),
-                                      Color(0xFFFFFFFF),
-                                      Color(0xFFFFFFFF),
-                                    ],
-                                  )),
-                              child: Image.asset('assets/person.png')),
+                          child: Image.asset(
+                            'assets/brigthness.png',
+                            width: width / 4,
+                            height: height / 8,
+                          ),
                         ),
                         Spacer(),
                         DelayedDisplay(
                           fadeIn: true,
                           fadingDuration: Duration(milliseconds: 800),
-                          child: Container(
+                          child: Image.asset(
+                            'assets/nohat.png',
                             width: width / 4,
                             height: height / 8,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.25),
-                                    spreadRadius: 3,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [
-                                    Color(0xFFFFFFFF),
-                                    Color(0xFFFFFFFF),
-                                    Color(0xFFFFFFFF),
-                                  ],
-                                )),
-                            child: Image.asset('assets/person.png'),
                           ),
                         ),
                         SizedBox(
@@ -303,7 +227,7 @@ class FaceIDRuleScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Avoid wearing hats',
+                            'Use enough Lighting',
                             style: GoogleFonts.poppins(
                                 color: DynamicColor().black.withOpacity(0.5),
                                 fontWeight: FontWeight.w400,

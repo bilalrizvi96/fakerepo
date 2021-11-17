@@ -52,6 +52,10 @@ dependencies:
   qr_code_scanner: ^0.6.1
   qr_flutter: ^4.0.0
   share_plus: ^3.0.4
+  get_storage: ^2.0.3
+  geolocator: ^7.7.1
+  location: ^4.3.0
+  google_maps_flutter: ^2.1.0
 
 dev_dependencies:
   flutter_test:

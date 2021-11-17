@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:attendencesystem/API/API.dart';
+
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
@@ -7,8 +9,11 @@ class SplashController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    print(API().storage.read("token"));
     Future.delayed(new Duration(seconds: 3), () {
-      Get.offNamed('/intro');
+      API().storage.read("token") != null
+          ? Get.offNamed('/home')
+          : Get.offNamed('/intro');
     });
   }
 

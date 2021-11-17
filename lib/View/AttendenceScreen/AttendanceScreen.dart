@@ -1,13 +1,14 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Component/SideDrawer.dart';
+import 'package:attendencesystem/Controller/AttendenceController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AttendanceScreen extends StatelessWidget {
-  const AttendanceScreen({Key? key}) : super(key: key);
-
+  // const AttendanceScreen({Key? key}) : super(key: key);
+  AttendanceController attendanceController = Get.put(AttendanceController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -53,18 +54,6 @@ class AttendanceScreen extends StatelessWidget {
                                   fontSize: width / 16),
                             ),
                             Spacer(),
-                            // Builder(builder: (context) {
-                            //   return GestureDetector(
-                            //     onTap: () {
-                            //       Scaffold.of(context).openDrawer();
-                            //     },
-                            //     child: Icon(
-                            //       Icons.menu,
-                            //       size: width / 13,
-                            //       color: DynamicColor().primarycolor,
-                            //     ),
-                            //   );
-                            // }),
                           ],
                         ),
                       ),
@@ -251,69 +240,81 @@ class AttendanceScreen extends StatelessWidget {
                       Row(
                         children: [
                           Spacer(),
-                          Container(
-                            width: width / 3,
-                            height: height / 5,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                border: Border.all(
-                                    color: Color(0xFF44A6F4).withOpacity(0.48)),
-                                color: Colors.white),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Clock In',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: width / 20),
+                          GestureDetector(
+                            onTap: () {
+                              attendanceController.clockin();
+                            },
+                            child: Container(
+                              width: width / 3,
+                              height: height / 5,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                      color:
+                                          Color(0xFF44A6F4).withOpacity(0.48)),
+                                  color: Colors.white),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Clock In',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: width / 20),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: height / 30,
-                                ),
-                                Center(
-                                  child: Image.asset(
-                                    'assets/clockIn.png',
-                                    height: height / 12,
+                                  SizedBox(
+                                    height: height / 30,
                                   ),
-                                ),
-                              ],
+                                  Center(
+                                    child: Image.asset(
+                                      'assets/clockIn.png',
+                                      height: height / 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Spacer(),
-                          Container(
-                            width: width / 3,
-                            height: height / 5,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                border: Border.all(
-                                    color: Color(0xFFF50000).withOpacity(0.46)),
-                                color: Colors.white),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Clock out',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: width / 20),
+                          GestureDetector(
+                            onTap: () {
+                              attendanceController.clockout();
+                            },
+                            child: Container(
+                              width: width / 3,
+                              height: height / 5,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                      color:
+                                          Color(0xFFF50000).withOpacity(0.46)),
+                                  color: Colors.white),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Clock out',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: width / 20),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: height / 30,
-                                ),
-                                Center(
-                                  child: Image.asset(
-                                    'assets/clockout.png',
-                                    height: height / 12,
+                                  SizedBox(
+                                    height: height / 30,
                                   ),
-                                ),
-                              ],
+                                  Center(
+                                    child: Image.asset(
+                                      'assets/clockout.png',
+                                      height: height / 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Spacer(),
