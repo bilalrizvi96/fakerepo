@@ -10,7 +10,7 @@ class QrScanScreen extends StatefulWidget {
 }
 
 class _QrScanScreenState extends State<QrScanScreen> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   Barcode? result;
 

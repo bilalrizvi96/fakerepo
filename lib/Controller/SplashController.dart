@@ -9,7 +9,8 @@ class SplashController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    print(API().storage.read("token"));
+    var val = API().storage.read("token");
+    print(val);
     Future.delayed(new Duration(seconds: 3), () {
       API().storage.read("token") != null
           ? Get.offNamed('/home')

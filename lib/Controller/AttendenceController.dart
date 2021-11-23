@@ -44,4 +44,10 @@ class AttendanceController extends GetxController {
       Get.toNamed('/home');
     }
   }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+  }
 }

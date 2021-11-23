@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class RegistrationController extends GetxController {
   var employee_IdController = new TextEditingController();
   var emailController = new TextEditingController();
-  final registrationFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> registrationFormKey = GlobalKey<FormState>();
 
   String? validators(var values) {
     if (values.isEmpty) {
@@ -30,5 +30,11 @@ class RegistrationController extends GetxController {
         Get.snackbar("Registration ", response.toString());
       }
     }
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
   }
 }

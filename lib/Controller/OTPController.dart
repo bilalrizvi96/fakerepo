@@ -15,4 +15,10 @@ class OTPController extends GetxController {
       Get.snackbar("OTP ", "You enter the wrong OTP");
     }
   }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+  }
 }

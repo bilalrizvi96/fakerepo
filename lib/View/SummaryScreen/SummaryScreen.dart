@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Component/SideDrawer.dart';
-import 'package:attendencesystem/Model/AttendanceChartModel.dart';
+
+import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -8,11 +11,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SummaryScreen extends StatelessWidget {
+  SummaryController summaryController = Get.put(SummaryController());
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Scaffold(
+    return new Scaffold(
       drawer: Drawers().drawers(context),
       body: SafeArea(
         child: Container(

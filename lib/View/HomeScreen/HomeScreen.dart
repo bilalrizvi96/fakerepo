@@ -1,19 +1,17 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Component/SideDrawer.dart';
-import 'package:attendencesystem/Model/AttendanceChartModel.dart';
+
+import 'package:attendencesystem/Controller/HomeController.dart';
+
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
-  int selectedyear = DateTime.now().year;
-  int selectedmonth = DateTime.now().month;
-
+  HomeController homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    var current = selectedmonth.toString() + "-" + selectedyear.toString();
-
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -100,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(right: 280.0, left: 30, top: 5),
                   child: Text(
-                    'Month: ${current}',
+                    'Month: ${homeController.current.value}',
                     style: GoogleFonts.poppins(
                         color: DynamicColor().black,
                         fontWeight: FontWeight.w600,

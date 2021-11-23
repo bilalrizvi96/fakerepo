@@ -39,7 +39,7 @@ class _IntroScreenState extends State<IntroScreen>
                         children: <Widget>[
                           Container(
                             color: DynamicColor().white,
-                            padding: EdgeInsets.only(top: 9.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -75,16 +75,20 @@ class _IntroScreenState extends State<IntroScreen>
                                   delay: Duration(milliseconds: 500),
                                   fadeIn: true,
                                   child: Container(
-                                    width: width,
+                                    width: width / 1,
+                                    height: height / 2.23,
                                     child: Stack(
                                       children: [
-                                        Image.asset(
-                                          'assets/introbottom.png',
-                                          fit: BoxFit.cover,
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Image.asset(
+                                            'assets/introbottom.png',
+                                            fit: BoxFit.contain,
+                                          ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              top: 80.0, left: 70),
+                                              top: 100.0, left: 70),
                                           child: Text(
                                             'Digital Attendance',
                                             style: GoogleFonts.poppins(
@@ -95,7 +99,7 @@ class _IntroScreenState extends State<IntroScreen>
                                         ),
                                         Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 130.0,
+                                                top: 150.0,
                                                 right: 65,
                                                 left: 70),
                                             child: Text(
@@ -146,23 +150,24 @@ class _IntroScreenState extends State<IntroScreen>
                                 SizedBox(
                                   height: height / 12.5,
                                 ),
-                                // SizedBox(
-                                //   height: height / 50,
-                                // ),
                                 DelayedDisplay(
                                   delay: Duration(milliseconds: 500),
                                   fadeIn: true,
                                   child: Container(
-                                    width: width,
+                                    width: width / 1,
+                                    height: height / 2.23,
                                     child: Stack(
                                       children: [
-                                        Image.asset(
-                                          'assets/introbottom.png',
-                                          fit: BoxFit.cover,
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Image.asset(
+                                            'assets/introbottom.png',
+                                            fit: BoxFit.contain,
+                                          ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              top: 80.0, left: 70),
+                                              top: 100.0, left: 70),
                                           child: Text(
                                             'Digital Attendance',
                                             style: GoogleFonts.poppins(
@@ -172,24 +177,25 @@ class _IntroScreenState extends State<IntroScreen>
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 130.0, right: 65, left: 70),
-                                          child: Text(
-                                            "Emerging as one of the fastest-growing professional marketing concerns of Pakistan,",
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w300,
-                                                fontSize: width / 30,
-                                                color: Color(0xFFF7F7F7)
-                                                    .withOpacity(0.59)),
-                                          ),
-                                        ),
+                                            padding: const EdgeInsets.only(
+                                                top: 150.0,
+                                                right: 65,
+                                                left: 70),
+                                            child: Text(
+                                              'Emerging as one of the fastest-growing professional marketing concerns of Pakistan, Star Marketing (Pvt.) Ltd. is now considered the true market leader of innovative real-estate marketing',
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w300,
+                                                  fontSize: width / 29,
+                                                  color: Color(0xFFF7F7F7)
+                                                      .withOpacity(0.59)),
+                                            )),
                                         GestureDetector(
                                           onTap: () {
-                                            Get.toNamed('/signinemp');
+                                            Get.offAllNamed('/signinemp');
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 280.0, left: 320),
+                                                top: 280.0, left: 310),
                                             child: Container(
                                               width: 60,
                                               height: 60,

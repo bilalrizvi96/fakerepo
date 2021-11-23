@@ -137,6 +137,7 @@ class Drawers {
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         {
+                          Get.back();
                           Get.toNamed('/profiletab');
                         }
                       },
@@ -265,7 +266,8 @@ class Drawers {
                       highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
-                        Get.offNamed('/summary');
+                        Get.back();
+                        Get.toNamed('/summary');
                       },
                       child: Row(
                         children: [
@@ -295,8 +297,9 @@ class Drawers {
                       highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
+                        Get.back();
                         API().storage.erase();
-                        Get.offAllNamed('/signinemp');
+                        Get.toNamed('/signinemp');
                       },
                       child: Row(
                         children: [

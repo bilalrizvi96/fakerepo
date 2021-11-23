@@ -104,6 +104,7 @@ class RegistrationScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
+                                keyboardType: TextInputType.streetAddress,
                                 controller: registrationController
                                     .employee_IdController,
                                 validator: registrationController.validators,
@@ -159,6 +160,7 @@ class RegistrationScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
+                                keyboardType: TextInputType.emailAddress,
                                 controller:
                                     registrationController.emailController,
                                 validator: registrationController.validators,

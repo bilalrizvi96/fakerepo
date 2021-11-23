@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/Error.dart';
+import 'package:attendencesystem/Model/LoginModel.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -38,15 +39,70 @@ class API {
     }
   }
 
-  Future Verification({var verification}) async {
+  Future SigIn({
+    var employee_Id,
+  }) async {
     try {
-      var file = await MultipartFile.fromFile(verification);
+      Map data = {
+        'code': employee_Id,
+      };
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        baseurl + 'login',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        var status = response;
+        token = "BEARER" + " " + response.data['token'];
+        storage.write("token", token);
+        print(storage.read("token"));
+        LoginModel.fromJson(response.data);
+        return status.statusCode;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future Face_Registration({var files}) async {
+    try {
+      var file = await MultipartFile.fromFile(files);
       var formData = FormData.fromMap({'video': file, "id": 'arsalan'});
       var dio = Dio();
       dio.options.headers['Authorization'] = API().storage.read('token');
       final response = await dio.post(
         baseurl + 'verify',
         // data: formData,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {
+              'Content-Type': "multipart/formdata",
+              Headers.acceptHeader: "application/json"
+            }),
+      );
+      if (response.statusCode == 200) {
+        var status = response;
+        return status;
+      } else if (response.statusCode == 404) {
+        return response.data.toString();
+      } else {
+        return "error";
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future Face_Verification({var verification}) async {
+    try {
+      var file = await MultipartFile.fromFile(verification);
+      var formData = FormData.fromMap({'video': file, "id": 'arsalan'});
+      var dio = Dio();
+      dio.options.headers['Authorization'] = API().storage.read('token');
+      final response = await dio.post(
+        "asharib90.pythonanywhere.com/verify",
+        data: formData,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {

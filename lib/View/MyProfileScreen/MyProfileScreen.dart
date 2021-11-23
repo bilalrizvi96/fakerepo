@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
+
 import 'package:attendencesystem/Controller/MyProfileController.dart';
 import 'package:attendencesystem/Trash/SigninController.dart';
 import 'package:delayed_display/delayed_display.dart';
@@ -11,9 +12,10 @@ class MyProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    myProfileController.profileFormKey = GlobalKey<FormState>();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Scaffold(
+    return new Scaffold(
       body: SingleChildScrollView(
         child: Container(
             width: width,

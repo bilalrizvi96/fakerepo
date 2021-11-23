@@ -11,14 +11,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class FaceVerficationScreen extends StatefulWidget {
+class FaceRegistrationScreen extends StatefulWidget {
   @override
-  _FaceVerficationScreenState createState() {
-    return _FaceVerficationScreenState();
+  _FaceRegistrationScreenState createState() {
+    return _FaceRegistrationScreenState();
   }
 }
 
-class _FaceVerficationScreenState extends State<FaceVerficationScreen> {
+class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
   CameraController? controller;
   var videoPath;
   var check = false;
@@ -26,12 +26,12 @@ class _FaceVerficationScreenState extends State<FaceVerficationScreen> {
   List<CameraDescription>? cameras;
   var selectedCameraIdx;
   var isLoading = true;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future Verification(var videofile) async {
     try {
       videoPath = videofile.path;
       isLoading = true;
-      var response = await API().Verification(verification: videoPath);
+      var response = await API().Face_Registration(files: videoPath);
       if (response.statusCode == 200) {
         print(response);
         Get.snackbar('Register', response.toString(),

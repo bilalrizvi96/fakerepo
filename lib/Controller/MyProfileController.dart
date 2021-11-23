@@ -1,5 +1,8 @@
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class MyProfileController extends GetxController {
@@ -11,7 +14,7 @@ class MyProfileController extends GetxController {
   var addressController = new TextEditingController();
   var email_addressController = new TextEditingController();
   var shift_timmingController = new TextEditingController();
-  final profileFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
   String? validators(var values) {
     if (values.isEmpty) {
       return "Please this field must be filled";
@@ -37,5 +40,11 @@ class MyProfileController extends GetxController {
         Get.snackbar("Profile Create", "Profile Create Successfully");
       }
     }
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
   }
 }
