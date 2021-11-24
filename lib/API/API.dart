@@ -53,12 +53,12 @@ class API {
         data: data,
       );
       if (response.statusCode == 200) {
-        var status = response;
+        // var status = response;
         token = "BEARER" + " " + response.data['token'];
         storage.write("token", token);
         print(storage.read("token"));
-        LoginModel.fromJson(response.data);
-        return status.statusCode;
+
+        return LoginModel.fromJson(response.data);
       }
     } catch (e) {
       return onError(e);

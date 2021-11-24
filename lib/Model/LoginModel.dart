@@ -1,22 +1,21 @@
 // To parse this JSON data, do
 //
-//     final loginModel = loginModelFromJson(jsonString);
+//     final loginModel = loginModelFromJson(jsonvar);
 
 import 'dart:convert';
 
-LoginModel loginModelFromJson(String str) =>
-    LoginModel.fromJson(json.decode(str));
+LoginModel loginModelFromJson(var str) => LoginModel.fromJson(json.decode(str));
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
   LoginModel({
-    required this.token,
-    required this.user,
+    this.token,
+    this.user,
   });
 
-  String token;
-  List<User> user;
+  var token;
+  var user;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
         token: json["token"],
@@ -31,24 +30,24 @@ class LoginModel {
 
 class User {
   User({
-    required this.id,
-    required this.code,
-    required this.empCode,
-    required this.name,
-    required this.phoneNo,
-    required this.eMail,
-    required this.faceVerification,
-    required this.profile,
+    this.id,
+    this.code,
+    this.empCode,
+    this.name,
+    this.phoneNo,
+    this.eMail,
+    this.faceVerification,
+    this.profile,
   });
 
-  String id;
-  String code;
-  String empCode;
-  String name;
-  String phoneNo;
-  String eMail;
-  bool faceVerification;
-  List<Profile> profile;
+  var id;
+  var code;
+  var empCode;
+  var name;
+  var phoneNo;
+  var eMail;
+  var faceVerification;
+  var profile;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
@@ -76,24 +75,24 @@ class User {
 
 class Profile {
   Profile({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.address,
-    required this.dateOfJoining,
-    required this.designation,
-    required this.shiftTiming,
-    required this.employeeId,
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.address,
+    this.dateOfJoining,
+    this.designation,
+    this.shiftTiming,
+    this.employeeId,
   });
 
-  String id;
-  String firstName;
-  String lastName;
-  String address;
-  String dateOfJoining;
-  String designation;
-  String shiftTiming;
-  String employeeId;
+  var id;
+  var firstName;
+  var lastName;
+  var address;
+  var dateOfJoining;
+  var designation;
+  var shiftTiming;
+  var employeeId;
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
         id: json["_id"],

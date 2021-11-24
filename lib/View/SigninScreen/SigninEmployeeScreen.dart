@@ -130,6 +130,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                               width: width / 1.22,
                               child: TextFormField(
                                 controller: signinController.empcodeController,
+                                validator: signinController.validators,
                                 // readOnly: true,
                                 cursorColor: DynamicColor().primarycolor,
                                 style: GoogleFonts.poppins(

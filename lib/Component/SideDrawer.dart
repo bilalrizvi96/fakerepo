@@ -9,6 +9,7 @@ class Drawers {
   // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Widget drawers(BuildContext context) {
+    var userdata = API().storage.read("users");
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     // TODO: implement build
@@ -74,14 +75,18 @@ class Drawers {
                             child: Column(
                               children: [
                                 Text(
-                                  'Emad',
+                                  userdata[0].name != ""
+                                      ? userdata[0].name
+                                      : "Name",
                                   style: GoogleFonts.poppins(
                                       fontSize: width / 20,
                                       fontWeight: FontWeight.w500,
                                       color: DynamicColor().white),
                                 ),
                                 Text(
-                                  'CTO',
+                                  userdata[0].profile[0].designation != " "
+                                      ? userdata[0].profile[0].designation
+                                      : "Designation",
                                   style: GoogleFonts.poppins(
                                       fontSize: width / 30,
                                       fontWeight: FontWeight.w400,
@@ -131,9 +136,9 @@ class Drawers {
                     SizedBox(height: height / 50),
                     FlatButton(
                       padding: EdgeInsets.zero,
-                      hoverColor: Colors.black,
-                      focusColor: Colors.black,
-                      highlightColor: Colors.black,
+                      // hoverColor: Colors.black,
+                      // focusColor: Colors.black,
+                      // highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         {
@@ -261,9 +266,6 @@ class Drawers {
                     SizedBox(height: height / 50),
                     FlatButton(
                       padding: EdgeInsets.zero,
-                      hoverColor: Colors.black,
-                      focusColor: Colors.black,
-                      highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         Get.back();
@@ -292,9 +294,6 @@ class Drawers {
                     SizedBox(height: height / 50),
                     FlatButton(
                       padding: EdgeInsets.zero,
-                      hoverColor: Colors.black,
-                      focusColor: Colors.black,
-                      highlightColor: Colors.black,
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         Get.back();

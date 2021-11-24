@@ -82,71 +82,71 @@ class CredentialsScreen extends StatelessWidget {
               SizedBox(
                 height: height / 15,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 35.0),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(
-                      children: [
-                        Text(
-                          'Pin Code',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: width / 30,
-                              color: DynamicColor().black),
-                        ),
-                        SizedBox(
-                          width: width / 50,
-                        ),
-                        Text(
-                          '(HR Only)',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w200,
-                              fontSize: width / 30,
-                              color: DynamicColor().black),
-                        ),
-                      ],
-                    )),
-              ),
-              SizedBox(
-                height: height / 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: width / 80,
-                    height: height / 15,
-                    color: DynamicColor().primarycolor,
-                  ),
-                  Container(
-                    width: width / 1.22,
-                    child: TextFormField(
-                      obscureText: true,
-                      readOnly: false,
-                      cursorColor: DynamicColor().primarycolor,
-                      style: GoogleFonts.poppins(
-                          color: DynamicColor().primarycolor,
-                          fontWeight: FontWeight.w600),
-                      decoration: new InputDecoration(
-                          // labelText: '2568765',
-                          focusColor: DynamicColor().primarycolor,
-                          hoverColor: DynamicColor().primarycolor,
-
-                          // labelText: "Enter Employee ID",
-                          // labelStyle: ,
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: InputBorder.none
-
-                          //fillColor: Colors.green
-                          ),
-                      // keyboardType: TextInputType.none,
-                    ),
-                  ),
-                ],
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 35.0),
+              //   child: Align(
+              //       alignment: Alignment.topLeft,
+              //       child: Row(
+              //         children: [
+              //           Text(
+              //             'Pin Code',
+              //             style: GoogleFonts.poppins(
+              //                 fontWeight: FontWeight.w500,
+              //                 fontSize: width / 30,
+              //                 color: DynamicColor().black),
+              //           ),
+              //           SizedBox(
+              //             width: width / 50,
+              //           ),
+              //           Text(
+              //             '(HR Only)',
+              //             style: GoogleFonts.poppins(
+              //                 fontWeight: FontWeight.w200,
+              //                 fontSize: width / 30,
+              //                 color: DynamicColor().black),
+              //           ),
+              //         ],
+              //       )),
+              // ),
+              // SizedBox(
+              //   height: height / 50,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       width: width / 80,
+              //       height: height / 15,
+              //       color: DynamicColor().primarycolor,
+              //     ),
+              //     Container(
+              //       width: width / 1.22,
+              //       child: TextFormField(
+              //         obscureText: true,
+              //         readOnly: false,
+              //         cursorColor: DynamicColor().primarycolor,
+              //         style: GoogleFonts.poppins(
+              //             color: DynamicColor().primarycolor,
+              //             fontWeight: FontWeight.w600),
+              //         decoration: new InputDecoration(
+              //             // labelText: '2568765',
+              //             focusColor: DynamicColor().primarycolor,
+              //             hoverColor: DynamicColor().primarycolor,
+              //
+              //             // labelText: "Enter Employee ID",
+              //             // labelStyle: ,
+              //             fillColor: Colors.white,
+              //             filled: true,
+              //             border: InputBorder.none
+              //
+              //             //fillColor: Colors.green
+              //             ),
+              //         // keyboardType: TextInputType.none,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               SizedBox(
                 height: height / 8,
               ),
@@ -163,24 +163,6 @@ class CredentialsScreen extends StatelessWidget {
                       fontWeight: FontWeight.w600, color: DynamicColor().white),
                 )),
               ),
-              // SizedBox(
-              //   height: height / 30,
-              // ),
-              // Container(
-              //   width: width / 1.2,
-              //   height: height / 15,
-              //   decoration: BoxDecoration(
-              //       border: Border.all(color: DynamicColor().black),
-              //       // color: DynamicColor().primarycolor,
-              //       borderRadius: BorderRadius.circular(10)),
-              //   child: Center(
-              //       child: Text(
-              //     'Register',
-              //     style: GoogleFonts.poppins(
-              //         fontWeight: FontWeight.w600,
-              //         color: DynamicColor().black),
-              //   )),
-              // ),
             ],
           ),
         ),

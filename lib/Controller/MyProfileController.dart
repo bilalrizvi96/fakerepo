@@ -15,6 +15,8 @@ class MyProfileController extends GetxController {
   var email_addressController = new TextEditingController();
   var shift_timmingController = new TextEditingController();
   GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
+  var read = true.obs;
+  var profiledata = [];
   String? validators(var values) {
     if (values.isEmpty) {
       return "Please this field must be filled";
@@ -46,5 +48,14 @@ class MyProfileController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    profiledata = API().storage.read("users");
+    // for(var value in profiledata){
+    //
+    // }
   }
 }

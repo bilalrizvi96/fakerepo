@@ -11,6 +11,7 @@ class SignInEmployeeController extends GetxController {
   XFile? faceImage;
   static final _auth = LocalAuthentication();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  var profiledata = [];
 
   static Future<bool> hasBiometrics() async {
     try {
@@ -65,12 +66,18 @@ class SignInEmployeeController extends GetxController {
       var response = await API().SigIn(
         employee_Id: empcodeController.text.toString(),
       );
-      if (response == 200) {
-        print(response);
-        Get.snackbar("Login ", "Login Successfully");
-        Get.offAllNamed('/home');
+      if (response != null) {
+        profiledata.clear();
+        if (response.user.length != 0) {
+          Get.snackbar("Login ", "Login Successfully");
+          Get.offAllNamed('/home');
+          profiledata.add(response.user[0]);
+          API().storage.write("users", profiledata);
+        } else {
+          Get.snackbar("Login ", response.toString());
+        }
       } else {
-        Get.snackbar("Login ", response);
+        Get.snackbar("Login ", response.toString());
       }
     }
   }
@@ -81,7 +88,7 @@ class SignInEmployeeController extends GetxController {
       if (response.statusCode == 200) {
         print(response);
         Get.snackbar("Face Verification ", "Verified Successfully");
-        Get.offAllNamed('/home');
+        await sigin();
       } else {
         Get.snackbar("Registration ", response.toString());
       }
