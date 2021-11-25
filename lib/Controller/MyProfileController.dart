@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class MyProfileController extends GetxController {
   var shift_timmingController = new TextEditingController();
   GlobalKey<FormState> profileFormKey = GlobalKey<FormState>();
   var read = true.obs;
-  var profiledata = [];
+
   String? validators(var values) {
     if (values.isEmpty) {
       return "Please this field must be filled";
@@ -45,15 +46,9 @@ class MyProfileController extends GetxController {
   }
 
   @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
-
-  @override
   void onInit() {
     super.onInit();
-    profiledata = API().storage.read("users");
+
     // for(var value in profiledata){
     //
     // }

@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ class Drawers {
   // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Widget drawers(BuildContext context) {
-    var userdata = API().storage.read("users");
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     // TODO: implement build
@@ -75,8 +75,8 @@ class Drawers {
                             child: Column(
                               children: [
                                 Text(
-                                  userdata[0].name != ""
-                                      ? userdata[0].name
+                                  BaseUrl().storage.read("name") != null
+                                      ? BaseUrl().storage.read("name")
                                       : "Name",
                                   style: GoogleFonts.poppins(
                                       fontSize: width / 20,
@@ -84,8 +84,8 @@ class Drawers {
                                       color: DynamicColor().white),
                                 ),
                                 Text(
-                                  userdata[0].profile[0].designation != " "
-                                      ? userdata[0].profile[0].designation
+                                  BaseUrl().storage.read("designation") != " "
+                                      ? BaseUrl().storage.read("designation")
                                       : "Designation",
                                   style: GoogleFonts.poppins(
                                       fontSize: width / 30,
@@ -297,7 +297,7 @@ class Drawers {
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         Get.back();
-                        API().storage.erase();
+                        // BaseUrl().storage.erase();
                         Get.toNamed('/signinemp');
                       },
                       child: Row(

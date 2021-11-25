@@ -1,12 +1,14 @@
 import 'package:attendencesystem/API/Error.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
+import 'package:attendencesystem/Model/SummaryModel.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'BaseURl.dart';
+import 'BaseURl.dart';
+
 class API {
-  var storage = GetStorage();
-  var token, code;
-  var baseurl = "https://attendancesystem12.herokuapp.com/";
   Future Registration({
     var email_address,
     var employee_Id,
@@ -19,17 +21,18 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        baseurl + 'register',
+        BaseUrl().baseurl + 'register',
         data: data,
       );
+
       if (response.statusCode == 200) {
         var status = response;
-        token = "BEARER" + " " + response.data['token'];
-        code = response.data['code'];
-        storage.write("token", token);
-        storage.write("code", code);
-        print(storage.read("token"));
-        print(storage.read("code".toString()));
+        BaseUrl().token = "BEARER" + " " + response.data['token'];
+        BaseUrl().code = response.data['code'];
+        BaseUrl().storage.write("token", BaseUrl().token);
+        BaseUrl().storage.write("code", BaseUrl().code);
+        print(BaseUrl().storage.read("token"));
+        print(BaseUrl().storage.read("code".toString()));
         return status;
       } else {
         return "error";
@@ -49,16 +52,30 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        baseurl + 'login',
+        BaseUrl().baseurl + 'login',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return LoginModel.fromJson(response.data);
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future Summary({var start, var end}) async {
+    try {
+      Map data = {"start": start, "end": end};
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl().baseurl + 'getSummary',
         data: data,
       );
       if (response.statusCode == 200) {
         // var status = response;
-        token = "BEARER" + " " + response.data['token'];
-        storage.write("token", token);
-        print(storage.read("token"));
-
-        return LoginModel.fromJson(response.data);
+        return response.data;
       }
     } catch (e) {
       return onError(e);
@@ -70,9 +87,9 @@ class API {
       var file = await MultipartFile.fromFile(files);
       var formData = FormData.fromMap({'video': file, "id": 'arsalan'});
       var dio = Dio();
-      dio.options.headers['Authorization'] = API().storage.read('token');
+      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
       final response = await dio.post(
-        baseurl + 'verify',
+        BaseUrl().baseurl + 'verify',
         // data: formData,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -99,7 +116,7 @@ class API {
       var file = await MultipartFile.fromFile(verification);
       var formData = FormData.fromMap({'video': file, "id": 'arsalan'});
       var dio = Dio();
-      dio.options.headers['Authorization'] = API().storage.read('token');
+      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
       final response = await dio.post(
         "asharib90.pythonanywhere.com/verify",
         data: formData,
@@ -127,9 +144,9 @@ class API {
     try {
       Map data = {'location': latlng, "siteId": siteId, "date": "2021-22-12"};
       var dio = Dio();
-      dio.options.headers['Authorization'] = API().storage.read('token');
+      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
       final response = await dio.post(
-        baseurl + 'start',
+        BaseUrl().baseurl + 'start',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -152,9 +169,9 @@ class API {
     try {
       Map data = {'location': latlng, "siteId": siteId, "date": "2021-22-12"};
       var dio = Dio();
-      dio.options.headers['Authorization'] = API().storage.read('token');
+      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
       final response = await dio.post(
-        baseurl + 'end',
+        BaseUrl().baseurl + 'end',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -200,7 +217,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        baseurl + 'add_user',
+        BaseUrl().baseurl + 'add_user',
         data: data,
       );
       if (response.statusCode == 200) {

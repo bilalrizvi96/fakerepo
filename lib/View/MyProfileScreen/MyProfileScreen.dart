@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 
 import 'package:attendencesystem/Controller/MyProfileController.dart';
@@ -64,12 +65,10 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                  hintText: myProfileController.profiledata[0]
-                                              .profile[0].firstName !=
-                                          ' '
-                                      ? myProfileController
-                                          .profiledata[0].profile[0].firstName
-                                      : "First Name",
+                                  hintText:
+                                      BaseUrl().storage.read("firstName") != ' '
+                                          ? BaseUrl().storage.read("firstName")
+                                          : "First Name",
                                   focusColor: DynamicColor().primarycolor,
                                   hoverColor: DynamicColor().primarycolor,
                                   fillColor: Colors.white,
@@ -118,11 +117,11 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: myProfileController.profiledata[0]
-                                                .profile[0].lastName !=
+                                    hintText: BaseUrl()
+                                                .storage
+                                                .read("lastName") !=
                                             ' '
-                                        ? myProfileController
-                                            .profiledata[0].profile[0].lastName
+                                        ? BaseUrl().storage.read("lastName")!
                                         : "Last Name",
                                     errorStyle: TextStyle(fontSize: 12),
                                     focusColor: DynamicColor().primarycolor,
@@ -174,12 +173,10 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: myProfileController
-                                                .profiledata[0].phoneNo !=
-                                            ' '
-                                        ? myProfileController
-                                            .profiledata[0].phoneNo
-                                        : "Mobile Number",
+                                    hintText:
+                                        BaseUrl().storage.read("phoneNo") != ' '
+                                            ? BaseUrl().storage.read("phoneNo")
+                                            : "Mobile Number",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
 
@@ -232,11 +229,11 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: myProfileController.profiledata[0]
-                                                .profile[0].designation !=
+                                    hintText: BaseUrl()
+                                                .storage
+                                                .read("designation") !=
                                             ' '
-                                        ? myProfileController.profiledata[0]
-                                            .profile[0].designation
+                                        ? BaseUrl().storage.read("designation")
                                         : "First Name",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
@@ -287,11 +284,13 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: myProfileController.profiledata[0]
-                                                .profile[0].dateOfJoining !=
+                                    hintText: BaseUrl()
+                                                .storage
+                                                .read("dateOfJoining") !=
                                             ' '
-                                        ? myProfileController.profiledata[0]
-                                            .profile[0].dateOfJoining
+                                        ? BaseUrl()
+                                            .storage
+                                            .read("dateOfJoining")
                                         : "First Name",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
@@ -345,12 +344,10 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: myProfileController.profiledata[0]
-                                                .profile[0].address !=
-                                            ' '
-                                        ? myProfileController
-                                            .profiledata[0].profile[0].address
-                                        : "First Name",
+                                    hintText:
+                                        BaseUrl().storage.read("address") != ' '
+                                            ? BaseUrl().storage.read("address")
+                                            : "First Name",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
                                     fillColor: Colors.white,
@@ -398,12 +395,10 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: myProfileController
-                                                .profiledata[0].eMail !=
-                                            ' '
-                                        ? myProfileController
-                                            .profiledata[0].eMail
-                                        : "First Name",
+                                    hintText:
+                                        BaseUrl().storage.read("eMail") != ' '
+                                            ? BaseUrl().storage.read("eMail")
+                                            : "First Name",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
                                     fillColor: Colors.white,
@@ -451,12 +446,12 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: myProfileController.profiledata[0]
-                                                .profile[0].address !=
+                                    hintText: BaseUrl()
+                                                .storage
+                                                .read("shiftTiming") !=
                                             ' '
-                                        ? myProfileController
-                                            .profiledata[0].profile[0].address
-                                        : "First Name",
+                                        ? BaseUrl().storage.read("shiftTiming")
+                                        : "Shift Timing",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
                                     fillColor: Colors.white,

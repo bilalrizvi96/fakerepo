@@ -17,7 +17,10 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 class Routes {
   final routes = [
-    GetPage(name: '/', page: () => SplashScreen(), transition: Transition.zoom),
+    GetPage(
+        name: '/splash',
+        page: () => SplashScreen(),
+        transition: Transition.zoom),
     GetPage(
         name: '/home', page: () => HomeScreen(), transition: Transition.fadeIn),
     GetPage(

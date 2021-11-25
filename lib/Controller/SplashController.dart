@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 
 import 'package:get/get.dart';
 
@@ -9,16 +10,18 @@ class SplashController extends GetxController {
   void onInit() {
     super.onInit();
     // TODO: implement onInit
-    var val = API().storage.read("token");
-    print(val);
+    var tokenval = BaseUrl().storage.read("token");
+
+    print(BaseUrl().storage.read("token"));
+    print("val");
     Future.delayed(new Duration(seconds: 3), () {
-      val != null ? Get.offNamed('/home') : Get.offNamed('/intro');
+      tokenval != null ? Get.offAllNamed('/home') : Get.offAllNamed('/intro');
     });
   }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   // TODO: implement onClose
+  //   super.onClose();
+  // }
 }

@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,8 +11,8 @@ class SignInEmployeeController extends GetxController {
   TextEditingController empcodeController = new TextEditingController();
   XFile? faceImage;
   static final _auth = LocalAuthentication();
+  var token = "".obs;
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-  var profiledata = [];
 
   static Future<bool> hasBiometrics() async {
     try {
@@ -67,12 +68,37 @@ class SignInEmployeeController extends GetxController {
         employee_Id: empcodeController.text.toString(),
       );
       if (response != null) {
-        profiledata.clear();
+        // profiledata.clear();
         if (response.user.length != 0) {
+          token.value = "BEARER" + " " + response.token;
+          BaseUrl().storage.write("token", token.value);
+          print(BaseUrl().storage.read("token"));
+          BaseUrl().storage.write("name", response.user[0].name);
+          BaseUrl().storage.write("phoneNo", response.user[0].phoneNo);
+          BaseUrl().storage.write("eMail", response.user[0].eMail);
+          BaseUrl()
+              .storage
+              .write("firstName", response.user[0].profile[0].firstName);
+          BaseUrl()
+              .storage
+              .write("lastName", response.user[0].profile[0].lastName);
+          BaseUrl()
+              .storage
+              .write("address", response.user[0].profile[0].address);
+          BaseUrl().storage.write(
+              "dateOfJoining", response.user[0].profile[0].dateOfJoining);
+          BaseUrl()
+              .storage
+              .write("designation", response.user[0].profile[0].designation);
+          BaseUrl()
+              .storage
+              .write("shiftTiming", response.user[0].profile[0].shiftTiming);
+          BaseUrl()
+              .storage
+              .write("employeeId", response.user[0].profile[0].employeeId);
+
           Get.snackbar("Login ", "Login Successfully");
           Get.offAllNamed('/home');
-          profiledata.add(response.user[0]);
-          API().storage.write("users", profiledata);
         } else {
           Get.snackbar("Login ", response.toString());
         }

@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Component/SideDrawer.dart';
 
@@ -79,7 +80,9 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                homeController.userdata[0].name,
+                                BaseUrl().storage.read("name") != null
+                                    ? BaseUrl().storage.read("name")
+                                    : "Name",
                                 style: GoogleFonts.poppins(
                                     color: DynamicColor().white,
                                     fontWeight: FontWeight.w400,

@@ -23,10 +23,4 @@ class IntroController extends GetxController {
     pageIndex.value = value;
     update();
   }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
 }

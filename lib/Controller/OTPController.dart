@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 
 import 'package:get/get.dart';
 
@@ -6,7 +7,7 @@ class OTPController extends GetxController {
   var code;
 
   submit(int verfication) {
-    code = API().storage.read("code");
+    code = BaseUrl().storage.read("code");
 
     if (verfication == code) {
       Get.snackbar("OTP ", "OTP Verified  Successfully");
@@ -14,11 +15,5 @@ class OTPController extends GetxController {
     } else {
       Get.snackbar("OTP ", "You enter the wrong OTP");
     }
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
   }
 }
