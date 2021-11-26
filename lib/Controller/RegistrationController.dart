@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -24,8 +25,9 @@ class RegistrationController extends GetxController {
       );
       if (response.statusCode == 200) {
         print(response);
+        BaseUrl().empcode = employee_IdController.text.toString();
         Get.snackbar("Registration ", "Register Successfully");
-        Get.offAllNamed('/OTP');
+        Get.offAllNamed('/facerule');
       } else {
         Get.snackbar("Registration ", response.toString());
       }

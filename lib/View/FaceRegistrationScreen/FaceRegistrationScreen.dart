@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -27,16 +28,19 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
   var selectedCameraIdx;
   var isLoading = true;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Future Verification(var videofile) async {
+  Future faceRegistration(var videofile) async {
     try {
       videoPath = videofile.path;
       isLoading = true;
-      var response = await API().Face_Registration(files: videoPath);
+      var response = await API().Face_Registration(
+        files: videoPath,
+        empcode: BaseUrl().empcode.toString(),
+      );
       if (response.statusCode == 200) {
         print(response);
         Get.snackbar('Register', response.toString(),
             colorText: DynamicColor().primarycolor);
-        Get.toNamed('/home');
+        Get.toNamed('/OTP');
       } else {
         Get.snackbar('Register', response.toString());
         check = false;
@@ -271,7 +275,7 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
     _stopVideoRecording().then((file) {
       if (mounted) setState(() {});
       if (file != null) {
-        Verification(file);
+        faceRegistration(file);
       }
       Fluttertoast.showToast(
           msg: 'Video recorded',

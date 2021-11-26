@@ -75,22 +75,21 @@ class API {
       );
       if (response.statusCode == 200) {
         // var status = response;
-        return response.data;
+        return response;
       }
     } catch (e) {
       return onError(e);
     }
   }
 
-  Future Face_Registration({var files}) async {
+  Future Face_Registration({var files, var empcode}) async {
     try {
       var file = await MultipartFile.fromFile(files);
-      var formData = FormData.fromMap({'video': file, "id": 'arsalan'});
+      var formData = FormData.fromMap({'video': file, "id": empcode});
       var dio = Dio();
-      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
       final response = await dio.post(
-        BaseUrl().baseurl + 'verify',
-        // data: formData,
+        BaseUrl().baseurl_Face + 'register',
+        data: formData,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {
@@ -111,14 +110,14 @@ class API {
     }
   }
 
-  Future Face_Verification({var verification}) async {
+  Future Face_Verification({var verification, var empcode}) async {
     try {
       var file = await MultipartFile.fromFile(verification);
       var formData = FormData.fromMap({'video': file, "id": 'arsalan'});
       var dio = Dio();
-      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
+
       final response = await dio.post(
-        "asharib90.pythonanywhere.com/verify",
+        BaseUrl().baseurl_Face + "verify",
         data: formData,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,

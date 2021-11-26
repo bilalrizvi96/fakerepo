@@ -41,31 +41,39 @@ class AttendanceController extends GetxController {
 
   void clockin() async {
     await CurrentLocation();
-    var response = await API().CheckIn(
-      latlng: center.value.latitude.toString() +
-          "," +
-          center.value.longitude.toString(),
-      siteId: "123",
-    );
-    if (response.statusCode == 200) {
-      print(response);
-      Get.snackbar("Registration ", "Register Successfully");
-      Get.toNamed('/home');
+    if (sites.value != "") {
+      var response = await API().CheckIn(
+        latlng: center.value.latitude.toString() +
+            "," +
+            center.value.longitude.toString(),
+        siteId: "123",
+      );
+      if (response.statusCode == 200) {
+        print(response);
+        Get.snackbar("Attendance", "Clock Out Successfully");
+        Get.toNamed('/home');
+      }
+    } else {
+      Get.snackbar("Attendance", "Location is empty kindly scan Qr");
     }
   }
 
   clockout() async {
     await CurrentLocation();
-    var response = await API().CheckOut(
-      latlng: center.value.latitude.toString() +
-          "," +
-          center.value.longitude.toString(),
-      siteId: "123",
-    );
-    if (response.statusCode == 200) {
-      print(response);
-      Get.snackbar("Registration ", "Register Successfully");
-      Get.toNamed('/home');
+    if (sites.value != "") {
+      var response = await API().CheckOut(
+        latlng: center.value.latitude.toString() +
+            "," +
+            center.value.longitude.toString(),
+        siteId: "123",
+      );
+      if (response.statusCode == 200) {
+        print(response);
+        Get.snackbar("Attendance ", "Clock Out Successfully");
+        Get.toNamed('/home');
+      }
+    } else {
+      Get.snackbar("Attendance", "Location is empty kindly scan Qr");
     }
   }
 

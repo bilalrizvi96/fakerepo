@@ -110,14 +110,18 @@ class SignInEmployeeController extends GetxController {
 
   faceverification() async {
     if (faceImage != null) {
-      var response = await API().Face_Verification(verification: faceImage);
+      var response = await API().Face_Verification(
+        verification: faceImage,
+      );
       if (response.statusCode == 200) {
         print(response);
         Get.snackbar("Face Verification ", "Verified Successfully");
         await sigin();
       } else {
-        Get.snackbar("Registration ", response.toString());
+        Get.snackbar("Log In", response.toString());
       }
+    } else {
+      Get.snackbar("Log In", "Kindly enter the proper data");
     }
   }
 }
