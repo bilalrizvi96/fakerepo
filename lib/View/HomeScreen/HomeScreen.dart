@@ -2,6 +2,7 @@ import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Component/SideDrawer.dart';
+import 'package:attendencesystem/Controller/AttendenceController.dart';
 
 import 'package:attendencesystem/Controller/HomeController.dart';
 import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
@@ -13,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
+  AttendanceController attendanceController = Get.put(AttendanceController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -80,8 +82,8 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                BaseUrl().storage.read("name") != null
-                                    ? BaseUrl().storage.read("name")
+                                BaseUrl.storage.read("name") != null
+                                    ? BaseUrl.storage.read("name")
                                     : "Name",
                                 style: GoogleFonts.poppins(
                                     color: DynamicColor().white,
@@ -113,6 +115,74 @@ class HomeScreen extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               fontSize: width / 30),
                         ),
+                      ),
+                      DelayedDisplay(
+                        fadeIn: true,
+                        fadingDuration: Duration(milliseconds: 400),
+                        child: Container(
+                          width: width / 1.2,
+                          height: height / 9,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.15),
+                                spreadRadius: 1,
+                                blurRadius: 20,
+                                offset:
+                                    Offset(0, 20), // changes position of shadow
+                              ),
+                            ],
+                            image: DecorationImage(
+                                alignment: Alignment.center,
+                                image: AssetImage("assets/presentbg.png"),
+                                fit: BoxFit.contain),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Spacer(),
+                              SizedBox(
+                                width: width / 80,
+                              ),
+                              Image.asset(
+                                'assets/presenticon.png',
+                                fit: BoxFit.contain,
+                                width: width / 7,
+                              ),
+                              SizedBox(
+                                width: width / 20,
+                              ),
+                              Text(
+                                BaseUrl.storage.read("total") != null
+                                    ? BaseUrl.storage.read("total")
+                                    : "Name",
+                                style: GoogleFonts.poppins(
+                                    color: DynamicColor().black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: width / 14),
+                              ),
+                              SizedBox(
+                                width: width / 40,
+                              ),
+                              Text(
+                                "Total Present",
+                                style: GoogleFonts.poppins(
+                                    color: DynamicColor().black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: width / 20),
+                              ),
+                              SizedBox(
+                                width: width / 8,
+                              ),
+                            ],
+                          ),
+                          // child:
+                        ),
+                      ),
+                      SizedBox(
+                        height: height / 100,
                       ),
                       DelayedDisplay(
                         fadeIn: true,
@@ -177,72 +247,6 @@ class HomeScreen extends StatelessWidget {
                           // child:
                         ),
                       ),
-                      SizedBox(
-                        height: height / 100,
-                      ),
-                      DelayedDisplay(
-                        fadeIn: true,
-                        fadingDuration: Duration(milliseconds: 400),
-                        child: Container(
-                          width: width / 1.2,
-                          height: height / 9,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.15),
-                                spreadRadius: 1,
-                                blurRadius: 20,
-                                offset:
-                                    Offset(0, 20), // changes position of shadow
-                              ),
-                            ],
-                            image: DecorationImage(
-                                alignment: Alignment.center,
-                                image: AssetImage("assets/presentbg.png"),
-                                fit: BoxFit.contain),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Spacer(),
-                              SizedBox(
-                                width: width / 80,
-                              ),
-                              Image.asset(
-                                'assets/presenticon.png',
-                                fit: BoxFit.contain,
-                                width: width / 7,
-                              ),
-                              SizedBox(
-                                width: width / 20,
-                              ),
-                              Text(
-                                "4",
-                                style: GoogleFonts.poppins(
-                                    color: DynamicColor().black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: width / 14),
-                              ),
-                              SizedBox(
-                                width: width / 40,
-                              ),
-                              Text(
-                                "Total Present",
-                                style: GoogleFonts.poppins(
-                                    color: DynamicColor().black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: width / 20),
-                              ),
-                              SizedBox(
-                                width: width / 8,
-                              ),
-                            ],
-                          ),
-                          // child:
-                        ),
-                      ),
                       Spacer(),
                       Stack(
                         children: [
@@ -265,7 +269,7 @@ class HomeScreen extends StatelessWidget {
                             left: width / 12,
                             child: GestureDetector(
                               onTap: () {
-                                Get.toNamed('/attendance');
+                                attendanceController.scan();
                               },
                               child: Image.asset(
                                 'assets/qrdashboard.png',
@@ -280,36 +284,31 @@ class HomeScreen extends StatelessWidget {
                             child: DelayedDisplay(
                               fadeIn: true,
                               fadingDuration: Duration(milliseconds: 800),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // Get.offNamed('/faceverfication');
-                                },
-                                child: Center(
-                                    child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Punch your Attendance',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: width / 20,
-                                          color: DynamicColor()
-                                              .white
-                                              .withOpacity(0.44)),
-                                    ),
-                                    SizedBox(
-                                      height: height / 8,
-                                    ),
-                                    Text(
-                                      'Scan QR code',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: width / 20,
-                                          color: DynamicColor().white),
-                                    ),
-                                  ],
-                                )),
-                              ),
+                              child: Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Punch your Attendance',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: width / 20,
+                                        color: DynamicColor()
+                                            .white
+                                            .withOpacity(0.44)),
+                                  ),
+                                  SizedBox(
+                                    height: height / 8,
+                                  ),
+                                  Text(
+                                    'Scan QR code',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: width / 20,
+                                        color: DynamicColor().white),
+                                  ),
+                                ],
+                              )),
                             ),
                           ),
                         ],

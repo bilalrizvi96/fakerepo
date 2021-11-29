@@ -19,18 +19,24 @@ class RegistrationController extends GetxController {
   registration() async {
     if (registrationFormKey.currentState!.validate() &&
         registrationFormKey.currentState!.validate()) {
-      var response = await API().Registration(
+      BaseUrl.empcode = employee_IdController.text;
+      Get.toNamed(
+        '/facerule',
+      );
+    }
+  }
+
+  submit(var check) async {
+    var response = await API().Registration(
         employee_Id: employee_IdController.text.toString(),
         email_address: emailController.text.toString(),
-      );
-      if (response.statusCode == 200) {
-        print(response);
-        BaseUrl().empcode = employee_IdController.text.toString();
-        Get.snackbar("Registration ", "Register Successfully");
-        Get.offAllNamed('/facerule');
-      } else {
-        Get.snackbar("Registration ", response.toString());
-      }
+        check: check);
+    if (response.statusCode == 200) {
+      print(response);
+      Get.snackbar("Registration ", "Register Successfully");
+      // Get.offAllNamed('/home');
+    } else {
+      Get.snackbar("Registration ", response.toString());
     }
   }
 }

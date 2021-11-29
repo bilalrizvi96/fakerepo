@@ -71,46 +71,54 @@ class _IntroScreenState extends State<IntroScreen>
                                 SizedBox(
                                   height: height / 12.5,
                                 ),
-                                DelayedDisplay(
-                                  delay: Duration(milliseconds: 500),
-                                  fadeIn: true,
-                                  child: Container(
-                                    width: width / 1,
-                                    height: height / 2.23,
-                                    child: Stack(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: Image.asset(
-                                            'assets/introbottom.png',
-                                            fit: BoxFit.contain,
+                                Expanded(
+                                  flex: 2,
+                                  child: DelayedDisplay(
+                                    delay: Duration(milliseconds: 500),
+                                    fadeIn: true,
+                                    child: Container(
+                                      width: width / 1,
+                                      height: height / 2.23,
+                                      // decoration: BoxDecoration(
+                                      //     borderRadius: BorderRadius.only(
+                                      //         topRight: Radius.circular(20.0),
+                                      //         topLeft: Radius.circular(20.0)),
+                                      //     color: DynamicColor().primarycolor),
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child: Image.asset(
+                                              'assets/introbottom.png',
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 100.0, left: 70),
-                                          child: Text(
-                                            'Digital Attendance',
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: width / 14,
-                                                color: DynamicColor().white),
-                                          ),
-                                        ),
-                                        Padding(
+                                          Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 150.0,
-                                                right: 65,
-                                                left: 70),
+                                                top: 100.0, left: 70),
                                             child: Text(
-                                              'Emerging as one of the fastest-growing professional marketing concerns of Pakistan, Star Marketing (Pvt.) Ltd. is now considered the true market leader of innovative real-estate marketing',
+                                              'Digital Attendance',
                                               style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w300,
-                                                  fontSize: width / 29,
-                                                  color: Color(0xFFF7F7F7)
-                                                      .withOpacity(0.59)),
-                                            )),
-                                      ],
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: width / 14,
+                                                  color: DynamicColor().white),
+                                            ),
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 150.0,
+                                                  right: 65,
+                                                  left: 70),
+                                              child: Text(
+                                                'Emerging as one of the fastest-growing professional marketing concerns of Pakistan, Star Marketing (Pvt.) Ltd. is now considered the true market leader of innovative real-estate marketing',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w300,
+                                                    fontSize: width / 29,
+                                                    color: Color(0xFFF7F7F7)
+                                                        .withOpacity(0.59)),
+                                              )),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 )
@@ -150,80 +158,88 @@ class _IntroScreenState extends State<IntroScreen>
                                 SizedBox(
                                   height: height / 12.5,
                                 ),
-                                DelayedDisplay(
-                                  delay: Duration(milliseconds: 500),
-                                  fadeIn: true,
-                                  child: Container(
-                                    width: width / 1,
-                                    height: height / 2.23,
-                                    child: Stack(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: Image.asset(
-                                            'assets/introbottom.png',
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 100.0, left: 70),
-                                          child: Text(
-                                            'Digital Attendance',
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: width / 14,
-                                                color: DynamicColor().white),
-                                          ),
-                                        ),
-                                        Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 150.0,
-                                                right: 65,
-                                                left: 70),
-                                            child: Text(
-                                              'Emerging as one of the fastest-growing professional marketing concerns of Pakistan, Star Marketing (Pvt.) Ltd. is now considered the true market leader of innovative real-estate marketing',
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w300,
-                                                  fontSize: width / 29,
-                                                  color: Color(0xFFF7F7F7)
-                                                      .withOpacity(0.59)),
-                                            )),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.offAllNamed('/signinemp');
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 280.0, left: 330),
-                                            child: Container(
-                                              width: 60,
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50.0),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: DynamicColor()
-                                                          .titletextcolor
-                                                          .withOpacity(0.5),
-                                                      spreadRadius: 3,
-                                                      blurRadius: 10,
-                                                      offset: Offset(0,
-                                                          3), // changes position of shadow
-                                                    ),
-                                                  ],
-                                                  color: DynamicColor()
-                                                      .primarycolor),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Colors.white,
-                                              ),
+                                Expanded(
+                                  flex: 2,
+                                  child: DelayedDisplay(
+                                    delay: Duration(milliseconds: 500),
+                                    fadeIn: true,
+                                    child: Container(
+                                      width: width / 1,
+                                      height: height / 2.23,
+                                      // decoration: BoxDecoration(
+                                      //     borderRadius: BorderRadius.only(
+                                      //         topRight: Radius.circular(20.0),
+                                      //         topLeft: Radius.circular(20.0)),
+                                      //     color: DynamicColor().primarycolor),
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child: Image.asset(
+                                              'assets/introbottom.png',
+                                              fit: BoxFit.contain,
                                             ),
                                           ),
-                                        )
-                                      ],
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 100.0, left: 70),
+                                            child: Text(
+                                              'Digital Attendance',
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: width / 14,
+                                                  color: DynamicColor().white),
+                                            ),
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 150.0,
+                                                  right: 65,
+                                                  left: 70),
+                                              child: Text(
+                                                'Emerging as one of the fastest-growing professional marketing concerns of Pakistan, Star Marketing (Pvt.) Ltd. is now considered the true market leader of innovative real-estate marketing',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w300,
+                                                    fontSize: width / 29,
+                                                    color: Color(0xFFF7F7F7)
+                                                        .withOpacity(0.59)),
+                                              )),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.offAllNamed('/signinemp');
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 280.0, left: 300),
+                                              child: Container(
+                                                width: 60,
+                                                height: 60,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50.0),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: DynamicColor()
+                                                            .titletextcolor
+                                                            .withOpacity(0.5),
+                                                        spreadRadius: 3,
+                                                        blurRadius: 10,
+                                                        offset: Offset(0,
+                                                            3), // changes position of shadow
+                                                      ),
+                                                    ],
+                                                    color: DynamicColor()
+                                                        .primarycolor),
+                                                child: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 )

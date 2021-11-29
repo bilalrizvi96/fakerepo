@@ -56,7 +56,7 @@ class MyProfileScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
-                                readOnly: true,
+                                readOnly: myProfileController.read.value,
                                 controller:
                                     myProfileController.firstnameController,
                                 validator: myProfileController.validators,
@@ -66,8 +66,8 @@ class MyProfileScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
                                   hintText:
-                                      BaseUrl().storage.read("firstName") != ' '
-                                          ? BaseUrl().storage.read("firstName")
+                                      BaseUrl.storage.read("firstName") != ' '
+                                          ? BaseUrl.storage.read("firstName")
                                           : "First Name",
                                   focusColor: DynamicColor().primarycolor,
                                   hoverColor: DynamicColor().primarycolor,
@@ -108,7 +108,7 @@ class MyProfileScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
-                                readOnly: true,
+                                readOnly: myProfileController.read.value,
                                 controller:
                                     myProfileController.lastnameController,
                                 validator: myProfileController.validators,
@@ -117,12 +117,10 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: BaseUrl()
-                                                .storage
-                                                .read("lastName") !=
-                                            ' '
-                                        ? BaseUrl().storage.read("lastName")!
-                                        : "Last Name",
+                                    hintText:
+                                        BaseUrl.storage.read("lastName") != ' '
+                                            ? BaseUrl.storage.read("lastName")!
+                                            : "Last Name",
                                     errorStyle: TextStyle(fontSize: 12),
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
@@ -163,7 +161,7 @@ class MyProfileScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
-                                readOnly: true,
+                                readOnly: myProfileController.read.value,
                                 keyboardType: TextInputType.number,
                                 controller:
                                     myProfileController.mobileController,
@@ -174,8 +172,8 @@ class MyProfileScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
                                     hintText:
-                                        BaseUrl().storage.read("phoneNo") != ' '
-                                            ? BaseUrl().storage.read("phoneNo")
+                                        BaseUrl.storage.read("phoneNo") != ' '
+                                            ? BaseUrl.storage.read("phoneNo")
                                             : "Mobile Number",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
@@ -220,7 +218,7 @@ class MyProfileScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
-                                readOnly: true,
+                                readOnly: myProfileController.read.value,
                                 controller:
                                     myProfileController.designationController,
                                 validator: myProfileController.validators,
@@ -229,11 +227,10 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: BaseUrl()
-                                                .storage
+                                    hintText: BaseUrl.storage
                                                 .read("designation") !=
                                             ' '
-                                        ? BaseUrl().storage.read("designation")
+                                        ? BaseUrl.storage.read("designation")
                                         : "First Name",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
@@ -274,7 +271,7 @@ class MyProfileScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
-                                readOnly: true,
+                                readOnly: myProfileController.read.value,
                                 keyboardType: TextInputType.datetime,
                                 controller: myProfileController
                                     .date_of_joiningController,
@@ -284,13 +281,10 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: BaseUrl()
-                                                .storage
+                                    hintText: BaseUrl.storage
                                                 .read("dateOfJoining") !=
                                             ' '
-                                        ? BaseUrl()
-                                            .storage
-                                            .read("dateOfJoining")
+                                        ? BaseUrl.storage.read("dateOfJoining")
                                         : "First Name",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
@@ -335,7 +329,7 @@ class MyProfileScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
-                                readOnly: true,
+                                readOnly: myProfileController.read.value,
                                 controller:
                                     myProfileController.addressController,
                                 validator: myProfileController.validators,
@@ -345,8 +339,8 @@ class MyProfileScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
                                     hintText:
-                                        BaseUrl().storage.read("address") != ' '
-                                            ? BaseUrl().storage.read("address")
+                                        BaseUrl.storage.read("address") != ' '
+                                            ? BaseUrl.storage.read("address")
                                             : "First Name",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
@@ -385,7 +379,7 @@ class MyProfileScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
-                                readOnly: true,
+                                readOnly: myProfileController.read.value,
                                 keyboardType: TextInputType.emailAddress,
                                 controller:
                                     myProfileController.email_addressController,
@@ -396,8 +390,8 @@ class MyProfileScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
                                     hintText:
-                                        BaseUrl().storage.read("eMail") != ' '
-                                            ? BaseUrl().storage.read("eMail")
+                                        BaseUrl.storage.read("eMail") != ' '
+                                            ? BaseUrl.storage.read("eMail")
                                             : "First Name",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
@@ -436,7 +430,7 @@ class MyProfileScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
-                                readOnly: true,
+                                readOnly: myProfileController.read.value,
                                 keyboardType: TextInputType.text,
                                 controller:
                                     myProfileController.shift_timmingController,
@@ -446,11 +440,10 @@ class MyProfileScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: BaseUrl()
-                                                .storage
+                                    hintText: BaseUrl.storage
                                                 .read("shiftTiming") !=
                                             ' '
-                                        ? BaseUrl().storage.read("shiftTiming")
+                                        ? BaseUrl.storage.read("shiftTiming")
                                         : "Shift Timing",
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,

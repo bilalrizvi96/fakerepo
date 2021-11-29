@@ -5,6 +5,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class AttendanceScreen extends StatelessWidget {
   // const AttendanceScreen({Key? key}) : super(key: key);
@@ -193,20 +194,22 @@ class AttendanceScreen extends StatelessWidget {
                             SizedBox(
                               height: height / 30,
                             ),
-                            GestureDetector(
-                              onTap: () => attendanceController.scan(),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    border: Border.all(color: Colors.white),
-                                    color: Colors.white),
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.qr_code_sharp,
-                                  color: Colors.black.withOpacity(0.75),
-                                  size: width / 3,
-                                ),
-                              ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(color: Colors.white),
+                                  color: Colors.white),
+                              padding: EdgeInsets.all(8.0),
+                              child: attendanceController.sites.value == ""
+                                  ? Icon(
+                                      Icons.qr_code_sharp,
+                                      color: Colors.black.withOpacity(0.75),
+                                      size: width / 3,
+                                    )
+                                  : QrImage(
+                                      data: attendanceController.sites.value,
+                                      size: width / 3,
+                                    ),
                             ),
                             SizedBox(
                               height: height / 35,

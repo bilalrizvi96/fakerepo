@@ -1,12 +1,13 @@
 // import 'package:attendencesystem/Component/DynamicColor.dart';
 // import 'package:attendencesystem/Component/SideDrawer.dart';
-// import 'package:attendencesystem/Controller/SigninController.dart';
-// import 'package:attendencesystem/Controller/ViewSitesController.dart';
+//
 // import 'package:delayed_display/delayed_display.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:google_fonts/google_fonts.dart';
+//
+// import '../ViewSitesController.dart';
 //
 // class ViewSitesScreen extends StatelessWidget {
 //   // SigninController signinController = Get.put(SigninController());
@@ -218,7 +219,7 @@
 //                                       decoration: BoxDecoration(
 //                                           borderRadius:
 //                                               BorderRadius.circular(5.0),
-//                                           border:
+//                                           // border:
 //                                               Border.all(color: Colors.white),
 //                                           color: Colors.white),
 //                                       child: Icon(

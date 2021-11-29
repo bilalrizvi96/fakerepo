@@ -75,8 +75,8 @@ class Drawers {
                             child: Column(
                               children: [
                                 Text(
-                                  BaseUrl().storage.read("name") != null
-                                      ? BaseUrl().storage.read("name")
+                                  BaseUrl.storage.read("name") != null
+                                      ? BaseUrl.storage.read("name")
                                       : "Name",
                                   style: GoogleFonts.poppins(
                                       fontSize: width / 20,
@@ -84,8 +84,8 @@ class Drawers {
                                       color: DynamicColor().white),
                                 ),
                                 Text(
-                                  BaseUrl().storage.read("designation") != " "
-                                      ? BaseUrl().storage.read("designation")
+                                  BaseUrl.storage.read("designation") != " "
+                                      ? BaseUrl.storage.read("designation")
                                       : "Designation",
                                   style: GoogleFonts.poppins(
                                       fontSize: width / 30,
@@ -297,7 +297,7 @@ class Drawers {
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         Get.back();
-                        // BaseUrl().storage.erase();
+                        // BaseUrl.storage.erase();
                         Get.toNamed('/signinemp');
                       },
                       child: Row(

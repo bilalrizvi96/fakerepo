@@ -9,30 +9,24 @@ import 'BaseURl.dart';
 import 'BaseURl.dart';
 
 class API {
-  Future Registration({
-    var email_address,
-    var employee_Id,
-  }) async {
+  Future Registration({var email_address, var employee_Id, var check}) async {
     try {
-      Map data = {
-        'code': employee_Id,
-        'email': email_address,
-      };
+      Map data = {'code': employee_Id, 'email': email_address, "isFace": check};
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl().baseurl + 'register',
+        BaseUrl.baseurl + 'register',
         data: data,
       );
 
       if (response.statusCode == 200) {
         var status = response;
-        BaseUrl().token = "BEARER" + " " + response.data['token'];
-        BaseUrl().code = response.data['code'];
-        BaseUrl().storage.write("token", BaseUrl().token);
-        BaseUrl().storage.write("code", BaseUrl().code);
-        print(BaseUrl().storage.read("token"));
-        print(BaseUrl().storage.read("code".toString()));
+        BaseUrl.token = "BEARER" + " " + response.data['token'];
+        BaseUrl.code = response.data['code'];
+        // BaseUrl.storage.write("token", BaseUrl.token);
+        BaseUrl.storage.write("code", BaseUrl.code);
+        print(BaseUrl.storage.read("token"));
+        print(BaseUrl.storage.read("code".toString()));
         return status;
       } else {
         return "error";
@@ -52,7 +46,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl().baseurl + 'login',
+        BaseUrl.baseurl + 'login',
         data: data,
       );
       if (response.statusCode == 200) {
@@ -67,10 +61,10 @@ class API {
     try {
       Map data = {"start": start, "end": end};
       var dio = Dio();
-      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl().baseurl + 'getSummary',
+        BaseUrl.baseurl + 'getSummary',
         data: data,
       );
       if (response.statusCode == 200) {
@@ -85,10 +79,10 @@ class API {
   Future Face_Registration({var files, var empcode}) async {
     try {
       var file = await MultipartFile.fromFile(files);
-      var formData = FormData.fromMap({'video': file, "id": empcode});
+      var formData = FormData.fromMap({'video': file, "id": BaseUrl.empcode});
       var dio = Dio();
       final response = await dio.post(
-        BaseUrl().baseurl_Face + 'register',
+        BaseUrl.baseurl_Face + 'register',
         data: formData,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -100,8 +94,6 @@ class API {
       if (response.statusCode == 200) {
         var status = response;
         return status;
-      } else if (response.statusCode == 404) {
-        return response.data.toString();
       } else {
         return "error";
       }
@@ -110,14 +102,14 @@ class API {
     }
   }
 
-  Future Face_Verification({var verification, var empcode}) async {
+  Future Face_Verification({var verification}) async {
     try {
-      var file = await MultipartFile.fromFile(verification);
-      var formData = FormData.fromMap({'video': file, "id": 'arsalan'});
+      var file = await MultipartFile.fromFile(verification.path);
+      var formData = FormData.fromMap({'image': file, "id": BaseUrl.empcode});
       var dio = Dio();
 
       final response = await dio.post(
-        BaseUrl().baseurl_Face + "verify",
+        BaseUrl.baseurl_Face + "verify",
         data: formData,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -129,10 +121,6 @@ class API {
       if (response.statusCode == 200) {
         var status = response;
         return status;
-      } else if (response.statusCode == 404) {
-        return response.data.toString();
-      } else {
-        return "error";
       }
     } catch (e) {
       return onError(e);
@@ -143,9 +131,9 @@ class API {
     try {
       Map data = {'location': latlng, "siteId": siteId, "date": "2021-22-12"};
       var dio = Dio();
-      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
-        BaseUrl().baseurl + 'start',
+        BaseUrl.baseurl + 'start',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -168,9 +156,9 @@ class API {
     try {
       Map data = {'location': latlng, "siteId": siteId, "date": "2021-22-12"};
       var dio = Dio();
-      dio.options.headers['Authorization'] = BaseUrl().storage.read('token');
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
-        BaseUrl().baseurl + 'end',
+        BaseUrl.baseurl + 'end',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -216,7 +204,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl().baseurl + 'add_user',
+        BaseUrl.baseurl + 'add_user',
         data: data,
       );
       if (response.statusCode == 200) {

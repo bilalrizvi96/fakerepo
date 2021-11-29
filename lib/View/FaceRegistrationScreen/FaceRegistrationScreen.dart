@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:developer' as developer;
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Controller/RegistrationController.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,11 @@ class FaceRegistrationScreen extends StatefulWidget {
   }
 }
 
+List<CameraDescription> cameras = [];
+
 class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
+  RegistrationController registrationController =
+      Get.put(RegistrationController());
   CameraController? controller;
   var videoPath;
   var check = false;
@@ -34,10 +39,11 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
       isLoading = true;
       var response = await API().Face_Registration(
         files: videoPath,
-        empcode: BaseUrl().empcode.toString(),
+        empcode: registrationController.employee_IdController.text,
       );
       if (response.statusCode == 200) {
         print(response);
+        await registrationController.submit(response.data["respose"]);
         Get.snackbar('Register', response.toString(),
             colorText: DynamicColor().primarycolor);
         Get.toNamed('/OTP');
@@ -51,9 +57,19 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
     }
   }
 
+  Future<void> camera() async {
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+      cameras = await availableCameras();
+    } on CameraException catch (e) {
+      developer.log(e.code, name: e.description.toString());
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+
     check = false;
     // Get the listonNewCameraSelected of available cameras.
     // Then set the first camera as selected.
@@ -140,6 +156,12 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller!.dispose();
   }
 
   /// Display a row of toggle to select the camera (or a message if no camera is available).

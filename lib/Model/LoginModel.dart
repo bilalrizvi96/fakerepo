@@ -1,10 +1,11 @@
 // To parse this JSON data, do
 //
-//     final loginModel = loginModelFromJson(jsonvar);
+//     final loginModel = loginModelFromJson(jsonString);
 
 import 'dart:convert';
 
-LoginModel loginModelFromJson(var str) => LoginModel.fromJson(json.decode(str));
+LoginModel loginModelFromJson(String str) =>
+    LoginModel.fromJson(json.decode(str));
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
@@ -36,8 +37,11 @@ class User {
     this.name,
     this.phoneNo,
     this.eMail,
-    this.faceVerification,
+    this.registered,
+    this.hoursPerWeek,
+    this.hoursPerDay,
     this.profile,
+    this.total,
   });
 
   var id;
@@ -46,8 +50,11 @@ class User {
   var name;
   var phoneNo;
   var eMail;
-  var faceVerification;
+  var registered;
+  var hoursPerWeek;
+  var hoursPerDay;
   var profile;
+  var total;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
@@ -56,9 +63,12 @@ class User {
         name: json["Name"],
         phoneNo: json["PhoneNo"],
         eMail: json["EMail"],
-        faceVerification: json["FaceVerification"],
+        registered: json["Registered"],
+        hoursPerWeek: json["hours_per_week"],
+        hoursPerDay: json["hours_per_day"],
         profile:
             List<Profile>.from(json["profile"].map((x) => Profile.fromJson(x))),
+        total: json["total"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,8 +78,11 @@ class User {
         "Name": name,
         "PhoneNo": phoneNo,
         "EMail": eMail,
-        "FaceVerification": faceVerification,
+        "Registered": registered,
+        "hours_per_week": hoursPerWeek,
+        "hours_per_day": hoursPerDay,
         "profile": List<dynamic>.from(profile.map((x) => x.toJson())),
+        "total": total,
       };
 }
 

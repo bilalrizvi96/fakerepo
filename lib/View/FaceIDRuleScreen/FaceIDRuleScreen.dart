@@ -82,7 +82,7 @@ class FaceIDRuleScreen extends StatelessWidget {
                         fadingDuration: Duration(milliseconds: 800),
                         child: GestureDetector(
                           onTap: () {
-                            Get.offAllNamed('//faceregistration');
+                            Get.toNamed('/faceregistration');
                           },
                           child: Container(
                             width: width / 1.2,

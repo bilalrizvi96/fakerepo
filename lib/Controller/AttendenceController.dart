@@ -26,6 +26,7 @@ class AttendanceController extends GetxController {
       print(scanResult!.rawContent);
       print("scanResult");
       sites.value = scanResult!.rawContent;
+      Get.toNamed('/attendance');
       update();
     } on PlatformException catch (e) {
       scanResult = ScanResult(

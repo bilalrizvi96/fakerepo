@@ -162,7 +162,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                             Spacer(),
                             GestureDetector(
                               onTap: () {
-                                signinController.imgFromCameras();
+                                signinController.checkOption(0);
                               },
                               child: Stack(
                                 children: [
@@ -223,10 +223,10 @@ class SiginEmployeeScreen extends StatelessWidget {
                                     await signinController.authenticate();
 
                                 if (isAuthenticated) {
-                                  signinController.sigin();
+                                  signinController.checkOption(1);
                                 } else {
-                                  Get.snackbar(
-                                      "Sign In", "Please try another methon");
+                                  Get.snackbar("Log In",
+                                      "Kindly Select FingerPrint or Face Verfication");
                                 }
                               },
                               child: Stack(
@@ -287,7 +287,8 @@ class SiginEmployeeScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // Get.toNamed('/home');
+                            Get.snackbar("Log In",
+                                "Kindly Select FingerPrint or Face Verfication");
                           },
                           child: Container(
                             width: width / 1.2,
@@ -297,7 +298,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
                                 child: Text(
-                              'Next'.toUpperCase(),
+                              'Submit'.toUpperCase(),
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   color: DynamicColor().white),

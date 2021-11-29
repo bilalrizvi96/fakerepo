@@ -7,11 +7,11 @@ class OTPController extends GetxController {
   var code;
 
   submit(int verfication) {
-    code = BaseUrl().storage.read("code");
+    code = BaseUrl.storage.read("code");
 
     if (verfication == code) {
-      Get.snackbar("OTP ", "OTP Verified  Successfully");
-      Get.offAllNamed("/facerule");
+      Get.snackbar("OTP ", "OTP Verified Successfully");
+      Get.offAllNamed("/signinemp");
     } else {
       Get.snackbar("OTP ", "You enter the wrong OTP");
     }
