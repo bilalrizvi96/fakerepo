@@ -27,22 +27,16 @@ class API {
         BaseUrl.storage.write("code", BaseUrl.code);
         print(BaseUrl.storage.read("token"));
         print(BaseUrl.storage.read("code".toString()));
-        return status;
-      } else {
-        return "error";
+        return status.data;
       }
     } catch (e) {
       return onError(e);
     }
   }
 
-  Future SigIn({
-    var employee_Id,
-  }) async {
+  Future SigIn({var employee_Id, var isFace}) async {
     try {
-      Map data = {
-        'code': employee_Id,
-      };
+      Map data = {'code': employee_Id, "isFace": isFace};
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
@@ -50,7 +44,7 @@ class API {
         data: data,
       );
       if (response.statusCode == 200) {
-        return LoginModel.fromJson(response.data);
+        return response;
       }
     } catch (e) {
       return onError(e);
@@ -59,7 +53,11 @@ class API {
 
   Future Summary({var start, var end}) async {
     try {
-      Map data = {"start": start, "end": end};
+      Map data = {
+        "start": start,
+        "end": end,
+        'empCode': BaseUrl.storage.read('empCode')
+      };
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       dio.options.headers['Accept'] = 'application/json';
@@ -94,8 +92,6 @@ class API {
       if (response.statusCode == 200) {
         var status = response;
         return status;
-      } else {
-        return "error";
       }
     } catch (e) {
       return onError(e);
@@ -111,12 +107,12 @@ class API {
       final response = await dio.post(
         BaseUrl.baseurl_Face + "verify",
         data: formData,
-        options: Options(
-            contentType: Headers.formUrlEncodedContentType,
-            headers: {
-              'Content-Type': "multipart/formdata",
-              Headers.acceptHeader: "application/json"
-            }),
+        options:
+            Options(contentType: Headers.formUrlEncodedContentType, headers: {
+          'Content-Type': "multipart/formdata",
+          Headers.acceptHeader: "application/json",
+          Headers.acceptHeader: "application/json"
+        }),
       );
       if (response.statusCode == 200) {
         var status = response;
@@ -142,10 +138,6 @@ class API {
       if (response.statusCode == 200) {
         var status = response;
         return status;
-      } else if (response.statusCode == 404) {
-        return response.data.toString();
-      } else {
-        return "error";
       }
     } catch (e) {
       return onError(e);
@@ -170,10 +162,6 @@ class API {
       if (response.statusCode == 200) {
         var status = response;
         return status;
-      } else if (response.statusCode == 404) {
-        return response.data.toString();
-      } else {
-        return "error";
       }
     } catch (e) {
       return onError(e);
@@ -204,50 +192,15 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'add_user',
+        BaseUrl.baseurl + 'update_profile',
         data: data,
       );
       if (response.statusCode == 200) {
-        var status = response.data.toString();
+        var status = response;
         return status;
-      } else if (response.statusCode == 404) {
-        return response.data['error'];
-      } else {
-        return "error";
       }
     } catch (e) {
       return onError(e);
     }
   }
-
-  // Future SiteCreation({
-  //   var sitename,
-  //   var city,
-  //   var type,
-  //   var address,
-  // }) async {
-  //   try {
-  //     Map data = {
-  //       'SitesName': sitename,
-  //       'Address': city,
-  //       'City': type,
-  //       'Type': address,
-  //     };
-  //     var dio = Dio();
-  //     dio.options.headers['Accept'] = 'application/json';
-  //     final response = await dio.post(
-  //       baseurl_backend + 'add_sites',
-  //       data: data,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       var status = response.data;
-  //       return status;
-  //     } else {
-  //       return "error";
-  //     }
-  //   } catch (e) {
-  //     onError(e);
-  //   }
-  // }
-
 }

@@ -20,7 +20,7 @@ class FaceRegistrationScreen extends StatefulWidget {
   }
 }
 
-List<CameraDescription> cameras = [];
+// List<CameraDescription> cameras = [];
 
 class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
   RegistrationController registrationController =
@@ -41,14 +41,13 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
         files: videoPath,
         empcode: registrationController.employee_IdController.text,
       );
+      print(response);
       if (response.statusCode == 200) {
         print(response);
         await registrationController.submit(response.data["respose"]);
-        Get.snackbar('Register', response.toString(),
-            colorText: DynamicColor().primarycolor);
-        Get.toNamed('/OTP');
       } else {
-        Get.snackbar('Register', response.toString());
+        Get.snackbar('Error', response.data['respose'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
         check = false;
         setState(() {});
       }

@@ -460,7 +460,7 @@ class MyProfileScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            myProfileController.profilecreation();
+                            myProfileController.updateProfile();
                           },
                           child: Container(
                             width: width / 1.2,
@@ -470,7 +470,9 @@ class MyProfileScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
                                 child: Text(
-                              'Next'.toUpperCase(),
+                              myProfileController.read.value == true
+                                  ? 'Edit'.toUpperCase()
+                                  : "Submit",
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   color: DynamicColor().white),

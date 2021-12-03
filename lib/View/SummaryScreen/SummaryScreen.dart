@@ -310,7 +310,17 @@ class SummaryScreen extends StatelessWidget {
                                                       SizedBox(
                                                         width: width / 40,
                                                       ),
-                                                      Text('30',
+                                                      Text(
+                                                          summaryController
+                                                                      .summarylist[
+                                                                          index]
+                                                                      .Present_Days !=
+                                                                  ""
+                                                              ? summaryController
+                                                                  .summarylist[
+                                                                      index]
+                                                                  .Present_Days
+                                                              : '0',
                                                           style: GoogleFonts
                                                               .poppins(
                                                                   fontWeight:

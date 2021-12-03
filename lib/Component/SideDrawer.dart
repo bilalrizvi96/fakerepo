@@ -297,7 +297,7 @@ class Drawers {
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         Get.back();
-                        // BaseUrl.storage.erase();
+                        BaseUrl.storage.erase();
                         Get.toNamed('/signinemp');
                       },
                       child: Row(

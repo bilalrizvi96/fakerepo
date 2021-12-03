@@ -25,6 +25,13 @@ class MyProfileController extends GetxController {
     return null;
   }
 
+  updateProfile() {
+    read.value = !read.value;
+    if (read.value == false) {
+      profilecreation();
+    }
+  }
+
   profilecreation() async {
     if (profileFormKey.currentState!.validate() &&
         profileFormKey.currentState!.validate()) {
@@ -38,9 +45,12 @@ class MyProfileController extends GetxController {
         mobile: mobileController.text.toString(),
         shift_timming: shift_timmingController.text.toString(),
       );
-      if (response != null && response != 'error') {
+      if (response.statusCode == 200) {
         print(response);
         Get.snackbar("Profile Create", "Profile Create Successfully");
+      } else {
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
     }
   }

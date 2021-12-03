@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:attendencesystem/API/API.dart';
-import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/SummaryModel.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +14,9 @@ class SummaryController extends GetxController {
   List<SummaryModel> summarylist = [];
   fromDate(date) {
     fromdate.value = date;
+    if (fromdate.value == date) {
+      summary();
+    }
     update();
   }
 
@@ -31,7 +31,8 @@ class SummaryController extends GetxController {
 
   summary() async {
     var response = await API().Summary(
-        end: todate.value.day.toString(), start: fromdate.value.day.toString());
+        end: int.parse(todate.value.day.toString()),
+        start: int.parse(fromdate.value.day.toString()));
     if (response != null) {
       summarylist.clear();
       if (response.statusCode == 200) {
@@ -45,10 +46,14 @@ class SummaryController extends GetxController {
             Working_Hours: data['Working Hours'].toString()));
         print(data);
         Get.snackbar("Summary ", "Summary Generated");
+      } else {
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
       update();
     } else {
-      Get.snackbar("Summary ", response.toString());
+      Get.snackbar("Error ", response.data['error'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
   }
 

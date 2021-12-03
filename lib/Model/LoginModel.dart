@@ -40,8 +40,12 @@ class User {
     this.registered,
     this.hoursPerWeek,
     this.hoursPerDay,
+    this.shiftType,
+    this.offPerYear,
+    this.offDay,
     this.profile,
-    this.total,
+    this.totalAbsent,
+    this.totalPresent,
   });
 
   var id;
@@ -53,8 +57,12 @@ class User {
   var registered;
   var hoursPerWeek;
   var hoursPerDay;
+  var shiftType;
+  var offPerYear;
+  var offDay;
   var profile;
-  var total;
+  var totalAbsent;
+  var totalPresent;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
@@ -66,9 +74,13 @@ class User {
         registered: json["Registered"],
         hoursPerWeek: json["hours_per_week"],
         hoursPerDay: json["hours_per_day"],
+        shiftType: json["shift_type"],
+        offPerYear: json["off_per_year"],
+        offDay: List<String>.from(json["off_day"].map((x) => x)),
         profile:
             List<Profile>.from(json["profile"].map((x) => Profile.fromJson(x))),
-        total: json["total"],
+        totalAbsent: json["total_absent"],
+        totalPresent: json["total_present"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,8 +93,12 @@ class User {
         "Registered": registered,
         "hours_per_week": hoursPerWeek,
         "hours_per_day": hoursPerDay,
+        "shift_type": shiftType,
+        "off_per_year": offPerYear,
+        "off_day": List<dynamic>.from(offDay.map((x) => x)),
         "profile": List<dynamic>.from(profile.map((x) => x.toJson())),
-        "total": total,
+        "total_absent": totalAbsent,
+        "total_present": totalPresent,
       };
 }
 

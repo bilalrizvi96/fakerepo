@@ -2,6 +2,7 @@ import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegistrationController extends GetxController {
@@ -34,9 +35,12 @@ class RegistrationController extends GetxController {
     if (response.statusCode == 200) {
       print(response);
       Get.snackbar("Registration ", "Register Successfully");
+      Get.toNamed('/OTP');
       // Get.offAllNamed('/home');
     } else {
-      Get.snackbar("Registration ", response.toString());
+      Get.snackbar("Error ", response.data['error'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+      Get.offAllNamed('/signinemp');
     }
   }
 }

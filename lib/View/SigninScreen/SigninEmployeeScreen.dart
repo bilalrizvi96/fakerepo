@@ -228,6 +228,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                   Get.snackbar("Log In",
                                       "Kindly Select FingerPrint or Face Verfication");
                                 }
+
                               },
                               child: Stack(
                                 children: [

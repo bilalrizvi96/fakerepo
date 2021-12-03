@@ -1,5 +1,6 @@
 import 'package:attendencesystem/API/API.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,12 @@ class AttendanceController extends GetxController {
       print(scanResult!.rawContent);
       print("scanResult");
       sites.value = scanResult!.rawContent;
-      Get.toNamed('/attendance');
+      if (sites.value != "") {
+        Get.toNamed('/attendance');
+      } else {
+        Get.snackbar("Attendance", "Location is empty kindly scan Qr again");
+      }
+
       update();
     } on PlatformException catch (e) {
       scanResult = ScanResult(
@@ -53,9 +59,11 @@ class AttendanceController extends GetxController {
         print(response);
         Get.snackbar("Attendance", "Clock Out Successfully");
         Get.toNamed('/home');
+      } else {
+        Get.snackbar("Error ", response.data['error'].toString(),colorText: Colors.white, backgroundColor: Colors.red);
       }
     } else {
-      Get.snackbar("Attendance", "Location is empty kindly scan Qr");
+      Get.snackbar("Error", "Location is empty kindly scan Qr",colorText: Colors.white, backgroundColor: Colors.red);
     }
   }
 
@@ -72,9 +80,13 @@ class AttendanceController extends GetxController {
         print(response);
         Get.snackbar("Attendance ", "Clock Out Successfully");
         Get.toNamed('/home');
+      } else {
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
     } else {
-      Get.snackbar("Attendance", "Location is empty kindly scan Qr");
+      Get.snackbar("Error", "Location is empty kindly scan Qr",
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
   }
 
