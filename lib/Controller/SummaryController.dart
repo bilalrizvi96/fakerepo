@@ -11,11 +11,13 @@ class SummaryController extends GetxController {
   var todate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .obs;
+  var Loading = false.obs;
   List<SummaryModel> summarylist = [];
   fromDate(date) {
     fromdate.value = date;
     if (fromdate.value == date) {
-      summary();
+      // Loading.value = true;
+      // summary();
     }
     update();
   }
@@ -23,9 +25,9 @@ class SummaryController extends GetxController {
   toDate(date) {
     todate.value = date;
     if (todate.value == date) {
+      Loading.value = true;
       summary();
     }
-
     update();
   }
 
@@ -36,6 +38,7 @@ class SummaryController extends GetxController {
     if (response != null) {
       summarylist.clear();
       if (response.statusCode == 200) {
+        Loading.value = false;
         var data = response.data;
         summarylist.add(SummaryModel(
             Absent_Days: data['Absent Days'].toString(),
@@ -47,11 +50,13 @@ class SummaryController extends GetxController {
         print(data);
         Get.snackbar("Summary ", "Summary Generated");
       } else {
+        Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
       update();
     } else {
+      Loading.value = false;
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
@@ -60,5 +65,6 @@ class SummaryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    Loading.value = false;
   }
 }

@@ -14,7 +14,7 @@ class SignInEmployeeController extends GetxController {
   XFile? faceImage;
   static final _auth = LocalAuthentication();
   var token = "".obs;
-
+  var Loading = false.obs;
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   static Future<bool> hasBiometrics() async {
@@ -23,6 +23,12 @@ class SignInEmployeeController extends GetxController {
     } on PlatformException catch (e) {
       return false;
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    Loading.value = false;
   }
 
   static Future<List<BiometricType>> getBiometrics() async {
@@ -71,12 +77,17 @@ class SignInEmployeeController extends GetxController {
   checkOption(var check) async {
     if (loginFormKey.currentState!.validate() &&
         loginFormKey.currentState!.validate()) {
+      Loading.value = true;
+      update();
       BaseUrl.empcode = empcodeController.text;
       if (check == 1) {
         await sigin(true);
       } else if (check == 0) {
+        Loading.value = true;
+
         await imgFromCameras();
       }
+      update();
     }
   }
 
@@ -85,6 +96,8 @@ class SignInEmployeeController extends GetxController {
         .SigIn(employee_Id: empcodeController.text.toString(), isFace: isface);
 
     if (response.statusCode == 200) {
+      Loading.value = false;
+
       response = await LoginModel.fromJson(response.data);
       token.value = "BEARER" + " " + response.token;
       BaseUrl.storage.write("token", token.value);
@@ -112,9 +125,12 @@ class SignInEmployeeController extends GetxController {
       Get.snackbar("Login ", "Login Successfully");
       Get.offAllNamed('/home');
     } else {
+      Loading.value = false;
+
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
+    // update();
   }
 
   faceverification() async {

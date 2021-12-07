@@ -11,13 +11,16 @@ class AttendanceController extends GetxController {
   var center = new LatLng(33.652100, 75.123398).obs;
   ScanResult? scanResult;
   var sites = "".obs;
+  var Loading = false.obs;
   CurrentLocation() async {
+    Loading.value = true;
     final location = new Location();
     Position position = await Geolocator.getCurrentPosition();
     center.value = LatLng(position.latitude, position.longitude);
     location.onLocationChanged.listen((LocationData cLoc) {
       center.value = LatLng(cLoc.latitude!, cLoc.longitude!);
     });
+    update();
   }
 
   Future<void> scan() async {
@@ -56,15 +59,21 @@ class AttendanceController extends GetxController {
         siteId: "123",
       );
       if (response.statusCode == 200) {
+        Loading.value = false;
         print(response);
         Get.snackbar("Attendance", "Clock Out Successfully");
         Get.toNamed('/home');
       } else {
-        Get.snackbar("Error ", response.data['error'].toString(),colorText: Colors.white, backgroundColor: Colors.red);
+        Loading.value = false;
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
     } else {
-      Get.snackbar("Error", "Location is empty kindly scan Qr",colorText: Colors.white, backgroundColor: Colors.red);
+      Loading.value = false;
+      Get.snackbar("Error", "Location is empty kindly scan Qr",
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
+    update();
   }
 
   clockout() async {
@@ -77,17 +86,27 @@ class AttendanceController extends GetxController {
         siteId: "123",
       );
       if (response.statusCode == 200) {
+        Loading.value = false;
         print(response);
         Get.snackbar("Attendance ", "Clock Out Successfully");
         Get.toNamed('/home');
       } else {
+        Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
     } else {
+      Loading.value = false;
       Get.snackbar("Error", "Location is empty kindly scan Qr",
           colorText: Colors.white, backgroundColor: Colors.red);
     }
+    update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    Loading.value = false;
   }
 
   @override

@@ -25,12 +25,13 @@ class MyProfileController extends GetxController {
     return null;
   }
 
-  updateProfile() {
-    read.value = !read.value;
-    if (read.value == false) {
-      profilecreation();
-    }
-  }
+  // updateProfile() {
+  //   read.value = !read.value;
+  //   if (read.value == false) {
+  //     profilecreation();
+  //   }
+  //   update();
+  // }
 
   profilecreation() async {
     if (profileFormKey.currentState!.validate() &&

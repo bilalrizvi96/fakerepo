@@ -32,6 +32,7 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
   List<CameraDescription>? cameras;
   var selectedCameraIdx;
   var isLoading = true;
+  var Loading = false;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future faceRegistration(var videofile) async {
     try {
@@ -101,14 +102,20 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
                 ),
               ),
             ),
-            Row(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _cameraTogglesRowWidget(),
-                _captureControlRowWidget(),
-              ],
-            ),
+            check == false
+                ? Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      _cameraTogglesRowWidget(),
+                      _captureControlRowWidget(),
+                    ],
+                  )
+                : Image.asset(
+                    "assets/1.gif",
+                    height: 200,
+                    width: 200,
+                  ),
           ],
         ),
       ),
@@ -144,7 +151,9 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
     return Stack(
       children: [
         AspectRatio(
-          aspectRatio: 1.08 / controller!.value.aspectRatio,
+          aspectRatio: check == false
+              ? 1.08 / controller!.value.aspectRatio
+              : 1.28 / controller!.value.aspectRatio,
           child: CameraPreview(controller!),
         ),
         Image.asset(
@@ -190,31 +199,28 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
       child: Align(
           alignment: Alignment.center,
           child: GestureDetector(
-            onTap: controller != null &&
-                    controller!.value.isInitialized &&
-                    !controller!.value.isRecordingVideo
-                ? _onRecordButtonPressed
-                : null,
-            child: check == false
-                ? Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 1.2,
-                      height: MediaQuery.of(context).size.height / 15,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                          child: Text(
-                        'Ready'.toUpperCase(),
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            color: DynamicColor().black),
-                      )),
-                    ),
-                  )
-                : Container(),
-          )),
+              onTap: controller != null &&
+                      controller!.value.isInitialized &&
+                      !controller!.value.isRecordingVideo
+                  ? _onRecordButtonPressed
+                  : null,
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: MediaQuery.of(context).size.height / 15,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                      child: Text(
+                    'Ready'.toUpperCase(),
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: DynamicColor().black),
+                  )),
+                ),
+              ))),
     );
   }
 
@@ -281,13 +287,13 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
       check = true;
       setState(() {});
       startTimer();
-      Fluttertoast.showToast(
-          msg: 'Recording video started',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.grey,
-          textColor: Colors.white);
+      // Fluttertoast.showToast(
+      //     msg: 'Recording video started',
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.CENTER,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.grey,
+      //     textColor: Colors.white);
       // }
     });
   }
@@ -298,13 +304,13 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
       if (file != null) {
         faceRegistration(file);
       }
-      Fluttertoast.showToast(
-          msg: 'Video recorded',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.grey,
-          textColor: Colors.white);
+      // Fluttertoast.showToast(
+      //     msg: 'Video recorded',
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.CENTER,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.grey,
+      //     textColor: Colors.white);
     });
   }
 

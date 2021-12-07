@@ -214,302 +214,310 @@ class SummaryScreen extends StatelessWidget {
                                   itemCount:
                                       summaryController.summarylist.length,
                                   itemBuilder: (_, index) {
-                                    return DelayedDisplay(
-                                      fadeIn: true,
-                                      fadingDuration:
-                                          Duration(milliseconds: 800),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(18.0),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(5.0),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                width: width / 80,
-                                                height: height / 4,
-                                                color:
-                                                    DynamicColor().primarycolor,
+                                    return summaryController.Loading.value ==
+                                            false
+                                        ? DelayedDisplay(
+                                            fadeIn: true,
+                                            fadingDuration:
+                                                Duration(milliseconds: 800),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(18.0),
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: width / 80,
+                                                      height: height / 4,
+                                                      color: DynamicColor()
+                                                          .primarycolor,
+                                                    ),
+                                                    SizedBox(
+                                                      width: width / 30,
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Shift Type :',
+                                                              style: GoogleFonts.poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w200,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.77),
+                                                                  fontSize:
+                                                                      width /
+                                                                          25),
+                                                            ),
+                                                            SizedBox(
+                                                              width: width / 40,
+                                                            ),
+                                                            Text(
+                                                                summaryController
+                                                                            .summarylist[
+                                                                                index]
+                                                                            .Shift_Type !=
+                                                                        ""
+                                                                    ? summaryController
+                                                                        .summarylist[
+                                                                            index]
+                                                                        .Shift_Type
+                                                                    : '0',
+                                                                style: GoogleFonts.poppins(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        width /
+                                                                            25)),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: height / 200,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Present Days :',
+                                                              style: GoogleFonts.poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w200,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.77),
+                                                                  fontSize:
+                                                                      width /
+                                                                          25),
+                                                            ),
+                                                            SizedBox(
+                                                              width: width / 40,
+                                                            ),
+                                                            Text(
+                                                                summaryController
+                                                                            .summarylist[
+                                                                                index]
+                                                                            .Present_Days !=
+                                                                        ""
+                                                                    ? summaryController
+                                                                        .summarylist[
+                                                                            index]
+                                                                        .Present_Days
+                                                                    : '0',
+                                                                style: GoogleFonts.poppins(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        width /
+                                                                            23)),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: height / 200,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Absent Days :',
+                                                              style: GoogleFonts.poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w200,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.77),
+                                                                  fontSize:
+                                                                      width /
+                                                                          25),
+                                                            ),
+                                                            SizedBox(
+                                                              width: width / 40,
+                                                            ),
+                                                            Text(
+                                                                summaryController
+                                                                            .summarylist[
+                                                                                index]
+                                                                            .Absent_Days !=
+                                                                        ""
+                                                                    ? summaryController
+                                                                        .summarylist[
+                                                                            index]
+                                                                        .Absent_Days
+                                                                    : '0',
+                                                                style: GoogleFonts.poppins(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        width /
+                                                                            23)),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: height / 200,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Working Hours :',
+                                                              style: GoogleFonts.poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w200,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.77),
+                                                                  fontSize:
+                                                                      width /
+                                                                          25),
+                                                            ),
+                                                            SizedBox(
+                                                              width: width / 40,
+                                                            ),
+                                                            Text(
+                                                                summaryController
+                                                                            .summarylist[
+                                                                                index]
+                                                                            .Working_Hours !=
+                                                                        ""
+                                                                    ? summaryController
+                                                                        .summarylist[
+                                                                            index]
+                                                                        .Working_Hours
+                                                                    : '0',
+                                                                style: GoogleFonts.poppins(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        width /
+                                                                            23)),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: height / 200,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Hours Short :',
+                                                              style: GoogleFonts.poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w200,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.77),
+                                                                  fontSize:
+                                                                      width /
+                                                                          25),
+                                                            ),
+                                                            SizedBox(
+                                                              width: width / 40,
+                                                            ),
+                                                            Text(
+                                                                summaryController
+                                                                            .summarylist[
+                                                                                index]
+                                                                            .Hours_Short !=
+                                                                        ""
+                                                                    ? summaryController
+                                                                        .summarylist[
+                                                                            index]
+                                                                        .Hours_Short
+                                                                    : '0',
+                                                                style: GoogleFonts.poppins(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        width /
+                                                                            23)),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: height / 200,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Over Time :',
+                                                              style: GoogleFonts.poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w200,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.77),
+                                                                  fontSize:
+                                                                      width /
+                                                                          25),
+                                                            ),
+                                                            SizedBox(
+                                                              width: width / 40,
+                                                            ),
+                                                            Text(
+                                                                summaryController
+                                                                            .summarylist[
+                                                                                index]
+                                                                            .Over_Time !=
+                                                                        ""
+                                                                    ? summaryController
+                                                                        .summarylist[
+                                                                            index]
+                                                                        .Over_Time
+                                                                    : '0',
+                                                                style: GoogleFonts.poppins(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        width /
+                                                                            23)),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              SizedBox(
-                                                width: width / 30,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Shift Type :',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w200,
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.77),
-                                                                fontSize:
-                                                                    width / 25),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width / 40,
-                                                      ),
-                                                      Text(
-                                                          summaryController
-                                                                      .summarylist[
-                                                                          index]
-                                                                      .Shift_Type !=
-                                                                  ""
-                                                              ? summaryController
-                                                                  .summarylist[
-                                                                      index]
-                                                                  .Shift_Type
-                                                              : '0',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      width /
-                                                                          25)),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: height / 200,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Present Days :',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w200,
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.77),
-                                                                fontSize:
-                                                                    width / 25),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width / 40,
-                                                      ),
-                                                      Text(
-                                                          summaryController
-                                                                      .summarylist[
-                                                                          index]
-                                                                      .Present_Days !=
-                                                                  ""
-                                                              ? summaryController
-                                                                  .summarylist[
-                                                                      index]
-                                                                  .Present_Days
-                                                              : '0',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      width /
-                                                                          23)),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: height / 200,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Absent Days :',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w200,
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.77),
-                                                                fontSize:
-                                                                    width / 25),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width / 40,
-                                                      ),
-                                                      Text(
-                                                          summaryController
-                                                                      .summarylist[
-                                                                          index]
-                                                                      .Absent_Days !=
-                                                                  ""
-                                                              ? summaryController
-                                                                  .summarylist[
-                                                                      index]
-                                                                  .Absent_Days
-                                                              : '0',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      width /
-                                                                          23)),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: height / 200,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Working Hours :',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w200,
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.77),
-                                                                fontSize:
-                                                                    width / 25),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width / 40,
-                                                      ),
-                                                      Text(
-                                                          summaryController
-                                                                      .summarylist[
-                                                                          index]
-                                                                      .Working_Hours !=
-                                                                  ""
-                                                              ? summaryController
-                                                                  .summarylist[
-                                                                      index]
-                                                                  .Working_Hours
-                                                              : '0',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      width /
-                                                                          23)),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: height / 200,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Hours Short :',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w200,
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.77),
-                                                                fontSize:
-                                                                    width / 25),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width / 40,
-                                                      ),
-                                                      Text(
-                                                          summaryController
-                                                                      .summarylist[
-                                                                          index]
-                                                                      .Hours_Short !=
-                                                                  ""
-                                                              ? summaryController
-                                                                  .summarylist[
-                                                                      index]
-                                                                  .Hours_Short
-                                                              : '0',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      width /
-                                                                          23)),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: height / 200,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Over Time :',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w200,
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.77),
-                                                                fontSize:
-                                                                    width / 25),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width / 40,
-                                                      ),
-                                                      Text(
-                                                          summaryController
-                                                                      .summarylist[
-                                                                          index]
-                                                                      .Over_Time !=
-                                                                  ""
-                                                              ? summaryController
-                                                                  .summarylist[
-                                                                      index]
-                                                                  .Over_Time
-                                                              : '0',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      width /
-                                                                          23)),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
+                                            ),
+                                          )
+                                        : Center(
+                                            child: Image.asset(
+                                              "assets/1.gif",
+                                              height: 500,
+                                              width: 500,
+                                            ),
+                                          );
                                   }),
                             )
                           : Container(
