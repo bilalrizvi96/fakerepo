@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Component/SideDrawer.dart';
 import 'package:attendencesystem/Controller/AttendenceController.dart';
@@ -254,97 +255,99 @@ class AttendanceScreen extends StatelessWidget {
                               height: height / 25,
                             ),
                             attendanceController.Loading.value == false
-                                ? Row(
-                                    children: [
-                                      Spacer(),
-                                      GestureDetector(
+                                ? BaseUrl.storage.read("status") == false
+                                    ? GestureDetector(
                                         onTap: () {
                                           attendanceController.clockin();
                                         },
-                                        child: Container(
-                                          width: width / 3,
-                                          height: height / 5,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                              border: Border.all(
-                                                  color: Color(0xFF44A6F4)
-                                                      .withOpacity(0.48)),
-                                              color: Colors.white),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  'Clock In',
-                                                  style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: width / 20),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 18.0),
+                                          child: Container(
+                                            width: width / 3,
+                                            height: height / 5,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                                border: Border.all(
+                                                    color: Color(0xFF44A6F4)
+                                                        .withOpacity(0.48)),
+                                                color: Colors.white),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    'Clock In',
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: width / 20),
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: height / 30,
-                                              ),
-                                              Center(
-                                                child: Image.asset(
-                                                  'assets/clockIn.png',
-                                                  height: height / 12,
+                                                SizedBox(
+                                                  height: height / 30,
                                                 ),
-                                              ),
-                                            ],
+                                                Center(
+                                                  child: Image.asset(
+                                                    'assets/clockIn.png',
+                                                    height: height / 12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Spacer(),
-                                      GestureDetector(
+                                      )
+                                    : GestureDetector(
                                         onTap: () {
                                           attendanceController.clockout();
                                         },
-                                        child: Container(
-                                          width: width / 3,
-                                          height: height / 5,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                              border: Border.all(
-                                                  color: Color(0xFFF50000)
-                                                      .withOpacity(0.46)),
-                                              color: Colors.white),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  'Clock out',
-                                                  style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: width / 20),
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 18.0),
+                                          child: Container(
+                                            width: width / 3,
+                                            height: height / 5,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                                border: Border.all(
+                                                    color: Color(0xFFF50000)
+                                                        .withOpacity(0.46)),
+                                                color: Colors.white),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    'Clock out',
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: width / 20),
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: height / 30,
-                                              ),
-                                              Center(
-                                                child: Image.asset(
-                                                  'assets/clockout.png',
-                                                  height: height / 12,
+                                                SizedBox(
+                                                  height: height / 30,
                                                 ),
-                                              ),
-                                            ],
+                                                Center(
+                                                  child: Image.asset(
+                                                    'assets/clockout.png',
+                                                    height: height / 12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  )
+                                      )
                                 : Center(
                                     child: Image.asset(
                                       "assets/1.gif",

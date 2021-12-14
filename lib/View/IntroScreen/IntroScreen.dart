@@ -210,7 +210,10 @@ class _IntroScreenState extends State<IntroScreen>
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.only(
-                                                  top: 280.0, left: 300),
+                                                  top: 280.0,
+                                                  left: 320,
+                                                  right: 30,
+                                                  bottom: 30),
                                               child: Container(
                                                 width: 60,
                                                 height: 60,

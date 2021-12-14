@@ -11,7 +11,12 @@ import 'BaseURl.dart';
 class API {
   Future Registration({var email_address, var employee_Id, var check}) async {
     try {
-      Map data = {'code': employee_Id, 'email': email_address, "isFace": check};
+      Map data = {
+        'code': employee_Id,
+        'email': email_address,
+        "isFace": check,
+        "registered": true,
+      };
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
@@ -34,9 +39,9 @@ class API {
     }
   }
 
-  Future SigIn({var employee_Id, var isFace}) async {
+  Future SigIn({var employee_Id, var isFace, var device_id}) async {
     try {
-      Map data = {'code': employee_Id, "isFace": isFace};
+      Map data = {'code': employee_Id, "isFace": isFace, "device_id": "132"};
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
@@ -56,7 +61,7 @@ class API {
       Map data = {
         "start": start,
         "end": end,
-        'empCode': BaseUrl.storage.read('empCode')
+        // 'empCode': BaseUrl.storage.read('empCode')
       };
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
@@ -168,39 +173,39 @@ class API {
     }
   }
 
-  Future ProfileCreation({
-    var firstname,
-    var lastname,
-    var mobile,
-    var designation,
-    var date_of_joining,
-    var address,
-    var email_address,
-    var shift_timming,
-  }) async {
-    try {
-      Map data = {
-        'first_name': firstname,
-        'last_name': lastname,
-        'phone_number': mobile,
-        'address': address,
-        'date_of_joining': date_of_joining,
-        'designation': designation,
-        'email': email_address,
-        'shift_timing': shift_timming,
-      };
-      var dio = Dio();
-      dio.options.headers['Accept'] = 'application/json';
-      final response = await dio.post(
-        BaseUrl.baseurl + 'update_profile',
-        data: data,
-      );
-      if (response.statusCode == 200) {
-        var status = response;
-        return status;
-      }
-    } catch (e) {
-      return onError(e);
-    }
-  }
+  // Future ProfileCreation({
+  //   var firstname,
+  //   var lastname,
+  //   var mobile,
+  //   var designation,
+  //   var date_of_joining,
+  //   var address,
+  //   var email_address,
+  //   var shift_timming,
+  // }) async {
+  //   try {
+  //     Map data = {
+  //       'first_name': firstname,
+  //       'last_name': lastname,
+  //       'phone_number': mobile,
+  //       'address': address,
+  //       'date_of_joining': date_of_joining,
+  //       'designation': designation,
+  //       'email': email_address,
+  //       'shift_timing': shift_timming,
+  //     };
+  //     var dio = Dio();
+  //     dio.options.headers['Accept'] = 'application/json';
+  //     final response = await dio.post(
+  //       BaseUrl.baseurl + 'update_profile',
+  //       data: data,
+  //     );
+  //     if (response.statusCode == 200) {
+  //       var status = response;
+  //       return status;
+  //     }
+  //   } catch (e) {
+  //     return onError(e);
+  //   }
+  // }
 }

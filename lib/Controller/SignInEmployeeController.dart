@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
+import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +18,7 @@ class SignInEmployeeController extends GetxController {
   static final _auth = LocalAuthentication();
   var token = "".obs;
   var Loading = false.obs;
+  var deviceId = "".obs;
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   static Future<bool> hasBiometrics() async {
@@ -29,6 +33,7 @@ class SignInEmployeeController extends GetxController {
   void onInit() {
     super.onInit();
     Loading.value = false;
+    // getDeviceDetails();
   }
 
   static Future<List<BiometricType>> getBiometrics() async {
@@ -74,6 +79,32 @@ class SignInEmployeeController extends GetxController {
     return null;
   }
 
+//   Future<String> getDeviceDetails() async {
+//     String deviceName;
+//     String deviceVersion;
+//     String identifier = "";
+//     final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
+//     try {
+//       if (Platform.isAndroid) {
+//         var build = await deviceInfoPlugin.androidInfo;
+//         deviceName = build.model;
+//         deviceVersion = build.version.toString();
+//         identifier = build.androidId;
+//         deviceId.value = build.id; //UUID for Android
+//       } else if (Platform.isIOS) {
+//         var data = await deviceInfoPlugin.iosInfo;
+//         deviceName = data.name;
+//         deviceVersion = data.systemVersion;
+//         identifier = data.identifierForVendor; //UUID for iOS
+//       }
+//     } on PlatformException {
+//       print('Failed to get platform version');
+//     }
+//
+// //if (!mounted) return;
+//     return identifier;
+//   }
+
   checkOption(var check) async {
     if (loginFormKey.currentState!.validate() &&
         loginFormKey.currentState!.validate()) {
@@ -92,8 +123,12 @@ class SignInEmployeeController extends GetxController {
   }
 
   sigin(var isface) async {
-    var response = await API()
-        .SigIn(employee_Id: empcodeController.text.toString(), isFace: isface);
+    print("deviceId");
+    print(deviceId.value);
+    var response = await API().SigIn(
+        employee_Id: empcodeController.text.toString(),
+        isFace: isface,
+        device_id: deviceId.value);
 
     if (response.statusCode == 200) {
       Loading.value = false;
@@ -105,9 +140,12 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage.write("name", response.user[0].name);
       BaseUrl.storage.write("empCode", response.user[0].empCode);
       BaseUrl.storage
-          .write("totalAbsent", response.user[0].totalAbsent.toString());
+          .write("totalAbsent", response.user[0].absentDays.toString());
       BaseUrl.storage
-          .write("totalPresent", response.user[0].totalPresent.toString());
+          .write("totalPresent", response.user[0].presentDays.toString());
+      BaseUrl.storage.write("status", response.user[0].status);
+      print(BaseUrl.storage.read("status").toString());
+      print("val");
       BaseUrl.storage.write("phoneNo", response.user[0].phoneNo);
       BaseUrl.storage.write("eMail", response.user[0].eMail);
       BaseUrl.storage.write("firstName", response.user[0].profile[0].firstName);

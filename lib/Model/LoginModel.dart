@@ -42,10 +42,13 @@ class User {
     this.hoursPerDay,
     this.shiftType,
     this.offPerYear,
+    this.role,
+    this.pin,
     this.offDay,
+    this.status,
     this.profile,
-    this.totalAbsent,
-    this.totalPresent,
+    this.presentDays,
+    this.absentDays,
   });
 
   var id;
@@ -59,10 +62,13 @@ class User {
   var hoursPerDay;
   var shiftType;
   var offPerYear;
+  var role;
+  var pin;
   var offDay;
+  var status;
   var profile;
-  var totalAbsent;
-  var totalPresent;
+  var presentDays;
+  var absentDays;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
@@ -76,11 +82,14 @@ class User {
         hoursPerDay: json["hours_per_day"],
         shiftType: json["shift_type"],
         offPerYear: json["off_per_year"],
+        role: json["role"],
+        pin: json["pin"],
         offDay: List<String>.from(json["off_day"].map((x) => x)),
+        status: json["status"],
         profile:
             List<Profile>.from(json["profile"].map((x) => Profile.fromJson(x))),
-        totalAbsent: json["total_absent"],
-        totalPresent: json["total_present"],
+        presentDays: json["present_days"],
+        absentDays: json["absent_days"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -95,10 +104,13 @@ class User {
         "hours_per_day": hoursPerDay,
         "shift_type": shiftType,
         "off_per_year": offPerYear,
+        "role": role,
+        "pin": pin,
         "off_day": List<dynamic>.from(offDay.map((x) => x)),
+        "status": status,
         "profile": List<dynamic>.from(profile.map((x) => x.toJson())),
-        "total_absent": totalAbsent,
-        "total_present": totalPresent,
+        "present_days": presentDays,
+        "absent_days": absentDays,
       };
 }
 
@@ -108,30 +120,36 @@ class Profile {
     this.firstName,
     this.lastName,
     this.address,
+    this.empCode,
     this.dateOfJoining,
     this.designation,
     this.shiftTiming,
     this.employeeId,
+    this.shiftType,
   });
 
   var id;
   var firstName;
   var lastName;
   var address;
+  var empCode;
   var dateOfJoining;
   var designation;
   var shiftTiming;
   var employeeId;
+  var shiftType;
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
         id: json["_id"],
         firstName: json["first_name"],
         lastName: json["last_name"],
         address: json["address"],
+        empCode: json["EmpCode"],
         dateOfJoining: json["date_of_joining"],
         designation: json["designation"],
         shiftTiming: json["shift_timing"],
         employeeId: json["employeeId"],
+        shiftType: json["shift_type"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -139,9 +157,11 @@ class Profile {
         "first_name": firstName,
         "last_name": lastName,
         "address": address,
+        "EmpCode": empCode,
         "date_of_joining": dateOfJoining,
         "designation": designation,
         "shift_timing": shiftTiming,
         "employeeId": employeeId,
+        "shift_type": shiftType,
       };
 }

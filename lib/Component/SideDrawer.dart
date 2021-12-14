@@ -103,10 +103,6 @@ class Drawers {
                     ),
                     FlatButton(
                       padding: EdgeInsets.zero,
-                      hoverColor: Colors.black,
-                      focusColor: Colors.black,
-                      highlightColor: Colors.black,
-                      disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         Get.back();
                         Get.toNamed('/home');
@@ -128,6 +124,7 @@ class Drawers {
                             style: GoogleFonts.poppins(
                               fontSize: width / 28,
                               fontWeight: FontWeight.w400,
+                                color: Colors.black.withOpacity(0.40)
                             ),
                           ),
                         ],
