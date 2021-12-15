@@ -1,5 +1,6 @@
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 onError(dynamic error) {
@@ -12,8 +13,15 @@ onError(dynamic error) {
   } else if (error.response.statusCode == 500) {
     return error.response;
     // return "Internal Server Error";
+  } else if (error.response.statusCode == 503) {
+    return "Service Unavailable";
+    // return "Internal Server Error";
   } else if (error.response.statusCode == 400) {
     return error.response;
+  } else {
+    return Get.snackbar("Error ", "Bhai shahab",
+        colorText: Colors.white, backgroundColor: Colors.red);
+    ;
   }
 }
 

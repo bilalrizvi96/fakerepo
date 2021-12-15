@@ -35,6 +35,13 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
   var Loading = false;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future faceRegistration(var videofile) async {
+    Fluttertoast.showToast(
+        msg: BaseUrl.baseurl_Face,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white);
     try {
       videoPath = videofile.path;
       isLoading = true;
@@ -44,7 +51,7 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
       );
       print(response);
       if (response.statusCode == 200) {
-        print(response);
+        // print(response);
         await registrationController.submit(response.data["respose"]);
       } else {
         Get.snackbar('Error', response.data['respose'].toString(),
@@ -113,8 +120,8 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
                   )
                 : Image.asset(
                     "assets/1.gif",
-                    height: 200,
-                    width: 200,
+                    height: 120,
+                    width: 120,
                   ),
           ],
         ),
@@ -153,7 +160,7 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
         AspectRatio(
           aspectRatio: check == false
               ? 1.08 / controller!.value.aspectRatio
-              : 1.28 / controller!.value.aspectRatio,
+              : 1.08 / controller!.value.aspectRatio,
           child: CameraPreview(controller!),
         ),
         Image.asset(
@@ -273,7 +280,7 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
 
   void startTimer() async {
     Future.delayed(
-      new Duration(seconds: 5),
+      new Duration(seconds: 4),
       () =>
           controller!.value.isInitialized && controller!.value.isRecordingVideo
               ? _onStopButtonPressed()

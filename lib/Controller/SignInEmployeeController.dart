@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
+import 'package:camera/camera.dart';
+import 'package:image/image.dart' as img;
 import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +22,8 @@ class SignInEmployeeController extends GetxController {
   var token = "".obs;
   var Loading = false.obs;
   var deviceId = "".obs;
+  List<int>? imageBytes;
+  String? imageBase64;
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   static Future<bool> hasBiometrics() async {
@@ -62,11 +67,12 @@ class SignInEmployeeController extends GetxController {
   imgFromCameras() async {
     var image = await _picker.pickImage(
         source: ImageSource.camera,
-        imageQuality: 2,
-        maxHeight: 100,
-        maxWidth: 100);
+        maxHeight: 1024,
+        preferredCameraDevice: CameraDevice.front,
+        maxWidth: 1024);
     if (image != null) {
       faceImage = image;
+
       await faceverification();
     }
     update();
@@ -184,12 +190,15 @@ class SignInEmployeeController extends GetxController {
           await sigin(true);
         } else {
           Get.snackbar("Log In ", "Not Verified");
+          Loading.value = false;
         }
       } else {
         Get.snackbar("Login ", response.data['respose'].toString());
+        Loading.value = false;
       }
     } else {
       Get.snackbar("Log In", "Kindly enter the valid data");
+      Loading.value = false;
     }
   }
 }

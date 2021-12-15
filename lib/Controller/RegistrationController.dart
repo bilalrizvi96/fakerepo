@@ -31,16 +31,19 @@ class RegistrationController extends GetxController {
     var response = await API().Registration(
         employee_Id: employee_IdController.text.toString(),
         email_address: emailController.text.toString(),
-        check: check);
+        check: true);
     if (response.statusCode == 200) {
+      Get.offAllNamed('/OTP');
       print(response);
       Get.snackbar("Registration ", "Register Successfully");
-      Get.toNamed('/OTP');
+
       // Get.offAllNamed('/home');
     } else {
+      Get.back();
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
-      Get.offAllNamed('/signinemp');
+
+      // Get.offAllNamed('/signinemp');
     }
   }
 }

@@ -5,5 +5,5 @@ class BaseUrl {
   static var token, code;
   static var empcode;
   static var baseurl = "https://attendancesystem12.herokuapp.com/";
-  static var baseurl_Face = "http://asharib90.pythonanywhere.com/";
+  static var baseurl_Face = "http://42c2-103-244-176-47.ngrok.io/";
 }

@@ -60,9 +60,8 @@ class AttendanceController extends GetxController {
       );
       if (response.statusCode == 200) {
         Loading.value = false;
-        print(response);
-        Get.snackbar("Attendance", "Clock Out Successfully");
-        Get.toNamed('/home');
+        Get.snackbar("Attendance", "Clock In Successfully");
+        Get.offAllNamed('/home');
       } else {
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),
@@ -88,8 +87,12 @@ class AttendanceController extends GetxController {
       if (response.statusCode == 200) {
         Loading.value = false;
         print(response);
-        Get.snackbar("Attendance ", "Clock Out Successfully");
-        Get.toNamed('/home');
+
+        Get.snackbar(
+          "Attendance ",
+          "Clock Out Successfully",
+        );
+        Get.offAllNamed('/home');
       } else {
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),

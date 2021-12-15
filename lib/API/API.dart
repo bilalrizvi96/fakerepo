@@ -30,9 +30,9 @@ class API {
         BaseUrl.code = response.data['code'];
         // BaseUrl.storage.write("token", BaseUrl.token);
         BaseUrl.storage.write("code", BaseUrl.code);
-        print(BaseUrl.storage.read("token"));
+        print(BaseUrl.storage.read("token").toString());
         print(BaseUrl.storage.read("code".toString()));
-        return status.data;
+        return response;
       }
     } catch (e) {
       return onError(e);
@@ -121,7 +121,7 @@ class API {
       );
       if (response.statusCode == 200) {
         var status = response;
-        return status;
+        return response;
       }
     } catch (e) {
       return onError(e);
