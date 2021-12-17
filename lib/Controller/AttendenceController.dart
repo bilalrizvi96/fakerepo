@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +51,7 @@ class AttendanceController extends GetxController {
   }
 
   void clockin() async {
+    BaseUrl.storage.write("status", true);
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckIn(
@@ -76,6 +78,7 @@ class AttendanceController extends GetxController {
   }
 
   clockout() async {
+    BaseUrl.storage.write("status", false);
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckOut(
