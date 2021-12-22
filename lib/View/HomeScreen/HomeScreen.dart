@@ -106,14 +106,28 @@ class HomeScreen extends StatelessWidget {
                         height: height / 20,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            right: 280.0, left: 30, top: 5),
-                        child: Text(
-                          'Month: ${homeController.current.value}',
-                          style: GoogleFonts.poppins(
-                              color: DynamicColor().black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: width / 30),
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Month: ${homeController.current.value}',
+                              style: GoogleFonts.poppins(
+                                  color: DynamicColor().black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: width / 30),
+                            ),
+                            Spacer(),
+                            Text(
+                              BaseUrl.clockin != ""
+                                  ? 'Clock In: ${BaseUrl.clockin}'
+                                  : "Clock In: sadsad",
+                              style: GoogleFonts.poppins(
+                                  color: DynamicColor().black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: width / 30),
+                            ),
+                            Spacer(),
+                          ],
                         ),
                       ),
                       DelayedDisplay(

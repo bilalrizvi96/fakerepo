@@ -4,6 +4,7 @@ class BaseUrl {
   static final storage = GetStorage();
   static var token, code;
   static var empcode;
+  static var clockin='';
   static var baseurl = "https://attendancesystem12.herokuapp.com/";
   static var baseurl_Face = "https://realpythonappfdaddscasdasd.herokuapp.com/";
 }

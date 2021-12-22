@@ -128,9 +128,14 @@ class API {
     }
   }
 
-  Future CheckIn({var latlng, var siteId}) async {
+  Future CheckIn({var latlng, var siteId, var date}) async {
     try {
-      Map data = {'location': latlng, "siteId": siteId, "date": "2021-22-12"};
+      Map data = {
+        'location': latlng,
+        "siteId": siteId,
+        "date": date.toString()
+      };
+      print(data);
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
@@ -149,9 +154,14 @@ class API {
     }
   }
 
-  Future CheckOut({var latlng, var siteId}) async {
+  Future CheckOut({var latlng, var siteId, var date}) async {
     try {
-      Map data = {'location': latlng, "siteId": siteId, "date": "2021-22-12"};
+      Map data = {
+        'location': latlng,
+        "siteId": siteId,
+        "date": date.toString()
+      };
+      print(data);
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
@@ -172,40 +182,4 @@ class API {
       return onError(e);
     }
   }
-
-  // Future ProfileCreation({
-  //   var firstname,
-  //   var lastname,
-  //   var mobile,
-  //   var designation,
-  //   var date_of_joining,
-  //   var address,
-  //   var email_address,
-  //   var shift_timming,
-  // }) async {
-  //   try {
-  //     Map data = {
-  //       'first_name': firstname,
-  //       'last_name': lastname,
-  //       'phone_number': mobile,
-  //       'address': address,
-  //       'date_of_joining': date_of_joining,
-  //       'designation': designation,
-  //       'email': email_address,
-  //       'shift_timing': shift_timming,
-  //     };
-  //     var dio = Dio();
-  //     dio.options.headers['Accept'] = 'application/json';
-  //     final response = await dio.post(
-  //       BaseUrl.baseurl + 'update_profile',
-  //       data: data,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       var status = response;
-  //       return status;
-  //     }
-  //   } catch (e) {
-  //     return onError(e);
-  //   }
-  // }
 }

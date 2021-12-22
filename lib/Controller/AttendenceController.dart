@@ -13,6 +13,7 @@ class AttendanceController extends GetxController {
   ScanResult? scanResult;
   var sites = "".obs;
   var Loading = false.obs;
+
   CurrentLocation() async {
     Loading.value = true;
     final location = new Location();
@@ -51,17 +52,24 @@ class AttendanceController extends GetxController {
   }
 
   void clockin() async {
+    var date = DateTime.now().toString();
+
     BaseUrl.storage.write("status", true);
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckIn(
-        latlng: center.value.latitude.toString() +
-            "," +
-            center.value.longitude.toString(),
-        siteId: "123",
-      );
+          latlng: center.value.latitude.toString() +
+              "," +
+              center.value.longitude.toString(),
+          siteId: "123",
+          date: date);
       if (response.statusCode == 200) {
         Loading.value = false;
+        BaseUrl.clockin = DateTime.now().hour.toString() +
+            "-" +
+            DateTime.now().minute.toString();
+        print(BaseUrl.clockin);
+        print("date1.value");
         Get.snackbar("Attendance", "Clock In Successfully");
         Get.offAllNamed('/home');
       } else {
@@ -78,15 +86,16 @@ class AttendanceController extends GetxController {
   }
 
   clockout() async {
+    var date = DateTime.now();
     BaseUrl.storage.write("status", false);
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckOut(
-        latlng: center.value.latitude.toString() +
-            "," +
-            center.value.longitude.toString(),
-        siteId: "123",
-      );
+          latlng: center.value.latitude.toString() +
+              "," +
+              center.value.longitude.toString(),
+          siteId: "123",
+          date: date);
       if (response.statusCode == 200) {
         Loading.value = false;
         print(response);
