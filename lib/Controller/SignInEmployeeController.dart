@@ -74,6 +74,8 @@ class SignInEmployeeController extends GetxController {
       faceImage = image;
 
       await faceverification();
+    } else {
+      Loading.value = false;
     }
     update();
   }

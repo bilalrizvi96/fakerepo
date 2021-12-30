@@ -24,9 +24,14 @@ class FaceIDRuleScreen extends StatelessWidget {
                 top: height / 40,
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.grey[300],
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.grey[300],
+                      ),
                     ),
                     SizedBox(
                       width: width / 20,

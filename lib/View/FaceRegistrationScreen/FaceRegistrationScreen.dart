@@ -69,17 +69,11 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
       WidgetsFlutterBinding.ensureInitialized();
       cameras = await availableCameras();
     } on CameraException catch (e) {
-      developer.log(e.code, name: e.description.toString());
+      // developer.log(e.code, name: e.description.toString());
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    check = false;
-    // Get the listonNewCameraSelected of available cameras.
-    // Then set the first camera as selected.
+  initialcamera() {
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
 
@@ -93,6 +87,16 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
     }).catchError((err) {
       print('Error: $err.code\nError Message: $err.message');
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    check = false;
+    initialcamera();
+    // Get the listonNewCameraSelected of available cameras.
+    // Then set the first camera as selected.
   }
 
   @override
@@ -175,8 +179,9 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     controller!.dispose();
+    cameras!.clear();
+    super.dispose();
   }
 
   /// Display a row of toggle to select the camera (or a message if no camera is available).

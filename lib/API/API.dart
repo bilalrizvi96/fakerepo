@@ -58,11 +58,7 @@ class API {
 
   Future Summary({var start, var end}) async {
     try {
-      Map data = {
-        "start": start,
-        "end": end,
-        // 'empCode': BaseUrl.storage.read('empCode')
-      };
+      Map data = {"start": start, "end": end, 'empCode': "123586"};
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       dio.options.headers['Accept'] = 'application/json';

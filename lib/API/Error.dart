@@ -16,6 +16,11 @@ onError(dynamic error) {
   } else if (error.response.statusCode == 503) {
     return "Service Unavailable";
     // return "Internal Server Error";
+  } else if (error.response == "Service Unavailable") {
+    return Get.snackbar("Error ", "Service Unavailable",
+        colorText: Colors.white, backgroundColor: Colors.red);
+    ;
+    // return "Internal Server Error";
   } else if (error.response.statusCode == 400) {
     return error.response;
   } else {
