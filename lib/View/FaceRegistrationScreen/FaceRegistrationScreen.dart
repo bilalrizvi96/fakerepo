@@ -136,13 +136,13 @@ class _FaceRegistrationScreenState extends State<FaceRegistrationScreen> {
   IconData _getCameraLensIcon(CameraLensDirection direction) {
     switch (direction) {
       case CameraLensDirection.front:
-        return Icons.camera_front;
+        return Icons.camera;
       case CameraLensDirection.front:
-        return Icons.camera_front;
+        return Icons.camera;
       case CameraLensDirection.external:
         return Icons.camera;
       default:
-        return Icons.device_unknown;
+        return Icons.camera;
     }
   }
 
