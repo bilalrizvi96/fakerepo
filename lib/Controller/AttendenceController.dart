@@ -68,6 +68,7 @@ class AttendanceController extends GetxController {
         BaseUrl.clockin = DateTime.now().hour.toString() +
             "-" +
             DateTime.now().minute.toString();
+        BaseUrl.storage.write("clock", BaseUrl.clockin);
         print(BaseUrl.clockin);
         print("date1.value");
         Get.snackbar("Attendance", "Clock In Successfully");

@@ -2,6 +2,7 @@ import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Component/SideDrawer.dart';
 import 'package:attendencesystem/Controller/AttendenceController.dart';
+import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 class AttendanceScreen extends StatelessWidget {
   // const AttendanceScreen({Key? key}) : super(key: key);
   AttendanceController attendanceController = Get.put(AttendanceController());
+  SummaryController summaryController = Get.put(SummaryController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -117,7 +119,14 @@ class AttendanceScreen extends StatelessWidget {
                                                   .primarycolor
                                                   .withOpacity(0.40)),
                                           child: Center(
-                                            child: Text('24/5',
+                                            child: Text(
+                                                summaryController
+                                                        .fromdate.value.day
+                                                        .toString() +
+                                                    " / " +
+                                                    summaryController
+                                                        .fromdate.value.month
+                                                        .toString(),
                                                 style: GoogleFonts.poppins(
                                                     fontWeight: FontWeight.w300,
                                                     fontSize: width / 21,
@@ -146,7 +155,14 @@ class AttendanceScreen extends StatelessWidget {
                                                   .primarycolor
                                                   .withOpacity(0.40)),
                                           child: Center(
-                                            child: Text('24/5',
+                                            child: Text(
+                                                summaryController
+                                                        .todate.value.day
+                                                        .toString() +
+                                                    " / " +
+                                                    summaryController
+                                                        .todate.value.month
+                                                        .toString(),
                                                 style: GoogleFonts.poppins(
                                                     fontWeight: FontWeight.w300,
                                                     fontSize: width / 21,
@@ -164,7 +180,7 @@ class AttendanceScreen extends StatelessWidget {
                                     // right: width / 1.3,
                                     child: GestureDetector(
                                       onTap: () {
-                                        Get.toNamed('/summary');
+                                        Get.offNamed('/summary');
                                       },
                                       child: Row(
                                         children: [

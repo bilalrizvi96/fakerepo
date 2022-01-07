@@ -118,8 +118,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              BaseUrl.clockin != ""
-                                  ? 'Clock In: ${BaseUrl.clockin}'
+                              BaseUrl.storage.read("clock") != ""
+                                  ? 'Clock In: ${BaseUrl.storage.read("clock")}'
                                   : "Clock In: 00:00",
                               style: GoogleFonts.poppins(
                                   color: DynamicColor().black,

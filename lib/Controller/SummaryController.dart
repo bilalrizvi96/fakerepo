@@ -66,5 +66,7 @@ class SummaryController extends GetxController {
   void onInit() {
     super.onInit();
     Loading.value = false;
+    summary();
+    update();
   }
 }
