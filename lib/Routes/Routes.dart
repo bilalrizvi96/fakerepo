@@ -58,11 +58,11 @@ class Routes {
         page: () => FaceIDRuleScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
-    GetPage(
-        name: "/faceregistration",
-        page: () => FaceRegistrationScreen(),
-        transition: Transition.rightToLeft,
-        curve: Curves.easeInQuart),
+    // GetPage(
+    //     name: "/faceregistration",
+    //     page: () => FaceRegistrationScreen(),
+    //     transition: Transition.rightToLeft,
+    //     curve: Curves.easeInQuart),
     GetPage(
         name: "/summary",
         page: () => SummaryScreen(),

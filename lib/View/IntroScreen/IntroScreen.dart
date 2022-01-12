@@ -211,12 +211,12 @@ class _IntroScreenState extends State<IntroScreen>
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 280.0,
-                                                  left: 320,
+                                                  left: 300,
                                                   right: 30,
                                                   bottom: 30),
                                               child: Container(
-                                                width: 60,
-                                                height: 60,
+                                                width: width / 5,
+                                                height: height / 15,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -224,11 +224,11 @@ class _IntroScreenState extends State<IntroScreen>
                                                     boxShadow: [
                                                       BoxShadow(
                                                         color: DynamicColor()
-                                                            .titletextcolor
-                                                            .withOpacity(0.5),
+                                                            .radiocolor
+                                                            .withOpacity(0.6),
                                                         spreadRadius: 3,
                                                         blurRadius: 10,
-                                                        offset: Offset(0,
+                                                        offset: Offset(1,
                                                             3), // changes position of shadow
                                                       ),
                                                     ],

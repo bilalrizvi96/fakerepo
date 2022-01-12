@@ -53,7 +53,6 @@ class AttendanceController extends GetxController {
 
   void clockin() async {
     var date = DateTime.now().toString();
-
     BaseUrl.storage.write("status", true);
     await CurrentLocation();
     if (sites.value != "") {

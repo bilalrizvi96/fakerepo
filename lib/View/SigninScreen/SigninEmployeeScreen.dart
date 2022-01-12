@@ -268,89 +268,89 @@ class SiginEmployeeScreen extends StatelessWidget {
                                             ),
                                           ),
                                           Spacer(),
-                                          GestureDetector(
-                                            onTap: () async {
-                                              final isAuthenticated =
-                                                  await signinController
-                                                      .authenticate();
-
-                                              if (isAuthenticated) {
-                                                signinController.checkOption(1);
-                                              } else {
-                                                Get.snackbar("Log In",
-                                                    "Kindly Select FingerPrint or Face Verfication");
-                                              }
-                                            },
-                                            child: DelayedDisplay(
-                                              delay:
-                                                  Duration(milliseconds: 1500),
-                                              slidingCurve: Curves.bounceInOut,
-                                              child: Stack(
-                                                children: [
-                                                  Container(
-                                                    width: width / 3.2,
-                                                    height: height / 5.2,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          DynamicColor().white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                    ),
-                                                    padding:
-                                                        EdgeInsets.all(8.0),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 18.0,
-                                                            right: 15,
-                                                            left: 20),
-                                                    child: Image.asset(
-                                                      'assets/finger.png',
-                                                      fit: BoxFit.scaleDown,
-                                                      height: height / 10,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 130.0,
-                                                            right: 40,
-                                                            left: 40),
-                                                    child: Container(
-                                                      width: 50,
-                                                      height: 50,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      50.0),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: DynamicColor()
-                                                                  .titletextcolor
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                              spreadRadius: 3,
-                                                              blurRadius: 10,
-                                                              offset: Offset(0,
-                                                                  3), // changes position of shadow
-                                                            ),
-                                                          ],
-                                                          color: DynamicColor()
-                                                              .primarycolor),
-                                                      child: Icon(
-                                                        Icons.arrow_forward_ios,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Spacer(),
+                                          // GestureDetector(
+                                          //   onTap: () async {
+                                          //     final isAuthenticated =
+                                          //         await signinController
+                                          //             .authenticate();
+                                          //
+                                          //     if (isAuthenticated) {
+                                          //       signinController.checkOption(1);
+                                          //     } else {
+                                          //       Get.snackbar("Log In",
+                                          //           "Kindly Select FingerPrint or Face Verfication");
+                                          //     }
+                                          //   },
+                                          //   child: DelayedDisplay(
+                                          //     delay:
+                                          //         Duration(milliseconds: 1500),
+                                          //     slidingCurve: Curves.bounceInOut,
+                                          //     child: Stack(
+                                          //       children: [
+                                          //         Container(
+                                          //           width: width / 3.2,
+                                          //           height: height / 5.2,
+                                          //           decoration: BoxDecoration(
+                                          //             color:
+                                          //                 DynamicColor().white,
+                                          //             borderRadius:
+                                          //                 BorderRadius.circular(
+                                          //                     5.0),
+                                          //           ),
+                                          //           padding:
+                                          //               EdgeInsets.all(8.0),
+                                          //         ),
+                                          //         Padding(
+                                          //           padding:
+                                          //               const EdgeInsets.only(
+                                          //                   top: 18.0,
+                                          //                   right: 15,
+                                          //                   left: 20),
+                                          //           child: Image.asset(
+                                          //             'assets/finger.png',
+                                          //             fit: BoxFit.scaleDown,
+                                          //             height: height / 10,
+                                          //           ),
+                                          //         ),
+                                          //         Padding(
+                                          //           padding:
+                                          //               const EdgeInsets.only(
+                                          //                   top: 130.0,
+                                          //                   right: 40,
+                                          //                   left: 40),
+                                          //           child: Container(
+                                          //             width: 50,
+                                          //             height: 50,
+                                          //             decoration: BoxDecoration(
+                                          //                 borderRadius:
+                                          //                     BorderRadius
+                                          //                         .circular(
+                                          //                             50.0),
+                                          //                 boxShadow: [
+                                          //                   BoxShadow(
+                                          //                     color: DynamicColor()
+                                          //                         .titletextcolor
+                                          //                         .withOpacity(
+                                          //                             0.5),
+                                          //                     spreadRadius: 3,
+                                          //                     blurRadius: 10,
+                                          //                     offset: Offset(0,
+                                          //                         3), // changes position of shadow
+                                          //                   ),
+                                          //                 ],
+                                          //                 color: DynamicColor()
+                                          //                     .primarycolor),
+                                          //             child: Icon(
+                                          //               Icons.arrow_forward_ios,
+                                          //               color: Colors.white,
+                                          //             ),
+                                          //           ),
+                                          //         )
+                                          //       ],
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          // Spacer(),
                                         ],
                                       ),
                                       SizedBox(

@@ -79,10 +79,11 @@ class API {
     }
   }
 
-  Future Face_Registration({var files, var empcode}) async {
+  Future Face_Registration({var files}) async {
     try {
-      var file = await MultipartFile.fromFile(files);
-      var formData = FormData.fromMap({'video': file, "id": BaseUrl.empcode});
+      var file = await MultipartFile.fromFile(files.path);
+      var formData =
+          FormData.fromMap({'image': file, "empCode": BaseUrl.empcode});
       var dio = Dio();
       final response = await dio.post(
         BaseUrl.baseurl_Face + 'register',
@@ -95,8 +96,8 @@ class API {
             }),
       );
       if (response.statusCode == 200) {
-        var status = response;
-        return status;
+        print(response);
+        return response;
       }
     } catch (e) {
       return onError(e);
@@ -106,7 +107,8 @@ class API {
   Future Face_Verification({var verification}) async {
     try {
       var file = await MultipartFile.fromFile(verification.path);
-      var formData = FormData.fromMap({'image': file, "id": BaseUrl.empcode});
+      var formData =
+          FormData.fromMap({'image': file, "empCode": BaseUrl.empcode});
       var dio = Dio();
 
       final response = await dio.post(
@@ -136,6 +138,8 @@ class API {
         "date": date.toString()
       };
       print(data);
+      print(BaseUrl.baseurl + 'start');
+      print(BaseUrl.storage.read('token'));
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
@@ -162,6 +166,8 @@ class API {
         "date": date.toString()
       };
       print(data);
+      print(BaseUrl.baseurl + 'end');
+      print(BaseUrl.storage.read('token'));
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
@@ -169,10 +175,7 @@ class API {
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
-            headers: {
-              'Content-Type': "multipart/formdata",
-              Headers.acceptHeader: "application/json"
-            }),
+            headers: {Headers.acceptHeader: "application/json"}),
       );
       if (response.statusCode == 200) {
         var status = response;

@@ -4,17 +4,45 @@ import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegistrationController extends GetxController {
   var employee_IdController = new TextEditingController();
   var emailController = new TextEditingController();
-  GlobalKey<FormState> registrationFormKey = GlobalKey<FormState>();
-
+  var registrationFormKey = GlobalKey<FormState>();
+  XFile? faceImage;
+  final ImagePicker _picker = ImagePicker();
+  var Loading = false.obs;
   String? validators(var values) {
     if (values.isEmpty) {
       return "Please this field must be filled";
     }
     return null;
+  }
+
+  imgFromCameras() async {
+    var image = await _picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 1024,
+        preferredCameraDevice: CameraDevice.front,
+        maxWidth: 1024);
+    if (image != null) {
+      faceImage = image;
+      Loading.value = true;
+      update();
+      await faceverification();
+    } else {
+      Loading.value = false;
+    }
+    update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    Loading.value = false;
+    update();
+    // getDeviceDetails();
   }
 
   registration() async {
@@ -27,7 +55,26 @@ class RegistrationController extends GetxController {
     }
   }
 
-  submit(var check) async {
+  faceverification() async {
+    if (faceImage != null) {
+      var response = await API().Face_Registration(
+        files: faceImage,
+      );
+      if (response.statusCode == 200) {
+        print(response);
+        await submit();
+        Loading.value = false;
+      } else {
+        Get.snackbar("Registration ", response.data['respose'].toString());
+        Loading.value = false;
+      }
+    } else {
+      Get.snackbar("Registration", "Kindly enter the valid data");
+      Loading.value = false;
+    }
+  }
+
+  submit() async {
     var response = await API().Registration(
         employee_Id: employee_IdController.text.toString(),
         email_address: emailController.text.toString(),

@@ -108,9 +108,10 @@ class SignInEmployeeController extends GetxController {
     print("deviceId");
     print(deviceId.value);
     var response = await API().SigIn(
-        employee_Id: empcodeController.text.toString(),
-        isFace: isface,
-        device_id: deviceId.value);
+      employee_Id: empcodeController.text.toString(),
+      isFace: isface,
+      // device_id: deviceId.value
+    );
 
     if (response.statusCode == 200) {
       Loading.value = false;
@@ -161,7 +162,7 @@ class SignInEmployeeController extends GetxController {
       if (response.statusCode == 200) {
         print(response);
 
-        if (response.data['respose'] == true) {
+        if (response.data['respose'] == "verification succeded") {
           Get.snackbar("Log In ", "Verified Successfully");
           await sigin(true);
         } else {

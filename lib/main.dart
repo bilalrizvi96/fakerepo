@@ -6,15 +6,15 @@ import 'package:get_storage/get_storage.dart';
 import 'dart:developer' as developer;
 import 'API/API.dart';
 
-List<CameraDescription> cameras = [];
+// List<CameraDescription> cameras = [];
 Future<void> main() async {
   await GetStorage.init();
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
-    cameras = await availableCameras();
-  } on CameraException catch (e) {
-    developer.log(e.code, name: e.description.toString());
-  }
+  // try {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   // cameras = await availableCameras();
+  // } on CameraException catch (e) {
+  //   developer.log(e.code, name: e.description.toString());
+  // }
   runApp(MyApp());
 }
 
