@@ -114,19 +114,19 @@ class SiginEmployeeScreen extends StatelessWidget {
                                       SizedBox(
                                         height: height / 5,
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 35.0),
-                                        child: Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              'Employee Id',
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: width / 29,
-                                                  color: DynamicColor().black),
-                                            )),
-                                      ),
+                                      // Padding(
+                                      //   padding:
+                                      //       const EdgeInsets.only(left: 35.0),
+                                      //   child: Align(
+                                      //       alignment: Alignment.topLeft,
+                                      //       child: Text(
+                                      //         'Employee Id',
+                                      //         style: GoogleFonts.poppins(
+                                      //             fontWeight: FontWeight.w500,
+                                      //             fontSize: width / 29,
+                                      //             color: DynamicColor().black),
+                                      //       )),
+                                      // ),
                                       SizedBox(
                                         height: height / 80,
                                       ),
@@ -358,8 +358,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          Get.snackbar("Log In",
-                                              "Kindly Select FingerPrint or Face Verfication");
+                                          signinController.siginbtn();
                                         },
                                         child: Container(
                                           width: width / 1.2,

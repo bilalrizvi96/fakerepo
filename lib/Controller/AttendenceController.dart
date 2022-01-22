@@ -35,7 +35,8 @@ class AttendanceController extends GetxController {
       if (sites.value != "") {
         Get.toNamed('/attendance');
       } else {
-        Get.snackbar("Attendance", "Location is empty kindly scan Qr again");
+        Get.snackbar("Attendance", "Location is empty kindly scan again",
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
 
       update();
@@ -65,13 +66,13 @@ class AttendanceController extends GetxController {
       if (response.statusCode == 200) {
         Loading.value = false;
         BaseUrl.clockin = DateTime.now().hour.toString() +
-            "-" +
+            ":" +
             DateTime.now().minute.toString();
-        BaseUrl.storage.write("clock", BaseUrl.clockin);
+        BaseUrl.storage.write("clockin", BaseUrl.clockin);
         print(BaseUrl.clockin);
         print("date1.value");
-        Get.snackbar("Attendance", "Clock In Successfully");
         Get.offAllNamed('/home');
+        Get.snackbar("Attendance", "Clock In Successfully");
       } else {
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),
@@ -98,13 +99,17 @@ class AttendanceController extends GetxController {
           date: date);
       if (response.statusCode == 200) {
         Loading.value = false;
+        BaseUrl.clockout = DateTime.now().hour.toString() +
+            ":" +
+            DateTime.now().minute.toString();
+        BaseUrl.storage.write("clockout", BaseUrl.clockout);
         print(response);
 
+        Get.offAllNamed('/home');
         Get.snackbar(
           "Attendance ",
           "Clock Out Successfully",
         );
-        Get.offAllNamed('/home');
       } else {
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),

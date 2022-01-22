@@ -104,6 +104,14 @@ class SignInEmployeeController extends GetxController {
     }
   }
 
+  siginbtn() {
+    if (loginFormKey.currentState!.validate() &&
+        loginFormKey.currentState!.validate()) {
+      Get.snackbar("Log In", "Kindly scan your face",
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+  }
+
   sigin(var isface) async {
     print("deviceId");
     print(deviceId.value);
@@ -166,11 +174,13 @@ class SignInEmployeeController extends GetxController {
           Get.snackbar("Log In ", "Verified Successfully");
           await sigin(true);
         } else {
-          Get.snackbar("Log In ", "Not Verified");
+          Get.snackbar("Log In ", "Not Verified",
+              colorText: Colors.white, backgroundColor: Colors.red);
           Loading.value = false;
         }
       } else {
-        Get.snackbar("Login ", response.data['respose'].toString());
+        Get.snackbar("Login ", response.data['respose'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
         Loading.value = false;
       }
     } else {

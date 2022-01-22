@@ -1,6 +1,9 @@
 import 'package:attendencesystem/Routes/Routes.dart';
 import 'package:camera/camera.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/assertions.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'dart:developer' as developer;
@@ -8,13 +11,16 @@ import 'API/API.dart';
 
 // List<CameraDescription> cameras = [];
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          appId: '1:833414981797:android:4f17b315106ee54a1b054c',
+          apiKey: 'AIzaSyDtqrjtfUH4AX3LNZ7fO7PfZVmBDRQ3z0Y',
+          messagingSenderId: '833414981797',
+          projectId: 'attendancesystem-332409'));
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   await GetStorage.init();
-  // try {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   // cameras = await availableCameras();
-  // } on CameraException catch (e) {
-  //   developer.log(e.code, name: e.description.toString());
-  // }
+
   runApp(MyApp());
 }
 

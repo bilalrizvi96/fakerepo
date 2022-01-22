@@ -65,11 +65,13 @@ class RegistrationController extends GetxController {
         await submit();
         Loading.value = false;
       } else {
-        Get.snackbar("Registration ", response.data['respose'].toString());
+        Get.snackbar("Error ", response.data['respose'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
         Loading.value = false;
       }
     } else {
-      Get.snackbar("Registration", "Kindly enter the valid data");
+      Get.snackbar("Registered", "Kindly enter the valid data",
+          colorText: Colors.white, backgroundColor: Colors.red);
       Loading.value = false;
     }
   }
@@ -82,7 +84,7 @@ class RegistrationController extends GetxController {
     if (response.statusCode == 200) {
       Get.offAllNamed('/OTP');
       print(response);
-      Get.snackbar("Registration ", "Register Successfully");
+      Get.snackbar("Registered ", "Register Successfully");
 
       // Get.offAllNamed('/home');
     } else {

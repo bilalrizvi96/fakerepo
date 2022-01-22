@@ -169,10 +169,10 @@ class RegistrationScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: 'Enter your Email Address',
+                                    hintText: 'Enter ',
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
-                                    suffix: Text('@'),
+                                    // suffix: Text('@star...com'),
                                     fillColor: Colors.white,
                                     filled: true,
                                     border: InputBorder.none),
@@ -180,6 +180,22 @@ class RegistrationScreen extends StatelessWidget {
                               ),
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          height: height / 150,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 35.0),
+                          child: Align(
+                              alignment: Alignment.topRight,
+                              child: Text(
+                                '@starmarketingonline.com',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: width / 29,
+                                    color:
+                                        DynamicColor().black.withOpacity(0.7)),
+                              )),
                         ),
                         SizedBox(
                           height: height / 4,

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "833414981797",
+    "project_id": "attendancesystem-332409",
+    "storage_bucket": "attendancesystem-332409.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833414981797:android:4f17b315106ee54a1b054c",
+        "android_client_info": {
+          "package_name": "com.starmarketing.attendencesystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833414981797-puhbp81mpd19a2h53121tk852nticlmn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.starmarketing.attendencesystem",
+            "certificate_hash": "b6d0885a65cdf8c7419fa8dc692cfb21d57f73f0"
+          }
+        },
+        {
+          "client_id": "833414981797-4084ns01oh0kq7899hk33eqmo6qk7o8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAqkVmtoPecMe2MhtuzF722nkS_ghvX2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833414981797-4084ns01oh0kq7899hk33eqmo6qk7o8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

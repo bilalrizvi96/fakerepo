@@ -108,12 +108,10 @@ class SummaryScreen extends StatelessWidget {
                                           showTitleActions: true,
                                           minTime: DateTime(DateTime.now().year,
                                               DateTime.now().month, 1),
-                                          maxTime: DateTime(DateTime.now().year,
-                                              DateTime.now().month, 30),
-
-                                          //     onChanged: (date) {
-                                          //   print('change $date');
-                                          // },
+                                          maxTime: DateTime(
+                                              DateTime.now().year,
+                                              DateTime.now().month,
+                                              DateTime.now().day),
                                           onConfirm: (date) {
                                         summaryController.fromDate(date);
                                         print('confirm $date');
@@ -168,7 +166,8 @@ class SummaryScreen extends StatelessWidget {
                                           maxTime: DateTime(
                                               DateTime.now().year,
                                               DateTime.now().month,
-                                              30), onConfirm: (date) {
+                                              DateTime.now().day),
+                                          onConfirm: (date) {
                                         summaryController.toDate(date);
                                       },
                                           currentTime: DateTime.now(),

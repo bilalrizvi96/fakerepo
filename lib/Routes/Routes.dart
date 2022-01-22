@@ -1,10 +1,11 @@
-import 'package:attendencesystem/Component/TabViewProfile.dart';
+import 'package:attendencesystem/Trash/TabViewProfile.dart';
 import 'package:attendencesystem/View/AttendenceScreen/AttendanceScreen.dart';
 import 'package:attendencesystem/View/FaceIDRuleScreen/FaceIDRuleScreen.dart';
 import 'package:attendencesystem/View/FaceRegistrationScreen/FaceRegistrationScreen.dart';
 
 import 'package:attendencesystem/View/HomeScreen/HomeScreen.dart';
 import 'package:attendencesystem/View/IntroScreen/IntroScreen.dart';
+import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:attendencesystem/View/OTPScreen/OTPScreen.dart';
 
 import 'package:attendencesystem/View/RegistrationScreen/RegistrationScreen.dart';
@@ -75,7 +76,7 @@ class Routes {
         curve: Curves.easeInQuart),
     GetPage(
         name: "/profiletab",
-        page: () => ProfileTabViewScreen(),
+        page: () => MyProfileScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     // GetPage(
