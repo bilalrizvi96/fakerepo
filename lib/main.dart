@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Routes/Routes.dart';
+import 'package:attendencesystem/View/test.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
       title: 'Attendance',
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash',
+      // initialRoute: '/splash',
+      home: test(),
       getPages: Routes().routes,
     );
   }

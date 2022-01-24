@@ -13,13 +13,26 @@ class HomeController extends GetxController {
   var selectedyear = DateTime.now().year.obs;
   var selectedmonth = DateTime.now().month.obs;
   var current = "".obs;
-
+  List months = [
+    'JAN',
+    'FEB',
+    'MAR',
+    'APR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DEC'
+  ];
   // var userdata;
   @override
   void onInit() {
     super.onInit();
     current.value =
-        selectedmonth.value.toString() + "-" + selectedyear.value.toString();
+        months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();
 
     // userdata = BaseUrl.storage.read("users");
   }
