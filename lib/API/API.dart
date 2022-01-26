@@ -39,9 +39,9 @@ class API {
     }
   }
 
-  Future SigIn({var employee_Id, var isFace, var device_id}) async {
+  Future SigIn({var employee_Id, var isFace, var hash}) async {
     try {
-      Map data = {'code': employee_Id, "isFace": isFace, "device_id": "132"};
+      Map data = {'code': employee_Id, "isFace": isFace, "verification": hash};
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(

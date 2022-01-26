@@ -17,15 +17,15 @@ class SplashController extends GetxController {
     // FirebaseCrashlytics.instance.crash();
 
     var tokenval = BaseUrl.storage.read("token");
-    isseen = BaseUrl.storage.read('seen') ?? false;
+    isseen = BaseUrl.storage1.read('seen') ?? false;
 
     Future.delayed(new Duration(seconds: 3), () {
       if (tokenval != null) {
         Get.offAllNamed('/home');
-      } else if (BaseUrl.storage.read('seen') == true) {
+      } else if (BaseUrl.storage1.read('seen') == true) {
         Get.offAllNamed('/signinemp');
       } else {
-        isseen = BaseUrl.storage.write('seen', true);
+        isseen = BaseUrl.storage1.write('seen', true);
         Get.offAllNamed('/intro');
       }
     });

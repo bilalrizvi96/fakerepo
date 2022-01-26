@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:math';
 
+import 'package:encrypt/encrypt.dart' as enc;
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
 import 'package:camera/camera.dart';
-import 'package:image/image.dart' as img;
-import 'package:device_info/device_info.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,10 +18,12 @@ class SignInEmployeeController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   TextEditingController empcodeController = new TextEditingController();
   XFile? faceImage;
+
   static final _auth = LocalAuthentication();
   var token = "".obs;
   var Loading = false.obs;
   var deviceId = "".obs;
+  var encoded = ''.obs;
   List<int>? imageBytes;
   String? imageBase64;
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
@@ -38,7 +40,18 @@ class SignInEmployeeController extends GetxController {
   void onInit() {
     super.onInit();
     Loading.value = false;
-    // getDeviceDetails();
+    Random random = new Random();
+    int randomNumber = random.nextInt(1000);
+    int randomNumber2 = random.nextInt(10000);
+    var value = "${randomNumber.toString()}" +
+        "np@U'vgy99`K`;^NcxRb" +
+        "${randomNumber2.toString()}";
+    String credentials = value;
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    encoded.value = stringToBase64.encode(credentials);
+
+    // String decoded = stringToBase64.decode(encoded);
+    //
   }
 
   static Future<List<BiometricType>> getBiometrics() async {
@@ -116,10 +129,9 @@ class SignInEmployeeController extends GetxController {
     print("deviceId");
     print(deviceId.value);
     var response = await API().SigIn(
-      employee_Id: empcodeController.text.toString(),
-      isFace: isface,
-      // device_id: deviceId.value
-    );
+        employee_Id: empcodeController.text.toString(),
+        isFace: isface,
+        hash: encoded.value);
 
     if (response.statusCode == 200) {
       Loading.value = false;
