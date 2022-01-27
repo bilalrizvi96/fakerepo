@@ -72,12 +72,12 @@ class _IntroScreenState extends State<IntroScreen>
                                   height: height / 12.5,
                                 ),
                                 Expanded(
-                                  flex: 2,
+                                  flex: 6,
                                   child: DelayedDisplay(
                                     delay: Duration(milliseconds: 500),
                                     fadeIn: true,
                                     child: Container(
-                                      width: width / 1,
+                                      width: width,
                                       height: height / 2.23,
                                       // decoration: BoxDecoration(
                                       //     borderRadius: BorderRadius.only(
@@ -210,33 +210,34 @@ class _IntroScreenState extends State<IntroScreen>
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.only(
-                                                  top: 280.0,
-                                                  left: 300,
-                                                  right: 30,
-                                                  bottom: 30),
-                                              child: Container(
-                                                width: width / 5,
-                                                height: height / 15,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50.0),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: DynamicColor()
-                                                            .radiocolor
-                                                            .withOpacity(0.6),
-                                                        spreadRadius: 3,
-                                                        blurRadius: 10,
-                                                        offset: Offset(1,
-                                                            3), // changes position of shadow
-                                                      ),
-                                                    ],
-                                                    color: DynamicColor()
-                                                        .primarycolor),
-                                                child: Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  color: Colors.white,
+                                                  bottom: 20.0, right: 20.0),
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: Container(
+                                                  width: width / 7,
+                                                  height: height / 15,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50.0),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: DynamicColor()
+                                                              .radiocolor
+                                                              .withOpacity(0.6),
+                                                          spreadRadius: 3,
+                                                          blurRadius: 10,
+                                                          offset: Offset(1,
+                                                              3), // changes position of shadow
+                                                        ),
+                                                      ],
+                                                      color: DynamicColor()
+                                                          .primarycolor),
+                                                  child: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -277,51 +278,3 @@ class _IntroScreenState extends State<IntroScreen>
     );
   }
 }
-// Padding(
-// padding: const EdgeInsets.all(8),
-// child: Row(
-// mainAxisAlignment: MainAxisAlignment.center,
-// children: <Widget>[
-// Container(
-// margin: EdgeInsets.all(2.0),
-// height: 8,
-// width: 8,
-// decoration: BoxDecoration(
-// shape: BoxShape.circle,
-// color: pageIndex == 0
-// ? Color.fromRGBO(243, 76, 67, 1)
-// : Color.fromRGBO(243, 76, 67, 0.16)),
-// ),
-// Container(
-// margin: EdgeInsets.all(2.0),
-// height: 8,
-// width: 8,
-// decoration: BoxDecoration(
-// shape: BoxShape.circle,
-// color: pageIndex == 1
-// ? Color.fromRGBO(243, 76, 67, 1)
-// : Color.fromRGBO(243, 76, 67, 0.16)),
-// ),
-// Container(
-// margin: EdgeInsets.all(2),
-// height: 8,
-// width: 8,
-// decoration: BoxDecoration(
-// shape: BoxShape.circle,
-// color: pageIndex == 2
-// ? Color.fromRGBO(243, 76, 67, 1)
-// : Color.fromRGBO(243, 76, 67, 0.16)),
-// ),
-// // Container(
-// //   margin: EdgeInsets.all(2.0),
-// //   height: 8,
-// //   width:8,                            decoration: BoxDecoration(
-// //     shape: BoxShape.circle,
-// //     color: pageIndex == 3
-// //         ? Color.fromRGBO(243, 76, 67, 1)
-// //         : Color.fromRGBO(243, 76, 67, 0.16)
-// // ),
-// // )
-// ],
-// ),
-// ),

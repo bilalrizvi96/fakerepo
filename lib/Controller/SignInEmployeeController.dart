@@ -40,17 +40,7 @@ class SignInEmployeeController extends GetxController {
   void onInit() {
     super.onInit();
     Loading.value = false;
-    Random random = new Random();
-    int randomNumber = random.nextInt(1000);
-    int randomNumber2 = random.nextInt(10000);
-    var value = "${randomNumber.toString()}" +
-        "np@U'vgy99`K`;^NcxRb" +
-        "${randomNumber2.toString()}";
-    String credentials = value;
-    Codec<String, String> stringToBase64 = utf8.fuse(base64);
-    encoded.value = stringToBase64.encode(credentials);
 
-    // String decoded = stringToBase64.decode(encoded);
     //
   }
 
@@ -127,7 +117,21 @@ class SignInEmployeeController extends GetxController {
 
   sigin(var isface) async {
     print("deviceId");
+    Random random = new Random();
+    int randomNumber = random.nextInt(1000);
+    int randomNumber2 = random.nextInt(10000);
+    var value = "${randomNumber.toString()}" +
+        "np@U'vgy99`K`;^NcxRb" +
+        "${randomNumber2.toString()}";
+    print(value);
+    String credentials = value;
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    encoded.value = stringToBase64.encode(credentials);
+    String decoded = stringToBase64.decode(encoded.value);
+    print(encoded.value);
+    print(decoded);
     print(deviceId.value);
+
     var response = await API().SigIn(
         employee_Id: empcodeController.text.toString(),
         isFace: isface,
@@ -167,10 +171,11 @@ class SignInEmployeeController extends GetxController {
       Get.offAllNamed('/home');
     } else {
       Loading.value = false;
-
+      print(response.data['error'].toString());
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
+
     // update();
   }
 

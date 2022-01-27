@@ -104,7 +104,7 @@ class Drawers {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         Get.back();
-                        Get.toNamed('/home');
+                        Get.offNamed('/home');
                       },
                       child: Row(
                         children: [
@@ -141,7 +141,7 @@ class Drawers {
                       onPressed: () {
                         {
                           Get.back();
-                          Get.toNamed('/profiletab');
+                          Get.offNamed('/profiletab');
                         }
                       },
                       child: Row(
@@ -174,7 +174,7 @@ class Drawers {
                   //   disabledColor: Colors.black.withOpacity(0.40),
                   //   onPressed: () {
                   //     {
-                  //       Get.toNamed('/managesites');
+                  //       Get.offNamed('/managesites');
                   //     }
                   //   },
                   //   child: Row(
@@ -207,7 +207,7 @@ class Drawers {
                   //   disabledColor: Colors.black.withOpacity(0.40),
                   //   onPressed: () {
                   //     {
-                  //       Get.toNamed('/reports');
+                  //       Get.offNamed('/reports');
                   //     }
                   //   },
                   //   child: Row(
@@ -239,7 +239,7 @@ class Drawers {
                   //   disabledColor: Colors.black.withOpacity(0.40),
                   //   onPressed: () {
                   //     {
-                  //       Get.toNamed('/setting');
+                  //       Get.offNamed('/setting');
                   //     }
                   //   },
                   //   child: Row(
@@ -270,7 +270,7 @@ class Drawers {
                       disabledColor: Colors.black.withOpacity(0.40),
                       onPressed: () {
                         Get.back();
-                        Get.toNamed('/summary');
+                        Get.offNamed('/summary');
                       },
                       child: Row(
                         children: [
@@ -302,7 +302,7 @@ class Drawers {
                       onPressed: () {
                         Get.back();
                         BaseUrl.storage.erase();
-                        Get.toNamed('/signinemp');
+                        Get.offNamed('/signinemp');
                       },
                       child: Row(
                         children: [

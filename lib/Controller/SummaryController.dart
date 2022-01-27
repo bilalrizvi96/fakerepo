@@ -35,6 +35,9 @@ class SummaryController extends GetxController {
     var response = await API().Summary(
         end: int.parse(todate.value.day.toString()),
         start: int.parse(fromdate.value.day.toString()));
+    print(fromdate.value.day.toString());
+    print(todate.value.day.toString());
+
     if (response != null) {
       summarylist.clear();
       if (response.statusCode == 200) {

@@ -152,6 +152,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                     .empcodeController,
                                                 validator:
                                                     signinController.validators,
+
                                                 // readOnly: true,
                                                 cursorColor:
                                                     DynamicColor().primarycolor,
@@ -169,6 +170,7 @@ class SiginEmployeeScreen extends StatelessWidget {
 
                                                     // labelText: "Enter Employee ID",
                                                     // labelStyle: ,
+
                                                     fillColor: Colors.white,
                                                     filled: true,
                                                     border: InputBorder.none
@@ -198,7 +200,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                               child: Stack(
                                                 children: [
                                                   Container(
-                                                    width: width / 3.2,
+                                                    width: width / 3.1,
                                                     height: height / 5.2,
                                                     decoration: BoxDecoration(
                                                       color:
@@ -207,59 +209,47 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                           BorderRadius.circular(
                                                               5.0),
                                                     ),
-                                                    padding:
-                                                        EdgeInsets.all(8.0),
+                                                    padding: EdgeInsets.only(
+                                                        right: 30.0,
+                                                        left: 30.0,
+                                                        bottom: 30.0),
+                                                    child: Image.asset(
+                                                      'assets/face.png',
+                                                      fit: BoxFit.scaleDown,
+                                                      width: width / 15,
+                                                    ),
                                                   ),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            top: 18.0,
-                                                            right: 15,
-                                                            left: 20),
-                                                    child: Image.asset(
-                                                      'assets/face.png',
-                                                      fit: BoxFit.scaleDown,
-                                                      height: height / 10,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 130.0,
-                                                              right: 40,
-                                                              left: 40),
-                                                      child: Container(
-                                                        width: 50,
-                                                        height: 50,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50.0),
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    color: DynamicColor()
-                                                                        .titletextcolor
-                                                                        .withOpacity(
-                                                                            0.5),
-                                                                    spreadRadius:
-                                                                        3,
-                                                                    blurRadius:
-                                                                        10,
-                                                                    offset: Offset(
-                                                                        0,
-                                                                        3), // changes position of shadow
-                                                                  ),
-                                                                ],
-                                                                color: DynamicColor()
-                                                                    .primarycolor),
-                                                        child: Icon(
-                                                          Icons
-                                                              .arrow_forward_ios,
-                                                          color: Colors.white,
-                                                        ),
+                                                            top: 130.0,
+                                                            right: 40,
+                                                            left: 40),
+                                                    child: Container(
+                                                      width: 50,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      50.0),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: DynamicColor()
+                                                                  .titletextcolor
+                                                                  .withOpacity(
+                                                                      0.5),
+                                                              spreadRadius: 3,
+                                                              blurRadius: 10,
+                                                              offset: Offset(0,
+                                                                  3), // changes position of shadow
+                                                            ),
+                                                          ],
+                                                          color: DynamicColor()
+                                                              .primarycolor),
+                                                      child: Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.white,
                                                       ),
                                                     ),
                                                   )
