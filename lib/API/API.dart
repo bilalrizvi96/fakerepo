@@ -135,7 +135,6 @@ class API {
       Map data = {
         'location': latlng,
         "siteId": siteId,
-        "date": date.toString()
       };
       print(data);
       print(BaseUrl.baseurl + 'start');
@@ -163,7 +162,7 @@ class API {
       Map data = {
         'location': latlng,
         "siteId": siteId,
-        "date": date.toString()
+        // "date": date.toString()
       };
       print(data);
       print(BaseUrl.baseurl + 'end');

@@ -58,11 +58,12 @@ class AttendanceController extends GetxController {
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckIn(
-          latlng: center.value.latitude.toString() +
-              "," +
-              center.value.longitude.toString(),
-          siteId: "123",
-          date: date);
+        latlng: center.value.latitude.toString() +
+            "," +
+            center.value.longitude.toString(),
+        siteId: "123",
+        // date: date
+      );
       if (response.statusCode == 200) {
         Loading.value = false;
         BaseUrl.clockin = DateTime.now().hour.toString() +
@@ -92,11 +93,12 @@ class AttendanceController extends GetxController {
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckOut(
-          latlng: center.value.latitude.toString() +
-              "," +
-              center.value.longitude.toString(),
-          siteId: "123",
-          date: date);
+        latlng: center.value.latitude.toString() +
+            "," +
+            center.value.longitude.toString(),
+        siteId: "123",
+        // date: date
+      );
       if (response.statusCode == 200) {
         Loading.value = false;
         BaseUrl.clockout = DateTime.now().hour.toString() +
