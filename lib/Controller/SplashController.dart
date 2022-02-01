@@ -7,7 +7,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
-  var isseen;
   @override
   void onInit() {
     super.onInit();
@@ -17,15 +16,15 @@ class SplashController extends GetxController {
     // FirebaseCrashlytics.instance.crash();
 
     var tokenval = BaseUrl.storage.read("token");
-    isseen = BaseUrl.storage1.read('seen') ?? false;
 
+    BaseUrl.storage1.read('seen') ?? false;
     Future.delayed(new Duration(seconds: 3), () {
       if (tokenval != null) {
         Get.offAllNamed('/home');
       } else if (BaseUrl.storage1.read('seen') == true) {
         Get.offAllNamed('/signinemp');
       } else {
-        isseen = BaseUrl.storage1.write('seen', true);
+        BaseUrl.storage1.write('seen', true);
         Get.offAllNamed('/intro');
       }
     });

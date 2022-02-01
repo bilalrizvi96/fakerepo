@@ -77,9 +77,13 @@ class RegistrationController extends GetxController {
   }
 
   submit() async {
+    var emailsplit = emailController.text.toString().split("@");
+    var email = emailsplit[0] + '@starmarketingonline.com';
+    print(email);
+    print("email");
     var response = await API().Registration(
         employee_Id: employee_IdController.text.toString(),
-        email_address: emailController.text.toString(),
+        email_address: email,
         check: true);
     if (response.statusCode == 200) {
       Get.offAllNamed('/OTP');
