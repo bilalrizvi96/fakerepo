@@ -115,14 +115,25 @@ class SignInEmployeeController extends GetxController {
     }
   }
 
-  sigin(var isface) async {
+  var value;
+  randomss() {
     print("deviceId");
     Random random = new Random();
     int randomNumber = random.nextInt(1000);
     int randomNumber2 = random.nextInt(10000);
-    var value = "${randomNumber.toString()}" +
-        "np@U'vgy99`K`;^NcxRb" +
-        "${randomNumber2.toString()}";
+    print(randomNumber.bitLength);
+    print(randomNumber2.bitLength);
+    if (randomNumber.bitLength != 3 && randomNumber2.bitLength != 4) {
+      value = "${randomNumber.toString()}" +
+          "np@U'vgy99`K`;^NcxRb" +
+          "${randomNumber2.toString()}";
+    } else {
+      randomss();
+    }
+  }
+
+  sigin(var isface) async {
+    randomss();
     print(value);
     String credentials = value;
     Codec<String, String> stringToBase64 = utf8.fuse(base64);

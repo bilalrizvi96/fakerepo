@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
@@ -17,7 +18,8 @@ class OTPController extends GetxController {
       Get.offAllNamed("/signinemp");
     } else {
       verfication.clear();
-      Get.snackbar("OTP ", "You enter the wrong OTP");
+      Get.snackbar("OTP ", "You enter the wrong OTP",
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
   }
 
