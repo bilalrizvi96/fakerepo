@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:get/get.dart';
@@ -16,7 +17,6 @@ class SplashController extends GetxController {
     // FirebaseCrashlytics.instance.crash();
 
     var tokenval = BaseUrl.storage.read("token");
-
     BaseUrl.storage1.read('seen') ?? false;
     Future.delayed(new Duration(seconds: 3), () {
       if (tokenval != null) {

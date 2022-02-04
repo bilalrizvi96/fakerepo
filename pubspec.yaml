@@ -63,6 +63,7 @@ dependencies:
   firebase_crashlytics: ^2.4.5
   encrypt:
   intl: ^0.17.0
+  data_connection_checker:
 
 dev_dependencies:
   flutter_test:

@@ -26,7 +26,7 @@ class SignInEmployeeController extends GetxController {
   var encoded = ''.obs;
   List<int>? imageBytes;
   String? imageBase64;
-  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  var loginFormKey = GlobalKey<FormState>();
 
   static Future<bool> hasBiometrics() async {
     try {

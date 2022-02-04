@@ -64,7 +64,7 @@ class AttendanceController extends GetxController {
         latlng: center.value.latitude.toString() +
             "," +
             center.value.longitude.toString(),
-        siteId: "123",
+        siteId: sites.value.toString(),
         // date: date
       );
       if (response.statusCode == 200) {
@@ -99,7 +99,7 @@ class AttendanceController extends GetxController {
         latlng: center.value.latitude.toString() +
             "," +
             center.value.longitude.toString(),
-        siteId: "123",
+        siteId: sites.value.toString(),
         // date: date
       );
       if (response.statusCode == 200) {

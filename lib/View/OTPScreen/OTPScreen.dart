@@ -70,6 +70,7 @@ class OTPScreen extends StatelessWidget {
 
                           fillColor: Colors.white,
                           borderWidth: 4.0,
+
                           //runs when a code is typed in
                           onCodeChanged: (String code) {
                             // otpController.submit(int.parse(code));
