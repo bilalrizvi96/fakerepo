@@ -1,7 +1,7 @@
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:attendencesystem/Component/SideDrawer.dart';
+import 'package:attendencesystem/Trash/SideDrawer.dart';
 import 'package:attendencesystem/Controller/AttendenceController.dart';
 
 import 'package:attendencesystem/Controller/HomeController.dart';
@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      drawer: Drawers().drawers(context),
+      // drawer: Drawers().drawers(context),
       body: SafeArea(
         child: Container(
             width: width,
@@ -67,18 +67,17 @@ class HomeScreen extends StatelessWidget {
                                       fontSize: width / 16),
                                 ),
                                 Spacer(),
-                                Builder(builder: (context) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Scaffold.of(context).openDrawer();
-                                    },
-                                    child: Icon(
-                                      Icons.menu,
-                                      size: width / 13,
-                                      color: DynamicColor().primarycolor,
-                                    ),
-                                  );
-                                }),
+                                GestureDetector(
+                                  onTap: () {
+                                    BaseUrl.storage.write("token", null);
+                                    Get.offAllNamed('/signinemp');
+                                  },
+                                  child: Icon(
+                                    Icons.logout,
+                                    size: width / 16,
+                                    color: Colors.red,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -90,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                             fadingDuration: Duration(milliseconds: 400),
                             child: Container(
                               width: width / 1.2,
-                              height: height / 7,
+                              height: height / 8.349,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 image: DecorationImage(
@@ -170,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: Container(
-                                          width: width / 7,
+                                          width: width / 6.7,
                                           height: height / 25,
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
@@ -220,7 +219,7 @@ class HomeScreen extends StatelessWidget {
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: Container(
-                                          width: width / 7,
+                                          width: width / 6.7,
                                           height: height / 25,
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
@@ -468,7 +467,7 @@ class HomeScreen extends StatelessWidget {
                                             fadingDuration:
                                                 Duration(milliseconds: 400),
                                             child: Container(
-                                              height: height / 18,
+                                              height: height / 25,
                                               width: width,
                                               decoration: BoxDecoration(
                                                   borderRadius:

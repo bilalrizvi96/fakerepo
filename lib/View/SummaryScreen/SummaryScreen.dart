@@ -1,7 +1,8 @@
 import 'dart:io';
 
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:attendencesystem/Component/SideDrawer.dart';
+import 'package:attendencesystem/Trash/SideDrawer.dart';
 
 import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:delayed_display/delayed_display.dart';
@@ -18,7 +19,7 @@ class SummaryScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return new Scaffold(
-      drawer: Drawers().drawers(context),
+      // drawer: Drawers().drawers(context),
       body: SafeArea(
         child: Container(
             width: width,
@@ -43,18 +44,17 @@ class SummaryScreen extends StatelessWidget {
                                   fontSize: width / 16),
                             ),
                             Spacer(),
-                            Builder(builder: (context) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Scaffold.of(context).openDrawer();
-                                },
-                                child: Icon(
-                                  Icons.menu,
-                                  size: width / 13,
-                                  color: DynamicColor().primarycolor,
-                                ),
-                              );
-                            }),
+                            GestureDetector(
+                              onTap: () {
+                                BaseUrl.storage.write("token", null);
+                                Get.offAllNamed('/signinemp');
+                              },
+                              child: Icon(
+                                Icons.logout,
+                                size: width / 16,
+                                color: Colors.red,
+                              ),
+                            ),
                           ],
                         ),
                       ),

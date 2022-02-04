@@ -1,5 +1,6 @@
 import 'package:attendencesystem/Trash/TabViewProfile.dart';
 import 'package:attendencesystem/View/AttendenceScreen/AttendanceScreen.dart';
+import 'package:attendencesystem/View/BottomNavigationScreen/BottomNavigationScreen.dart';
 import 'package:attendencesystem/View/FaceIDRuleScreen/FaceIDRuleScreen.dart';
 import 'package:attendencesystem/View/FaceRegistrationScreen/FaceRegistrationScreen.dart';
 
@@ -23,7 +24,9 @@ class Routes {
         page: () => SplashScreen(),
         transition: Transition.zoom),
     GetPage(
-        name: '/home', page: () => HomeScreen(), transition: Transition.fadeIn),
+        name: '/home',
+        page: () => BottomNavigationScreen(),
+        transition: Transition.fadeIn),
     GetPage(
         name: '/intro',
         page: () => IntroScreen(),
@@ -64,21 +67,21 @@ class Routes {
     //     page: () => FaceRegistrationScreen(),
     //     transition: Transition.rightToLeft,
     //     curve: Curves.easeInQuart),
-    GetPage(
-        name: "/summary",
-        page: () => SummaryScreen(),
-        transition: Transition.rightToLeft,
-        curve: Curves.easeInQuart),
+    // GetPage(
+    //     name: "/summary",
+    //     page: () => SummaryScreen(),
+    //     transition: Transition.rightToLeft,
+    //     curve: Curves.easeInQuart),
     GetPage(
         name: "/attendance",
         page: () => AttendanceScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
-    GetPage(
-        name: "/profiletab",
-        page: () => MyProfileScreen(),
-        transition: Transition.rightToLeft,
-        curve: Curves.easeInQuart),
+    // GetPage(
+    //     name: "/profiletab",
+    //     page: () => MyProfileScreen(),
+    //     transition: Transition.rightToLeft,
+    //     curve: Curves.easeInQuart),
     // GetPage(
     //     name: "/managesites",
     //     page: () => ManageSitesScreen(),

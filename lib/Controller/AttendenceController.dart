@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 
 class AttendanceController extends GetxController {
@@ -53,7 +54,9 @@ class AttendanceController extends GetxController {
   }
 
   void clockin() async {
-    var date = DateTime.now().toString();
+    var date = DateTime.now();
+    var outputFormat = DateFormat('hh:mm a');
+    var outputDate = outputFormat.format(date);
     BaseUrl.storage.write("status", true);
     await CurrentLocation();
     if (sites.value != "") {
@@ -66,9 +69,7 @@ class AttendanceController extends GetxController {
       );
       if (response.statusCode == 200) {
         Loading.value = false;
-        BaseUrl.clockin = DateTime.now().hour.toString() +
-            ":" +
-            DateTime.now().minute.toString();
+        BaseUrl.clockin = outputDate.toString();
         BaseUrl.storage.write("clockin", BaseUrl.clockin);
         print(BaseUrl.clockin);
         print("date1.value");
@@ -89,6 +90,8 @@ class AttendanceController extends GetxController {
 
   clockout() async {
     var date = DateTime.now();
+    var outputFormat = DateFormat('hh:mm a');
+    var outputDate = outputFormat.format(date);
     BaseUrl.storage.write("status", false);
     await CurrentLocation();
     if (sites.value != "") {
@@ -101,9 +104,7 @@ class AttendanceController extends GetxController {
       );
       if (response.statusCode == 200) {
         Loading.value = false;
-        BaseUrl.clockout = DateTime.now().hour.toString() +
-            ":" +
-            DateTime.now().minute.toString();
+        BaseUrl.clockout = outputDate.toString();
         BaseUrl.storage.write("clockout", BaseUrl.clockout);
         print(response);
 
