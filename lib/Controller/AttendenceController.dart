@@ -76,6 +76,7 @@ class AttendanceController extends GetxController {
         Get.offAllNamed('/home');
         Get.snackbar("Attendance", "Clock In Successfully");
       } else {
+        // BaseUrl.storage.write("status", false);
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
@@ -114,6 +115,7 @@ class AttendanceController extends GetxController {
           "Clock Out Successfully",
         );
       } else {
+        // BaseUrl.storage.write("status", true);
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);

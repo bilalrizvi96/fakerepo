@@ -2,7 +2,7 @@ import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/RegistrationController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -120,12 +120,16 @@ class FaceIDRuleScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Positioned(
-                            right: width / 10,
-                            left: width / 10,
-                            top: height / 5.5,
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 20.0, left: 20.0),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                // SizedBox(
+                                //   height: height / 5,
+                                // ),
                                 DelayedDisplay(
                                   fadeIn: true,
                                   delay: Duration(milliseconds: 400),
@@ -274,6 +278,9 @@ class FaceIDRuleScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+                                ),
+                                SizedBox(
+                                  height: height / 13,
                                 ),
                               ],
                             ),

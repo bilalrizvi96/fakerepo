@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                                 Spacer(),
                                 GestureDetector(
                                   onTap: () {
-                                    BaseUrl.storage.write("token", null);
+                                    BaseUrl.storage.write("token", "out");
                                     Get.offAllNamed('/signinemp');
                                   },
                                   child: Icon(
@@ -417,23 +417,29 @@ class HomeScreen extends StatelessWidget {
                                   onTap: () {
                                     attendanceController.scan();
                                   },
-                                  child: Image.asset(
-                                    'assets/qrdashboard.png',
-                                    height: height / 5,
+                                  child: DelayedDisplay(
+                                    fadeIn: true,
+                                    fadingDuration:
+                                        Duration(milliseconds: 1200),
+                                    child: Image.asset(
+                                      'assets/qrdashboard.png',
+                                      height: height / 5,
+                                    ),
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: height / 30,
-                                // right: width / 14,
-                                // left: width / 12,
+                              Align(
+                                alignment: Alignment.center,
                                 child: DelayedDisplay(
                                   fadeIn: true,
                                   fadingDuration: Duration(milliseconds: 800),
-                                  child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 18.0),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           BaseUrl.storage.read("status") ==
@@ -448,7 +454,7 @@ class HomeScreen extends StatelessWidget {
                                                   .withOpacity(0.44)),
                                         ),
                                         SizedBox(
-                                          height: height / 8,
+                                          height: height / 7,
                                         ),
                                         Text(
                                           'Scan QR code',
@@ -457,126 +463,102 @@ class HomeScreen extends StatelessWidget {
                                               fontSize: width / 20,
                                               color: DynamicColor().white),
                                         ),
-                                        SizedBox(
-                                          height: height / 80,
-                                        ),
-                                        Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: DelayedDisplay(
-                                            fadeIn: true,
-                                            fadingDuration:
-                                                Duration(milliseconds: 400),
-                                            child: Container(
-                                              height: height / 25,
-                                              width: width,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  20.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  20.0)),
-                                                  color: Color(0xFF395BCC)),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: width / 6,
-                                                    height: height / 35,
-                                                    decoration: BoxDecoration(
-                                                      color: DynamicColor()
-                                                          .primarycolor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: DynamicColor()
-                                                              .primarycolor
-                                                              .withOpacity(0.1),
-                                                          spreadRadius: 4,
-                                                          blurRadius: 6,
-                                                          offset: Offset(0,
-                                                              1), // changes position of shadow
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Container(
-                                                            width: 15,
-                                                            height: 15,
-                                                            alignment: Alignment
-                                                                .center,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  DynamicColor()
-                                                                      .white,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          30.0),
-                                                            ),
-                                                            child: Text(
-                                                              "!",
-                                                              style: TextStyle(
-                                                                  color: DynamicColor()
-                                                                      .primarycolor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      width /
-                                                                          35),
-                                                            )),
-                                                        SizedBox(
-                                                          width: width / 50,
-                                                        ),
-                                                        Text(
-                                                          "Note",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  DynamicColor()
-                                                                      .white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontSize:
-                                                                  width / 32),
-                                                        )
-                                                      ],
-                                                    ),
+                                        // SizedBox(
+                                        //   height: height / 80,
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: height / 3.9,
+                                child: DelayedDisplay(
+                                  fadeIn: true,
+                                  fadingDuration: Duration(milliseconds: 400),
+                                  child: Container(
+                                    height: height / 25,
+                                    width: width,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(20.0),
+                                            topLeft: Radius.circular(20.0)),
+                                        color: Color(0xFF395BCC)),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: width / 6,
+                                          height: height / 35,
+                                          decoration: BoxDecoration(
+                                            color: DynamicColor().primarycolor,
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: DynamicColor()
+                                                    .primarycolor
+                                                    .withOpacity(0.1),
+                                                spreadRadius: 4,
+                                                blurRadius: 6,
+                                                offset: Offset(0,
+                                                    1), // changes position of shadow
+                                              ),
+                                            ],
+                                          ),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                  width: 15,
+                                                  height: 15,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                    color: DynamicColor().white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0),
                                                   ),
-                                                  SizedBox(
-                                                    width: width / 50,
-                                                  ),
-                                                  Text(
-                                                    "Avoid Multiple Check-ins",
+                                                  child: Text(
+                                                    "!",
                                                     style: TextStyle(
                                                         color: DynamicColor()
-                                                            .white
-                                                            .withOpacity(0.41),
+                                                            .primarycolor,
                                                         fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: width / 30),
-                                                  )
-                                                ],
+                                                            FontWeight.bold,
+                                                        fontSize: width / 35),
+                                                  )),
+                                              SizedBox(
+                                                width: width / 50,
                                               ),
-                                            ),
+                                              Text(
+                                                "Note",
+                                                style: TextStyle(
+                                                    color: DynamicColor().white,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: width / 32),
+                                              )
+                                            ],
                                           ),
                                         ),
+                                        SizedBox(
+                                          width: width / 50,
+                                        ),
+                                        Text(
+                                          "Avoid Multiple Check-ins",
+                                          style: TextStyle(
+                                              color: DynamicColor()
+                                                  .white
+                                                  .withOpacity(0.41),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: width / 30),
+                                        )
                                       ],
                                     ),
                                   ),

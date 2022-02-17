@@ -12,10 +12,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SummaryScreen extends StatelessWidget {
-  SummaryController summaryController = Get.put(SummaryController());
-
   @override
   Widget build(BuildContext context) {
+    SummaryController summaryController = Get.put(SummaryController());
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return new Scaffold(
@@ -46,7 +45,7 @@ class SummaryScreen extends StatelessWidget {
                             Spacer(),
                             GestureDetector(
                               onTap: () {
-                                BaseUrl.storage.write("token", null);
+                                BaseUrl.storage.write("token", "out");
                                 Get.offAllNamed('/signinemp');
                               },
                               child: Icon(

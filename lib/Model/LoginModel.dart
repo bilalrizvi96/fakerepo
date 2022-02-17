@@ -42,11 +42,16 @@ class User {
     this.hoursPerDay,
     this.shiftType,
     this.offPerYear,
-    this.role,
-    this.pin,
     this.offDay,
     this.status,
+    this.deviceId,
+    this.pin,
+    this.role,
+    this.endTiming,
+    this.startTiming,
     this.profile,
+    this.checkIn,
+    this.checkOut,
     this.presentDays,
     this.absentDays,
   });
@@ -62,11 +67,16 @@ class User {
   var hoursPerDay;
   var shiftType;
   var offPerYear;
-  var role;
-  var pin;
   var offDay;
   var status;
+  var deviceId;
+  var pin;
+  var role;
+  var endTiming;
+  var startTiming;
   var profile;
+  var checkIn;
+  var checkOut;
   var presentDays;
   var absentDays;
 
@@ -82,12 +92,17 @@ class User {
         hoursPerDay: json["hours_per_day"],
         shiftType: json["shift_type"],
         offPerYear: json["off_per_year"],
-        role: json["role"],
-        pin: json["pin"],
         offDay: List<String>.from(json["off_day"].map((x) => x)),
         status: json["status"],
+        deviceId: json["device_id"],
+        pin: json["pin"],
+        role: json["role"],
+        endTiming: json["end_timing"],
+        startTiming: json["start_timing"],
         profile:
             List<Profile>.from(json["profile"].map((x) => Profile.fromJson(x))),
+        checkIn: json["checkIn"],
+        checkOut: json["checkOut"],
         presentDays: json["present_days"],
         absentDays: json["absent_days"],
       );
@@ -104,11 +119,16 @@ class User {
         "hours_per_day": hoursPerDay,
         "shift_type": shiftType,
         "off_per_year": offPerYear,
-        "role": role,
-        "pin": pin,
         "off_day": List<dynamic>.from(offDay.map((x) => x)),
         "status": status,
+        "device_id": deviceId,
+        "pin": pin,
+        "role": role,
+        "end_timing": endTiming,
+        "start_timing": startTiming,
         "profile": List<dynamic>.from(profile.map((x) => x.toJson())),
+        "checkIn": checkIn,
+        "checkOut": checkOut,
         "present_days": presentDays,
         "absent_days": absentDays,
       };
@@ -119,36 +139,30 @@ class Profile {
     this.id,
     this.firstName,
     this.lastName,
-    this.address,
     this.empCode,
-    this.dateOfJoining,
+    this.address,
     this.designation,
-    this.shiftTiming,
-    this.employeeId,
+    this.dateOfJoining,
     this.shiftType,
   });
 
   var id;
   var firstName;
   var lastName;
-  var address;
   var empCode;
-  var dateOfJoining;
+  var address;
   var designation;
-  var shiftTiming;
-  var employeeId;
+  var dateOfJoining;
   var shiftType;
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
         id: json["_id"],
         firstName: json["first_name"],
         lastName: json["last_name"],
-        address: json["address"],
         empCode: json["EmpCode"],
-        dateOfJoining: json["date_of_joining"],
+        address: json["address"],
         designation: json["designation"],
-        shiftTiming: json["shift_timing"],
-        employeeId: json["employeeId"],
+        dateOfJoining: json["date_of_joining"],
         shiftType: json["shift_type"],
       );
 
@@ -156,12 +170,10 @@ class Profile {
         "_id": id,
         "first_name": firstName,
         "last_name": lastName,
-        "address": address,
         "EmpCode": empCode,
-        "date_of_joining": dateOfJoining,
+        "address": address,
         "designation": designation,
-        "shift_timing": shiftTiming,
-        "employeeId": employeeId,
+        "date_of_joining": dateOfJoining,
         "shift_type": shiftType,
       };
 }

@@ -53,7 +53,7 @@ class MyProfileScreen extends StatelessWidget {
 
                                     GestureDetector(
                                       onTap: () {
-                                        BaseUrl.storage.write("token",null);
+                                        BaseUrl.storage.write("token", "out");
                                         Get.offAllNamed('/signinemp');
                                       },
                                       child: Icon(

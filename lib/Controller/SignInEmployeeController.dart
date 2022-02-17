@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:encrypt/encrypt.dart' as enc;
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
@@ -174,9 +173,10 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage
           .write("designation", response.user[0].profile[0].designation);
       BaseUrl.storage
-          .write("shiftTiming", response.user[0].profile[0].shiftTiming);
-      BaseUrl.storage
-          .write("employeeId", response.user[0].profile[0].employeeId);
+          .write("shiftTiming", response.user[0].profile[0].shiftType);
+      BaseUrl.storage.write("employeeId", response.user[0].profile[0].empCode);
+      BaseUrl.storage.write("clockin", response.user[0].checkIn);
+      BaseUrl.storage.write("clockout", response.user[0].checkOut);
 
       Get.snackbar("Login ", "Login Successfully");
       Get.offAllNamed('/home');
@@ -197,15 +197,8 @@ class SignInEmployeeController extends GetxController {
       );
       if (response.statusCode == 200) {
         print(response);
-
-        if (response.data['respose'] == "verification succeded") {
-          Get.snackbar("Log In ", "Verified Successfully");
-          await sigin(true);
-        } else {
-          Get.snackbar("Log In ", "Not Verified",
-              colorText: Colors.white, backgroundColor: Colors.red);
-          Loading.value = false;
-        }
+        Get.snackbar("Log In ", "Verified Successfully");
+        await sigin(true);
       } else {
         Get.snackbar("Login ", response.data['respose'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 class OTPController extends GetxController {
   var code;
+  var otptextcontroller = TextEditingController();
   Timer? _timer;
   var start = 30.obs;
   submit(verfication) {
@@ -17,7 +18,7 @@ class OTPController extends GetxController {
       Get.snackbar("OTP ", "OTP Verified Successfully");
       Get.offAllNamed("/signinemp");
     } else {
-      verfication.clear();
+      otptextcontroller.clear();
       Get.snackbar("OTP ", "You enter the wrong OTP",
           colorText: Colors.white, backgroundColor: Colors.red);
     }

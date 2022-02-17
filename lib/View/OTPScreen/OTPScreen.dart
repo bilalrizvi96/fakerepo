@@ -2,9 +2,11 @@ import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/OTPController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class OTPScreen extends StatelessWidget {
   OTPController otpController = Get.put(OTPController());
@@ -60,27 +62,46 @@ class OTPScreen extends StatelessWidget {
                         right: width / 8,
                         left: width / 8,
                         top: height / 2.3,
-                        child: OtpTextField(
-                          numberOfFields: 6,
-                          borderColor: Colors.black,
-                          focusedBorderColor: Colors.black,
-                          showFieldAsBox: true,
-                          cursorColor: Colors.white,
-                          filled: true,
-
-                          fillColor: Colors.white,
-                          borderWidth: 4.0,
-
-                          //runs when a code is typed in
-                          onCodeChanged: (String code) {
-                            // otpController.submit(int.parse(code));
+                        child: PinCodeTextField(
+                          controller: otpController.otptextcontroller,
+                          hasTextBorderColor: Colors.white,
+                          highlightPinBoxColor: DynamicColor().white,
+                          defaultBorderColor: Colors.white,
+                          pinTextStyle:
+                              TextStyle(color: DynamicColor().primarycolor),
+                          highlightAnimationBeginColor: Colors.black,
+                          highlightAnimationEndColor: Colors.white12,
+                          pinBoxDecoration:
+                              ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+                          onDone: (String val) {
+                            otpController.submit(int.parse(val));
                           },
-
-                          onSubmit: (String verificationCode) {
-                            otpController.submit(int.parse(verificationCode));
-                          },
+                          maxLength: 6,
+                          pinBoxHeight: 45,
+                          pinBoxWidth: width / 10,
                         ),
                       ),
+                      //   OTPTextField(
+                      //     length: 6,
+                      //     borderColor: Colors.black,
+                      //     focusedBorderColor: Colors.black,
+                      //     showFieldAsBox: true,
+                      //     cursorColor: Colors.white,
+                      //     filled: true,
+                      //
+                      //     fillColor: Colors.white,
+                      //     borderWidth: 4.0,
+                      //
+                      //     //runs when a code is typed in
+                      //     onCodeChanged: (String code) {
+                      //       // otpController.submit(int.parse(code));
+                      //     },
+                      //
+                      //     onSubmit: (String verificationCode) {
+                      //
+                      //     },
+                      //   ),
+                      // ),
                       Positioned(
                         right: width / 10,
                         top: height / 1.9,

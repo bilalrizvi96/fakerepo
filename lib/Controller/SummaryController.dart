@@ -51,7 +51,6 @@ class SummaryController extends GetxController {
             Shift_Type: data['Shift Type'].toString(),
             Working_Hours: data['Working Hours'].toString()));
         print(data);
-        Get.snackbar("Summary ", "Summary Generated");
       } else {
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),

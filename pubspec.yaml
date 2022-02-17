@@ -44,7 +44,6 @@ dependencies:
   google_fonts: ^2.1.0
   dots_indicator: ^2.0.0
   video_player: ^2.1.4
-  flutter_otp_text_field: ^1.0.0
   delayed_display: ^2.0.0
   flutter_datetime_picker: ^1.5.1
   fluttertoast: ^8.0.8
@@ -57,13 +56,12 @@ dependencies:
   location: ^4.3.0
   google_maps_flutter: ^2.1.0
   image_picker: ^0.8.4+4
-  device_info: ^2.0.3
   image: ^3.1.0
   firebase_core:
   firebase_crashlytics: ^2.4.5
-  encrypt:
   intl: ^0.17.0
   data_connection_checker:
+  pin_code_text_field: ^1.8.0
 
 dev_dependencies:
   flutter_test:
