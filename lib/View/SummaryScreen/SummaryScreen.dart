@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:attendencesystem/Trash/SideDrawer.dart';
 
 import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:delayed_display/delayed_display.dart';

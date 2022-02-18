@@ -55,21 +55,25 @@ class AttendanceController extends GetxController {
 
   void clockin() async {
     var date = DateTime.now();
-    var outputFormat = DateFormat('hh:mm a');
+
+    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
     var outputDate = outputFormat.format(date);
+    print(outputDate.toString());
+    var outputFormat1 = DateFormat('hh:mm a');
+    var outputDate1 = outputFormat1.format(date);
     BaseUrl.storage.write("status", true);
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckIn(
-        latlng: center.value.latitude.toString() +
-            "," +
-            center.value.longitude.toString(),
-        siteId: sites.value.toString(),
-        // date: date
-      );
+          latlng: center.value.latitude.toString() +
+              "," +
+              center.value.longitude.toString(),
+          siteId: sites.value.toString(),
+          date: outputDate);
       if (response.statusCode == 200) {
         Loading.value = false;
-        BaseUrl.clockin = outputDate.toString();
+        BaseUrl.clockin = outputDate1.toString();
         BaseUrl.storage.write("clockin", BaseUrl.clockin);
         print(BaseUrl.clockin);
         print("date1.value");
@@ -91,21 +95,24 @@ class AttendanceController extends GetxController {
 
   clockout() async {
     var date = DateTime.now();
-    var outputFormat = DateFormat('hh:mm a');
+    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
+    var outputFormat1 = DateFormat('hh:mm a');
+    var outputDate1 = outputFormat1.format(date);
+
+    print(outputDate.toString());
     BaseUrl.storage.write("status", false);
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckOut(
-        latlng: center.value.latitude.toString() +
-            "," +
-            center.value.longitude.toString(),
-        siteId: sites.value.toString(),
-        // date: date
-      );
+          latlng: center.value.latitude.toString() +
+              "," +
+              center.value.longitude.toString(),
+          siteId: sites.value.toString(),
+          date: outputDate);
       if (response.statusCode == 200) {
         Loading.value = false;
-        BaseUrl.clockout = outputDate.toString();
+        BaseUrl.clockout = outputDate1.toString();
         BaseUrl.storage.write("clockout", BaseUrl.clockout);
         print(response);
 

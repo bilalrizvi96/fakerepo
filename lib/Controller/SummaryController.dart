@@ -16,8 +16,8 @@ class SummaryController extends GetxController {
   fromDate(date) {
     fromdate.value = date;
     if (fromdate.value == date) {
-      // Loading.value = true;
-      // summary();
+      Loading.value = true;
+      summary();
     }
     update();
   }
@@ -66,9 +66,9 @@ class SummaryController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     Loading.value = false;
     summary();
     update();
+    super.onInit();
   }
 }
