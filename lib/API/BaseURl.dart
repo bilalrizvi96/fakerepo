@@ -3,7 +3,8 @@ import 'package:get_storage/get_storage.dart';
 class BaseUrl {
   static final storage = GetStorage();
   static final storage1 = GetStorage();
-  static var token, code;
+  static var token, code, bear;
+
   static var empcode;
   static var clockin = '';
   static var clockout = '';

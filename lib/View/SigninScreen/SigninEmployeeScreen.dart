@@ -163,7 +163,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                       .primarycolor,
                                                   fontWeight: FontWeight.w600),
                                               decoration: new InputDecoration(
-                                                  labelText: BaseUrl.storage
+                                                  hintText: BaseUrl.storage
                                                               .read(
                                                                   "empCode") !=
                                                           null

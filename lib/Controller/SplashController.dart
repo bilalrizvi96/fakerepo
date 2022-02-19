@@ -19,8 +19,15 @@ class SplashController extends GetxController {
     var tokenval = BaseUrl.storage.read("token");
     BaseUrl.storage1.read('seen') ?? false;
     Future.delayed(new Duration(seconds: 3), () {
+      print(tokenval != null);
+      print(tokenval != "out");
       if (tokenval != "out") {
-        Get.offAllNamed('/home');
+        if (tokenval != null) {
+          Get.offAllNamed('/home');
+        } else {
+          BaseUrl.storage1.write('seen', true);
+          Get.offAllNamed('/intro');
+        }
       } else if (BaseUrl.storage1.read('seen') == true) {
         Get.offAllNamed('/signinemp');
       } else {
