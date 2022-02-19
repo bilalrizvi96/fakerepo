@@ -1,16 +1,12 @@
 import 'package:attendencesystem/Routes/Routes.dart';
-import 'package:attendencesystem/View/test.dart';
-import 'package:camera/camera.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/assertions.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'dart:developer' as developer;
-import 'API/API.dart';
 
-// List<CameraDescription> cameras = [];
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

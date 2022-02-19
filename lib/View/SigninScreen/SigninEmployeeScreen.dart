@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
 
@@ -150,7 +151,11 @@ class SiginEmployeeScreen extends StatelessWidget {
                                               validator:
                                                   signinController.validators,
 
-                                              // readOnly: true,
+                                              readOnly: BaseUrl.storage
+                                                          .read("empCode") !=
+                                                      null
+                                                  ? true
+                                                  : false,
                                               cursorColor:
                                                   DynamicColor().primarycolor,
                                               style: GoogleFonts.poppins(
@@ -158,7 +163,14 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                       .primarycolor,
                                                   fontWeight: FontWeight.w600),
                                               decoration: new InputDecoration(
-                                                  labelText: 'Employee Code',
+                                                  labelText: BaseUrl.storage
+                                                              .read(
+                                                                  "empCode") !=
+                                                          null
+                                                      ? BaseUrl.storage
+                                                          .read("empCode")
+                                                          .toString()
+                                                      : 'Employee Code',
                                                   focusColor: DynamicColor()
                                                       .primarycolor,
                                                   hoverColor: DynamicColor()
