@@ -44,12 +44,15 @@ class SummaryController extends GetxController {
         Loading.value = false;
         var data = response.data;
         summarylist.add(SummaryModel(
-            Absent_Days: data['Absent Days'].toString(),
-            Hours_Short: data['Hours Short'].toString(),
-            Over_Time: data['Over Time'].toString(),
-            Present_Days: data['Present Days'].toString(),
-            Shift_Type: data['Shift Type'].toString(),
-            Working_Hours: data['Working Hours'].toString()));
+          Absent_Days: data['Absent Days'].toString(),
+          Hours_Short: data['Short Hours'].toString(),
+          Over_Time: data['Over Time'].toString(),
+          Present_Days: data['Present Days'].toString(),
+          Shift_Type: data['Shift Type'].toString(),
+          Working_Hours: data['Total Working Hours'].toString(),
+          Hours: data['Hours'].toString(),
+          Estimate_time: data['Estimated Time'].toString(),
+        ));
         print(data);
       } else {
         Loading.value = false;

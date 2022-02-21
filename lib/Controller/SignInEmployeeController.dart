@@ -39,17 +39,20 @@ class SignInEmployeeController extends GetxController {
   void onInit() {
     super.onInit();
     Loading.value = false;
+    if (BaseUrl.storage.read("empCode") != null) {
+      empcodeController.text = BaseUrl.storage.read("empCode").toString();
+    }
 
     //
   }
 
-  static Future<List<BiometricType>> getBiometrics() async {
-    try {
-      return await _auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      return <BiometricType>[];
-    }
-  }
+  // static Future<List<BiometricType>> getBiometrics() async {
+  //   try {
+  //     return await _auth.getAvailableBiometrics();
+  //   } on PlatformException catch (e) {
+  //     return <BiometricType>[];
+  //   }
+  // }
 
   Future<bool> authenticate() async {
     final isAvailable = await hasBiometrics();
@@ -122,7 +125,7 @@ class SignInEmployeeController extends GetxController {
     int randomNumber2 = random.nextInt(10000);
     print(randomNumber.bitLength);
     print(randomNumber2.bitLength);
-    if (randomNumber.bitLength != 3 && randomNumber2.bitLength != 4) {
+    if ("$randomNumber".length == 3 && "$randomNumber2".length == 4) {
       value = "${randomNumber.toString()}" +
           "np@U'vgy99`K`;^NcxRb" +
           "${randomNumber2.toString()}";

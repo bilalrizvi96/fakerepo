@@ -62,7 +62,7 @@ class AttendanceController extends GetxController {
     print(outputDate.toString());
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
-    BaseUrl.storage.write("status", true);
+
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckIn(
@@ -74,6 +74,8 @@ class AttendanceController extends GetxController {
       if (response.statusCode == 200) {
         Loading.value = false;
         BaseUrl.clockin = outputDate1.toString();
+
+        BaseUrl.storage.write("status", true);
         BaseUrl.storage.write("clockin", BaseUrl.clockin);
         print(BaseUrl.clockin);
         print("date1.value");
@@ -101,7 +103,7 @@ class AttendanceController extends GetxController {
     var outputDate1 = outputFormat1.format(date);
 
     print(outputDate.toString());
-    BaseUrl.storage.write("status", false);
+
     await CurrentLocation();
     if (sites.value != "") {
       var response = await API().CheckOut(
@@ -111,6 +113,7 @@ class AttendanceController extends GetxController {
           siteId: sites.value.toString(),
           date: outputDate);
       if (response.statusCode == 200) {
+        BaseUrl.storage.write("status", false);
         Loading.value = false;
         BaseUrl.clockout = outputDate1.toString();
         BaseUrl.storage.write("clockout", BaseUrl.clockout);

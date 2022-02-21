@@ -4,6 +4,8 @@ class SummaryModel {
   var Absent_Days;
   var Working_Hours;
   var Hours_Short;
+  var Estimate_time;
+  var Hours;
   var Over_Time;
 
   SummaryModel(
@@ -12,5 +14,7 @@ class SummaryModel {
       this.Absent_Days,
       this.Working_Hours,
       this.Hours_Short,
+      this.Hours,
+      this.Estimate_time,
       this.Over_Time});
 }
