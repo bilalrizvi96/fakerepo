@@ -169,7 +169,7 @@ class RegistrationScreen extends StatelessWidget {
                                     color: DynamicColor().primarycolor,
                                     fontWeight: FontWeight.w600),
                                 decoration: new InputDecoration(
-                                    hintText: 'Enter ',
+                                    hintText: '',
                                     focusColor: DynamicColor().primarycolor,
                                     hoverColor: DynamicColor().primarycolor,
                                     // suffix: Text('@star...com'),

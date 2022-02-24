@@ -22,11 +22,12 @@ class SignInEmployeeController extends GetxController {
   var token = "".obs;
   var Loading = false.obs;
   var deviceId = "".obs;
+  var value;
   var encoded = ''.obs;
   List<int>? imageBytes;
   String? imageBase64;
   var loginFormKey = GlobalKey<FormState>();
-
+  var read = false.obs;
   static Future<bool> hasBiometrics() async {
     try {
       return await _auth.canCheckBiometrics;
@@ -41,11 +42,23 @@ class SignInEmployeeController extends GetxController {
     Loading.value = false;
     if (BaseUrl.storage.read("empCode") != null) {
       empcodeController.text = BaseUrl.storage.read("empCode").toString();
+      read.value = true;
+      update();
+    } else {
+      read.value = false;
+      update();
     }
 
     //
   }
 
+  empcodeUpdate() {
+    read.value = false;
+    empcodeController.text = '';
+    empcodeController.clear();
+    print(read.value);
+    update();
+  }
   // static Future<List<BiometricType>> getBiometrics() async {
   //   try {
   //     return await _auth.getAvailableBiometrics();
@@ -117,7 +130,6 @@ class SignInEmployeeController extends GetxController {
     }
   }
 
-  var value;
   randomss() {
     print("deviceId");
     Random random = new Random();

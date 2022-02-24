@@ -16,7 +16,7 @@ class SiginEmployeeScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: GetBuilder<SignInEmployeeController>(
+      body: GetBuilder(
           init: signinController,
           builder: (_) {
             return SafeArea(
@@ -151,11 +151,8 @@ class SiginEmployeeScreen extends StatelessWidget {
                                               validator:
                                                   signinController.validators,
 
-                                              readOnly: BaseUrl.storage
-                                                          .read("empCode") !=
-                                                      null
-                                                  ? true
-                                                  : false,
+                                              readOnly:
+                                                  signinController.read.value,
                                               cursorColor:
                                                   DynamicColor().primarycolor,
                                               style: GoogleFonts.poppins(
@@ -163,10 +160,9 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                       .primarycolor,
                                                   fontWeight: FontWeight.w600),
                                               decoration: new InputDecoration(
-                                                  hintText: BaseUrl.storage
-                                                              .read(
-                                                                  "empCode") !=
-                                                          null
+                                                  hintText: signinController
+                                                              .read.value !=
+                                                          false
                                                       ? BaseUrl.storage
                                                           .read("empCode")
                                                           .toString()
@@ -175,10 +171,12 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                       .primarycolor,
                                                   hoverColor: DynamicColor()
                                                       .primarycolor,
-
-                                                  // labelText: "Enter Employee ID",
-                                                  // labelStyle: ,
-
+                                                  suffixIcon: GestureDetector(
+                                                      onTap: () {
+                                                        signinController
+                                                            .empcodeUpdate();
+                                                      },
+                                                      child: Icon(Icons.clear)),
                                                   fillColor: Colors.white,
                                                   filled: true,
                                                   border: InputBorder.none

@@ -300,7 +300,9 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     BaseUrl.storage.read("totalPresent") != null
-                                        ? BaseUrl.storage.read("totalPresent")
+                                        ? BaseUrl.storage
+                                            .read("totalPresent")
+                                            .toString()
                                         : "0",
                                     style: GoogleFonts.poppins(
                                         color: DynamicColor().black,
@@ -368,7 +370,9 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     BaseUrl.storage.read("totalAbsent") != null
-                                        ? BaseUrl.storage.read("totalAbsent")
+                                        ? BaseUrl.storage
+                                            .read("totalAbsent")
+                                            .toString()
                                         : "0",
                                     style: GoogleFonts.poppins(
                                         color: DynamicColor().black,
