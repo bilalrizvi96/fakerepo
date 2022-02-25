@@ -122,15 +122,15 @@ class AttendanceController extends GetxController {
           siteId: sites.value.toString(),
           date: outputDate);
       if (response.statusCode == 200) {
-        var resp = await API().AbsentPresent();
-        if (resp.statusCode == 200) {
-          BaseUrl.storage
-              .write("totalPresent", resp.data['present_days'].toString());
-          BaseUrl.storage
-              .write("totalAbsent", resp.data['absent_days'].toString());
-
-          print(resp.data);
-        }
+        // var resp = await API().AbsentPresent();
+        // if (resp.statusCode == 200) {
+        //   BaseUrl.storage
+        //       .write("totalPresent", resp.data['present_days'].toString());
+        //   BaseUrl.storage
+        //       .write("totalAbsent", resp.data['absent_days'].toString());
+        //
+        //   print(resp.data);
+        // }
         BaseUrl.storage.write("status", false);
         Loading.value = false;
         BaseUrl.clockout = outputDate1.toString();

@@ -48,11 +48,29 @@ class RegistrationController extends GetxController {
   registration() async {
     if (registrationFormKey.currentState!.validate() &&
         registrationFormKey.currentState!.validate()) {
+      Loading.value = true;
+      update();
       BaseUrl.empcode = employee_IdController.text;
-      Get.toNamed(
-        '/facerule',
+      var emailsplit = emailController.text.toString().split("@");
+      var email = emailsplit[0] + '@starmarketingonline.com';
+      var response = await API().RegistrationConfirmation(
+        employee_Id: employee_IdController.text.toString(),
+        email_address: email,
       );
+      if (response.statusCode == 200) {
+        Loading.value = false;
+        Get.toNamed(
+          '/facerule',
+        );
+      } else {
+        Loading.value = false;
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
+
+        // Get.offAllNamed('/signinemp');
+      }
     }
+    update();
   }
 
   faceverification() async {

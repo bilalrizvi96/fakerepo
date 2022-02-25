@@ -111,6 +111,63 @@ class MyProfileScreen extends StatelessWidget {
                                         hintText: BaseUrl.storage
                                                     .read("firstName") !=
                                                 ' '
+                                            ? BaseUrl.storage.read("empCode")
+                                            : "First Name",
+                                        focusColor: DynamicColor().primarycolor,
+                                        hoverColor: DynamicColor().primarycolor,
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        border: InputBorder.none,
+                                        //fillColor: Colors.green
+                                      ),
+                                      // keyboardType: TextInputType.none,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              SizedBox(
+                                height: height / 80,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 35.0,
+                                ),
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'First Name',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: width / 30,
+                                          color: DynamicColor().black),
+                                    )),
+                              ),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: width / 80,
+                                    height: height / 18,
+                                    color: DynamicColor().primarycolor,
+                                  ),
+                                  Container(
+                                    width: width / 1.22,
+                                    child: TextFormField(
+                                      readOnly: myProfileController.read.value,
+                                      controller: myProfileController
+                                          .firstnameController,
+                                      validator: myProfileController.validators,
+                                      cursorColor: DynamicColor().primarycolor,
+                                      style: GoogleFonts.poppins(
+                                          color: DynamicColor().primarycolor,
+                                          fontWeight: FontWeight.w600),
+                                      decoration: new InputDecoration(
+                                        hintText: BaseUrl.storage
+                                                    .read("firstName") !=
+                                                ' '
                                             ? BaseUrl.storage.read("firstName")
                                             : "First Name",
                                         focusColor: DynamicColor().primarycolor,

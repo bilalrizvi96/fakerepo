@@ -4,21 +4,19 @@ import 'dart:math';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
-import 'package:camera/camera.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:local_auth/local_auth.dart';
 
 class SignInEmployeeController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   TextEditingController empcodeController = new TextEditingController();
   XFile? faceImage;
 
-  static final _auth = LocalAuthentication();
+  // static final _auth = LocalAuthentication();
   var token = "".obs;
   var Loading = false.obs;
   var deviceId = "".obs;
@@ -28,13 +26,13 @@ class SignInEmployeeController extends GetxController {
   String? imageBase64;
   var loginFormKey = GlobalKey<FormState>();
   var read = false.obs;
-  static Future<bool> hasBiometrics() async {
-    try {
-      return await _auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      return false;
-    }
-  }
+  // static Future<bool> hasBiometrics() async {
+  //   try {
+  //     return await _auth.canCheckBiometrics;
+  //   } on PlatformException catch (e) {
+  //     return false;
+  //   }
+  // }
 
   @override
   void onInit() {
@@ -67,20 +65,20 @@ class SignInEmployeeController extends GetxController {
   //   }
   // }
 
-  Future<bool> authenticate() async {
-    final isAvailable = await hasBiometrics();
-    if (!isAvailable) return false;
-
-    try {
-      return await _auth.authenticateWithBiometrics(
-        localizedReason: 'Scan Fingerprint to Authenticate',
-        useErrorDialogs: true,
-        stickyAuth: true,
-      );
-    } on PlatformException catch (e) {
-      return false;
-    }
-  }
+  // Future<bool> authenticate() async {
+  //   final isAvailable = await hasBiometrics();
+  //   if (!isAvailable) return false;
+  //
+  //   try {
+  //     return await _auth.authenticateWithBiometrics(
+  //       localizedReason: 'Scan Fingerprint to Authenticate',
+  //       useErrorDialogs: true,
+  //       stickyAuth: true,
+  //     );
+  //   } on PlatformException catch (e) {
+  //     return false;
+  //   }
+  // }
 
   imgFromCameras() async {
     var image = await _picker.pickImage(
