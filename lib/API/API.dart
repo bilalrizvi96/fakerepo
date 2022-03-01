@@ -59,6 +59,23 @@ class API {
     }
   }
 
+  Future CheckUpdate() async {
+    try {
+      Map data = {};
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl.baseurl + 'checkUpdate',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
   Future SigIn({var employee_Id, var isFace, var hash}) async {
     try {
       Map data = {'code': employee_Id, "isFace": isFace, "verification": hash};

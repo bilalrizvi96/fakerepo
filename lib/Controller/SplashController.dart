@@ -8,6 +8,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
+  var updates = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -35,6 +36,13 @@ class SplashController extends GetxController {
         Get.offAllNamed('/intro');
       }
     });
+  }
+
+  checkUpdate() async {
+    var response = await API().CheckUpdate();
+    if (response.statusCode == 200) {
+      updates.value = response.data['updateAvailability'];
+    }
   }
 
   @override
