@@ -61,7 +61,9 @@ class API {
 
   Future CheckUpdate() async {
     try {
-      Map data = {};
+      Map data = {
+        // "version": BaseUrl.version.toString()
+      };
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
