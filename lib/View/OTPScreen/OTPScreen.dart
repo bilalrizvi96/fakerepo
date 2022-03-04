@@ -67,6 +67,9 @@ class OTPScreen extends StatelessWidget {
                           hasTextBorderColor: Colors.white,
                           highlightPinBoxColor: DynamicColor().white,
                           defaultBorderColor: Colors.white,
+                          // autofocus: true,
+                          isCupertino: true,
+
                           pinTextStyle:
                               TextStyle(color: DynamicColor().primarycolor),
                           highlightAnimationBeginColor: Colors.black,
@@ -76,32 +79,12 @@ class OTPScreen extends StatelessWidget {
                           onDone: (String val) {
                             otpController.submit(int.parse(val));
                           },
+
                           maxLength: 6,
                           pinBoxHeight: 45,
                           pinBoxWidth: width / 10,
                         ),
                       ),
-                      //   OTPTextField(
-                      //     length: 6,
-                      //     borderColor: Colors.black,
-                      //     focusedBorderColor: Colors.black,
-                      //     showFieldAsBox: true,
-                      //     cursorColor: Colors.white,
-                      //     filled: true,
-                      //
-                      //     fillColor: Colors.white,
-                      //     borderWidth: 4.0,
-                      //
-                      //     //runs when a code is typed in
-                      //     onCodeChanged: (String code) {
-                      //       // otpController.submit(int.parse(code));
-                      //     },
-                      //
-                      //     onSubmit: (String verificationCode) {
-                      //
-                      //     },
-                      //   ),
-                      // ),
                       Positioned(
                         right: width / 10,
                         top: height / 1.9,
@@ -142,6 +125,7 @@ class OTPScreen extends StatelessWidget {
                         child: otpController.start.value == 0
                             ? GestureDetector(
                                 onTap: () {
+                                  otpController.resendOtp();
                                   // Get.offNamed('/facerule');
                                 },
                                 child: Container(

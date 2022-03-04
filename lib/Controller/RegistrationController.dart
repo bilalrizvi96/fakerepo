@@ -82,8 +82,22 @@ class RegistrationController extends GetxController {
         print(response);
         await submit();
         Loading.value = false;
+      } else if (response.statusCode == 422) {
+        var errorid = response.data['error'].toString().split(":");
+        var cheaterID = errorid[1];
+        var date = DateTime.now();
+        await API().NotificationSend(
+          empId: BaseUrl.storage.read("empCode"),
+          time: date.hour.toString() + ":" + date.minute.toString(),
+          message: cheaterID.toString() +
+              "is trying to register on face" +
+              employee_IdController.text.toString(),
+        );
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
+        Loading.value = false;
       } else {
-        Get.snackbar("Error ", response.data['respose'].toString(),
+        Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
         Loading.value = false;
       }
@@ -99,12 +113,13 @@ class RegistrationController extends GetxController {
     var email = emailsplit[0] + '@starmarketingonline.com';
     print(email);
     print("email");
+    BaseUrl.storage.write("empCode", employee_IdController.text.toString());
     var response = await API().Registration(
         employee_Id: employee_IdController.text.toString(),
         email_address: email,
         check: true);
     if (response.statusCode == 200) {
-      Get.offAllNamed('/OTP');
+      Get.offNamed('/OTP');
       print(response);
       Get.snackbar("Registered ", "Register Successfully");
 

@@ -146,14 +146,10 @@ class SignInEmployeeController extends GetxController {
 
   sigin(var isface) async {
     randomss();
-    print(value);
+
     String credentials = value;
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     encoded.value = stringToBase64.encode(credentials);
-    String decoded = stringToBase64.decode(encoded.value);
-    print(encoded.value);
-    print(decoded);
-    print(deviceId.value);
 
     var response = await API().SigIn(
         employee_Id: empcodeController.text.toString(),
@@ -174,8 +170,7 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage
           .write("totalPresent", response.user[0].presentDays.toString());
       BaseUrl.storage.write("status", response.user[0].status);
-      print(BaseUrl.storage.read("status").toString());
-      print("val");
+
       BaseUrl.storage.write("phoneNo", response.user[0].phoneNo);
       BaseUrl.storage.write("eMail", response.user[0].eMail);
       BaseUrl.storage.write("firstName", response.user[0].profile[0].firstName);
@@ -195,7 +190,7 @@ class SignInEmployeeController extends GetxController {
       Get.offAllNamed('/home');
     } else {
       Loading.value = false;
-      print(response.data['error'].toString());
+
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
@@ -209,11 +204,10 @@ class SignInEmployeeController extends GetxController {
         verification: faceImage,
       );
       if (response.statusCode == 200) {
-        print(response);
         Get.snackbar("Log In ", "Verified Successfully");
         await sigin(true);
       } else {
-        Get.snackbar("Login ", response.data['respose'].toString(),
+        Get.snackbar("Login ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
         Loading.value = false;
       }

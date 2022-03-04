@@ -17,6 +17,7 @@ class API {
         "isFace": check,
         "registered": true,
       };
+      print(data);
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
@@ -25,11 +26,10 @@ class API {
       );
 
       if (response.statusCode == 200) {
-        var status = response;
         BaseUrl.token = "BEARER" + " " + response.data['token'];
         BaseUrl.code = response.data['code'];
         // BaseUrl.storage.write("token", BaseUrl.token);
-        BaseUrl.storage.write("code", BaseUrl.code);
+        // BaseUrl.storage.write("code", BaseUrl.code);
         print(BaseUrl.storage.read("token").toString());
         print(BaseUrl.storage.read("code".toString()));
         return response;
@@ -61,13 +61,67 @@ class API {
 
   Future CheckUpdate() async {
     try {
-      Map data = {
-        // "version": BaseUrl.version.toString()
-      };
+      Map data = {"version": BaseUrl.version.toString()};
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
         BaseUrl.baseurl + 'checkUpdate',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future OTPVerification({var code, var empCode}) async {
+    try {
+      Map data = {"otpCode": code, 'empCode': BaseUrl.storage.read("empCode")};
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl.baseurl + 'OTPVerification',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future ResendOTp() async {
+    try {
+      Map data = {"empCode": BaseUrl.storage.read("empCode")};
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl.baseurl + 'OTPResend',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future NotificationSend({var time, var empId, var message}) async {
+    try {
+      Map data = {
+        "type": "faceDuplication",
+        "time": "",
+        "employeeId": "",
+        "message": ""
+      };
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl.baseurl + 'notifications',
         data: data,
       );
       if (response.statusCode == 200) {
