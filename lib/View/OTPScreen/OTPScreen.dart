@@ -77,9 +77,11 @@ class OTPScreen extends StatelessWidget {
                           pinBoxDecoration:
                               ProvidedPinBoxDecoration.defaultPinBoxDecoration,
                           onDone: (String val) {
-                            otpController.submit(int.parse(val));
+                            otpController.submit();
                           },
-
+                          onTextChanged: (val) {
+                            otpController.submit();
+                          },
                           maxLength: 6,
                           pinBoxHeight: 45,
                           pinBoxWidth: width / 10,

@@ -46,6 +46,7 @@ class RegistrationController extends GetxController {
   }
 
   registration() async {
+    BaseUrl.storage.write("empCode", employee_IdController.text.toString());
     if (registrationFormKey.currentState!.validate() &&
         registrationFormKey.currentState!.validate()) {
       Loading.value = true;
@@ -74,15 +75,16 @@ class RegistrationController extends GetxController {
   }
 
   faceverification() async {
+    BaseUrl.storage.write("empCode", employee_IdController.text.toString());
     if (faceImage != null) {
       var response = await API().Face_Registration(
         files: faceImage,
       );
       if (response.statusCode == 200) {
         print(response);
-        await submit();
+        Get.offNamed('/OTP');
         Loading.value = false;
-      } else if (response.statusCode == 422) {
+      } else if (response.data['error'] != "") {
         var errorid = response.data['error'].toString().split(":");
         var cheaterID = errorid[1];
         var date = DateTime.now();
@@ -90,7 +92,7 @@ class RegistrationController extends GetxController {
           empId: BaseUrl.storage.read("empCode"),
           time: date.hour.toString() + ":" + date.minute.toString(),
           message: cheaterID.toString() +
-              "is trying to register on face" +
+              " is trying to register on " +
               employee_IdController.text.toString(),
         );
         Get.snackbar("Error ", response.data['error'].toString(),
@@ -108,28 +110,28 @@ class RegistrationController extends GetxController {
     }
   }
 
-  submit() async {
-    var emailsplit = emailController.text.toString().split("@");
-    var email = emailsplit[0] + '@starmarketingonline.com';
-    print(email);
-    print("email");
-    BaseUrl.storage.write("empCode", employee_IdController.text.toString());
-    var response = await API().Registration(
-        employee_Id: employee_IdController.text.toString(),
-        email_address: email,
-        check: true);
-    if (response.statusCode == 200) {
-      Get.offNamed('/OTP');
-      print(response);
-      Get.snackbar("Registered ", "Register Successfully");
-
-      // Get.offAllNamed('/home');
-    } else {
-      Get.back();
-      Get.snackbar("Error ", response.data['error'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
-
-      // Get.offAllNamed('/signinemp');
-    }
-  }
+  // submit() async {
+  //   var emailsplit = emailController.text.toString().split("@");
+  //   var email = emailsplit[0] + '@starmarketingonline.com';
+  //   print(email);
+  //   print("email");
+  //
+  //   var response = await API().Registration(
+  //       employee_Id: employee_IdController.text.toString(),
+  //       email_address: email,
+  //       check: true);
+  //   if (response.statusCode == 200) {
+  //     Get.offNamed('/OTP');
+  //     print(response);
+  //     Get.snackbar("Registered ", "Register Successfully");
+  //
+  //     // Get.offAllNamed('/home');
+  //   } else {
+  //     Get.back();
+  //     Get.snackbar("Error ", response.data['error'].toString(),
+  //         colorText: Colors.white, backgroundColor: Colors.red);
+  //
+  //     // Get.offAllNamed('/signinemp');
+  //   }
+  // }
 }

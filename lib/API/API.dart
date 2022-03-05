@@ -79,6 +79,7 @@ class API {
   Future OTPVerification({var code, var empCode}) async {
     try {
       Map data = {"otpCode": code, 'empCode': BaseUrl.storage.read("empCode")};
+      print(data);
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
@@ -99,7 +100,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'OTPResend',
+        BaseUrl.baseurl + 'OTPSend',
         data: data,
       );
       if (response.statusCode == 200) {
@@ -114,9 +115,9 @@ class API {
     try {
       Map data = {
         "type": "faceDuplication",
-        "time": "",
-        "employeeId": "",
-        "message": ""
+        "time": time.toString(),
+        "employeeId": empId.toString(),
+        "message": message
       };
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';

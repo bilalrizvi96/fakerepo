@@ -79,7 +79,7 @@ class MyProfileScreen extends StatelessWidget {
                                 child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      'First Name',
+                                      'Employee Code',
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w500,
                                           fontSize: width / 30,
@@ -136,7 +136,7 @@ class MyProfileScreen extends StatelessWidget {
                                 child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      'First Name',
+                                      'Name',
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w500,
                                           fontSize: width / 30,
@@ -165,11 +165,10 @@ class MyProfileScreen extends StatelessWidget {
                                           color: DynamicColor().primarycolor,
                                           fontWeight: FontWeight.w600),
                                       decoration: new InputDecoration(
-                                        hintText: BaseUrl.storage
-                                                    .read("firstName") !=
-                                                ' '
-                                            ? BaseUrl.storage.read("firstName")
-                                            : "First Name",
+                                        hintText:
+                                            BaseUrl.storage.read("name") != ' '
+                                                ? BaseUrl.storage.read("name")
+                                                : "Name",
                                         focusColor: DynamicColor().primarycolor,
                                         hoverColor: DynamicColor().primarycolor,
                                         fillColor: Colors.white,
@@ -182,63 +181,63 @@ class MyProfileScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              // SizedBox(
+                              //   height: height / 40,
+                              // ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(left: 35.0),
+                              //   child: Align(
+                              //       alignment: Alignment.topLeft,
+                              //       child: Text(
+                              //         'Last Name',
+                              //         style: GoogleFonts.poppins(
+                              //             fontWeight: FontWeight.w500,
+                              //             fontSize: width / 30,
+                              //             color: DynamicColor().black),
+                              //       )),
+                              // ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     Container(
+                              //       width: width / 80,
+                              //       height: height / 18,
+                              //       color: DynamicColor().primarycolor,
+                              //     ),
+                              //     Container(
+                              //       width: width / 1.22,
+                              //       child: TextFormField(
+                              //         readOnly: myProfileController.read.value,
+                              //         controller: myProfileController
+                              //             .lastnameController,
+                              //         validator: myProfileController.validators,
+                              //         cursorColor: DynamicColor().primarycolor,
+                              //         style: GoogleFonts.poppins(
+                              //             color: DynamicColor().primarycolor,
+                              //             fontWeight: FontWeight.w600),
+                              //         decoration: new InputDecoration(
+                              //             hintText: BaseUrl.storage
+                              //                         .read("lastName") !=
+                              //                     ' '
+                              //                 ? BaseUrl.storage
+                              //                     .read("lastName")!
+                              //                 : "Last Name",
+                              //             errorStyle: TextStyle(fontSize: 12),
+                              //             focusColor:
+                              //                 DynamicColor().primarycolor,
+                              //             hoverColor:
+                              //                 DynamicColor().primarycolor,
+                              //             fillColor: Colors.white,
+                              //             filled: true,
+                              //             border: InputBorder.none),
+                              //         // keyboardType: TextInputType.none,
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                               SizedBox(
-                                height: height / 40,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 35.0),
-                                child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Last Name',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: width / 30,
-                                          color: DynamicColor().black),
-                                    )),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: width / 80,
-                                    height: height / 18,
-                                    color: DynamicColor().primarycolor,
-                                  ),
-                                  Container(
-                                    width: width / 1.22,
-                                    child: TextFormField(
-                                      readOnly: myProfileController.read.value,
-                                      controller: myProfileController
-                                          .lastnameController,
-                                      validator: myProfileController.validators,
-                                      cursorColor: DynamicColor().primarycolor,
-                                      style: GoogleFonts.poppins(
-                                          color: DynamicColor().primarycolor,
-                                          fontWeight: FontWeight.w600),
-                                      decoration: new InputDecoration(
-                                          hintText: BaseUrl.storage
-                                                      .read("lastName") !=
-                                                  ' '
-                                              ? BaseUrl.storage
-                                                  .read("lastName")!
-                                              : "Last Name",
-                                          errorStyle: TextStyle(fontSize: 12),
-                                          focusColor:
-                                              DynamicColor().primarycolor,
-                                          hoverColor:
-                                              DynamicColor().primarycolor,
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                          border: InputBorder.none),
-                                      // keyboardType: TextInputType.none,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: height / 40,
+                                height: height / 80,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -300,7 +299,7 @@ class MyProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: height / 40,
+                                height: height / 80,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 35.0),
@@ -354,7 +353,7 @@ class MyProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: height / 40,
+                                height: height / 80,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -363,7 +362,7 @@ class MyProfileScreen extends StatelessWidget {
                                 child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      'Date of Joining',
+                                      'Start Timing',
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w500,
                                           fontSize: width / 30,
@@ -393,10 +392,10 @@ class MyProfileScreen extends StatelessWidget {
                                           fontWeight: FontWeight.w600),
                                       decoration: new InputDecoration(
                                           hintText: BaseUrl.storage
-                                                      .read("dateOfJoining") !=
+                                                      .read("starttime") !=
                                                   ' '
                                               ? BaseUrl.storage
-                                                  .read("dateOfJoining")
+                                                  .read("starttime")
                                               : "First Name",
                                           focusColor:
                                               DynamicColor().primarycolor,
@@ -417,7 +416,199 @@ class MyProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: height / 40,
+                                height: height / 80,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 35.0,
+                                ),
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'End Timing',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: width / 30,
+                                          color: DynamicColor().black),
+                                    )),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: width / 80,
+                                    height: height / 18,
+                                    color: DynamicColor().primarycolor,
+                                  ),
+                                  Container(
+                                    width: width / 1.22,
+                                    child: TextFormField(
+                                      readOnly: myProfileController.read.value,
+                                      keyboardType: TextInputType.datetime,
+                                      controller: myProfileController
+                                          .date_of_joiningController,
+                                      validator: myProfileController.validators,
+                                      cursorColor: DynamicColor().primarycolor,
+                                      style: GoogleFonts.poppins(
+                                          color: DynamicColor().primarycolor,
+                                          fontWeight: FontWeight.w600),
+                                      decoration: new InputDecoration(
+                                          hintText: BaseUrl.storage
+                                                      .read("endTiming") !=
+                                                  ' '
+                                              ? BaseUrl.storage
+                                                  .read("endTiming")
+                                              : "First Name",
+                                          focusColor:
+                                              DynamicColor().primarycolor,
+                                          hoverColor:
+                                              DynamicColor().primarycolor,
+
+                                          // labelText: "Enter First Name",
+                                          // labelStyle: ,
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          border: InputBorder.none
+
+                                          //fillColor: Colors.green
+                                          ),
+                                      // keyboardType: TextInputType.none,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: height / 80,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 35.0,
+                                ),
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Hours Per Week',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: width / 30,
+                                          color: DynamicColor().black),
+                                    )),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: width / 80,
+                                    height: height / 18,
+                                    color: DynamicColor().primarycolor,
+                                  ),
+                                  Container(
+                                    width: width / 1.22,
+                                    child: TextFormField(
+                                      readOnly: myProfileController.read.value,
+                                      keyboardType: TextInputType.datetime,
+                                      controller: myProfileController
+                                          .date_of_joiningController,
+                                      validator: myProfileController.validators,
+                                      cursorColor: DynamicColor().primarycolor,
+                                      style: GoogleFonts.poppins(
+                                          color: DynamicColor().primarycolor,
+                                          fontWeight: FontWeight.w600),
+                                      decoration: new InputDecoration(
+                                          hintText: BaseUrl.storage
+                                                      .read("hoursPerWeek") !=
+                                                  ' '
+                                              ? BaseUrl.storage
+                                                  .read("hoursPerWeek")
+                                              : "First Name",
+                                          focusColor:
+                                              DynamicColor().primarycolor,
+                                          hoverColor:
+                                              DynamicColor().primarycolor,
+
+                                          // labelText: "Enter First Name",
+                                          // labelStyle: ,
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          border: InputBorder.none
+
+                                          //fillColor: Colors.green
+                                          ),
+                                      // keyboardType: TextInputType.none,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: height / 80,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 35.0,
+                                ),
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Off Days',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: width / 30,
+                                          color: DynamicColor().black),
+                                    )),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: width / 80,
+                                    height: height / 18,
+                                    color: DynamicColor().primarycolor,
+                                  ),
+                                  Container(
+                                    width: width / 1.22,
+                                    child: TextFormField(
+                                      readOnly: myProfileController.read.value,
+                                      keyboardType: TextInputType.datetime,
+                                      controller: myProfileController
+                                          .date_of_joiningController,
+                                      validator: myProfileController.validators,
+                                      cursorColor: DynamicColor().primarycolor,
+                                      style: GoogleFonts.poppins(
+                                          color: DynamicColor().primarycolor,
+                                          fontWeight: FontWeight.w600),
+                                      decoration: new InputDecoration(
+                                          hintText:
+                                              BaseUrl.storage.read("offDay") !=
+                                                      null
+                                                  ? BaseUrl.storage
+                                                      .read("offDay")
+                                                      .toString()
+                                                      .replaceAll('[', '')
+                                                      .replaceAll(']', '')
+                                                  : "First Name",
+                                          focusColor:
+                                              DynamicColor().primarycolor,
+                                          hoverColor:
+                                              DynamicColor().primarycolor,
+
+                                          // labelText: "Enter First Name",
+                                          // labelStyle: ,
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          border: InputBorder.none
+
+                                          //fillColor: Colors.green
+                                          ),
+                                      // keyboardType: TextInputType.none,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: height / 80,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 35.0),
@@ -470,7 +661,7 @@ class MyProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: height / 40,
+                                height: height / 80,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 35.0),
@@ -524,7 +715,7 @@ class MyProfileScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: height / 40,
+                                height: height / 80,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 35.0),

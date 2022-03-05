@@ -14,15 +14,15 @@ class OTPController extends GetxController {
   Timer? _timer;
   var start = 30.obs;
   String _comingSms = 'Unknown';
-  submit(verfication) async {
+  submit() async {
     code = BaseUrl.storage.read("code");
 
-    if (verfication != null) {
+    if (otptextcontroller.text.isNotEmpty) {
       var response = await API().OTPVerification(
-          code: verfication.toString(),
+          code: otptextcontroller.text.toString(),
           empCode: BaseUrl.storage.read("empCode"));
       if (response.statusCode == 200) {
-        Get.snackbar("OTP ", "OTP Verified Successfully");
+        Get.snackbar("OTP ", response.data['response'].toString());
         Get.offAllNamed("/signinemp");
       } else {
         otptextcontroller.clear();
@@ -38,17 +38,19 @@ class OTPController extends GetxController {
 
   resendOtp() async {
     otptextcontroller.clear();
-    start.value = 0;
-    startTimer();
-    update();
+
     var response = await API().ResendOTp();
     if (response.statusCode == 200) {
       Get.snackbar("OTP ", "OTP Send Successfully");
+      start.value = 30;
+      startTimer();
     } else {
       otptextcontroller.clear();
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
+      // update();
     }
+    update();
   }
 
   Future<void> initSmsListener() async {
@@ -68,12 +70,13 @@ class OTPController extends GetxController {
         _comingSms[34] +
         _comingSms[35] +
         _comingSms[36] +
-        _comingSms[
-            37]; //used to set the code in the message to a string and setting it to a textcontroller. message length is 38. so my code is in string index 32-37.
+        _comingSms[37];
+    // submit();
   }
 
   @override
   void onInit() {
+    resendOtp();
     super.onInit();
     initSmsListener();
     startTimer();

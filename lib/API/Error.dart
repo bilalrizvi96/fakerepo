@@ -13,6 +13,8 @@ onError(dynamic error) {
     return error.response;
   } else if (error.response.statusCode == 400) {
     return error.response;
+  } else if (error.response.statusCode == 422) {
+    return error.response;
   } else {
     return Get.snackbar("Error ", "Lead Say Contact Kray",
         colorText: Colors.white, backgroundColor: Colors.red);

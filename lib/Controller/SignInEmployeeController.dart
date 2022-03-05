@@ -170,19 +170,15 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage
           .write("totalPresent", response.user[0].presentDays.toString());
       BaseUrl.storage.write("status", response.user[0].status);
-
+      BaseUrl.storage.write("starttime", response.user[0].startTiming);
+      BaseUrl.storage.write("endTiming", response.user[0].endTiming);
+      BaseUrl.storage.write("hoursPerWeek", response.user[0].hoursPerWeek);
+      BaseUrl.storage.write("offDay", response.user[0].offDay);
       BaseUrl.storage.write("phoneNo", response.user[0].phoneNo);
       BaseUrl.storage.write("eMail", response.user[0].eMail);
-      BaseUrl.storage.write("firstName", response.user[0].profile[0].firstName);
-      BaseUrl.storage.write("lastName", response.user[0].profile[0].lastName);
-      BaseUrl.storage.write("address", response.user[0].profile[0].address);
-      BaseUrl.storage
-          .write("dateOfJoining", response.user[0].profile[0].dateOfJoining);
-      BaseUrl.storage
-          .write("designation", response.user[0].profile[0].designation);
-      BaseUrl.storage
-          .write("shiftTiming", response.user[0].profile[0].shiftType);
-      BaseUrl.storage.write("employeeId", response.user[0].profile[0].empCode);
+      // BaseUrl.storage.write("address", response.user[0].address);
+      BaseUrl.storage.write("designation", response.user[0].designation);
+      BaseUrl.storage.write("shiftTiming", response.user[0].shiftType);
       BaseUrl.storage.write("clockin", response.user[0].checkIn);
       BaseUrl.storage.write("clockout", response.user[0].checkOut);
 
