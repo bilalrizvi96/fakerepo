@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 onError(dynamic error) {
   if (error.response.statusCode == 403) {
-    BaseUrl.storage.erase();
+    BaseUrl.storage.write("token", "out");
     Get.offNamed("/signinemp");
   } else if (error.response.statusCode == 404) {
     return error.response;
@@ -21,5 +21,3 @@ onError(dynamic error) {
     ;
   }
 }
-
-//bilal try method next time

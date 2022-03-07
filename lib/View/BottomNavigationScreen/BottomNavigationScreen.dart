@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/BottomNavigationController.dart';
-import 'package:attendencesystem/View/HomeScreen/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

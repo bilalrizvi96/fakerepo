@@ -7,7 +7,7 @@ import 'package:attendencesystem/Model/LoginModel.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,13 +26,6 @@ class SignInEmployeeController extends GetxController {
   String? imageBase64;
   var loginFormKey = GlobalKey<FormState>();
   var read = false.obs;
-  // static Future<bool> hasBiometrics() async {
-  //   try {
-  //     return await _auth.canCheckBiometrics;
-  //   } on PlatformException catch (e) {
-  //     return false;
-  //   }
-  // }
 
   @override
   void onInit() {
@@ -57,28 +50,6 @@ class SignInEmployeeController extends GetxController {
     print(read.value);
     update();
   }
-  // static Future<List<BiometricType>> getBiometrics() async {
-  //   try {
-  //     return await _auth.getAvailableBiometrics();
-  //   } on PlatformException catch (e) {
-  //     return <BiometricType>[];
-  //   }
-  // }
-
-  // Future<bool> authenticate() async {
-  //   final isAvailable = await hasBiometrics();
-  //   if (!isAvailable) return false;
-  //
-  //   try {
-  //     return await _auth.authenticateWithBiometrics(
-  //       localizedReason: 'Scan Fingerprint to Authenticate',
-  //       useErrorDialogs: true,
-  //       stickyAuth: true,
-  //     );
-  //   } on PlatformException catch (e) {
-  //     return false;
-  //   }
-  // }
 
   imgFromCameras() async {
     var image = await _picker.pickImage(
@@ -190,8 +161,6 @@ class SignInEmployeeController extends GetxController {
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
-
-    // update();
   }
 
   faceverification() async {

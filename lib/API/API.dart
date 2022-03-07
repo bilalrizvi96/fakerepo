@@ -133,6 +133,28 @@ class API {
     }
   }
 
+  Future Feedback({var time, var empId, var message}) async {
+    try {
+      Map data = {
+        "type": "feedback",
+        "time": time.toString(),
+        "employeeId": empId.toString(),
+        "message": message
+      };
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl.baseurl + 'notifications',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
   Future SigIn({var employee_Id, var isFace, var hash}) async {
     try {
       Map data = {'code': employee_Id, "isFace": isFace, "verification": hash};

@@ -30,10 +30,6 @@ class OTPController extends GetxController {
             colorText: Colors.white, backgroundColor: Colors.red);
       }
     }
-    // else {
-    //   Get.snackbar("OTP ", "You enter the wrong OTP",
-    //       colorText: Colors.white, backgroundColor: Colors.red);
-    // }
   }
 
   resendOtp() async {
@@ -48,7 +44,6 @@ class OTPController extends GetxController {
       otptextcontroller.clear();
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
-      // update();
     }
     update();
   }
@@ -71,7 +66,6 @@ class OTPController extends GetxController {
         _comingSms[35] +
         _comingSms[36] +
         _comingSms[37];
-    // submit();
   }
 
   @override

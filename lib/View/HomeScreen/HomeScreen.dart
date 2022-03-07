@@ -20,7 +20,6 @@ class HomeScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      // drawer: Drawers().drawers(context),
       body: SafeArea(
         child: Container(
             width: width,
@@ -67,6 +66,23 @@ class HomeScreen extends StatelessWidget {
                                       fontSize: width / 16),
                                 ),
                                 Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/feedback');
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8.0, left: 8.0),
+                                    child: Icon(
+                                      Icons.support_agent,
+                                      size: width / 16,
+                                      color: DynamicColor().primarycolor,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width / 50,
+                                ),
                                 GestureDetector(
                                   onTap: () {
                                     BaseUrl.storage.write("token", "out");
@@ -242,15 +258,6 @@ class HomeScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                // Text(
-                                //   BaseUrl.storage.read("clock") != null
-                                //       ? 'Clock In: ${BaseUrl.storage.read("clock")}'
-                                //       : "Clock In: 00:00",
-                                //   style: GoogleFonts.poppins(
-                                //       color: DynamicColor().black,
-                                //       fontWeight: FontWeight.w600,
-                                //       fontSize: width / 30),
-                                // ),
                                 SizedBox(
                                   width: width / 10,
                                 ),
@@ -561,99 +568,6 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              // Positioned(
-                              //   top: height / 3.9,
-                              //   child: DelayedDisplay(
-                              //     fadeIn: true,
-                              //     fadingDuration: Duration(milliseconds: 400),
-                              //     child: Container(
-                              //       height: height / 25,
-                              //       width: width,
-                              //       decoration: BoxDecoration(
-                              //           borderRadius: BorderRadius.only(
-                              //               topRight: Radius.circular(20.0),
-                              //               topLeft: Radius.circular(20.0)),
-                              //           color: Color(0xFF395BCC)),
-                              //       child: Row(
-                              //         crossAxisAlignment:
-                              //             CrossAxisAlignment.center,
-                              //         mainAxisAlignment:
-                              //             MainAxisAlignment.center,
-                              //         children: [
-                              //           Container(
-                              //             width: width / 6,
-                              //             height: height / 35,
-                              //             decoration: BoxDecoration(
-                              //               color: DynamicColor().primarycolor,
-                              //               borderRadius:
-                              //                   BorderRadius.circular(5.0),
-                              //               boxShadow: [
-                              //                 BoxShadow(
-                              //                   color: DynamicColor()
-                              //                       .primarycolor
-                              //                       .withOpacity(0.1),
-                              //                   spreadRadius: 4,
-                              //                   blurRadius: 6,
-                              //                   offset: Offset(0,
-                              //                       1), // changes position of shadow
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //             child: Row(
-                              //               crossAxisAlignment:
-                              //                   CrossAxisAlignment.center,
-                              //               mainAxisAlignment:
-                              //                   MainAxisAlignment.center,
-                              //               children: [
-                              //                 Container(
-                              //                     width: 15,
-                              //                     height: 15,
-                              //                     alignment: Alignment.center,
-                              //                     decoration: BoxDecoration(
-                              //                       color: DynamicColor().white,
-                              //                       borderRadius:
-                              //                           BorderRadius.circular(
-                              //                               30.0),
-                              //                     ),
-                              //                     child: Text(
-                              //                       "!",
-                              //                       style: TextStyle(
-                              //                           color: DynamicColor()
-                              //                               .primarycolor,
-                              //                           fontWeight:
-                              //                               FontWeight.bold,
-                              //                           fontSize: width / 35),
-                              //                     )),
-                              //                 SizedBox(
-                              //                   width: width / 50,
-                              //                 ),
-                              //                 Text(
-                              //                   "Note",
-                              //                   style: TextStyle(
-                              //                       color: DynamicColor().white,
-                              //                       fontWeight: FontWeight.w400,
-                              //                       fontSize: width / 32),
-                              //                 )
-                              //               ],
-                              //             ),
-                              //           ),
-                              //           SizedBox(
-                              //             width: width / 50,
-                              //           ),
-                              //           Text(
-                              //             "Avoid Multiple Check-ins",
-                              //             style: TextStyle(
-                              //                 color: DynamicColor()
-                              //                     .white
-                              //                     .withOpacity(0.41),
-                              //                 fontWeight: FontWeight.w600,
-                              //                 fontSize: width / 30),
-                              //           )
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ],

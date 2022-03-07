@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:attendencesystem/View/HomeScreen/HomeScreen.dart';
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:attendencesystem/View/SummaryScreen/SummaryScreen.dart';
@@ -21,13 +19,6 @@ class BottomNavigationController extends GetxController {
         update();
       }
     });
-    // if (await DataConnectionChecker().hasConnection) {
-    //   connection.value = true;
-    //   update();
-    // } else {
-    //   connection.value = false;
-    //   update();
-    // }
   }
 
   List<Widget> children = [HomeScreen(), SummaryScreen(), MyProfileScreen()];

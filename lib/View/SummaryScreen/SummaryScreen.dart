@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-
 import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +14,6 @@ class SummaryScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return new Scaffold(
-      // drawer: Drawers().drawers(context),
       body: SafeArea(
         child: Container(
             width: width,

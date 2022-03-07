@@ -30,31 +30,6 @@ class SplashScreen extends StatelessWidget {
                   ),
 
                   // RichText(
-                  //   text: TextSpan(
-                  //     text: 'Star ',
-                  //     style: GoogleFonts.poppins(
-                  //         color: DynamicColor().white,
-                  //         fontStyle: FontStyle.normal,
-                  //         fontWeight: FontWeight.w300,
-                  //         fontSize: width / 9),
-                  //     children: <TextSpan>[
-                  //       TextSpan(
-                  //         text: 'Marketing',
-                  //         style: GoogleFonts.poppins(
-                  //             fontWeight: FontWeight.w200,
-                  //             fontSize: width / 14,
-                  //             color: DynamicColor().white),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
-                  // Text(
-                  //   'Attendance',
-                  //   style: GoogleFonts.poppins(
-                  //       fontWeight: FontWeight.w200,
-                  //       fontSize: width / 14,
-                  //       color: DynamicColor().white),
-                  // )
                 ],
               ),
             );

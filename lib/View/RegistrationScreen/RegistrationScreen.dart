@@ -1,6 +1,5 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/RegistrationController.dart';
-
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,15 +44,6 @@ class RegistrationScreen extends StatelessWidget {
                                           fontSize: width / 14,
                                           color: DynamicColor().black),
                                     ),
-
-                                    // Spacer(),
-                                    // Spacer(),
-                                    // Image.asset(
-                                    //   'assets/signinclock.png',
-                                    //   fit: BoxFit.cover,
-                                    //   height: height / 8,
-                                    // ),
-                                    // Spacer(),
                                   ],
                                 ),
                               ),
@@ -191,7 +181,7 @@ class RegistrationScreen extends StatelessWidget {
                                                     DynamicColor().primarycolor,
                                                 fontWeight: FontWeight.w600),
                                             decoration: new InputDecoration(
-                                                hintText: '',
+                                                hintText: 'Enter Your Email',
                                                 focusColor:
                                                     DynamicColor().primarycolor,
                                                 hoverColor:
@@ -204,24 +194,6 @@ class RegistrationScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ],
-                                    ),
-                                    SizedBox(
-                                      height: height / 150,
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 35.0),
-                                      child: Align(
-                                          alignment: Alignment.topRight,
-                                          child: Text(
-                                            '@starmarketingonline.com',
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: width / 29,
-                                                color: DynamicColor()
-                                                    .black
-                                                    .withOpacity(0.7)),
-                                          )),
                                     ),
                                     SizedBox(
                                       height: height / 4,

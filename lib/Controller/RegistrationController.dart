@@ -52,11 +52,11 @@ class RegistrationController extends GetxController {
       Loading.value = true;
       update();
       BaseUrl.empcode = employee_IdController.text;
-      var emailsplit = emailController.text.toString().split("@");
-      var email = emailsplit[0] + '@starmarketingonline.com';
+      // var emailsplit = emailController.text.toString().split("@");
+      // var email = emailsplit[0] + '@starmarketingonline.com';
       var response = await API().RegistrationConfirmation(
         employee_Id: employee_IdController.text.toString(),
-        email_address: email,
+        email_address: emailController.text.toString(),
       );
       if (response.statusCode == 200) {
         Loading.value = false;
@@ -67,8 +67,6 @@ class RegistrationController extends GetxController {
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
-
-        // Get.offAllNamed('/signinemp');
       }
     }
     update();
@@ -109,29 +107,4 @@ class RegistrationController extends GetxController {
       Loading.value = false;
     }
   }
-
-  // submit() async {
-  //   var emailsplit = emailController.text.toString().split("@");
-  //   var email = emailsplit[0] + '@starmarketingonline.com';
-  //   print(email);
-  //   print("email");
-  //
-  //   var response = await API().Registration(
-  //       employee_Id: employee_IdController.text.toString(),
-  //       email_address: email,
-  //       check: true);
-  //   if (response.statusCode == 200) {
-  //     Get.offNamed('/OTP');
-  //     print(response);
-  //     Get.snackbar("Registered ", "Register Successfully");
-  //
-  //     // Get.offAllNamed('/home');
-  //   } else {
-  //     Get.back();
-  //     Get.snackbar("Error ", response.data['error'].toString(),
-  //         colorText: Colors.white, backgroundColor: Colors.red);
-  //
-  //     // Get.offAllNamed('/signinemp');
-  //   }
-  // }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
@@ -19,10 +20,6 @@ class SplashController extends GetxController {
   void onInit() {
     super.onInit();
     checkUpdate();
-
-    // TODO: implement onInit
-    // await Firebase.initializeApp();
-    // FirebaseCrashlytics.instance.crash();
   }
 
   checkUpdate() async {
@@ -95,9 +92,7 @@ class SplashController extends GetxController {
                           primary: DynamicColor().primarycolor,
                           textStyle:
                               TextStyle(color: DynamicColor().primarycolor)),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
+                      onPressed: () => exit(0),
                       child: const Text('No'))
                 ],
               ));
