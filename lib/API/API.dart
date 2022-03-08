@@ -3,6 +3,7 @@ import 'package:attendencesystem/Model/LoginModel.dart';
 import 'package:attendencesystem/Model/SummaryModel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'BaseURl.dart';
@@ -133,21 +134,30 @@ class API {
     }
   }
 
-  Future Feedback({var time, var empId, var message}) async {
+  Future Feedback(
+      {var time, var empId, var message, var type, var image}) async {
+    print(image);
+    var file;
+    if (image != null) {
+      file = await MultipartFile.fromFile(image.path);
+    }
     try {
-      Map data = {
-        "type": "feedback",
+      var data = FormData.fromMap({
+        "type": type,
         "time": time.toString(),
         "employeeId": empId.toString(),
-        "message": message
-      };
+        "message": message,
+        "image": file != null ? file : ''
+      });
+      print(data.fields);
+      print("data");
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'notifications',
+        BaseUrl.baseurl + 'feedback',
         data: data,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return response;
       }
     } catch (e) {

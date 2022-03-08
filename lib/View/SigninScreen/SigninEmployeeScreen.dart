@@ -184,7 +184,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                         Spacer(),
                                         GestureDetector(
                                           onTap: () {
-                                            signinController.checkOption(0);
+                                            signinController.checkOption();
                                           },
                                           child: DelayedDisplay(
                                             delay: Duration(milliseconds: 1500),

@@ -74,19 +74,19 @@ class SignInEmployeeController extends GetxController {
     return null;
   }
 
-  checkOption(var check) async {
+  checkOption() async {
     if (loginFormKey.currentState!.validate() &&
         loginFormKey.currentState!.validate()) {
       Loading.value = true;
       update();
       BaseUrl.empcode = empcodeController.text;
-      if (check == 1) {
-        await sigin(true);
-      } else if (check == 0) {
-        Loading.value = true;
+      // if (check == 1) {
+      //   await sigin(true);
+      // } else if (check == 0) {
+      //   Loading.value = true;
 
-        await imgFromCameras();
-      }
+      await imgFromCameras();
+      // }
       update();
     }
   }

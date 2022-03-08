@@ -22,7 +22,7 @@ class OTPController extends GetxController {
           code: otptextcontroller.text.toString(),
           empCode: BaseUrl.storage.read("empCode"));
       if (response.statusCode == 200) {
-        Get.snackbar("OTP ", response.data['response'].toString());
+        // Get.snackbar("OTP ", response.data['response'].toString());
         Get.offAllNamed("/signinemp");
       } else {
         otptextcontroller.clear();
