@@ -95,6 +95,7 @@ class OTPController extends GetxController {
   @override
   void dispose() {
     _timer!.cancel();
+
     AltSmsAutofill().unregisterListener();
     super.dispose();
   }
