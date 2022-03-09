@@ -23,8 +23,8 @@ class SplashScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/Splash.png',
+                  Image.network(
+                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/Splash.png',
                     fit: BoxFit.cover,
                     height: height / 4,
                   ),

@@ -49,8 +49,8 @@ class SiginEmployeeScreen extends StatelessWidget {
                             DelayedDisplay(
                               delay: Duration(milliseconds: 1500),
                               slidingCurve: Curves.bounceInOut,
-                              child: Image.asset(
-                                'assets/signinclock.png',
+                              child: Image.network(
+                                'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/signinclock.png',
                                 fit: BoxFit.cover,
                                 height: height / 8,
                               ),
@@ -204,8 +204,8 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                       right: 30.0,
                                                       left: 30.0,
                                                       bottom: 30.0),
-                                                  child: Image.asset(
-                                                    'assets/face.png',
+                                                  child: Image.network(
+                                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
                                                     fit: BoxFit.scaleDown,
                                                     width: width / 15,
                                                   ),

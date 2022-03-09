@@ -25,29 +25,29 @@ class LoginModel {
 }
 
 class User {
-  User({
-    this.id,
-    this.empCode,
-    this.eMail,
-    this.name,
-    this.phoneNo,
-    this.registered,
-    this.designation,
-    this.endTiming,
-    this.firstName,
-    this.hoursPerDay,
-    this.hoursPerWeek,
-    this.lastName,
-    this.offDay,
-    this.offPerYear,
-    this.shiftType,
-    this.startTiming,
-    this.status,
-    this.checkIn,
-    this.checkOut,
-    this.presentDays,
-    this.absentDays,
-  });
+  User(
+      {this.id,
+      this.empCode,
+      this.eMail,
+      this.name,
+      this.phoneNo,
+      this.registered,
+      this.designation,
+      this.endTiming,
+      this.firstName,
+      this.hoursPerDay,
+      this.hoursPerWeek,
+      this.lastName,
+      this.offDay,
+      this.offPerYear,
+      this.shiftType,
+      this.startTiming,
+      this.status,
+      this.checkIn,
+      this.checkOut,
+      this.presentDays,
+      this.absentDays,
+      this.address});
 
   var id;
   var empCode;
@@ -70,6 +70,7 @@ class User {
   var checkOut;
   var presentDays;
   var absentDays;
+  var address;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
@@ -93,6 +94,7 @@ class User {
         checkOut: json["checkOut"],
         presentDays: json["present_days"],
         absentDays: json["absent_days"],
+        address: json["address"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -117,5 +119,6 @@ class User {
         "checkOut": checkOut,
         "present_days": presentDays,
         "absent_days": absentDays,
+        "address": address,
       };
 }

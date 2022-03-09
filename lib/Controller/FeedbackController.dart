@@ -20,10 +20,10 @@ class FeedbackController extends GetxController {
   }
 
   submit() async {
-    Loading.value = true;
-    update();
     if (feedbackFormKey.currentState!.validate() &&
         feedbackFormKey.currentState!.validate()) {
+      Loading.value = true;
+      update();
       if (dropdownValue.value != 'Select') {
         var date = DateTime.now();
         var response = await API().Feedback(

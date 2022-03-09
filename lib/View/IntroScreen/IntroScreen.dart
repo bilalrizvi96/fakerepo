@@ -60,8 +60,8 @@ class _IntroScreenState extends State<IntroScreen>
                                         ),
                                       ],
                                     ),
-                                    child: Image.asset(
-                                      'assets/intro1.png',
+                                    child: Image.network(
+                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro1.png',
                                       fit: BoxFit.cover,
                                       width: width / 1.3,
                                       height: height / 2.5,
@@ -88,8 +88,8 @@ class _IntroScreenState extends State<IntroScreen>
                                         children: [
                                           Align(
                                             alignment: Alignment.bottomCenter,
-                                            child: Image.asset(
-                                              'assets/introbottom.png',
+                                            child: Image.network(
+                                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -147,8 +147,8 @@ class _IntroScreenState extends State<IntroScreen>
                                         ),
                                       ],
                                     ),
-                                    child: Image.asset(
-                                      'assets/intro2.png',
+                                    child: Image.network(
+                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro2.png',
                                       fit: BoxFit.cover,
                                       width: width / 1.3,
                                       height: height / 2.5,
@@ -175,8 +175,8 @@ class _IntroScreenState extends State<IntroScreen>
                                         children: [
                                           Align(
                                             alignment: Alignment.bottomCenter,
-                                            child: Image.asset(
-                                              'assets/introbottom.png',
+                                            child: Image.network(
+                                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
                                               fit: BoxFit.contain,
                                             ),
                                           ),

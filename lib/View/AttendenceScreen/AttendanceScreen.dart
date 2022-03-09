@@ -27,8 +27,8 @@ class AttendanceScreen extends StatelessWidget {
                   builder: (_) {
                     return Stack(
                       children: [
-                        Image.asset(
-                          'assets/attendancebg.png',
+                        Image.network(
+                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/attendancebg.png',
                           fit: BoxFit.cover,
                           width: width,
                           height: height,
@@ -165,8 +165,8 @@ class AttendanceScreen extends StatelessWidget {
                                                   height: height / 30,
                                                 ),
                                                 Center(
-                                                  child: Image.asset(
-                                                    'assets/clockIn.png',
+                                                  child: Image.network(
+                                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
                                                     height: height / 12,
                                                   ),
                                                 ),
@@ -211,8 +211,8 @@ class AttendanceScreen extends StatelessWidget {
                                                   height: height / 30,
                                                 ),
                                                 Center(
-                                                  child: Image.asset(
-                                                    'assets/clockout.png',
+                                                  child: Image.network(
+                                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
                                                     height: height / 12,
                                                   ),
                                                 ),

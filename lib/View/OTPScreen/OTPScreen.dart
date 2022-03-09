@@ -40,8 +40,8 @@ class OTPScreen extends StatelessWidget {
                         child: DelayedDisplay(
                           delay: Duration(milliseconds: 400),
                           slidingCurve: Curves.decelerate,
-                          child: Image.asset(
-                            'assets/otpbg.png',
+                          child: Image.network(
+                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/otpbg.png',
                             fit: BoxFit.cover,
                             width: width,
                             height: height,
@@ -51,8 +51,8 @@ class OTPScreen extends StatelessWidget {
                       Positioned(
                         left: width / 20,
                         top: height / 6,
-                        child: Image.asset(
-                          'assets/OTPphone.png',
+                        child: Image.network(
+                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/OTPphone.png',
                           fit: BoxFit.cover,
                           // width: width,
                           height: height / 6,

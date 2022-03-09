@@ -33,8 +33,8 @@ class FeedbackScreen extends StatelessWidget {
                 builder: (_) {
                   return Stack(
                     children: [
-                      Image.asset(
-                        'assets/attendancebg.png',
+                      Image.network(
+                        'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/attendancebg.png',
                         fit: BoxFit.cover,
                         width: width,
                         height: height,

@@ -110,7 +110,8 @@ class HomeScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10.0),
                                 image: DecorationImage(
                                     alignment: Alignment.center,
-                                    image: AssetImage("assets/summarybg.png"),
+                                    image: NetworkImage(
+                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarybg.png"),
                                     fit: BoxFit.cover),
                               ),
                               padding: EdgeInsets.only(left: 30, right: 30),
@@ -133,8 +134,8 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Spacer(),
-                                  Image.asset(
-                                    'assets/summarycalendar.png',
+                                  Image.network(
+                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
                                     height: height / 22,
                                   ),
                                   Text(
@@ -286,7 +287,8 @@ class HomeScreen extends StatelessWidget {
                                 ],
                                 image: DecorationImage(
                                     alignment: Alignment.center,
-                                    image: AssetImage("assets/presentbg.png"),
+                                    image: NetworkImage(
+                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presentbg.png"),
                                     fit: BoxFit.contain),
                               ),
                               child: Row(
@@ -297,8 +299,8 @@ class HomeScreen extends StatelessWidget {
                                   SizedBox(
                                     width: width / 15,
                                   ),
-                                  Image.asset(
-                                    'assets/presenticon.png',
+                                  Image.network(
+                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
                                     fit: BoxFit.contain,
                                     width: width / 9,
                                   ),
@@ -356,7 +358,8 @@ class HomeScreen extends StatelessWidget {
                                 ],
                                 image: DecorationImage(
                                     alignment: Alignment.center,
-                                    image: AssetImage("assets/absentbg.png"),
+                                    image: NetworkImage(
+                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absentbg.png"),
                                     fit: BoxFit.contain),
                               ),
                               child: Row(
@@ -367,8 +370,8 @@ class HomeScreen extends StatelessWidget {
                                   SizedBox(
                                     width: width / 15,
                                   ),
-                                  Image.asset(
-                                    'assets/absenticon.png',
+                                  Image.network(
+                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
                                     fit: BoxFit.contain,
                                     width: width / 9,
                                   ),
@@ -518,8 +521,8 @@ class HomeScreen extends StatelessWidget {
                                     fadeIn: true,
                                     fadingDuration:
                                         Duration(milliseconds: 1200),
-                                    child: Image.asset(
-                                      'assets/qrdashboard.png',
+                                    child: Image.network(
+                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/qrdashboard.png',
                                       height: height / 5,
                                     ),
                                   ),

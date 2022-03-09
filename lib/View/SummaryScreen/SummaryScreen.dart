@@ -61,8 +61,8 @@ class SummaryScreen extends StatelessWidget {
                         child: Stack(
                           children: [
                             Center(
-                              child: Image.asset(
-                                'assets/summarybg.png',
+                              child: Image.network(
+                                'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarybg.png',
                                 fit: BoxFit.contain,
                                 width: width / 1.1,
                               ),
@@ -80,8 +80,8 @@ class SummaryScreen extends StatelessWidget {
                                 Spacer(),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
-                                  child: Image.asset(
-                                    'assets/summarycalendar.png',
+                                  child: Image.network(
+                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
                                     height: height / 13,
                                   ),
                                 ),

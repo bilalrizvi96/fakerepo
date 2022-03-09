@@ -147,7 +147,7 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage.write("offDay", response.user[0].offDay);
       BaseUrl.storage.write("phoneNo", response.user[0].phoneNo);
       BaseUrl.storage.write("eMail", response.user[0].eMail);
-      // BaseUrl.storage.write("address", response.user[0].address);
+      BaseUrl.storage.write("address", response.user[0].address);
       BaseUrl.storage.write("designation", response.user[0].designation);
       BaseUrl.storage.write("shiftTiming", response.user[0].shiftType);
       BaseUrl.storage.write("clockin", response.user[0].checkIn);

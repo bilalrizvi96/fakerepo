@@ -80,7 +80,8 @@ class BottomNavigationScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset('assets/oops.png'),
+                          Image.network(
+                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/oops.png'),
                           SizedBox(
                             height: MediaQuery.of(context).size.height / 10,
                           ),
