@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:alt_sms_autofill/alt_sms_autofill.dart';
+// import 'package:alt_sms_autofill/alt_sms_autofill.dart';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:flutter/material.dart';
@@ -48,31 +48,31 @@ class OTPController extends GetxController {
     update();
   }
 
-  Future<void> initSmsListener() async {
-    String comingSms;
-    try {
-      comingSms = (await AltSmsAutofill().listenForSms)!;
-    } on PlatformException {
-      comingSms = 'Failed to get Sms.';
-    }
-    // if (!mounted) return;
-
-    _comingSms = comingSms;
-    print("====>Message: ${_comingSms}");
-    print("${_comingSms[32]}");
-    otptextcontroller.text = _comingSms[32] +
-        _comingSms[33] +
-        _comingSms[34] +
-        _comingSms[35] +
-        _comingSms[36] +
-        _comingSms[37];
-  }
+  // Future<void> initSmsListener() async {
+  //   String comingSms;
+  //   try {
+  //     comingSms = (await AltSmsAutofill().listenForSms)!;
+  //   } on PlatformException {
+  //     comingSms = 'Failed to get Sms.';
+  //   }
+  //   // if (!mounted) return;
+  //
+  //   _comingSms = comingSms;
+  //   print("====>Message: ${_comingSms}");
+  //   print("${_comingSms[32]}");
+  //   otptextcontroller.text = _comingSms[32] +
+  //       _comingSms[33] +
+  //       _comingSms[34] +
+  //       _comingSms[35] +
+  //       _comingSms[36] +
+  //       _comingSms[37];
+  // }
 
   @override
   void onInit() {
     resendOtp();
     super.onInit();
-    initSmsListener();
+    // initSmsListener();
     startTimer();
   }
 
@@ -96,14 +96,14 @@ class OTPController extends GetxController {
   void dispose() {
     _timer!.cancel();
 
-    AltSmsAutofill().unregisterListener();
+    // AltSmsAutofill().unregisterListener();
     super.dispose();
   }
 
   @override
   void onClose() {
     _timer!.cancel();
-    AltSmsAutofill().unregisterListener();
+    // AltSmsAutofill().unregisterListener();
     super.onClose();
   }
 }
