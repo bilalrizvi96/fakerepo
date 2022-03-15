@@ -26,7 +26,9 @@ class BottomNavigationController extends GetxController {
     HomeScreen(),
     SummaryScreen(),
     // MyProfileScreen(),
-    FeedbackScreen()
+    FeedbackScreen(
+      check: true,
+    )
   ];
   void ItemIndex(index) {
     selectedIndex.value = index;

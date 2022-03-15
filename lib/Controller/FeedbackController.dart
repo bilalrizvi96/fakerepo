@@ -13,14 +13,17 @@ class FeedbackController extends GetxController {
   XFile? faceImage;
   var Loading = false.obs;
   final ImagePicker _picker = ImagePicker();
-  var check;
+  var check = true;
   @override
   void onInit() {
     super.onInit();
     Loading.value = false;
+    print(check);
     if (check == true) {
       namecontroller.text =
           BaseUrl.storage.read('name').toString().toUpperCase();
+    } else {
+      namecontroller.text = 'Name';
     }
   }
 

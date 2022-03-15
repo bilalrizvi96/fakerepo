@@ -40,7 +40,6 @@ class RegistrationController extends GetxController {
     super.onInit();
     Loading.value = false;
     update();
-    // getDeviceDetails();
   }
 
   registration() async {
@@ -50,8 +49,7 @@ class RegistrationController extends GetxController {
       Loading.value = true;
       update();
       BaseUrl.empcode = employee_IdController.text;
-      // var emailsplit = emailController.text.toString().split("@");
-      // var email = emailsplit[0] + '@starmarketingonline.com';
+
       var response = await API().RegistrationConfirmation(
         employee_Id: employee_IdController.text.toString(),
         email_address: emailController.text.toString(),
@@ -77,7 +75,6 @@ class RegistrationController extends GetxController {
         files: faceImage,
       );
       if (response.statusCode == 200) {
-        //print(response);
         Get.offNamed('/OTP');
         Loading.value = false;
       } else if (response.statusCode == 422) {
@@ -88,7 +85,15 @@ class RegistrationController extends GetxController {
         var date = DateTime.now();
         await API().NotificationSend(
           empId: BaseUrl.storage.read("empCode"),
-          time: date.hour.toString() + ":" + date.minute.toString(),
+          time: date.hour.toString() +
+              ":" +
+              date.minute.toString() +
+              " " +
+              date.day.toString() +
+              "-" +
+              date.month.toString() +
+              "-" +
+              date.year.toString(),
           message: cheaterID.toString() +
               " is trying to register on " +
               employee_IdController.text.toString(),
