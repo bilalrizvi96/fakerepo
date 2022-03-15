@@ -121,15 +121,9 @@ class RegistrationScreen extends StatelessWidget {
                                                     DynamicColor().primarycolor,
                                                 hoverColor:
                                                     DynamicColor().primarycolor,
-
-                                                // labelText: "Enter Employee ID",
-                                                // labelStyle: ,
                                                 fillColor: Colors.white,
                                                 filled: true,
-                                                border: InputBorder.none
-
-                                                //fillColor: Colors.green
-                                                ),
+                                                border: InputBorder.none),
                                             // keyboardType: TextInputType.none,
                                           ),
                                         ),
@@ -186,11 +180,9 @@ class RegistrationScreen extends StatelessWidget {
                                                     DynamicColor().primarycolor,
                                                 hoverColor:
                                                     DynamicColor().primarycolor,
-                                                // suffix: Text('@star...com'),
                                                 fillColor: Colors.white,
                                                 filled: true,
                                                 border: InputBorder.none),
-                                            // keyboardType: TextInputType.none,
                                           ),
                                         ),
                                       ],

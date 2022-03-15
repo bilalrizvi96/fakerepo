@@ -1,19 +1,21 @@
 import 'dart:io';
-
 import 'package:attendencesystem/Controller/FeedbackController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-
 import '../../API/BaseURl.dart';
 import '../../Component/DynamicColor.dart';
 
 class FeedbackScreen extends StatelessWidget {
+  FeedbackScreen({this.check});
+  var check;
   FeedbackController _feedbackController = Get.put(FeedbackController());
 
   @override
   Widget build(BuildContext context) {
+    check == false
+        ? _feedbackController.check = false
+        : _feedbackController.check = true;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -22,10 +24,6 @@ class FeedbackScreen extends StatelessWidget {
         child: Container(
           height: height,
           width: width,
-          // decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //         image: AssetImage('assets/attendancebg.png'),
-          //         fit: BoxFit.cover)),
           child: Form(
             key: _feedbackController.feedbackFormKey,
             child: GetBuilder(
@@ -49,39 +47,47 @@ class FeedbackScreen extends StatelessWidget {
                                       right: 22.0, left: 22.0, top: 22.0),
                                   child: Row(
                                     children: [
-                                      SizedBox(
-                                        width: width / 50,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Get.back();
-                                        },
-                                        child: Icon(
-                                          Icons.arrow_back_ios,
-                                          color: Colors.grey[300],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: width / 50,
-                                      ),
                                       Text(
-                                        'FeedBack',
+                                        'Feedback',
                                         style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w500,
                                             fontSize: width / 16),
                                       ),
                                       Spacer(),
-                                      // GestureDetector(
-                                      //   onTap: () {
-                                      //     BaseUrl.storage.write("token", "out");
-                                      //     Get.offAllNamed('/signinemp');
-                                      //   },
-                                      //   child: Icon(
-                                      //     Icons.logout,
-                                      //     size: width / 16,
-                                      //     color: Colors.red,
-                                      //   ),
-                                      // ),
+                                      check == false
+                                          ? Container()
+                                          : GestureDetector(
+                                              onTap: () {
+                                                Get.toNamed('/profile');
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 8.0, left: 8.0),
+                                                child: Icon(
+                                                  Icons.person_outline,
+                                                  size: width / 16,
+                                                  color: DynamicColor()
+                                                      .primarycolor,
+                                                ),
+                                              ),
+                                            ),
+                                      SizedBox(
+                                        width: width / 50,
+                                      ),
+                                      check == false
+                                          ? Container()
+                                          : GestureDetector(
+                                              onTap: () {
+                                                BaseUrl.storage
+                                                    .write("token", "out");
+                                                Get.offAllNamed('/signinemp');
+                                              },
+                                              child: Icon(
+                                                Icons.logout,
+                                                size: width / 16,
+                                                color: Colors.red,
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -91,7 +97,10 @@ class FeedbackScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.2,
                                   child: TextFormField(
-                                    readOnly: true,
+                                    controller:
+                                        _feedbackController.namecontroller,
+                                    validator: _feedbackController.validators,
+                                    readOnly: check == false ? false : true,
                                     decoration: new InputDecoration(
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -105,10 +114,12 @@ class FeedbackScreen extends StatelessWidget {
                                                   DynamicColor().titletextcolor,
                                               width: 1.0),
                                         ),
-                                        hintText: BaseUrl.storage
-                                            .read('name')
-                                            .toString()
-                                            .toUpperCase(),
+                                        hintText: check != false
+                                            ? BaseUrl.storage
+                                                .read('name')
+                                                .toString()
+                                                .toUpperCase()
+                                            : "Name",
                                         hintStyle: GoogleFonts.poppins(
                                             color: DynamicColor().black,
                                             fontWeight: FontWeight.w600,
@@ -116,13 +127,18 @@ class FeedbackScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: height / 15,
+                                  height: height / 50,
                                 ),
                                 Container(
-                                  // width: 1.2,
-                                  color: Colors.white,
+                                  width: width / 1.2,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        color: DynamicColor().titletextcolor),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
                                   padding:
-                                      EdgeInsets.only(right: 30.0, left: 30),
+                                      EdgeInsets.only(right: 10.0, left: 10),
                                   child: DropdownButton<String>(
                                     value:
                                         _feedbackController.dropdownValue.value,
@@ -150,7 +166,7 @@ class FeedbackScreen extends StatelessWidget {
                                       // FocusScope.of(context).nextFocus();
                                     },
                                     items: <String>[
-                                      'Select',
+                                      'Choose Category',
                                       'Feedback',
                                       'Technical Support',
                                       'HR',
@@ -172,7 +188,7 @@ class FeedbackScreen extends StatelessWidget {
                                     controller:
                                         _feedbackController.feedbackcontroller,
                                     validator: _feedbackController.validators,
-                                    maxLines: 6,
+                                    maxLines: 7,
                                     maxLength: 1000,
                                     decoration: new InputDecoration(
                                       focusedBorder: OutlineInputBorder(

@@ -1,3 +1,4 @@
+import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
 import 'package:attendencesystem/View/HomeScreen/HomeScreen.dart';
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:attendencesystem/View/SummaryScreen/SummaryScreen.dart';
@@ -21,7 +22,12 @@ class BottomNavigationController extends GetxController {
     });
   }
 
-  List<Widget> children = [HomeScreen(), SummaryScreen(), MyProfileScreen()];
+  List<Widget> children = [
+    HomeScreen(),
+    SummaryScreen(),
+    // MyProfileScreen(),
+    FeedbackScreen()
+  ];
   void ItemIndex(index) {
     selectedIndex.value = index;
     update();

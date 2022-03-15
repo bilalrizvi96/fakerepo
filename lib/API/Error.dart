@@ -1,4 +1,3 @@
-import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +15,7 @@ onError(dynamic error) {
   } else if (error.response.statusCode == 422) {
     return error.response;
   } else {
-    return Get.snackbar("Error ", "Lead Say Contact Kray",
+    return Get.snackbar("Error ", "Please Contact to IT Team",
         colorText: Colors.white, backgroundColor: Colors.red);
     ;
   }

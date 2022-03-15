@@ -2,6 +2,7 @@ import 'package:attendencesystem/View/AttendenceScreen/AttendanceScreen.dart';
 import 'package:attendencesystem/View/BottomNavigationScreen/BottomNavigationScreen.dart';
 import 'package:attendencesystem/View/FaceIDRuleScreen/FaceIDRuleScreen.dart';
 import 'package:attendencesystem/View/IntroScreen/IntroScreen.dart';
+import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:attendencesystem/View/OTPScreen/OTPScreen.dart';
 import 'package:attendencesystem/View/RegistrationScreen/RegistrationScreen.dart';
 import 'package:attendencesystem/View/SigninScreen/SigninEmployeeScreen.dart';
@@ -53,8 +54,8 @@ class Routes {
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/feedback",
-        page: () => FeedbackScreen(),
+        name: "/profile",
+        page: () => MyProfileScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
   ];

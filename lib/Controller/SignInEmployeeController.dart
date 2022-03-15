@@ -7,7 +7,6 @@ import 'package:attendencesystem/Model/LoginModel.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -16,7 +15,6 @@ class SignInEmployeeController extends GetxController {
   TextEditingController empcodeController = new TextEditingController();
   XFile? faceImage;
 
-  // static final _auth = LocalAuthentication();
   var token = "".obs;
   var Loading = false.obs;
   var deviceId = "".obs;
@@ -47,7 +45,7 @@ class SignInEmployeeController extends GetxController {
     read.value = false;
     empcodeController.text = '';
     empcodeController.clear();
-    print(read.value);
+
     update();
   }
 
@@ -80,13 +78,9 @@ class SignInEmployeeController extends GetxController {
       Loading.value = true;
       update();
       BaseUrl.empcode = empcodeController.text;
-      // if (check == 1) {
-      //   await sigin(true);
-      // } else if (check == 0) {
-      //   Loading.value = true;
 
       await imgFromCameras();
-      // }
+
       update();
     }
   }
@@ -100,12 +94,12 @@ class SignInEmployeeController extends GetxController {
   }
 
   randomss() {
-    print("deviceId");
+    //print("deviceId");
     Random random = new Random();
     int randomNumber = random.nextInt(1000);
     int randomNumber2 = random.nextInt(10000);
-    print(randomNumber.bitLength);
-    print(randomNumber2.bitLength);
+    //print(randomNumber.bitLength);
+    //print(randomNumber2.bitLength);
     if ("$randomNumber".length == 3 && "$randomNumber2".length == 4) {
       value = "${randomNumber.toString()}" +
           "np@U'vgy99`K`;^NcxRb" +
@@ -133,7 +127,7 @@ class SignInEmployeeController extends GetxController {
       response = await LoginModel.fromJson(response.data);
       token.value = "BEARER" + " " + response.token;
       BaseUrl.storage.write("token", token.value);
-      print(BaseUrl.storage.read("token"));
+      //print(BaseUrl.storage.read("token"));
       BaseUrl.storage.write("name", response.user[0].name);
       BaseUrl.storage.write("empCode", response.user[0].empCode);
       BaseUrl.storage

@@ -1,6 +1,7 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
+import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
 
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
@@ -166,10 +167,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                       child: Icon(Icons.clear)),
                                                   fillColor: Colors.white,
                                                   filled: true,
-                                                  border: InputBorder.none
-
-                                                  //fillColor: Colors.green
-                                                  ),
+                                                  border: InputBorder.none),
                                               // keyboardType: TextInputType.none,
                                             ),
                                           ),
@@ -274,7 +272,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: height / 30,
+                                      height: height / 50,
                                     ),
                                     GestureDetector(
                                       onTap: () {
@@ -297,6 +295,42 @@ class SiginEmployeeScreen extends StatelessWidget {
                                               color: DynamicColor().black),
                                         )),
                                       ),
+                                    ),
+                                    SizedBox(
+                                      height: height / 30,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(FeedbackScreen(
+                                          check: false,
+                                        ));
+                                      },
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.support_agent_sharp,
+                                            size: width / 16,
+                                            color: DynamicColor().primarycolor,
+                                          ),
+                                          SizedBox(
+                                            width: width / 30,
+                                          ),
+                                          Text(
+                                            'Any Feedback?',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: width / 22,
+                                                fontWeight: FontWeight.w600,
+                                                color: DynamicColor().black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: height / 50,
                                     ),
                                   ],
                                 )

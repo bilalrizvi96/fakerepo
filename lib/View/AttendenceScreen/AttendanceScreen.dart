@@ -1,9 +1,6 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-
 import 'package:attendencesystem/Controller/AttendenceController.dart';
-import 'package:attendencesystem/Controller/SummaryController.dart';
-import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -2,7 +2,6 @@ import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/RegistrationController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,7 +15,6 @@ class FaceIDRuleScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
-
         child: Container(
           height: height,
           width: width,
@@ -291,7 +289,7 @@ class FaceIDRuleScreen extends StatelessWidget {
                       )
                     : Center(
                         child: Image.asset(
-                          "assets//1.gif",
+                          "assets/1.gif",
                           height: 500,
                           width: 500,
                         ),

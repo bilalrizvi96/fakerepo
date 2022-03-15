@@ -1,7 +1,5 @@
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -79,11 +77,13 @@ class RegistrationController extends GetxController {
         files: faceImage,
       );
       if (response.statusCode == 200) {
-        print(response);
+        //print(response);
         Get.offNamed('/OTP');
         Loading.value = false;
-      } else if (response.data['error'] != "") {
+      } else if (response.statusCode == 422) {
         var errorid = response.data['error'].toString().split(":");
+        print(response.data['error']);
+        print(response.statusCode);
         var cheaterID = errorid[1];
         var date = DateTime.now();
         await API().NotificationSend(
@@ -99,6 +99,7 @@ class RegistrationController extends GetxController {
       } else {
         Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
+
         Loading.value = false;
       }
     } else {

@@ -1,12 +1,7 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:attendencesystem/API/Error.dart';
-import 'package:attendencesystem/Model/LoginModel.dart';
-import 'package:attendencesystem/Model/SummaryModel.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-
-import 'BaseURl.dart';
 import 'BaseURl.dart';
 
 class API {
@@ -18,21 +13,16 @@ class API {
         "isFace": check,
         "registered": true,
       };
-      print(data);
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
         BaseUrl.baseurl + 'register',
         data: data,
       );
-
       if (response.statusCode == 200) {
         BaseUrl.token = "BEARER" + " " + response.data['token'];
         BaseUrl.code = response.data['code'];
-        // BaseUrl.storage.write("token", BaseUrl.token);
-        // BaseUrl.storage.write("code", BaseUrl.code);
-        print(BaseUrl.storage.read("token").toString());
-        print(BaseUrl.storage.read("code".toString()));
+
         return response;
       }
     } catch (e) {
@@ -80,7 +70,7 @@ class API {
   Future OTPVerification({var code, var empCode}) async {
     try {
       Map data = {"otpCode": code, 'empCode': BaseUrl.storage.read("empCode")};
-      print(data);
+
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
@@ -136,27 +126,29 @@ class API {
 
   Future Feedback(
       {var time, var empId, var message, var type, var image}) async {
-    print(image);
     var file;
     if (image != null) {
-      file = await MultipartFile.fromFile(image.path);
+      Uint8List imagebytes = await image.readAsBytes();
+      String base64string = base64.encode(imagebytes);
+      file = base64string.toString();
+      file.replaceAll('/', '');
     }
     try {
-      var data = FormData.fromMap({
+      var data = {
         "type": type,
         "time": time.toString(),
         "employeeId": empId.toString(),
         "message": message,
-        "image": file != null ? file : ''
-      });
-      print(data.fields);
-      print("data");
+        "image": file != '' ? file : ''
+      };
+
       var dio = Dio();
-      dio.options.headers['Accept'] = 'application/json';
+
       final response = await dio.post(
         BaseUrl.baseurl + 'feedback',
         data: data,
       );
+
       if (response.statusCode == 201) {
         return response;
       }
@@ -197,7 +189,6 @@ class API {
         data: data,
       );
       if (response.statusCode == 200) {
-        // var status = response;
         return response;
       }
     } catch (e) {
@@ -222,7 +213,6 @@ class API {
             }),
       );
       if (response.statusCode == 200) {
-        print(response);
         return response;
       }
     } catch (e) {
@@ -248,7 +238,6 @@ class API {
         }),
       );
       if (response.statusCode == 200) {
-        var status = response;
         return response;
       }
     } catch (e) {
@@ -263,9 +252,7 @@ class API {
         "siteId": siteId,
         "date": date.toString()
       };
-      print(data);
-      print(BaseUrl.baseurl + 'start');
-      print(BaseUrl.storage.read('token'));
+
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
@@ -291,9 +278,7 @@ class API {
         "siteId": siteId,
         "date": date.toString()
       };
-      print(data);
-      print(BaseUrl.baseurl + 'end');
-      print(BaseUrl.storage.read('token'));
+
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(

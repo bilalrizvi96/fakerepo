@@ -40,6 +40,23 @@ class SummaryScreen extends StatelessWidget {
                             Spacer(),
                             GestureDetector(
                               onTap: () {
+                                Get.toNamed('/profile');
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 8.0, left: 8.0),
+                                child: Icon(
+                                  Icons.person_outline,
+                                  size: width / 16,
+                                  color: DynamicColor().primarycolor,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: width / 50,
+                            ),
+                            GestureDetector(
+                              onTap: () {
                                 BaseUrl.storage.write("token", "out");
                                 Get.offAllNamed('/signinemp');
                               },
@@ -108,7 +125,7 @@ class SummaryScreen extends StatelessWidget {
                                               DateTime.now().day),
                                           onConfirm: (date) {
                                         summaryController.fromDate(date);
-                                        print('confirm $date');
+                                        //print('confirm $date');
                                       },
                                           currentTime: DateTime.now(),
                                           locale: LocaleType.en);

@@ -2,11 +2,10 @@ import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/IntroController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:introduction_screen/introduction_screen.dart';
+
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -28,7 +27,6 @@ class _IntroScreenState extends State<IntroScreen>
               child: Container(
                   width: width,
                   height: height,
-                  // color: DynamicColor().white,
                   child: Stack(
                     children: [
                       PageView(
@@ -95,7 +93,7 @@ class _IntroScreenState extends State<IntroScreen>
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 100.0, left: 70),
+                                                top: 100.0, left: 50),
                                             child: Text(
                                               'Digital Attendance',
                                               style: GoogleFonts.poppins(
@@ -108,12 +106,12 @@ class _IntroScreenState extends State<IntroScreen>
                                               padding: const EdgeInsets.only(
                                                   top: 150.0,
                                                   right: 65,
-                                                  left: 70),
+                                                  left: 50),
                                               child: Text(
-                                                'Emerging as one of the fastest-growing professional marketing concerns of Pakistan, Star Marketing (Pvt.) Ltd. is now considered the true market leader of innovative real-estate marketing',
+                                                'We are proud to announce the state-of-the-art "Digital Attendance" application for our organization. Just scan the QR Code and mark your attendance.  ',
                                                 style: GoogleFonts.poppins(
                                                     fontWeight: FontWeight.w300,
-                                                    fontSize: width / 29,
+                                                    fontSize: width / 24,
                                                     color: Color(0xFFF7F7F7)
                                                         .withOpacity(0.59)),
                                               )),
@@ -182,9 +180,9 @@ class _IntroScreenState extends State<IntroScreen>
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 100.0, left: 70),
+                                                top: 100.0, left: 50),
                                             child: Text(
-                                              'Digital Attendance',
+                                              'Register Your Identity',
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: width / 14,
@@ -195,12 +193,12 @@ class _IntroScreenState extends State<IntroScreen>
                                               padding: const EdgeInsets.only(
                                                   top: 150.0,
                                                   right: 65,
-                                                  left: 70),
+                                                  left: 50),
                                               child: Text(
-                                                'Emerging as one of the fastest-growing professional marketing concerns of Pakistan, Star Marketing (Pvt.) Ltd. is now considered the true market leader of innovative real-estate marketing',
+                                                'Your very first step towards Digital Attendance is to register yourself in this application. ',
                                                 style: GoogleFonts.poppins(
                                                     fontWeight: FontWeight.w300,
-                                                    fontSize: width / 29,
+                                                    fontSize: width / 24,
                                                     color: Color(0xFFF7F7F7)
                                                         .withOpacity(0.59)),
                                               )),

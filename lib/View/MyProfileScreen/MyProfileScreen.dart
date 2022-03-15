@@ -10,16 +10,16 @@ class MyProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // myProfileController.profileFormKey = GlobalKey<FormState>();
+
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return new Scaffold(
-      // drawer: Drawers().drawers(context),
+
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
               width: width,
-              // height: height,
+
               color: Color(0xFFEBEFFF),
               padding: EdgeInsets.only(top: 15.0),
               child: GetBuilder(
@@ -93,7 +93,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
-                                    // readOnly: myProfileController.read.value,
+                                    readOnly: true,
                                     controller:
                                         myProfileController.firstnameController,
                                     //   validator: myProfileController.validators,
@@ -148,7 +148,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
-                                    // readOnly: myProfileController.read.value,
+                                    readOnly: true,
                                     controller:
                                         myProfileController.firstnameController,
                                     //   validator: myProfileController.validators,
@@ -202,7 +202,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
-                                    // readOnly: myProfileController.read.value,
+                                    readOnly: true,
                                     keyboardType: TextInputType.number,
                                     controller:
                                         myProfileController.mobileController,
@@ -260,7 +260,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
-                                    // readOnly: myProfileController.read.value,
+                                    readOnly: true,
                                     controller: myProfileController
                                         .designationController,
                                     //   validator: myProfileController.validators,
@@ -314,7 +314,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
-                                    // readOnly: myProfileController.read.value,
+                                    readOnly: true,
                                     keyboardType: TextInputType.datetime,
                                     controller: myProfileController
                                         .date_of_joiningController,
@@ -374,7 +374,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
-                                    // readOnly: myProfileController.read.value,
+                                    readOnly: true,
                                     keyboardType: TextInputType.datetime,
                                     controller: myProfileController
                                         .date_of_joiningController,
@@ -391,14 +391,10 @@ class MyProfileScreen extends StatelessWidget {
                                             : "First Name",
                                         focusColor: DynamicColor().primarycolor,
                                         hoverColor: DynamicColor().primarycolor,
-
-                                        // labelText: "Enter First Name",
-                                        // labelStyle: ,
                                         fillColor: Colors.white,
                                         filled: true,
                                         border: InputBorder.none
 
-                                        //fillColor: Colors.green
                                         ),
                                     // keyboardType: TextInputType.none,
                                   ),
@@ -434,6 +430,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
+                                    readOnly: true,
                                     keyboardType: TextInputType.datetime,
                                     controller: myProfileController
                                         .date_of_joiningController,
@@ -454,7 +451,6 @@ class MyProfileScreen extends StatelessWidget {
                                         fillColor: Colors.white,
                                         filled: true,
                                         border: InputBorder.none),
-                                    // keyboardType: TextInputType.none,
                                   ),
                                 ),
                               ],
@@ -488,6 +484,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
+                                    readOnly: true,
                                     keyboardType: TextInputType.datetime,
                                     controller: myProfileController
                                         .date_of_joiningController,
@@ -543,6 +540,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
+                                    readOnly: true,
                                     controller:
                                         myProfileController.addressController,
 
@@ -593,6 +591,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
+                                    readOnly: true,
                                     keyboardType: TextInputType.emailAddress,
                                     controller: myProfileController
                                         .email_addressController,
@@ -641,6 +640,7 @@ class MyProfileScreen extends StatelessWidget {
                                 Container(
                                   width: width / 1.22,
                                   child: TextFormField(
+                                    readOnly: true,
                                     keyboardType: TextInputType.text,
                                     controller: myProfileController
                                         .shift_timmingController,
@@ -663,9 +663,6 @@ class MyProfileScreen extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            ),
-                            SizedBox(
-                              height: height / 40,
                             ),
                             SizedBox(
                               height: height / 10,

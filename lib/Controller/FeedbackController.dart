@@ -7,16 +7,21 @@ import '../API/BaseURl.dart';
 
 class FeedbackController extends GetxController {
   var feedbackcontroller = TextEditingController();
+  var namecontroller = TextEditingController();
   var feedbackFormKey = GlobalKey<FormState>();
-  var dropdownValue = 'Select'.obs;
+  var dropdownValue = 'Choose Category'.obs;
   XFile? faceImage;
   var Loading = false.obs;
   final ImagePicker _picker = ImagePicker();
-
+  var check;
   @override
   void onInit() {
     super.onInit();
     Loading.value = false;
+    if (check == true) {
+      namecontroller.text =
+          BaseUrl.storage.read('name').toString().toUpperCase();
+    }
   }
 
   submit() async {
@@ -24,17 +29,31 @@ class FeedbackController extends GetxController {
         feedbackFormKey.currentState!.validate()) {
       Loading.value = true;
       update();
-      if (dropdownValue.value != 'Select') {
+      if (dropdownValue.value != 'Choose Category') {
         var date = DateTime.now();
         var response = await API().Feedback(
-            empId: BaseUrl.storage.read("empCode"),
-            time: date.hour.toString() + ":" + date.minute.toString(),
-            message: feedbackcontroller.text.toString(),
+            empId: check != false ? BaseUrl.storage.read("empCode") : "00000",
+            time: date.hour.toString() +
+                ":" +
+                date.minute.toString() +
+                " " +
+                date.day.toString() +
+                "-" +
+                date.month.toString() +
+                "-" +
+                date.year.toString(),
+            message: namecontroller.text.toString() +
+                '~|~' +
+                feedbackcontroller.text.toString(),
             type: dropdownValue.value.toString(),
             image: faceImage);
         if (response.statusCode == 201) {
           Loading.value = false;
-          Get.offAllNamed('/home');
+          if (check == false) {
+            namecontroller.clear();
+            Get.back();
+          }
+          feedbackcontroller.clear();
           Get.snackbar(
             "Feedback",
             "Thank You for your feedback",

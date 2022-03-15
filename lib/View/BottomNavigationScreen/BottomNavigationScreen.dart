@@ -51,6 +51,7 @@ class BottomNavigationScreen extends StatelessWidget {
                     bottomNavigationBar: BottomNavigationBar(
                       selectedItemColor: DynamicColor().primarycolor,
                       onTap: bottomNavigationController.ItemIndex,
+                      unselectedItemColor: Colors.grey[500],
                       currentIndex:
                           bottomNavigationController.selectedIndex.value,
                       items: const <BottomNavigationBarItem>[
@@ -62,9 +63,13 @@ class BottomNavigationScreen extends StatelessWidget {
                           icon: Icon(Icons.summarize_outlined),
                           label: 'Summary',
                         ),
+                        // BottomNavigationBarItem(
+                        //   icon: Icon(Icons.person_outline),
+                        //   label: 'Profile',
+                        // ),
                         BottomNavigationBarItem(
-                          icon: Icon(Icons.person_outline),
-                          label: 'Profile',
+                          icon: Icon(Icons.support_agent),
+                          label: 'Support',
                         ),
                       ],
                     ),

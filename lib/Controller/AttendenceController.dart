@@ -30,8 +30,8 @@ class AttendanceController extends GetxController {
     try {
       final result = await BarcodeScanner.scan();
       scanResult = result;
-      print(scanResult!.rawContent);
-      print("scanResult");
+      //print(scanResult!.rawContent);
+      //print("scanResult");
       sites.value = scanResult!.rawContent;
       if (sites.value != "") {
         Get.toNamed('/attendance');
@@ -59,7 +59,7 @@ class AttendanceController extends GetxController {
     var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     var outputDate = outputFormat.format(date);
-    print(outputDate.toString());
+    //print(outputDate.toString());
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
 
@@ -79,15 +79,16 @@ class AttendanceController extends GetxController {
           BaseUrl.storage
               .write("totalAbsent", resp.data['absent_days'].toString());
 
-          print(resp.data);
+          //print(resp.data);
         }
+        BaseUrl.storage.write("clockout", "00:00");
         Loading.value = false;
         BaseUrl.clockin = outputDate1.toString();
 
         BaseUrl.storage.write("status", true);
         BaseUrl.storage.write("clockin", BaseUrl.clockin);
-        print(BaseUrl.clockin);
-        print("date1.value");
+        //print(BaseUrl.clockin);
+        //print("date1.value");
         Get.offAllNamed('/home');
         Get.snackbar("Attendance", "Clock In Successfully");
       } else {
@@ -111,7 +112,7 @@ class AttendanceController extends GetxController {
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
 
-    print(outputDate.toString());
+    //print(outputDate.toString());
 
     await CurrentLocation();
     if (sites.value != "") {
@@ -126,7 +127,7 @@ class AttendanceController extends GetxController {
         Loading.value = false;
         BaseUrl.clockout = outputDate1.toString();
         BaseUrl.storage.write("clockout", BaseUrl.clockout);
-        print(response);
+        //print(response);
 
         Get.offAllNamed('/home');
         Get.snackbar(

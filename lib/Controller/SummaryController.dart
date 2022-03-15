@@ -35,8 +35,6 @@ class SummaryController extends GetxController {
     var response = await API().Summary(
         end: int.parse(todate.value.day.toString()),
         start: int.parse(fromdate.value.day.toString()));
-    print(fromdate.value.day.toString());
-    print(todate.value.day.toString());
 
     if (response != null) {
       summarylist.clear();
@@ -53,7 +51,7 @@ class SummaryController extends GetxController {
           Hours: data['Hours'].toString(),
           Estimate_time: data['Estimated Time'].toString(),
         ));
-        print(data);
+        //print(data);
       } else {
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),

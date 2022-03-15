@@ -79,9 +79,7 @@ class OTPScreen extends StatelessWidget {
                           onDone: (String val) {
                             otpController.submit();
                           },
-                          // onTextChanged: (val) {
-                          //   otpController.submit();
-                          // },
+
                           maxLength: 6,
                           pinBoxHeight: 45,
                           pinBoxWidth: width / 10,

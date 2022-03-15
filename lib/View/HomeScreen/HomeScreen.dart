@@ -1,12 +1,7 @@
-import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-
 import 'package:attendencesystem/Controller/AttendenceController.dart';
-
 import 'package:attendencesystem/Controller/HomeController.dart';
-import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
-
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,13 +63,13 @@ class HomeScreen extends StatelessWidget {
                                 Spacer(),
                                 GestureDetector(
                                   onTap: () {
-                                    Get.toNamed('/feedback');
+                                    Get.toNamed('/profile');
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         right: 8.0, left: 8.0),
                                     child: Icon(
-                                      Icons.support_agent,
+                                      Icons.person_outline,
                                       size: width / 16,
                                       color: DynamicColor().primarycolor,
                                     ),
@@ -123,9 +118,7 @@ class HomeScreen extends StatelessWidget {
                                     width: width / 3,
                                     child: Text(
                                       BaseUrl.storage.read("name") != null
-                                          ? "Hey " +
-                                              BaseUrl.storage.read("name") +
-                                              ","
+                                          ? "Hey, " + homeController.name
                                           : "Name",
                                       style: GoogleFonts.poppins(
                                           color: DynamicColor().white,

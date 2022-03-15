@@ -1,11 +1,7 @@
 import 'dart:async';
-
-// import 'package:alt_sms_autofill/alt_sms_autofill.dart';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
 
 class OTPController extends GetxController {
@@ -13,7 +9,7 @@ class OTPController extends GetxController {
   var otptextcontroller = TextEditingController();
   Timer? _timer;
   var start = 30.obs;
-  String _comingSms = 'Unknown';
+
   submit() async {
     code = BaseUrl.storage.read("code");
 
@@ -58,8 +54,8 @@ class OTPController extends GetxController {
   //   // if (!mounted) return;
   //
   //   _comingSms = comingSms;
-  //   print("====>Message: ${_comingSms}");
-  //   print("${_comingSms[32]}");
+  //   //print("====>Message: ${_comingSms}");
+  //   //print("${_comingSms[32]}");
   //   otptextcontroller.text = _comingSms[32] +
   //       _comingSms[33] +
   //       _comingSms[34] +
@@ -73,7 +69,7 @@ class OTPController extends GetxController {
     resendOtp();
     super.onInit();
     // initSmsListener();
-    startTimer();
+    // startTimer();
   }
 
   void startTimer() {

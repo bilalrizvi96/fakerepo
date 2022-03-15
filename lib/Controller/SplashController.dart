@@ -40,7 +40,7 @@ class SplashController extends GetxController {
     if (updates.value == false) {
       var tokenval = BaseUrl.storage.read("token");
       BaseUrl.storage1.read('seen') ?? false;
-      Future.delayed(new Duration(seconds: 3), () {
+      Future.delayed(new Duration(milliseconds: 500), () {
         if (tokenval != "out") {
           if (tokenval != null) {
             Get.offAllNamed('/home');
@@ -72,7 +72,7 @@ class SplashController extends GetxController {
                           primary: DynamicColor().primarycolor),
                       onPressed: () async {
                         url.value.toString();
-                        print(url.value);
+                        //print(url.value);
                         if (await canLaunch(url.value)) {
                           await launch(
                             url.value,

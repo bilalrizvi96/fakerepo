@@ -2,7 +2,6 @@ import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SplashController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashController splashController = Get.put(SplashController());
@@ -28,8 +27,6 @@ class SplashScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                     height: height / 4,
                   ),
-
-                  // RichText(
                 ],
               ),
             );
