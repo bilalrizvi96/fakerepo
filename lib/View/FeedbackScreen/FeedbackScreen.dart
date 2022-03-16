@@ -114,12 +114,11 @@ class FeedbackScreen extends StatelessWidget {
                                                   DynamicColor().titletextcolor,
                                               width: 1.0),
                                         ),
-                                        // hintText: check != false
-                                        //     ? BaseUrl.storage
-                                        //         .read('name')
-                                        //         .toString()
-                                        //         .toUpperCase()
-                                        //     : "Name",
+                                        hintText: _feedbackController
+                                                    .namecontroller.text ==
+                                                ''
+                                            ? "Name"
+                                            : '',
                                         hintStyle: GoogleFonts.poppins(
                                             color: DynamicColor().black,
                                             fontWeight: FontWeight.w600,

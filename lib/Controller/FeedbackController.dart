@@ -19,11 +19,11 @@ class FeedbackController extends GetxController {
     super.onInit();
     Loading.value = false;
     print(check);
-    if (check == true) {
+    if (BaseUrl.storage.read('name') != null) {
       namecontroller.text =
           BaseUrl.storage.read('name').toString().toUpperCase();
     } else {
-      namecontroller.text = 'Name';
+      namecontroller.text = '';
     }
   }
 

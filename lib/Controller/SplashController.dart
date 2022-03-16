@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
+import 'package:attendencesystem/Controller/UpdateController.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class SplashController extends GetxController {
   var updates = false.obs;
   var url = ''.obs;
   var context;
+  UpdateController updateController = Get.put(UpdateController());
   @override
   void onInit() {
     super.onInit();
@@ -58,44 +60,119 @@ class SplashController extends GetxController {
         }
       });
     } else {
-      return showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-                title: Text(
-                  'Kindly Update Your Application',
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w300, fontSize: 18),
-                ),
-                actions: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: DynamicColor().primarycolor),
-                      onPressed: () async {
-                        url.value.toString();
-                        //print(url.value);
-                        if (await canLaunch(url.value)) {
-                          await launch(
-                            url.value,
-                            forceSafariVC: false,
-                            forceWebView: false,
-                            headers: <String, String>{
-                              'my_header_key': 'my_header_value'
-                            },
-                          );
-                        } else {
-                          throw 'Could not launch ${url.value}';
-                        }
-                      },
-                      child: const Text('Update')),
-                  TextButton(
-                      style: TextButton.styleFrom(
-                          primary: DynamicColor().primarycolor,
-                          textStyle:
-                              TextStyle(color: DynamicColor().primarycolor)),
-                      onPressed: () => exit(0),
-                      child: const Text('No'))
-                ],
-              ));
+      updateController.url.value = url.value;
+      Get.offAllNamed('/updatescreen');
+      // return showDialog(
+      //     context: context,
+      //     barrierDismissible: false,
+      //     builder: (_) => AlertDialog(
+      //           // content: Text(
+      //           //   'Kindly Update Your Application',
+      //           //   style: GoogleFonts.poppins(
+      //           //       fontWeight: FontWeight.w300, fontSize: 15),
+      //           // ),
+      //           actions: [
+      //             Column(
+      //               children: [
+      //                 Stack(
+      //                   children: [
+      //                     Container(
+      //                       width: MediaQuery.of(context).size.width / 1.2,
+      //                       height: MediaQuery.of(context).size.height / 3.5,
+      //
+      //                       // width: double.infinity,
+      //                       alignment: Alignment.bottomCenter,
+      //                       padding: EdgeInsets.only(top: 120.0),
+      //                       decoration: BoxDecoration(
+      //                           color: Color(0xFFF2F5FF),
+      //                           borderRadius: BorderRadius.only(
+      //                               bottomLeft: Radius.circular(5.0),
+      //                               bottomRight: Radius.circular(5.0))),
+      //                       child: Column(
+      //                         crossAxisAlignment: CrossAxisAlignment.start,
+      //                         children: [
+      //                           Container(
+      //                             width: MediaQuery.of(context).size.width / 2,
+      //                             child: Text(
+      //                               'Improve ',
+      //                               style: GoogleFonts.poppins(
+      //                                   fontWeight: FontWeight.w300,
+      //                                   fontSize: 12),
+      //                             ),
+      //                           ),
+      //                         ],
+      //                       ),
+      //                     ),
+      //                     Container(
+      //                       width: MediaQuery.of(context).size.width / 1.2,
+      //                       height: MediaQuery.of(context).size.height / 8,
+      //                       // width: double.infinity,
+      //                       padding: EdgeInsets.all(12.0),
+      //                       decoration: BoxDecoration(
+      //                           image: DecorationImage(
+      //                               image: AssetImage('assets/updatebg.png'),
+      //                               fit: BoxFit.fitWidth)),
+      //                       child: Column(
+      //                         crossAxisAlignment: CrossAxisAlignment.start,
+      //                         children: [
+      //                           Text(
+      //                             'What\'s New',
+      //                             style: GoogleFonts.poppins(
+      //                                 fontWeight: FontWeight.w600,
+      //                                 fontSize: 18),
+      //                           ),
+      //                           Container(
+      //                             width: MediaQuery.of(context).size.width / 2,
+      //                             child: Text(
+      //                               'Find out what\'s include in this update',
+      //                               style: GoogleFonts.poppins(
+      //                                   fontWeight: FontWeight.w300,
+      //                                   fontSize: 12),
+      //                             ),
+      //                           ),
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //                 Row(
+      //                   children: [
+      //                     Spacer(),
+      //                     ElevatedButton(
+      //                         style: ElevatedButton.styleFrom(
+      //                             primary: DynamicColor().primarycolor),
+      //                         onPressed: () async {
+      //                           url.value.toString();
+      //                           //print(url.value);
+      //                           if (await canLaunch(url.value)) {
+      //                             await launch(
+      //                               url.value,
+      //                               forceSafariVC: false,
+      //                               forceWebView: false,
+      //                               headers: <String, String>{
+      //                                 'my_header_key': 'my_header_value'
+      //                               },
+      //                             );
+      //                           } else {
+      //                             throw 'Could not launch ${url.value}';
+      //                           }
+      //                         },
+      //                         child: const Text('Update')),
+      //                     Spacer(),
+      //                     TextButton(
+      //                         style: TextButton.styleFrom(
+      //                             primary: DynamicColor().primarycolor,
+      //                             textStyle: TextStyle(
+      //                                 color: DynamicColor().primarycolor)),
+      //                         onPressed: () => exit(0),
+      //                         child: const Text('No')),
+      //                     Spacer(),
+      //                   ],
+      //                 ),
+      //               ],
+      //             ),
+      //           ],
+      //         ));
     }
   }
 

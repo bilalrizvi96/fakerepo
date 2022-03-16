@@ -2,6 +2,7 @@ import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SplashController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashController splashController = Get.put(SplashController());
@@ -22,11 +23,23 @@ class SplashScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Spacer(),
                   Image.network(
                     'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/Splash.png',
                     fit: BoxFit.cover,
                     height: height / 4,
                   ),
+                  Spacer(),
+                  Text(
+                    'V 1.0.5',
+                    style: GoogleFonts.poppins(
+                        color: DynamicColor().white,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: height / 50,
+                  )
                 ],
               ),
             );

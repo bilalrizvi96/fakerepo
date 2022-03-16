@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AttendanceController extends GetxController {
   var center = new LatLng(33.652100, 75.123398).obs;
@@ -20,9 +21,11 @@ class AttendanceController extends GetxController {
     final location = new Location();
     Position position = await Geolocator.getCurrentPosition();
     center.value = LatLng(position.latitude, position.longitude);
+
     location.onLocationChanged.listen((LocationData cLoc) {
       center.value = LatLng(cLoc.latitude!, cLoc.longitude!);
     });
+
     update();
   }
 
@@ -42,6 +45,9 @@ class AttendanceController extends GetxController {
 
       update();
     } on PlatformException catch (e) {
+      Get.snackbar("Error ", e.toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+      Loading.value = false;
       scanResult = ScanResult(
         type: ResultType.Error,
         format: BarcodeFormat.unknown,
@@ -49,6 +55,7 @@ class AttendanceController extends GetxController {
             ? 'The user did not grant the camera permission!'
             : 'Unknown error: $e',
       );
+
       update();
     }
   }
@@ -62,44 +69,53 @@ class AttendanceController extends GetxController {
     //print(outputDate.toString());
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
-
     await CurrentLocation();
-    if (sites.value != "") {
-      var response = await API().CheckIn(
-          latlng: center.value.latitude.toString() +
-              "," +
-              center.value.longitude.toString(),
-          siteId: sites.value.toString(),
-          date: outputDate);
-      if (response.statusCode == 200) {
-        var resp = await API().AbsentPresent();
-        if (resp.statusCode == 200) {
-          BaseUrl.storage
-              .write("totalPresent", resp.data['present_days'].toString());
-          BaseUrl.storage
-              .write("totalAbsent", resp.data['absent_days'].toString());
+    var status = await Permission.location.status;
+    if (status.isGranted) {
+      await CurrentLocation();
 
-          //print(resp.data);
+      if (sites.value != "") {
+        var response = await API().CheckIn(
+            latlng: center.value.latitude.toString() +
+                "," +
+                center.value.longitude.toString(),
+            siteId: sites.value.toString(),
+            date: outputDate);
+        if (response.statusCode == 200) {
+          var resp = await API().AbsentPresent();
+          if (resp.statusCode == 200) {
+            BaseUrl.storage
+                .write("totalPresent", resp.data['present_days'].toString());
+            BaseUrl.storage
+                .write("totalAbsent", resp.data['absent_days'].toString());
+
+            //print(resp.data);
+          }
+          BaseUrl.storage.write("clockout", "00:00");
+          Loading.value = false;
+          BaseUrl.clockin = outputDate1.toString();
+
+          BaseUrl.storage.write("status", true);
+          BaseUrl.storage.write("clockin", BaseUrl.clockin);
+          //print(BaseUrl.clockin);
+          //print("date1.value");
+          Get.offAllNamed('/home');
+          Get.snackbar("Attendance", "Clock In Successfully");
+        } else {
+          // BaseUrl.storage.write("status", false);
+          Loading.value = false;
+          Get.snackbar("Error ", response.data['error'].toString(),
+              colorText: Colors.white, backgroundColor: Colors.red);
         }
-        BaseUrl.storage.write("clockout", "00:00");
-        Loading.value = false;
-        BaseUrl.clockin = outputDate1.toString();
-
-        BaseUrl.storage.write("status", true);
-        BaseUrl.storage.write("clockin", BaseUrl.clockin);
-        //print(BaseUrl.clockin);
-        //print("date1.value");
-        Get.offAllNamed('/home');
-        Get.snackbar("Attendance", "Clock In Successfully");
       } else {
-        // BaseUrl.storage.write("status", false);
         Loading.value = false;
-        Get.snackbar("Error ", response.data['error'].toString(),
+        Get.snackbar("Error", "Location is empty kindly scan Qr",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
     } else {
       Loading.value = false;
-      Get.snackbar("Error", "Location is empty kindly scan Qr",
+      Get.snackbar("Error ",
+          'The user did not grant the location permission!'.toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();

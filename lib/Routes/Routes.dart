@@ -7,6 +7,7 @@ import 'package:attendencesystem/View/OTPScreen/OTPScreen.dart';
 import 'package:attendencesystem/View/RegistrationScreen/RegistrationScreen.dart';
 import 'package:attendencesystem/View/SigninScreen/SigninEmployeeScreen.dart';
 import 'package:attendencesystem/View/SplashScreen/SplashScreen.dart';
+import 'package:attendencesystem/View/UpdateScreen/UpdateScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
@@ -56,6 +57,11 @@ class Routes {
     GetPage(
         name: "/profile",
         page: () => MyProfileScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/updatescreen",
+        page: () => UpdateScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
   ];

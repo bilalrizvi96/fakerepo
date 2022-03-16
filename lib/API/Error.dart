@@ -15,8 +15,9 @@ onError(dynamic error) {
   } else if (error.response.statusCode == 422) {
     return error.response;
   } else {
+    BaseUrl.storage.write("token", "out");
+    Get.offNamed("/signinemp");
     return Get.snackbar("Error ", "Please Contact to IT Team",
         colorText: Colors.white, backgroundColor: Colors.red);
-    ;
   }
 }
