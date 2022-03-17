@@ -17,11 +17,9 @@ class AttendanceController extends GetxController {
   var Loading = false.obs;
 
   CurrentLocation() async {
-    Loading.value = true;
     final location = new Location();
     Position position = await Geolocator.getCurrentPosition();
     center.value = LatLng(position.latitude, position.longitude);
-
     location.onLocationChanged.listen((LocationData cLoc) {
       center.value = LatLng(cLoc.latitude!, cLoc.longitude!);
     });
@@ -33,8 +31,6 @@ class AttendanceController extends GetxController {
     try {
       final result = await BarcodeScanner.scan();
       scanResult = result;
-      //print(scanResult!.rawContent);
-      //print("scanResult");
       sites.value = scanResult!.rawContent;
       if (sites.value != "") {
         Get.toNamed('/attendance');
@@ -61,12 +57,13 @@ class AttendanceController extends GetxController {
   }
 
   void clockin() async {
+    Loading.value = true;
     var date = DateTime.now();
 
     var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     var outputDate = outputFormat.format(date);
-    //print(outputDate.toString());
+
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
     await CurrentLocation();
@@ -88,8 +85,6 @@ class AttendanceController extends GetxController {
                 .write("totalPresent", resp.data['present_days'].toString());
             BaseUrl.storage
                 .write("totalAbsent", resp.data['absent_days'].toString());
-
-            //print(resp.data);
           }
           BaseUrl.storage.write("clockout", "00:00");
           Loading.value = false;
@@ -97,12 +92,10 @@ class AttendanceController extends GetxController {
 
           BaseUrl.storage.write("status", true);
           BaseUrl.storage.write("clockin", BaseUrl.clockin);
-          //print(BaseUrl.clockin);
-          //print("date1.value");
+
           Get.offAllNamed('/home');
           Get.snackbar("Attendance", "Clock In Successfully");
         } else {
-          // BaseUrl.storage.write("status", false);
           Loading.value = false;
           Get.snackbar("Error ", response.data['error'].toString(),
               colorText: Colors.white, backgroundColor: Colors.red);
@@ -122,13 +115,12 @@ class AttendanceController extends GetxController {
   }
 
   clockout() async {
+    Loading.value = true;
     var date = DateTime.now();
     var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
-
-    //print(outputDate.toString());
 
     await CurrentLocation();
     if (sites.value != "") {
@@ -151,7 +143,6 @@ class AttendanceController extends GetxController {
           "Clock Out Successfully",
         );
       } else {
-        // BaseUrl.storage.write("status", true);
         Loading.value = false;
         Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);

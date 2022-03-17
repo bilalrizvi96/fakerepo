@@ -132,7 +132,7 @@ class AttendanceScreen extends StatelessWidget {
                                         },
                                         child: Padding(
                                           padding:
-                                              const EdgeInsets.only(top: 18.0),
+                                              const EdgeInsets.only(top: 35.0),
                                           child: Container(
                                             width: width / 3,
                                             height: height / 5,
@@ -142,10 +142,11 @@ class AttendanceScreen extends StatelessWidget {
                                                 border: Border.all(
                                                     color: Color(0xFF44A6F4)
                                                         .withOpacity(0.48)),
-                                                color: Colors.white),
+                                                color: Color(0xFFBBD7F5FF)
+                                                    .withOpacity(0.10)),
                                             child: Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Padding(
                                                   padding:
@@ -178,7 +179,7 @@ class AttendanceScreen extends StatelessWidget {
                                         },
                                         child: Padding(
                                           padding:
-                                              const EdgeInsets.only(top: 18.0),
+                                              const EdgeInsets.only(top: 35.0),
                                           child: Container(
                                             width: width / 3,
                                             height: height / 5,
@@ -188,10 +189,11 @@ class AttendanceScreen extends StatelessWidget {
                                                 border: Border.all(
                                                     color: Color(0xFFF50000)
                                                         .withOpacity(0.46)),
-                                                color: Colors.white),
+                                                color: Color(0xFFFAC5C5)
+                                                    .withOpacity(0.10)),
                                             child: Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Padding(
                                                   padding:

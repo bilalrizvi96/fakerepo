@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SplashController.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class SplashScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    'V 1.0.5',
+                    'Beta Release',
                     style: GoogleFonts.poppins(
                         color: DynamicColor().white,
                         fontWeight: FontWeight.w300,

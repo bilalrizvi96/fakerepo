@@ -7,6 +7,7 @@ class BaseUrl {
   static var empcode;
   static var clockin = '';
   static var clockout = '';
+  static var url = '';
   static var baseurl =
       "https://fn8tsd4pbh.execute-api.us-east-2.amazonaws.com/dev/";
   static var baseurl_Face =

@@ -6,12 +6,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../API/BaseURl.dart';
 import '../../Component/DynamicColor.dart';
-import '../../Controller/UpdateController.dart';
+
 import '../FeedbackScreen/FeedbackScreen.dart';
 
 class UpdateScreen extends StatelessWidget {
-  UpdateController updateController = Get.put(UpdateController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +102,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            'V 1.0.5',
+                            BaseUrl.version,
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
@@ -157,11 +157,11 @@ class UpdateScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         elevation: 1.0, primary: DynamicColor().primarycolor),
                     onPressed: () async {
-                      updateController.url.value.toString();
-                      //print(url.value);
-                      if (await canLaunch(updateController.url.value)) {
+                      BaseUrl.url;
+                      print(BaseUrl.url);
+                      if (await canLaunch(BaseUrl.url)) {
                         await launch(
-                          updateController.url.value,
+                          BaseUrl.url,
                           forceSafariVC: false,
                           forceWebView: false,
                           headers: <String, String>{
@@ -169,7 +169,7 @@ class UpdateScreen extends StatelessWidget {
                           },
                         );
                       } else {
-                        throw 'Could not launch ${updateController.url.value}';
+                        throw 'Could not launch ${BaseUrl.url}';
                       }
                     },
                     child: const Text('UPDATE')),

@@ -1,23 +1,14 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
-import 'package:attendencesystem/Controller/UpdateController.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import '../Component/DynamicColor.dart';
 
 class SplashController extends GetxController {
   var updates = false.obs;
   var url = ''.obs;
   var context;
-  UpdateController updateController = Get.put(UpdateController());
+
   @override
   void onInit() {
     super.onInit();
@@ -30,6 +21,8 @@ class SplashController extends GetxController {
       updates.value = response.data['response']['updateAvailability'];
       if (updates.value == true) {
         url.value = response.data['response']['link'];
+        BaseUrl.url = url.value;
+        // print(updateController.url);
       }
       checks();
     } else {
@@ -60,7 +53,6 @@ class SplashController extends GetxController {
         }
       });
     } else {
-      updateController.url.value = url.value;
       Get.offAllNamed('/updatescreen');
       // return showDialog(
       //     context: context,
