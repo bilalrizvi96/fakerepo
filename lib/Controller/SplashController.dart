@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,11 +9,26 @@ class SplashController extends GetxController {
   var updates = false.obs;
   var url = ''.obs;
   var context;
+  var connection = true.obs;
+  check() async {
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        connection.value = true;
+        checkUpdate();
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+    });
+    update();
+  }
 
   @override
   void onInit() {
     super.onInit();
-    checkUpdate();
+    // check();
+    // checkUpdate();
   }
 
   checkUpdate() async {

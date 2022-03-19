@@ -16,10 +16,7 @@ import '../View/FeedbackScreen/FeedbackScreen.dart';
 
 class Routes {
   final routes = [
-    GetPage(
-        name: '/splash',
-        page: () => SplashScreen(),
-        transition: Transition.zoom),
+    GetPage(name: '/', page: () => SplashScreen(), transition: Transition.zoom),
     GetPage(
         name: '/home',
         page: () => BottomNavigationScreen(),

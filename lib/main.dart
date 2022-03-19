@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Routes/Routes.dart';
+import 'package:attendencesystem/View/GoogleMapScreen/GoogleMapScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/gestures.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
-      // home: test(),
+      // home: GoogleMapScreen(),
       getPages: Routes().routes,
     );
   }

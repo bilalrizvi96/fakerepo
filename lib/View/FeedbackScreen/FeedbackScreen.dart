@@ -96,34 +96,47 @@ class FeedbackScreen extends StatelessWidget {
                                 ),
                                 Container(
                                   width: width / 1.2,
-                                  child: TextFormField(
-                                    controller:
-                                        _feedbackController.namecontroller,
-                                    validator: _feedbackController.validators,
-                                    readOnly: check == false ? false : true,
-                                    decoration: new InputDecoration(
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                                  DynamicColor().titletextcolor,
-                                              width: 1.2),
+                                  child: check == false
+                                      ? TextFormField(
+                                          controller: _feedbackController
+                                              .namecontroller,
+                                          validator:
+                                              _feedbackController.validators,
+                                          readOnly:
+                                              check == false ? false : true,
+                                          decoration: new InputDecoration(
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: DynamicColor()
+                                                        .titletextcolor,
+                                                    width: 1.2),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: DynamicColor()
+                                                        .titletextcolor,
+                                                    width: 1.0),
+                                              ),
+                                              hintText: _feedbackController
+                                                          .namecontroller
+                                                          .text ==
+                                                      ''
+                                                  ? "Name"
+                                                  : '',
+                                              hintStyle: GoogleFonts.poppins(
+                                                  color: DynamicColor().black,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: width / 25)),
+                                        )
+                                      : Text(
+                                          _feedbackController
+                                              .namecontroller.text
+                                              .toUpperCase(),
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black),
                                         ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                                  DynamicColor().titletextcolor,
-                                              width: 1.0),
-                                        ),
-                                        hintText: _feedbackController
-                                                    .namecontroller.text ==
-                                                ''
-                                            ? "Name"
-                                            : '',
-                                        hintStyle: GoogleFonts.poppins(
-                                            color: DynamicColor().black,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: width / 25)),
-                                  ),
                                 ),
                                 SizedBox(
                                   height: height / 50,
@@ -187,7 +200,7 @@ class FeedbackScreen extends StatelessWidget {
                                     controller:
                                         _feedbackController.feedbackcontroller,
                                     validator: _feedbackController.validators,
-                                    maxLines: 7,
+                                    maxLines: 6,
                                     maxLength: 1000,
                                     decoration: new InputDecoration(
                                       focusedBorder: OutlineInputBorder(
@@ -238,7 +251,7 @@ class FeedbackScreen extends StatelessWidget {
                                 _feedbackController.faceImage != null
                                     ? Container(
                                         width: 100,
-                                        height: 150,
+                                        height: 130,
                                         child: Image.file(File(
                                             _feedbackController
                                                 .faceImage!.path)),

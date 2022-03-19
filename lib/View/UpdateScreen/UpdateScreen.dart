@@ -43,7 +43,8 @@ class UpdateScreen extends StatelessWidget {
                               left: 25.0, right: 25.0, top: 12.0),
                           child: Text(
                             'This update includes improvements to function as listed below.\n\nThe exact changes may differ depending on your device model,region and service provider.'
-                            '\n\n*  Fixed location access bug on older phones.',
+                            '\n\n*  Fixed splash bug on older phones.'
+                            '\n*  Add network conectivity.',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w300,
                                 fontSize:
@@ -71,7 +72,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            'V 1.0.4',
+                            'V 1.0.5',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
