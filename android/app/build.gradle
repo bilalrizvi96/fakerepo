@@ -53,7 +53,7 @@ android {
 
 
         versionCode flutterVersionCode.toInteger()
-        versionName '1.0.6'
+        versionName '1.0.7'
     }
 
     buildTypes {

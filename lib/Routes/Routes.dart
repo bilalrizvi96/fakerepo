@@ -46,11 +46,11 @@ class Routes {
         page: () => FaceIDRuleScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
-    GetPage(
-        name: "/attendance",
-        page: () => AttendanceScreen(),
-        transition: Transition.rightToLeft,
-        curve: Curves.easeInQuart),
+    // GetPage(
+    //     name: "/attendance",
+    //     page: () => AttendanceScreen(),
+    //     transition: Transition.rightToLeft,
+    //     curve: Curves.easeInQuart),
     GetPage(
         name: "/profile",
         page: () => MyProfileScreen(),

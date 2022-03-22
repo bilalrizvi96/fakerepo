@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
-  AttendanceController attendanceController = Get.put(AttendanceController());
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -144,278 +144,24 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: height / 20,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 18.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: width / 25,
-                                ),
-                                Container(
-                                  width: width / 3,
-                                  height: height / 25,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFE5E5E5).withOpacity(0.6),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 15.0),
-                                          child: Text(
-                                            'Clock In',
-                                            style: GoogleFonts.poppins(
-                                                color:
-                                                    DynamicColor().primarycolor,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: width / 30),
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Container(
-                                          width: width / 6.7,
-                                          height: height / 25,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF85A0F8),
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          child: Text(
-                                            BaseUrl.storage.read("clockin") !=
-                                                    null
-                                                ? "${BaseUrl.storage.read("clockin")}"
-                                                : "00:00",
-                                            style: GoogleFonts.poppins(
-                                                color: DynamicColor().white,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: width / 30),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Spacer(),
-                                Container(
-                                  width: width / 2.8,
-                                  height: height / 25,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFE5E5E5).withOpacity(0.6),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 12.0),
-                                          child: Text(
-                                            'Clock Out',
-                                            style: GoogleFonts.poppins(
-                                                color:
-                                                    DynamicColor().primarycolor,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: width / 30),
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Container(
-                                          width: width / 6.7,
-                                          height: height / 25,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFEE6969),
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          child: Text(
-                                            BaseUrl.storage.read("clockout") !=
-                                                    null
-                                                ? "${BaseUrl.storage.read("clockout")}"
-                                                : "00:00",
-                                            style: GoogleFonts.poppins(
-                                                color: DynamicColor().white,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: width / 30),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width / 10,
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: height / 20,
-                          ),
-                          DelayedDisplay(
-                            fadeIn: true,
-                            fadingDuration: Duration(milliseconds: 400),
-                            child: Container(
-                              width: width / 1.2,
-                              height: height / 11,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.15),
-                                    spreadRadius: 1,
-                                    blurRadius: 20,
-                                    offset: Offset(
-                                        0, 20), // changes position of shadow
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                    alignment: Alignment.center,
-                                    image: NetworkImage(
-                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presentbg.png"),
-                                    fit: BoxFit.contain),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  // Spacer(),
-                                  SizedBox(
-                                    width: width / 15,
-                                  ),
-                                  Image.network(
-                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
-                                    fit: BoxFit.contain,
-                                    width: width / 9,
-                                  ),
-                                  SizedBox(
-                                    width: width / 40,
-                                  ),
-                                  Text(
-                                    BaseUrl.storage.read("totalPresent") != null
-                                        ? BaseUrl.storage
-                                            .read("totalPresent")
-                                            .toString()
-                                        : "0",
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: width / 14),
-                                  ),
-                                  SizedBox(
-                                    width: width / 40,
-                                  ),
-                                  Text(
-                                    "Present",
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: width / 20),
-                                  ),
-                                  SizedBox(
-                                    width: width / 8,
-                                  ),
-                                ],
-                              ),
-                              // child:
-                            ),
-                          ),
-                          SizedBox(
-                            height: height / 100,
-                          ),
-                          DelayedDisplay(
-                            fadeIn: true,
-                            fadingDuration: Duration(milliseconds: 400),
-                            child: Container(
-                              width: width / 1.2,
-                              height: height / 11,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.15),
-                                    spreadRadius: 1,
-                                    blurRadius: 20,
-                                    offset: Offset(
-                                        0, 20), // changes position of shadow
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                    alignment: Alignment.center,
-                                    image: NetworkImage(
-                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absentbg.png"),
-                                    fit: BoxFit.contain),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  // Spacer(),
-                                  SizedBox(
-                                    width: width / 15,
-                                  ),
-                                  Image.network(
-                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
-                                    fit: BoxFit.contain,
-                                    width: width / 9,
-                                  ),
-                                  SizedBox(
-                                    width: width / 40,
-                                  ),
-                                  Text(
-                                    BaseUrl.storage.read("totalAbsent") != null
-                                        ? BaseUrl.storage
-                                            .read("totalAbsent")
-                                            .toString()
-                                        : "0",
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: width / 14),
-                                  ),
-                                  SizedBox(
-                                    width: width / 40,
-                                  ),
-                                  Text(
-                                    "Absent",
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: width / 20),
-                                  ),
-                                  SizedBox(
-                                    width: width / 8,
-                                  ),
-                                ],
-                              ),
-                              // child:
-                            ),
-                          ),
-                          SizedBox(
-                            height: height / 80,
+                            height: height / 50,
                           ),
                           DelayedDisplay(
                             fadeIn: true,
                             fadingDuration: Duration(milliseconds: 400),
                             child: Container(
                               height: height / 25,
-                              width: width / 1.2,
+                              width: width / 1.15,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
+                                  SizedBox(
+                                    width: width / 50,
+                                  ),
                                   Container(
                                     width: width / 6,
                                     height: height / 35,
@@ -486,86 +232,483 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Spacer(),
-                          Stack(
-                            children: [
-                              DelayedDisplay(
-                                fadeIn: true,
-                                fadingDuration: Duration(milliseconds: 400),
-                                child: Container(
-                                  height: height / 3.4,
-                                  width: width,
+                          SizedBox(
+                            height: height / 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: width / 25,
+                                ),
+                                Container(
+                                  width: width / 2.4,
+                                  height: height / 25,
                                   decoration: BoxDecoration(
+                                    color: Color(0xFFE5E5E5).withOpacity(0.6),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(left: 15.0),
+                                          child: Text(
+                                            'Clock In',
+                                            style: GoogleFonts.poppins(
+                                                color:
+                                                    DynamicColor().primarycolor,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: width / 30),
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Container(
+                                          width: width / 6.0,
+                                          height: height / 25,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF85A0F8),
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                          ),
+                                          child: Text(
+                                            BaseUrl.storage.read("clockin") !=
+                                                    null
+                                                ? "${BaseUrl.storage.read("clockin")}"
+                                                : "00:00",
+                                            style: GoogleFonts.poppins(
+                                                color: DynamicColor().white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: width / 30),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Spacer(),
+                                Container(
+                                  width: width / 2.4,
+                                  height: height / 25,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE5E5E5).withOpacity(0.6),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(left: 12.0),
+                                          child: Text(
+                                            'Clock Out',
+                                            style: GoogleFonts.poppins(
+                                                color:
+                                                    DynamicColor().primarycolor,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: width / 30),
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Container(
+                                          width: width / 6.0,
+                                          height: height / 25,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFEE6969),
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                          ),
+                                          child: Text(
+                                            BaseUrl.storage.read("clockout") !=
+                                                    null
+                                                ? "${BaseUrl.storage.read("clockout")}"
+                                                : "00:00",
+                                            style: GoogleFonts.poppins(
+                                                color: DynamicColor().white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: width / 30),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width / 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: height / 20,
+                          ),
+                          DelayedDisplay(
+                            fadeIn: true,
+                            fadingDuration: Duration(milliseconds: 400),
+                            child: Container(
+                              width: width / 1.15,
+                              height: height / 11,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.15),
+                                    spreadRadius: 1,
+                                    blurRadius: 20,
+                                    offset: Offset(
+                                        0, 20), // changes position of shadow
+                                  ),
+                                ],
+                                image: DecorationImage(
+                                    alignment: Alignment.center,
+                                    image: NetworkImage(
+                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presentbg.png"),
+                                    fit: BoxFit.cover),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // Spacer(),
+                                  SizedBox(
+                                    width: width / 15,
+                                  ),
+                                  Image.network(
+                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
+                                    fit: BoxFit.contain,
+                                    width: width / 9,
+                                  ),
+                                  SizedBox(
+                                    width: width / 40,
+                                  ),
+                                  Text(
+                                    BaseUrl.storage.read("totalPresent") != null
+                                        ? BaseUrl.storage
+                                            .read("totalPresent")
+                                            .toString()
+                                        : "0",
+                                    style: GoogleFonts.poppins(
+                                        color: DynamicColor().black,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: width / 14),
+                                  ),
+                                  SizedBox(
+                                    width: width / 40,
+                                  ),
+                                  Text(
+                                    "Present",
+                                    style: GoogleFonts.poppins(
+                                        color: DynamicColor().black,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: width / 20),
+                                  ),
+                                  SizedBox(
+                                    width: width / 8,
+                                  ),
+                                ],
+                              ),
+                              // child:
+                            ),
+                          ),
+                          SizedBox(
+                            height: height / 100,
+                          ),
+                          DelayedDisplay(
+                            fadeIn: true,
+                            fadingDuration: Duration(milliseconds: 400),
+                            child: Container(
+                              width: width / 1.15,
+                              height: height / 11,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.15),
+                                    spreadRadius: 1,
+                                    blurRadius: 20,
+                                    offset: Offset(
+                                        0, 20), // changes position of shadow
+                                  ),
+                                ],
+                                image: DecorationImage(
+                                    alignment: Alignment.center,
+                                    image: NetworkImage(
+                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absentbg.png"),
+                                    fit: BoxFit.cover),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // Spacer(),
+                                  SizedBox(
+                                    width: width / 15,
+                                  ),
+                                  Image.network(
+                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
+                                    fit: BoxFit.contain,
+                                    width: width / 9,
+                                  ),
+                                  SizedBox(
+                                    width: width / 40,
+                                  ),
+                                  Text(
+                                    BaseUrl.storage.read("totalAbsent") != null
+                                        ? BaseUrl.storage
+                                            .read("totalAbsent")
+                                            .toString()
+                                        : "0",
+                                    style: GoogleFonts.poppins(
+                                        color: DynamicColor().black,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: width / 14),
+                                  ),
+                                  SizedBox(
+                                    width: width / 40,
+                                  ),
+                                  Text(
+                                    "Absent",
+                                    style: GoogleFonts.poppins(
+                                        color: DynamicColor().black,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: width / 20),
+                                  ),
+                                  SizedBox(
+                                    width: width / 8,
+                                  ),
+                                ],
+                              ),
+                              // child:
+                            ),
+                          ),
+                          Spacer(),
+                          homeController.Loading.value == false
+                              ? DelayedDisplay(
+                                  fadeIn: true,
+                                  fadingDuration: Duration(milliseconds: 400),
+                                  child: Container(
+                                    height: height / 3.4,
+                                    width: width,
+                                    decoration: BoxDecoration(
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(20.0),
                                           topLeft: Radius.circular(20.0)),
-                                      color: DynamicColor().primarycolor),
-                                ),
-                              ),
-                              Positioned(
-                                top: height / 20,
-                                right: width / 12,
-                                left: width / 12,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    attendanceController.scan();
-                                  },
-                                  child: DelayedDisplay(
-                                    fadeIn: true,
-                                    fadingDuration:
-                                        Duration(milliseconds: 1200),
-                                    child: Image.network(
-                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/qrdashboard.png',
-                                      height: height / 5,
                                     ),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: DelayedDisplay(
-                                  fadeIn: true,
-                                  fadingDuration: Duration(milliseconds: 800),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 18.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    child: Row(
                                       children: [
-                                        Text(
-                                          BaseUrl.storage.read("status") ==
-                                                  false
-                                              ? 'Scan to Clock In'
-                                              : 'Scan to Clock Out',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: width / 20,
-                                              color: DynamicColor()
-                                                  .white
-                                                  .withOpacity(0.44)),
+                                        SizedBox(
+                                          width: width / 15,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Spacer(),
+                                            DelayedDisplay(
+                                              fadeIn: true,
+                                              fadingDuration:
+                                                  Duration(milliseconds: 1200),
+                                              child: Text(
+                                                'Clock In',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: width / 25,
+                                                    color: DynamicColor()
+                                                        .black
+                                                        .withOpacity(0.44)),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            GestureDetector(
+                                              onTap: () {
+                                                if (BaseUrl.storage
+                                                        .read("status") ==
+                                                    false) {
+                                                  homeController.Loading.value =
+                                                      true;
+                                                  homeController.scan();
+                                                }
+
+                                                // homeController.valcheck.value='clockin';
+                                                // homeController.clockin();
+                                              },
+                                              child: DelayedDisplay(
+                                                fadeIn: true,
+                                                fadingDuration: Duration(
+                                                    milliseconds: 1200),
+                                                child: Container(
+                                                  width: width / 2.5,
+                                                  height: height / 6,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                      border: Border.all(
+                                                          color: BaseUrl.storage.read("status") ==
+                                                                  false
+                                                              ? Color(0xFF44A6F4)
+                                                                  .withOpacity(
+                                                                      0.48)
+                                                              : Colors.grey
+                                                                  .withOpacity(
+                                                                      0.1)),
+                                                      color: BaseUrl.storage.read("status") ==
+                                                              false
+                                                          ? Color(0xFFBBD7F5FF)
+                                                              .withOpacity(0.10)
+                                                          : Color(0xFFEAEAEAFF)
+                                                              .withOpacity(0.1)),
+                                                  child: Center(
+                                                    child: BaseUrl.storage.read(
+                                                                "status") ==
+                                                            false
+                                                        ? Image.network(
+                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
+                                                            height: height / 12,
+                                                          )
+                                                        : Image.network(
+                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                                            height: height / 12,
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            DelayedDisplay(
+                                              fadeIn: true,
+                                              fadingDuration:
+                                                  Duration(milliseconds: 1200),
+                                              child: Text(
+                                                'Scan',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: width / 25,
+                                                    color:
+                                                        DynamicColor().black),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                          ],
+                                        ),
+                                        Spacer(),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Spacer(),
+                                            DelayedDisplay(
+                                              fadeIn: true,
+                                              fadingDuration:
+                                                  Duration(milliseconds: 1200),
+                                              child: Text(
+                                                'Clock Out',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: width / 25,
+                                                    color: DynamicColor()
+                                                        .black
+                                                        .withOpacity(0.44)),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            GestureDetector(
+                                              onTap: () {
+                                                if (BaseUrl.storage
+                                                        .read("status") ==
+                                                    true) {
+                                                  homeController.Loading.value =
+                                                      true;
+                                                  homeController.scan();
+                                                }
+
+                                                // homeController.valcheck.val
+                                              },
+                                              child: DelayedDisplay(
+                                                fadeIn: true,
+                                                fadingDuration: Duration(
+                                                    milliseconds: 1200),
+                                                child: Container(
+                                                  width: width / 2.5,
+                                                  height: height / 6,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                      border: Border.all(
+                                                          color: BaseUrl.storage.read("status") ==
+                                                                  true
+                                                              ? Color(0xFFF50000)
+                                                                  .withOpacity(
+                                                                      0.46)
+                                                              : Colors.grey
+                                                                  .withOpacity(
+                                                                      0.1)),
+                                                      color: BaseUrl.storage.read("status") ==
+                                                              true
+                                                          ? Color(0xFFFAC5C5)
+                                                              .withOpacity(0.10)
+                                                          : Color(0xFFEAEAEAFF)
+                                                              .withOpacity(0.1)),
+                                                  child: Center(
+                                                    child: BaseUrl.storage.read(
+                                                                "status") ==
+                                                            true
+                                                        ? Image.network(
+                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
+                                                            height: height / 12,
+                                                          )
+                                                        : Image.network(
+                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                                            height: height / 12,
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            DelayedDisplay(
+                                              fadeIn: true,
+                                              fadingDuration:
+                                                  Duration(milliseconds: 1200),
+                                              child: Text(
+                                                'Scan',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: width / 25,
+                                                    color:
+                                                        DynamicColor().black),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                          ],
                                         ),
                                         SizedBox(
-                                          height: height / 7,
+                                          width: width / 12,
                                         ),
-                                        Text(
-                                          'Scan QR code',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: width / 20,
-                                              color: DynamicColor().white),
-                                        ),
-                                        // SizedBox(
-                                        //   height: height / 80,
-                                        // ),
                                       ],
                                     ),
                                   ),
+                                )
+                              : Center(
+                                  child: Image.asset(
+                                    "assets/1.gif",
+                                    height: 200,
+                                    width: 200,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ],
