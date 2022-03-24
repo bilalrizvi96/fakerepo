@@ -1,6 +1,6 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:attendencesystem/Controller/AttendenceController.dart';
+
 import 'package:attendencesystem/Controller/HomeController.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
@@ -63,13 +63,13 @@ class HomeScreen extends StatelessWidget {
                                 Spacer(),
                                 GestureDetector(
                                   onTap: () {
-                                    Get.toNamed('/profile');
+                                    Get.toNamed('/checkpoint');
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         right: 8.0, left: 8.0),
                                     child: Icon(
-                                      Icons.person_outline,
+                                      Icons.location_on_outlined,
                                       size: width / 16,
                                       color: DynamicColor().primarycolor,
                                     ),
@@ -235,117 +235,114 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(
                             height: height / 50,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: width / 25,
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: width / 12,
+                              ),
+                              Container(
+                                width: width / 2.7,
+                                height: height / 25,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE5E5E5).withOpacity(0.6),
+                                  borderRadius: BorderRadius.circular(5.0),
                                 ),
-                                Container(
-                                  width: width / 2.4,
-                                  height: height / 25,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFE5E5E5).withOpacity(0.6),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 15.0),
-                                          child: Text(
-                                            'Clock In',
-                                            style: GoogleFonts.poppins(
-                                                color:
-                                                    DynamicColor().primarycolor,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: width / 30),
-                                          ),
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(left: 15.0),
+                                        child: Text(
+                                          'Last In',
+                                          style: GoogleFonts.poppins(
+                                              color:
+                                                  DynamicColor().primarycolor,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: width / 30),
                                         ),
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Container(
-                                          width: width / 6.0,
-                                          height: height / 25,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF85A0F8),
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          child: Text(
-                                            BaseUrl.storage.read("clockin") !=
-                                                    null
-                                                ? "${BaseUrl.storage.read("clockin")}"
-                                                : "00:00",
-                                            style: GoogleFonts.poppins(
-                                                color: DynamicColor().white,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: width / 30),
-                                          ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                        width: width / 6.0,
+                                        height: height / 25,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFF85A0F8),
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                        ),
+                                        child: Text(
+                                          BaseUrl.storage.read("clockin") !=
+                                                  null
+                                              ? "${BaseUrl.storage.read("clockin")}"
+                                              : "00:00",
+                                          style: GoogleFonts.poppins(
+                                              color: DynamicColor().white,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: width / 30),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Spacer(),
-                                Container(
-                                  width: width / 2.4,
-                                  height: height / 25,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFE5E5E5).withOpacity(0.6),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 12.0),
-                                          child: Text(
-                                            'Clock Out',
-                                            style: GoogleFonts.poppins(
-                                                color:
-                                                    DynamicColor().primarycolor,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: width / 30),
-                                          ),
+                              ),
+                              Spacer(),
+                              Container(
+                                width: width / 2.7,
+                                height: height / 25,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE5E5E5).withOpacity(0.6),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(left: 12.0),
+                                        child: Text(
+                                          'Last Out',
+                                          style: GoogleFonts.poppins(
+                                              color:
+                                                  DynamicColor().primarycolor,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: width / 30),
                                         ),
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Container(
-                                          width: width / 6.0,
-                                          height: height / 25,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFEE6969),
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          child: Text(
-                                            BaseUrl.storage.read("clockout") !=
-                                                    null
-                                                ? "${BaseUrl.storage.read("clockout")}"
-                                                : "00:00",
-                                            style: GoogleFonts.poppins(
-                                                color: DynamicColor().white,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: width / 30),
-                                          ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                        width: width / 6.0,
+                                        height: height / 25,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFEE6969),
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                        ),
+                                        child: Text(
+                                          BaseUrl.storage.read("clockout") !=
+                                                  null
+                                              ? "${BaseUrl.storage.read("clockout")}"
+                                              : "00:00",
+                                          style: GoogleFonts.poppins(
+                                              color: DynamicColor().white,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: width / 30),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: width / 20,
-                                ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(
+                                width: width / 10,
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: height / 20,
@@ -353,69 +350,73 @@ class HomeScreen extends StatelessWidget {
                           DelayedDisplay(
                             fadeIn: true,
                             fadingDuration: Duration(milliseconds: 400),
-                            child: Container(
-                              width: width / 1.15,
-                              height: height / 11,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.15),
-                                    spreadRadius: 1,
-                                    blurRadius: 20,
-                                    offset: Offset(
-                                        0, 20), // changes position of shadow
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                    alignment: Alignment.center,
-                                    image: NetworkImage(
-                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presentbg.png"),
-                                    fit: BoxFit.cover),
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 10.0),
+                              child: Container(
+                                width: width / 1.2,
+                                height: height / 11,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.15),
+                                      spreadRadius: 1,
+                                      blurRadius: 20,
+                                      offset: Offset(
+                                          0, 20), // changes position of shadow
+                                    ),
+                                  ],
+                                  image: DecorationImage(
+                                      alignment: Alignment.center,
+                                      image: NetworkImage(
+                                          "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presentbg.png"),
+                                      fit: BoxFit.cover),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // Spacer(),
+                                    SizedBox(
+                                      width: width / 15,
+                                    ),
+                                    Image.network(
+                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
+                                      fit: BoxFit.contain,
+                                      width: width / 9,
+                                    ),
+                                    SizedBox(
+                                      width: width / 40,
+                                    ),
+                                    Text(
+                                      BaseUrl.storage.read("totalPresent") !=
+                                              null
+                                          ? BaseUrl.storage
+                                              .read("totalPresent")
+                                              .toString()
+                                          : "0",
+                                      style: GoogleFonts.poppins(
+                                          color: DynamicColor().black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: width / 14),
+                                    ),
+                                    SizedBox(
+                                      width: width / 40,
+                                    ),
+                                    Text(
+                                      "Present",
+                                      style: GoogleFonts.poppins(
+                                          color: DynamicColor().black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: width / 20),
+                                    ),
+                                    SizedBox(
+                                      width: width / 8,
+                                    ),
+                                  ],
+                                ),
+                                // child:
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  // Spacer(),
-                                  SizedBox(
-                                    width: width / 15,
-                                  ),
-                                  Image.network(
-                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
-                                    fit: BoxFit.contain,
-                                    width: width / 9,
-                                  ),
-                                  SizedBox(
-                                    width: width / 40,
-                                  ),
-                                  Text(
-                                    BaseUrl.storage.read("totalPresent") != null
-                                        ? BaseUrl.storage
-                                            .read("totalPresent")
-                                            .toString()
-                                        : "0",
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: width / 14),
-                                  ),
-                                  SizedBox(
-                                    width: width / 40,
-                                  ),
-                                  Text(
-                                    "Present",
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: width / 20),
-                                  ),
-                                  SizedBox(
-                                    width: width / 8,
-                                  ),
-                                ],
-                              ),
-                              // child:
                             ),
                           ),
                           SizedBox(
@@ -424,69 +425,74 @@ class HomeScreen extends StatelessWidget {
                           DelayedDisplay(
                             fadeIn: true,
                             fadingDuration: Duration(milliseconds: 400),
-                            child: Container(
-                              width: width / 1.15,
-                              height: height / 11,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.15),
-                                    spreadRadius: 1,
-                                    blurRadius: 20,
-                                    offset: Offset(
-                                        0, 20), // changes position of shadow
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                    alignment: Alignment.center,
-                                    image: NetworkImage(
-                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absentbg.png"),
-                                    fit: BoxFit.cover),
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 10.0),
+                              child: Container(
+                                width: width / 1.2,
+                                height: height / 11,
+
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.15),
+                                      spreadRadius: 1,
+                                      blurRadius: 20,
+                                      offset: Offset(
+                                          0, 20), // changes position of shadow
+                                    ),
+                                  ],
+                                  image: DecorationImage(
+                                      alignment: Alignment.center,
+                                      image: NetworkImage(
+                                          "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absentbg.png"),
+                                      fit: BoxFit.cover),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // Spacer(),
+                                    SizedBox(
+                                      width: width / 15,
+                                    ),
+                                    Image.network(
+                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
+                                      fit: BoxFit.contain,
+                                      width: width / 9,
+                                    ),
+                                    SizedBox(
+                                      width: width / 40,
+                                    ),
+                                    Text(
+                                      BaseUrl.storage.read("totalAbsent") !=
+                                              null
+                                          ? BaseUrl.storage
+                                              .read("totalAbsent")
+                                              .toString()
+                                          : "0",
+                                      style: GoogleFonts.poppins(
+                                          color: DynamicColor().black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: width / 14),
+                                    ),
+                                    SizedBox(
+                                      width: width / 40,
+                                    ),
+                                    Text(
+                                      "Absent",
+                                      style: GoogleFonts.poppins(
+                                          color: DynamicColor().black,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: width / 20),
+                                    ),
+                                    SizedBox(
+                                      width: width / 8,
+                                    ),
+                                  ],
+                                ),
+                                // child:
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  // Spacer(),
-                                  SizedBox(
-                                    width: width / 15,
-                                  ),
-                                  Image.network(
-                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
-                                    fit: BoxFit.contain,
-                                    width: width / 9,
-                                  ),
-                                  SizedBox(
-                                    width: width / 40,
-                                  ),
-                                  Text(
-                                    BaseUrl.storage.read("totalAbsent") != null
-                                        ? BaseUrl.storage
-                                            .read("totalAbsent")
-                                            .toString()
-                                        : "0",
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: width / 14),
-                                  ),
-                                  SizedBox(
-                                    width: width / 40,
-                                  ),
-                                  Text(
-                                    "Absent",
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: width / 20),
-                                  ),
-                                  SizedBox(
-                                    width: width / 8,
-                                  ),
-                                ],
-                              ),
-                              // child:
                             ),
                           ),
                           Spacer(),
@@ -518,17 +524,36 @@ class HomeScreen extends StatelessWidget {
                                               fadeIn: true,
                                               fadingDuration:
                                                   Duration(milliseconds: 1200),
-                                              child: Text(
-                                                'Clock In',
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: width / 25,
-                                                    color: DynamicColor()
-                                                        .black
-                                                        .withOpacity(0.44)),
+                                              child: Container(
+                                                width: width / 2.5,
+                                                height: height / 25,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: BaseUrl.storage.read(
+                                                                "status") ==
+                                                            false
+                                                        ? Color(0xFF85A0F8)
+                                                        : Colors.grey
+                                                            .withOpacity(0.50),
+                                                    borderRadius: BorderRadius
+                                                        .only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    5.0),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    5.0))),
+                                                child: Text(
+                                                  'Clock In',
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: width / 25,
+                                                      color:
+                                                          DynamicColor().white),
+                                                ),
                                               ),
                                             ),
-                                            Spacer(),
                                             GestureDetector(
                                               onTap: () {
                                                 if (BaseUrl.storage
@@ -550,20 +575,20 @@ class HomeScreen extends StatelessWidget {
                                                   width: width / 2.5,
                                                   height: height / 6,
                                                   decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
+                                                      borderRadius: BorderRadius.only(
+                                                          bottomRight: Radius.circular(
                                                               5.0),
+                                                          bottomLeft: Radius.circular(
+                                                              5.0)),
                                                       border: Border.all(
-                                                          color: BaseUrl.storage.read("status") ==
-                                                                  false
-                                                              ? Color(0xFF44A6F4)
+                                                          color: BaseUrl.storage.read("status") == false
+                                                              ? Color(0xFF85A0F8)
                                                                   .withOpacity(
                                                                       0.48)
                                                               : Colors.grey
                                                                   .withOpacity(
                                                                       0.1)),
-                                                      color: BaseUrl.storage.read("status") ==
-                                                              false
+                                                      color: BaseUrl.storage.read("status") == false
                                                           ? Color(0xFFBBD7F5FF)
                                                               .withOpacity(0.10)
                                                           : Color(0xFFEAEAEAFF)
@@ -585,20 +610,6 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Spacer(),
-                                            DelayedDisplay(
-                                              fadeIn: true,
-                                              fadingDuration:
-                                                  Duration(milliseconds: 1200),
-                                              child: Text(
-                                                'Scan',
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: width / 25,
-                                                    color:
-                                                        DynamicColor().black),
-                                              ),
-                                            ),
-                                            Spacer(),
                                           ],
                                         ),
                                         Spacer(),
@@ -613,17 +624,36 @@ class HomeScreen extends StatelessWidget {
                                               fadeIn: true,
                                               fadingDuration:
                                                   Duration(milliseconds: 1200),
-                                              child: Text(
-                                                'Clock Out',
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: width / 25,
-                                                    color: DynamicColor()
-                                                        .black
-                                                        .withOpacity(0.44)),
+                                              child: Container(
+                                                width: width / 2.5,
+                                                height: height / 25,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: BaseUrl.storage.read(
+                                                                "status") ==
+                                                            true
+                                                        ? Color(0xFFEE6969)
+                                                        : Colors.grey
+                                                            .withOpacity(0.50),
+                                                    borderRadius: BorderRadius
+                                                        .only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    5.0),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    5.0))),
+                                                child: Text(
+                                                  'Clock Out',
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: width / 25,
+                                                      color:
+                                                          DynamicColor().white),
+                                                ),
                                               ),
                                             ),
-                                            Spacer(),
                                             GestureDetector(
                                               onTap: () {
                                                 if (BaseUrl.storage
@@ -644,20 +674,20 @@ class HomeScreen extends StatelessWidget {
                                                   width: width / 2.5,
                                                   height: height / 6,
                                                   decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
+                                                      borderRadius: BorderRadius.only(
+                                                          bottomLeft: Radius.circular(
                                                               5.0),
+                                                          bottomRight: Radius.circular(
+                                                              5.0)),
                                                       border: Border.all(
-                                                          color: BaseUrl.storage.read("status") ==
-                                                                  true
-                                                              ? Color(0xFFF50000)
+                                                          color: BaseUrl.storage.read("status") == true
+                                                              ? Color(0xFFEE6969)
                                                                   .withOpacity(
                                                                       0.46)
                                                               : Colors.grey
                                                                   .withOpacity(
                                                                       0.1)),
-                                                      color: BaseUrl.storage.read("status") ==
-                                                              true
+                                                      color: BaseUrl.storage.read("status") == true
                                                           ? Color(0xFFFAC5C5)
                                                               .withOpacity(0.10)
                                                           : Color(0xFFEAEAEAFF)
@@ -676,20 +706,6 @@ class HomeScreen extends StatelessWidget {
                                                           ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                            Spacer(),
-                                            DelayedDisplay(
-                                              fadeIn: true,
-                                              fadingDuration:
-                                                  Duration(milliseconds: 1200),
-                                              child: Text(
-                                                'Scan',
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: width / 25,
-                                                    color:
-                                                        DynamicColor().black),
                                               ),
                                             ),
                                             Spacer(),

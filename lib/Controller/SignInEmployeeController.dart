@@ -127,7 +127,7 @@ class SignInEmployeeController extends GetxController {
       response = await LoginModel.fromJson(response.data);
       token.value = "BEARER" + " " + response.token;
       BaseUrl.storage.write("token", token.value);
-      //print(BaseUrl.storage.read("token"));
+      print(BaseUrl.storage.read("token"));
       BaseUrl.storage.write("name", response.user[0].name);
       BaseUrl.storage.write("empCode", response.user[0].empCode);
       BaseUrl.storage

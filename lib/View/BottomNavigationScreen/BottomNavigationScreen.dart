@@ -49,6 +49,7 @@ class BottomNavigationScreen extends StatelessWidget {
             child: bottomNavigationController.connection == true
                 ? Scaffold(
                     bottomNavigationBar: BottomNavigationBar(
+                      type: BottomNavigationBarType.fixed,
                       selectedItemColor: DynamicColor().primarycolor,
                       onTap: bottomNavigationController.ItemIndex,
                       unselectedItemColor: Colors.grey[500],
@@ -57,20 +58,24 @@ class BottomNavigationScreen extends StatelessWidget {
                       items: const <BottomNavigationBarItem>[
                         BottomNavigationBarItem(
                           icon: Icon(Icons.dashboard),
-                          label: 'DashBoard',
+                          label: 'Dashboard',
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.summarize_outlined),
                           label: 'Summary',
                         ),
-                        // BottomNavigationBarItem(
-                        //   icon: Icon(Icons.person_outline),
-                        //   label: 'Profile',
-                        // ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.support_agent),
                           label: 'Support',
                         ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.person_outline),
+                          label: 'Profile',
+                        ),
+                        // BottomNavigationBarItem(
+                        //   icon: Icon(Icons.location_on_outlined),
+                        //   label: 'CheckPoint',
+                        // ),
                       ],
                     ),
                     body: bottomNavigationController.children.elementAt(

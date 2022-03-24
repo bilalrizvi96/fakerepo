@@ -234,7 +234,6 @@ class API {
             Options(contentType: Headers.formUrlEncodedContentType, headers: {
           'Content-Type': "multipart/formdata",
           Headers.acceptHeader: "application/json",
-          Headers.acceptHeader: "application/json"
         }),
       );
       if (response.statusCode == 200) {
@@ -311,6 +310,44 @@ class API {
         return response;
       }
     } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future CheckPoints({var latlng, var sitename, var note, var image}) async {
+    var file;
+    if (image != null) {
+      Uint8List imagebytes = await image.readAsBytes();
+      String base64string = base64.encode(imagebytes);
+      file = base64string.toString();
+      file.replaceAll('/', '');
+    }
+    try {
+      Map data = {
+        'location': latlng,
+        "siteName": sitename,
+        "notes": note,
+        'image': file != '' ? file : '',
+      };
+      print(data);
+      var dio = Dio();
+      print(BaseUrl.storage.read('token'));
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl.baseurl + 'checkPoints',
+        data: data,
+        options: Options(headers: {
+          Headers.acceptHeader: "application/json",
+          Headers.contentLengthHeader: '<calculated when request is sent>'
+        }),
+      );
+      print(response);
+      if (response.statusCode == 201) {
+        return response;
+      }
+    } catch (e) {
+      print(e);
       return onError(e);
     }
   }

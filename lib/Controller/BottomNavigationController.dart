@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../View/CheckPointScreen/CheckPointScreen.dart';
+
 class BottomNavigationController extends GetxController {
   var selectedIndex = 0.obs;
   var connection = true.obs;
@@ -25,10 +27,10 @@ class BottomNavigationController extends GetxController {
   List<Widget> children = [
     HomeScreen(),
     SummaryScreen(),
-    // MyProfileScreen(),
     FeedbackScreen(
       check: true,
-    )
+    ),
+    MyProfileScreen(),
   ];
   void ItemIndex(index) {
     selectedIndex.value = index;

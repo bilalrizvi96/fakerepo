@@ -1,4 +1,3 @@
-import 'package:attendencesystem/View/AttendenceScreen/AttendanceScreen.dart';
 import 'package:attendencesystem/View/BottomNavigationScreen/BottomNavigationScreen.dart';
 import 'package:attendencesystem/View/FaceIDRuleScreen/FaceIDRuleScreen.dart';
 import 'package:attendencesystem/View/IntroScreen/IntroScreen.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
+import '../View/CheckPointScreen/CheckPointScreen.dart';
 import '../View/FeedbackScreen/FeedbackScreen.dart';
 
 class Routes {
@@ -46,16 +46,16 @@ class Routes {
         page: () => FaceIDRuleScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
-    // GetPage(
-    //     name: "/attendance",
-    //     page: () => AttendanceScreen(),
-    //     transition: Transition.rightToLeft,
-    //     curve: Curves.easeInQuart),
     GetPage(
-        name: "/profile",
-        page: () => MyProfileScreen(),
+        name: "/checkpoint",
+        page: () => CheckPointScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
+    // GetPage(
+    //     name: "/profile",
+    //     page: () => MyProfileScreen(),
+    //     transition: Transition.rightToLeft,
+    //     curve: Curves.easeInQuart),
     GetPage(
         name: "/updatescreen",
         page: () => UpdateScreen(),
