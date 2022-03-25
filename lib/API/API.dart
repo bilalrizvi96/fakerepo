@@ -351,4 +351,29 @@ class API {
       return onError(e);
     }
   }
+
+  Future HistoryCheckPoints({var require, var date}) async {
+    try {
+      Map data = {"require": require, "date": date};
+      print(data);
+      var dio = Dio();
+      print(BaseUrl.storage.read('token'));
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl.baseurl + 'getCheckPoints',
+        data: data,
+        options: Options(headers: {
+          Headers.acceptHeader: "application/json",
+        }),
+      );
+      print(response);
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      print(e);
+      return onError(e);
+    }
+  }
 }

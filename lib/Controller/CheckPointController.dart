@@ -1,6 +1,5 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -9,15 +8,21 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart' as la;
 
 import '../API/API.dart';
+import '../Model/HistoryCheckpointModel.dart';
 
 class CheckPointController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final ImagePicker _picker = ImagePicker();
   XFile? faceImage;
   var first = ''.obs;
+  var finaldate = ''.obs;
   TabController? tabController;
+  var searchhistorylist = [].obs;
+  var mainhistorylist = [].obs;
   var checkpointFormKey = GlobalKey<FormState>();
-  // late GoogleMapController? mapController;
+  var todate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .obs;
   var siteController = TextEditingController();
   var noteController = TextEditingController();
   var center = new LatLng(33.652100, 75.123398).obs;
@@ -32,6 +37,34 @@ class CheckPointController extends GetxController
   var markers = Set<Marker>().obs;
   final colors = [DynamicColor().primarycolor, DynamicColor().primarycolor];
   Color? indicatorColor;
+  var historyList = [].obs;
+  toDate(date) {
+    todate.value = date;
+    print(todate.value);
+    if (todate.value == date) {
+      Loading.value = true;
+      historycheckpoint();
+    }
+    update();
+  }
+
+  search(val) {
+    if (val.isNotEmpty) {
+      searchhistorylist.value = historyList.value
+          .where((history) =>
+              history.siteName.toLowerCase().contains(val.toLowerCase()))
+          .toList();
+      print(searchhistorylist.value.map((e) => e.siteName));
+      historyList.value = searchhistorylist.value;
+      update();
+    } else {
+      searchhistorylist.value.clear();
+      historyList.value = mainhistorylist.value;
+      update();
+    }
+    update();
+  }
+
   @override
   void onInit() {
     mapupdate();
@@ -40,6 +73,7 @@ class CheckPointController extends GetxController
         indicatorColor = colors[tabController!.index];
         update();
       });
+
     update();
     super.onInit();
   }
@@ -51,7 +85,7 @@ class CheckPointController extends GetxController
     location.onLocationChanged.listen((la.LocationData cLoc) {
       center.value = LatLng(cLoc.latitude!, cLoc.longitude!);
     });
-
+    historycheckpoint();
     update();
   }
 
@@ -74,7 +108,11 @@ class CheckPointController extends GetxController
           noteController.clear();
           faceImage = null;
           Loading.value = false;
-          Get.back();
+          Get.snackbar(
+            "Checkpoints ",
+            'Successfully Added',
+          );
+          // Get.back();
         } else {
           Loading.value = false;
           Get.snackbar("Error ", response.data['error'].toString(),
@@ -84,6 +122,28 @@ class CheckPointController extends GetxController
         Get.snackbar("Error ", "Please Upload Image",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+    }
+    update();
+  }
+
+  historycheckpoint() async {
+    // Loading.value = true;
+    historyList.value.clear();
+    var date = todate.value.toString().split(' ');
+    finaldate.value = date[0].toString();
+
+    update();
+    var response = await API().HistoryCheckPoints(
+        date: finaldate.toString(), require: "myCheckPoints");
+    if (response.statusCode == 200) {
+      Loading.value = false;
+      response = HistoryCheckpointModel.fromJson(response.data);
+      historyList.value = response.data[0].checkPoints;
+      mainhistorylist.value = historyList.value;
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", response.data['error'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
@@ -115,6 +175,16 @@ class CheckPointController extends GetxController
 
   mapupdate() async {
     await CurrentLocation();
+
+    initialCameraPosition.value = CameraPosition(
+      target: LatLng(
+        center.value.latitude,
+        center.value.longitude,
+      ),
+      zoom: 14,
+      tilt: 1.0,
+      bearing: 30,
+    );
     controller!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       zoom: 14,
       tilt: 0,
@@ -125,16 +195,7 @@ class CheckPointController extends GetxController
       ),
     )));
     update();
-    initialCameraPosition.value = CameraPosition(
-      target: LatLng(
-        center.value.latitude,
-        center.value.longitude,
-      ),
-      zoom: 14,
-      tilt: 1.0,
-      bearing: 30,
-    );
-    update();
+
     showPinsOnMap();
   }
 
