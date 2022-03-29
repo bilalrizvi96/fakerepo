@@ -38,20 +38,20 @@ class SummaryScreen extends StatelessWidget {
                                   fontSize: width / 16),
                             ),
                             Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                Get.toNamed('/checkpoint');
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 8.0, left: 8.0),
-                                child: Icon(
-                                  Icons.location_on_outlined,
-                                  size: width / 16,
-                                  color: DynamicColor().primarycolor,
-                                ),
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Get.toNamed('/checkpoint');
+                            //   },
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.only(
+                            //         right: 8.0, left: 8.0),
+                            //     child: Icon(
+                            //       Icons.location_on_outlined,
+                            //       size: width / 16,
+                            //       color: DynamicColor().primarycolor,
+                            //     ),
+                            //   ),
+                            // ),
                             SizedBox(
                               width: width / 50,
                             ),

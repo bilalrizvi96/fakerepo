@@ -21,6 +21,9 @@ class HomeController extends GetxController {
   var center = new LatLng(33.652100, 75.123398).obs;
   ScanResult? scanResult;
   var sites = "".obs;
+  var date = DateTime.now();
+  var clockindate;
+  var clockindate2;
   var Loading = false.obs;
   List months = [
     'JAN',
@@ -84,12 +87,8 @@ class HomeController extends GetxController {
   void clockin() async {
     Loading.value = true;
     update();
-    var date = DateTime.now();
-
     var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
     var outputDate = outputFormat.format(date);
-
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
     await CurrentLocation();
@@ -113,6 +112,8 @@ class HomeController extends GetxController {
             BaseUrl.storage
                 .write("totalAbsent", resp.data['absent_days'].toString());
           }
+          clockindate = DateTime.now().hour;
+          BaseUrl.storage.write('clockindate', clockindate);
           BaseUrl.storage.write("clockout", "00:00");
           Loading.value = false;
           BaseUrl.clockin = outputDate1.toString();

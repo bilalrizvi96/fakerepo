@@ -81,6 +81,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                 //fillColor: Colors.green
                                 ),
                             onChanged: (val) {
+                              FocusScope.of(context).nextFocus();
                               _checkPointController.search(val);
                             },
                             // keyboardType: TextInputType.none,
@@ -214,30 +215,20 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                               Radius.circular(
                                                                   8),
                                                         ),
-                                                        child: GoogleMap(
-                                                            zoomControlsEnabled:
-                                                                false,
-                                                            compassEnabled:
-                                                                true,
-                                                            markers:
-                                                                _checkPointController
-                                                                    .markers
-                                                                    .value,
-                                                            mapType:
-                                                                MapType.normal,
-                                                            initialCameraPosition:
-                                                                _checkPointController
-                                                                    .initialCameraPosition
-                                                                    .value,
-                                                            onTap:
-                                                                (LatLng loc) {},
-                                                            onMapCreated:
-                                                                (GoogleMapController
-                                                                    controller) {
-                                                              _checkPointController
-                                                                      .controller =
-                                                                  controller;
-                                                            }),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            _checkPointController
+                                                                .mapdialog(
+                                                                    index,
+                                                                    context,
+                                                                    width,
+                                                                    height);
+                                                          },
+                                                          child: Image.asset(
+                                                              'assets/map.jpg',
+                                                              fit:
+                                                                  BoxFit.cover),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -248,25 +239,55 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             top: 10.0),
-                                                    child: Container(
-                                                        width: width / 6,
-                                                        height: height / 9,
-                                                        decoration: BoxDecoration(
-                                                            color:
-                                                                DynamicColor()
-                                                                    .white,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0)),
-                                                        child: Image.memory(
-                                                            base64Decode(
-                                                                _checkPointController
-                                                                    .historyList
-                                                                    .value[
-                                                                        index]
-                                                                    .image),
-                                                            fit: BoxFit.cover)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            barrierDismissible:
+                                                                false,
+                                                            builder:
+                                                                (_) =>
+                                                                    AlertDialog(
+                                                                      actions: [
+                                                                        Center(
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.all(8.0),
+                                                                            child: GestureDetector(
+                                                                                onTap: () {
+                                                                                  Get.back();
+                                                                                },
+                                                                                child: Icon(Icons.clear)),
+                                                                          ),
+                                                                        ),
+                                                                        Image.memory(
+                                                                            base64Decode(_checkPointController.historyList.value[index].image),
+                                                                            fit: BoxFit.cover)
+                                                                      ],
+                                                                    ));
+                                                      },
+                                                      child: Container(
+                                                          width: width / 6,
+                                                          height: height / 9,
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  DynamicColor()
+                                                                      .white,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0)),
+                                                          child: Image.memory(
+                                                              base64Decode(
+                                                                  _checkPointController
+                                                                      .historyList
+                                                                      .value[
+                                                                          index]
+                                                                      .image),
+                                                              fit: BoxFit
+                                                                  .cover)),
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     width: width / 25,

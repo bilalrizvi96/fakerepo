@@ -28,7 +28,7 @@ class SplashController extends GetxController {
   void onInit() {
     super.onInit();
     // check();
-    // checkUpdate();
+    checkUpdate();
   }
 
   checkUpdate() async {

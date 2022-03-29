@@ -6,6 +6,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
@@ -656,12 +657,39 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                             GestureDetector(
                                               onTap: () {
-                                                if (BaseUrl.storage
-                                                        .read("status") ==
-                                                    true) {
+                                                homeController.clockindate2 =
+                                                    DateTime.now().hour;
+                                                var check = BaseUrl.storage
+                                                        .read('clockindate') -
+                                                    homeController.clockindate2;
+                                                if (check < 10) {
+                                                  print(true);
+                                                  print(check);
+                                                  Get.bottomSheet(
+                                                      MerchantBottom(
+                                                        width: width,
+                                                        height: height,
+                                                      ),
+                                                      elevation: 20.0,
+                                                      enableDrag: false,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                15.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                15.0),
+                                                      )));
+                                                } else {
+                                                  homeController.scan();
                                                   homeController.Loading.value =
                                                       true;
-                                                  homeController.scan();
                                                 }
 
                                                 // homeController.valcheck.val
@@ -730,6 +758,146 @@ class HomeScreen extends StatelessWidget {
                     ],
                   );
                 })),
+      ),
+    );
+  }
+}
+
+class MerchantBottom extends StatelessWidget {
+  MerchantBottom({Key? key, required this.width, required this.height})
+      : super(key: key);
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    var outputFormat1 = DateFormat('hh:mm a');
+    var outputDate1 = outputFormat1.format(DateTime.now());
+
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: height / 50,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 45.0,
+            ),
+            child: Text(
+              '${outputDate1 + 10.toString()}',
+              style: Theme.of(context).textTheme.caption!.copyWith(
+                  color: Colors.black,
+                  fontSize: width / 22,
+                  fontWeight: FontWeight.w900),
+            ),
+          ),
+          SizedBox(
+            height: height / 80,
+          ),
+          Center(
+            child: Container(
+              width: width / 1.2,
+              height: height / 15,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(13.0),
+                  border: Border.all(color: Color(0xFFDEDEDE))),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: width / 20,
+                  ),
+                  // Text(
+                  //   branchname,
+                  //   style: Theme.of(context).textTheme.caption!.copyWith(
+                  //       color: DynamicColor().primarycolor,
+                  //       fontSize: width / 25,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
+                  SizedBox(
+                    width: width / 20,
+                  ),
+                  // Icon(
+                  //   Icons.keyboard_arrow_down_sharp,
+                  //   color: Colors.black,
+                  // ),
+                  // SizedBox(
+                  //   width: width / 20,
+                  // ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: height / 80,
+          ),
+          SizedBox(
+            height: height / 80,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 45.0,
+            ),
+            child: Text(
+              'Reason',
+              style: Theme.of(context).textTheme.caption!.copyWith(
+                  color: Colors.black,
+                  fontSize: width / 22,
+                  fontWeight: FontWeight.w900),
+            ),
+          ),
+          SizedBox(
+            height: height / 80,
+          ),
+          Center(
+            child: Container(
+              width: width / 1.2,
+              child: TextFormField(
+                // controller: _feedbackController.feedbackcontroller,
+                // validator: _feedbackController.validators,
+                maxLines: 6,
+                maxLength: 1000,
+                decoration: new InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: DynamicColor().titletextcolor, width: 1.2),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: DynamicColor().titletextcolor, width: 1.0),
+                  ),
+                  hintText: 'Write your reason',
+                ),
+              ),
+            ),
+          ),
+          Spacer(),
+          Center(
+            child: TextButton(
+                onPressed: () {},
+                child: Container(
+                  width: width / 1.25,
+                  height: height / 15,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: DynamicColor().primarycolor,
+                      borderRadius: BorderRadius.circular(15.0)),
+                  child: Text(
+                    'Submit',
+                    style: Theme.of(context).textTheme.caption!.copyWith(
+                        color: Colors.white,
+                        fontSize: width / 25,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )),
+          ),
+          SizedBox(
+            height: height / 80,
+          ),
+        ],
       ),
     );
   }

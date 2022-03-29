@@ -35,6 +35,7 @@ class CheckPointController extends GetxController
           target: LatLng(24.9161647, 67.0653569))
       .obs;
   var markers = Set<Marker>().obs;
+  var historymarkers = Set<Marker>().obs;
   final colors = [DynamicColor().primarycolor, DynamicColor().primarycolor];
   Color? indicatorColor;
   var historyList = [].obs;
@@ -67,15 +68,18 @@ class CheckPointController extends GetxController
 
   @override
   void onInit() {
-    mapupdate();
     tabController = TabController(length: 2, vsync: this, initialIndex: 0)
       ..addListener(() {
         indicatorColor = colors[tabController!.index];
         update();
       });
 
-    update();
     super.onInit();
+    Future.delayed(Duration(milliseconds: 200), () {
+      mapupdate();
+    });
+
+    update();
   }
 
   CurrentLocation() async {
@@ -106,6 +110,7 @@ class CheckPointController extends GetxController
         if (response.statusCode == 201) {
           siteController.clear();
           noteController.clear();
+          historycheckpoint();
           faceImage = null;
           Loading.value = false;
           Get.snackbar(
@@ -115,10 +120,12 @@ class CheckPointController extends GetxController
           // Get.back();
         } else {
           Loading.value = false;
+
           Get.snackbar("Error ", response.data['error'].toString(),
               colorText: Colors.white, backgroundColor: Colors.red);
         }
       } else {
+        Loading.value = false;
         Get.snackbar("Error ", "Please Upload Image",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
@@ -173,6 +180,41 @@ class CheckPointController extends GetxController
   //   siteController.text = "${addresses[1].addressLine.camelCase}";
   // }
 
+  mapdialog(index, context, width, height) {
+    showHistoryPinsOnMap(index);
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => AlertDialog(
+              actions: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Icon(Icons.clear)),
+                  ),
+                ),
+                Container(
+                  width: width,
+                  height: height / 3,
+                  child: GoogleMap(
+                      zoomControlsEnabled: false,
+                      compassEnabled: true,
+                      markers: historymarkers.value,
+                      mapType: MapType.normal,
+                      initialCameraPosition: initialCameraPosition.value,
+                      onTap: (LatLng loc) {},
+                      onMapCreated: (GoogleMapController controller) {
+                        controller = controller;
+                      }),
+                )
+              ],
+            ));
+  }
+
   mapupdate() async {
     await CurrentLocation();
 
@@ -214,10 +256,30 @@ class CheckPointController extends GetxController
     update();
   }
 
+  void showHistoryPinsOnMap(index) {
+    historymarkers.clear();
+    var latlong = historyList.value[index].location.split(",");
+    double latitude = double.parse(latlong[0]);
+    double longitude = double.parse(latlong[1]);
+    var pinPosition = LatLng(
+      latitude,
+      longitude,
+    );
+
+    historymarkers.value.add(Marker(
+        icon: BitmapDescriptor.defaultMarker,
+        markerId: MarkerId('sourcePin'),
+        position: pinPosition,
+        onTap: () {}));
+
+    update();
+  }
+
   imgFromCameras() async {
     var image = await _picker.pickImage(
         source: ImageSource.camera,
         maxHeight: 1024,
+        imageQuality: 10,
         preferredCameraDevice: CameraDevice.front,
         maxWidth: 1024);
     if (image != null) {
