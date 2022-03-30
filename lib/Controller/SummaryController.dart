@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class SummaryController extends GetxController {
+class SummaryController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   var fromdate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .obs;
@@ -12,6 +13,7 @@ class SummaryController extends GetxController {
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .obs;
   var Loading = false.obs;
+  TabController? tabController;
   List<SummaryModel> summarylist = [];
   fromDate(date) {
     fromdate.value = date;
@@ -66,7 +68,14 @@ class SummaryController extends GetxController {
   }
 
   @override
+  void onClose() {
+    super.onClose();
+    tabController!.dispose();
+  }
+
+  @override
   void onInit() {
+    tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     Loading.value = false;
     summary();
     update();

@@ -799,7 +799,6 @@ class MerchantBottom extends StatelessWidget {
           Center(
             child: Container(
               width: width / 1.2,
-
               height: height / 15,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13.0),

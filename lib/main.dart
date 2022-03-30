@@ -1,11 +1,13 @@
 import 'package:attendencesystem/Routes/Routes.dart';
-import 'package:attendencesystem/View/GoogleMapScreen/GoogleMapScreen.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'Summarynew.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,9 +38,9 @@ class MyApp extends StatelessWidget {
       title: 'Attendance',
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash',
-      // home: GoogleMapScreen(),
-      getPages: Routes().routes,
+      // initialRoute: '/splash',
+      home: Summarynew(),
+      // getPages: Routes().routes,
     );
   }
 }
