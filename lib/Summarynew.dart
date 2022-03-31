@@ -97,7 +97,7 @@ class Summarynew extends StatelessWidget {
                                   ),
                                   Spacer(),
                                   Text(
-                                    'Summary',
+                                    'March 22',
                                     style: GoogleFonts.poppins(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500,
@@ -153,6 +153,18 @@ class Summarynew extends StatelessWidget {
                             Spacer(),
                             GestureDetector(
                               onTap: () {
+                                Get.bottomSheet(
+                                    InformationBottom(
+                                        height: height, width: width),
+                                    elevation: 20.0,
+                                    enableDrag: false,
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.0),
+                                      topRight: Radius.circular(10.0),
+                                    )));
+
                                 // BaseUrl.storage.write("token", "out");
                                 // Get.offAllNamed('/signinemp');
                               },
@@ -284,12 +296,212 @@ class Summarynew extends StatelessWidget {
                             controller: summaryController.tabController,
                             children: [
                               Analytics(width: width, height: height),
-                              Text(
-                                '1 - 7',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 2,
-                                    fontSize: width / 24),
+                              Column(
+                                children: [
+                                  Expanded(
+                                      child: ListView.builder(
+                                          itemCount: 30,
+                                          shrinkWrap: true,
+                                          itemBuilder: (_, index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 15.0,
+                                                  left: 15.0,
+                                                  top: 10,
+                                                  bottom: 10),
+                                              child: Container(
+                                                height: height / 5.5,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Color(0xFFF2F2F2)),
+                                                  color: Color(0xFFF2F2F2),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(35.0),
+                                                    topLeft:
+                                                        Radius.circular(35.0),
+                                                    bottomLeft:
+                                                        Radius.circular(35.0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: width / 35,
+                                                    ),
+                                                    Container(
+                                                      width: width / 4.5,
+                                                      height: height / 7.5,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      35.0),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                        0.30),
+                                                                blurRadius: 12,
+                                                                spreadRadius: 5,
+                                                                offset: Offset(
+                                                                    0, 1))
+                                                          ],
+                                                          color: Colors.white),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          SizedBox(
+                                                            height: height / 50,
+                                                          ),
+                                                          Text(
+                                                            '${index}',
+                                                            style: GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                letterSpacing:
+                                                                    0.5,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize:
+                                                                    width / 22),
+                                                          ),
+                                                          SizedBox(
+                                                            height: height / 50,
+                                                          ),
+                                                          Text(
+                                                            'MON',
+                                                            style: GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                letterSpacing:
+                                                                    0.5,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize:
+                                                                    width / 21),
+                                                          ),
+                                                          SizedBox(
+                                                            height: height / 50,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Spacer(),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Spacer(),
+                                                        Text(
+                                                          'Clock In',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  letterSpacing:
+                                                                      0.5,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize:
+                                                                      width /
+                                                                          27),
+                                                        ),
+                                                        SizedBox(
+                                                          height: height / 50,
+                                                        ),
+                                                        Text(
+                                                          '10:15 AM',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  letterSpacing:
+                                                                      0.5,
+                                                                  color: Color(
+                                                                      0XFF5B5B5B),
+                                                                  fontSize:
+                                                                      width /
+                                                                          25),
+                                                        ),
+                                                        Spacer(),
+                                                      ],
+                                                    ),
+                                                    Spacer(),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Spacer(),
+                                                        Text(
+                                                          'Clock Out',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  letterSpacing:
+                                                                      0.5,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize:
+                                                                      width /
+                                                                          27),
+                                                        ),
+                                                        SizedBox(
+                                                          height: height / 50,
+                                                        ),
+                                                        Text(
+                                                          '10:15 AM',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  letterSpacing:
+                                                                      0.5,
+                                                                  color: Color(
+                                                                      0XFF5B5B5B),
+                                                                  fontSize:
+                                                                      width /
+                                                                          25),
+                                                        ),
+                                                        Spacer(),
+                                                      ],
+                                                    ),
+                                                    Spacer(),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          })),
+                                  SizedBox(
+                                    height: height / 1.5,
+                                  )
+                                ],
                               ),
                             ],
                           ),
@@ -362,12 +574,12 @@ class Analytics extends StatelessWidget {
                         child: Text(
                           'For every single dark'
                           " night there is a"
-                          '  brighter day.',
+                          ' brighter day.',
                           maxLines: 4,
                           style: GoogleFonts.poppins(
                               color: Color(0XFF1B236B),
                               fontWeight: FontWeight.w500,
-                              fontSize: width / 25),
+                              fontSize: width / 27),
                         ),
                       ),
                       Align(
@@ -496,7 +708,7 @@ class Analytics extends StatelessWidget {
                             positionFactor: 0.1,
                             widget: Text(2.ceil().toString() + '/12',
                                 style: TextStyle(
-                                    fontSize: width / 30,
+                                    fontSize: width / 27,
                                     fontWeight: FontWeight.bold,
                                     color: DynamicColor().primarycolor))),
                         GaugeAnnotation(
@@ -509,7 +721,7 @@ class Analytics extends StatelessWidget {
                             child: Text('Annual Leave',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
-                                    letterSpacing: 2,
+                                    letterSpacing: 1,
                                     color: DynamicColor().primarycolor,
                                     fontSize: width / 36)),
                           ),
@@ -565,7 +777,7 @@ class Analytics extends StatelessWidget {
                             positionFactor: 0.1,
                             widget: Text(2.ceil().toString() + '/12',
                                 style: TextStyle(
-                                    fontSize: width / 25,
+                                    fontSize: width / 27,
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFFEC4A22)))),
                         GaugeAnnotation(
@@ -578,7 +790,7 @@ class Analytics extends StatelessWidget {
                               child: Text('Sick Leave',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
-                                      letterSpacing: 2,
+                                      letterSpacing: 1,
                                       color: Colors.red,
                                       fontSize: width / 36))),
                         )
@@ -633,7 +845,7 @@ class Analytics extends StatelessWidget {
                             positionFactor: 0.1,
                             widget: Text(2.ceil().toString() + '/12',
                                 style: TextStyle(
-                                    fontSize: width / 25,
+                                    fontSize: width / 27,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.deepPurple))),
                         GaugeAnnotation(
@@ -643,10 +855,10 @@ class Analytics extends StatelessWidget {
                           widget: Padding(
                               padding:
                                   const EdgeInsets.only(top: 40.0, bottom: 5),
-                              child: Text('Causal Leave',
+                              child: Text('Casual Leave',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
-                                      letterSpacing: 2,
+                                      letterSpacing: 1,
                                       color: Colors.deepPurple,
                                       fontSize: width / 36))),
                         )
@@ -677,8 +889,8 @@ class Analytics extends StatelessWidget {
                         'Presents',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: width / 25),
+                            color: Colors.blueAccent,
+                            fontSize: width / 27),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -688,7 +900,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -716,7 +928,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -753,8 +965,8 @@ class Analytics extends StatelessWidget {
                         'Absents',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: width / 25),
+                            color: Colors.blueAccent,
+                            fontSize: width / 27),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -764,7 +976,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -792,7 +1004,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -832,8 +1044,8 @@ class Analytics extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: width / 25),
+                            color: Colors.blueAccent,
+                            fontSize: width / 27),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -843,7 +1055,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -871,7 +1083,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -919,8 +1131,8 @@ class Analytics extends StatelessWidget {
                         'Work Hours',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: width / 25),
+                            color: Colors.blueAccent,
+                            fontSize: width / 27),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -930,7 +1142,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -958,7 +1170,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -995,8 +1207,8 @@ class Analytics extends StatelessWidget {
                         'Short Hours',
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: width / 25),
+                            color: Colors.blueAccent,
+                            fontSize: width / 27),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -1006,7 +1218,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -1034,7 +1246,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -1074,8 +1286,8 @@ class Analytics extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: width / 25),
+                            color: Colors.blueAccent,
+                            fontSize: width / 27),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -1085,7 +1297,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -1113,7 +1325,7 @@ class Analytics extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: width / 27),
+                            fontSize: width / 29),
                       ),
                       SizedBox(
                         height: height / 80,
@@ -1141,6 +1353,171 @@ class Analytics extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class InformationBottom extends StatelessWidget {
+  const InformationBottom({
+    Key? key,
+    required this.height,
+    required this.width,
+  }) : super(key: key);
+
+  final double height;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: width,
+          height: height / 14,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5.0),
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.topRight,
+                colors: DynamicColor().gradient),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: width / 10,
+              ),
+              Text(
+                'Points Guideline',
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: width / 20),
+              ),
+              Icon(
+                Icons.star,
+                color: Colors.amber,
+                size: width / 12,
+              ),
+              Spacer(),
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.cancel_outlined,
+                  color: Colors.white,
+                  size: width / 12,
+                ),
+              ),
+              SizedBox(
+                width: width / 15,
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: height / 50,
+        ),
+        Expanded(
+            child: ListView.builder(
+                itemCount: 6,
+                shrinkWrap: true,
+                itemBuilder: (_, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        right: 30.0, left: 30.0, top: 10, bottom: 10),
+                    child: Container(
+                      height: height / 11,
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xFFD0E4FA),
+                              offset: const Offset(
+                                5.0,
+                                5.0,
+                              ),
+                              blurRadius: 10,
+                              spreadRadius: -2,
+                            ), //BoxShadow
+                            BoxShadow(
+                              color: Colors.white,
+                              offset: const Offset(0.0, 0.0),
+                              blurRadius: 0.0,
+                              spreadRadius: 0.0,
+                            ), //BoxShadow
+                          ],
+                          borderRadius: BorderRadius.circular(10.0),
+                          border:
+                              Border.all(color: DynamicColor().primarycolor)),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: width / 25,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: height / 50,
+                              ),
+                              Text(
+                                'Registration',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: width / 26),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Get 10 points on registration',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black,
+                                      fontSize: width / 28),
+                                ),
+                              ),
+                              SizedBox(
+                                height: height / 50,
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            width: width / 8,
+                            height: height / 19,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Color(0xFFB66B2A)),
+                              color: Color(0xFFFFF6C2),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10.0),
+                                topLeft: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0),
+                              ),
+                            ),
+                            child: Text(
+                              '+10',
+                              style: GoogleFonts.poppins(
+                                  color: Color(0xFFB66B2A),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: width / 24),
+                            ),
+                          ),
+                          SizedBox(
+                            width: width / 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }))
+      ],
     );
   }
 }

@@ -139,15 +139,16 @@ class HistoryCheckPointScreen extends StatelessWidget {
                               ? ListView.builder(
                                   itemCount: _checkPointController
                                       .historyList.value.length,
+                                  shrinkWrap: true,
                                   itemBuilder: (_, index) {
                                     return Center(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(10.0),
                                         child: Stack(
                                           children: [
                                             Container(
                                               width: width / 1.2,
-                                              height: height / 3.5,
+                                              height: height / 3.8,
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(30.0),
@@ -166,10 +167,10 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            top: 15.0),
+                                                            top: 20.0),
                                                     child: Container(
-                                                      width: 20,
-                                                      height: 20,
+                                                      width: 25,
+                                                      height: 25,
                                                       alignment:
                                                           Alignment.center,
                                                       decoration: BoxDecoration(
@@ -295,11 +296,11 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                 ],
                                               ),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 60.0),
+                                            Positioned(
+                                              top: height / 15,
+                                              right: width / 30,
                                               child: Container(
-                                                width: width / 1.25,
+                                                width: width / 1.2,
                                                 height: height / 4.5,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
@@ -308,7 +309,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                     image: DecorationImage(
                                                         image: AssetImage(
                                                             'assets/frontcp.png'),
-                                                        fit: BoxFit.cover)),
+                                                        fit: BoxFit.contain)),
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,

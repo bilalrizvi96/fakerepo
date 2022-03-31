@@ -666,7 +666,7 @@ class HomeScreen extends StatelessWidget {
                                                   print(true);
                                                   print(check);
                                                   Get.bottomSheet(
-                                                      MerchantBottom(
+                                                      ReasonBottom(
                                                         width: width,
                                                         height: height,
                                                       ),
@@ -763,8 +763,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class MerchantBottom extends StatelessWidget {
-  MerchantBottom({Key? key, required this.width, required this.height})
+class ReasonBottom extends StatelessWidget {
+  ReasonBottom({Key? key, required this.width, required this.height})
       : super(key: key);
   final double width;
   final double height;

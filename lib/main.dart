@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
       title: 'Attendance',
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
-      // initialRoute: '/splash',
-      home: Summarynew(),
-      // getPages: Routes().routes,
+      initialRoute: '/splash',
+      // home: Summarynew(),
+      getPages: Routes().routes,
     );
   }
 }

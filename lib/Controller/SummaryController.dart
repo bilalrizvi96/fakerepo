@@ -77,7 +77,7 @@ class SummaryController extends GetxController
   void onInit() {
     tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     Loading.value = false;
-    summary();
+    // summary();
     update();
     super.onInit();
   }
