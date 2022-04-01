@@ -40,6 +40,7 @@ dependencies:
   google_fonts: ^2.1.0
   dots_indicator: ^2.0.0
   delayed_display: ^2.0.0
+
   flutter_datetime_picker: ^1.5.1
   dio: ^4.0.1
   barcode_scan:
@@ -56,6 +57,8 @@ dependencies:
   url_launcher: ^6.0.20
   permission_handler:
   syncfusion_flutter_gauges: ^19.4.56
+  printing: ^5.7.5
+  pdf: ^3.7.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

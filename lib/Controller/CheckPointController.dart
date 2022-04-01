@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart' as la;
-
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import '../API/API.dart';
 import '../Model/HistoryCheckpointModel.dart';
 
@@ -16,6 +18,7 @@ class CheckPointController extends GetxController
   XFile? faceImage;
   var first = ''.obs;
   var finaldate = ''.obs;
+  final GlobalKey<State<StatefulWidget>> printKey = GlobalKey();
   TabController? tabController;
   var searchhistorylist = [].obs;
   var mainhistorylist = [].obs;
@@ -64,6 +67,29 @@ class CheckPointController extends GetxController
       update();
     }
     update();
+  }
+
+  void printScreen() {
+    Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
+      final doc = pw.Document();
+
+      final image = await WidgetWraper.fromKey(
+        key: printKey,
+        pixelRatio: 2.0,
+      );
+
+      doc.addPage(pw.Page(
+          pageFormat: format,
+          build: (pw.Context context) {
+            return pw.Center(
+              child: pw.Expanded(
+                child: pw.Image(image),
+              ),
+            );
+          }));
+
+      return doc.save();
+    });
   }
 
   @override
