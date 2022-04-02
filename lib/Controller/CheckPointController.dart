@@ -18,7 +18,7 @@ class CheckPointController extends GetxController
   XFile? faceImage;
   var first = ''.obs;
   var finaldate = ''.obs;
-  final GlobalKey<State<StatefulWidget>> printKey = GlobalKey();
+  var printKey = GlobalKey();
   TabController? tabController;
   var searchhistorylist = [].obs;
   var mainhistorylist = [].obs;
@@ -75,7 +75,7 @@ class CheckPointController extends GetxController
 
       final image = await WidgetWraper.fromKey(
         key: printKey,
-        pixelRatio: 2.0,
+        pixelRatio: 5.0,
       );
 
       doc.addPage(pw.Page(
