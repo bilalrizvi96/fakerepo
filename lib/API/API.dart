@@ -5,31 +5,30 @@ import 'package:dio/dio.dart';
 import 'BaseURl.dart';
 
 class API {
-  Future Registration({var email_address, var employee_Id, var check}) async {
-    try {
-      Map data = {
-        'code': employee_Id,
-        'email': email_address,
-        "isFace": check,
-        "registered": true,
-      };
-      var dio = Dio();
-      dio.options.headers['Accept'] = 'application/json';
-      final response = await dio.post(
-        BaseUrl.baseurl + 'register',
-        data: data,
-      );
-      if (response.statusCode == 200) {
-        BaseUrl.token = "BEARER" + " " + response.data['token'];
-        BaseUrl.code = response.data['code'];
-
-        return response;
-      }
-    } catch (e) {
-      return onError(e);
-    }
-  }
-
+  // Future Registration({var email_address, var employee_Id, var check}) async {
+  //   try {
+  //     Map data = {
+  //       'code': employee_Id,
+  //       'email': email_address,
+  //       "isFace": check,
+  //       "registered": true,
+  //     };
+  //     var dio = Dio();
+  //     dio.options.headers['Accept'] = 'application/json';
+  //     final response = await dio.post(
+  //       BaseUrl.baseurl + 'register',
+  //       data: data,
+  //     );
+  //     if (response.statusCode == 200) {
+  //       BaseUrl.token = "BEARER" + " " + response.data['token'];
+  //       BaseUrl.code = response.data['code'];
+  //
+  //       return response;
+  //     }
+  //   } catch (e) {
+  //     return onError(e);
+  //   }
+  // }
   Future RegistrationConfirmation({var email_address, var employee_Id}) async {
     try {
       Map data = {

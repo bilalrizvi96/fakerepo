@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:flutter/material.dart';
 
@@ -69,13 +71,40 @@ class CheckPointController extends GetxController
     update();
   }
 
+  createPdfFile() {
+    Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
+      final image = await WidgetWraper.fromKey(
+        key: printKey,
+        pixelRatio: 1.0,
+      );
+
+      final pdf = pw.Document();
+      pdf.addPage(pw.MultiPage(
+          maxPages: 20,
+          margin: pw.EdgeInsets.all(10),
+          pageFormat: PdfPageFormat.a4,
+          build: (pw.Context context) {
+            return <pw.Widget>[
+              pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.center,
+                  mainAxisSize: pw.MainAxisSize.min,
+                  children: [
+                    pw.Image(image),
+                    pw.Divider(),
+                  ]),
+            ];
+          }));
+      return pdf.save();
+    });
+  }
+
   void printScreen() {
     Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
       final doc = pw.Document();
 
       final image = await WidgetWraper.fromKey(
         key: printKey,
-        pixelRatio: 5.0,
+        pixelRatio: 2.0,
       );
 
       doc.addPage(pw.Page(
@@ -88,6 +117,8 @@ class CheckPointController extends GetxController
             );
           }));
 
+      // final file = File("report.pdf");
+      // await file.writeAsBytes(doc.save());
       return doc.save();
     });
   }

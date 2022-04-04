@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:slider_button/slider_button.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class SummaryScreen extends StatelessWidget {
@@ -532,8 +533,47 @@ class Details extends StatelessWidget {
                     );
                   }),
               SizedBox(
+                height: height / 50,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black.withOpacity(0.12),
+                    ),
+                    borderRadius: BorderRadius.circular(50.0)),
+                child: SliderButton(
+                  height: 70.0,
+                  radius: 50.0,
+                  dismissible: true,
+                  disable: false,
+                  width: width / 1.2,
+                  buttonColor: DynamicColor().primarycolor,
+                  vibrationFlag: true,
+                  backgroundColor: Colors.white.withOpacity(0.25),
+                  baseColor: Colors.red,
+                  action: () {
+                    Get.back();
+
+                    ///Do something here
+                    // Navigator.of(context).pop();
+                  },
+                  label: Text(
+                    "Swipe right to export pdf",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Color(0xFFAFAFAF).withOpacity(0.25),
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18),
+                  ),
+                  icon: Icon(
+                    Icons.arrow_forward_ios_sharp,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(
                 height: height / 2,
-              )
+              ),
             ],
           ),
         ),
