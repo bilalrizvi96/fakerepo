@@ -1,19 +1,21 @@
+import 'package:attendencesystem/Model/SummaryAnalyticsModel.dart';
 import 'package:attendencesystem/Model/WeekModel.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../API/API.dart';
+
 class SummaryController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  // var fromdate =
-  //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
-  //         .obs;
   var todate = DateTime(DateTime.now().year, DateTime.now().month).obs;
   var Loading = false.obs;
   TabController? tabController;
   var lastday = DateTime(DateTime.now().year, DateTime.now().month + 1, 0).day;
   var weeklist = [].obs;
   var selectedmonths = ''.obs;
+  var summarydata = [].obs;
+  var message = ''.obs;
   List months = [
     'JAN',
     'FEB',
@@ -46,6 +48,7 @@ class SummaryController extends GetxController
       selectedmonths.value =
           months[todate.value.month - 1] + "-" + todate.value.year.toString();
       // summary();
+      summaryAnalytics();
     }
     update();
   }
@@ -66,41 +69,25 @@ class SummaryController extends GetxController
     update();
   }
 
-  init() // summary() async {
-  //   var response = await API().Summary(
-  //     end: int.parse(todate.value.day.toString()),
-  //     // start: int.parse(fromdate.value.day.toString())
-  //   );
-  //
-  //   if (response != null) {
-  //     // summarylist.clear();
-  //     if (response.statusCode == 200) {
-  //       Loading.value = false;
-  //       var data = response.data;
-  //       // summarylist.add(SummaryModel(
-  //       //   Absent_Days: data['Absent Days'].toString(),
-  //       //   Hours_Short: data['Short Hours'].toString(),
-  //       //   Over_Time: data['Over Time'].toString(),
-  //       //   Present_Days: data['Present Days'].toString(),
-  //       //   Shift_Type: data['Shift Type'].toString(),
-  //       //   Working_Hours: data['Total Working Hours'].toString(),
-  //       //   Hours: data['Hours'].toString(),
-  //       //   Estimate_time: data['Estimated Time'].toString(),
-  //       // ));
-  //       //print(data);
-  //     } else {
-  //       Loading.value = false;
-  //       Get.snackbar("Error ", response.data['error'].toString(),
-  //           colorText: Colors.white, backgroundColor: Colors.red);
-  //     }
-  //     update();
-  //   } else {
-  //     Loading.value = false;
-  //     Get.snackbar("Error ", response.data['error'].toString(),
-  //         colorText: Colors.white, backgroundColor: Colors.red);
-  //   }
-  // }
-  {
+  summaryAnalytics() async {
+    var response = await API().Summaryanalytic(
+        month: todate.value.month.toString(),
+        year: todate.value.year.toString());
+    if (response.statusCode == 200) {
+      Loading.value = false;
+      response = await SummaryAnalytics.fromJson(response.data);
+      message.value = response.data.messages.message;
+      summarydata.value = response;
+      print(message.value);
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", response.data['message'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
+  }
+
+  init() {
     tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     weeklist.value = [
       WeekModel(range: '1 - 7', selected: true),
@@ -114,14 +101,15 @@ class SummaryController extends GetxController
     selectedmonths.value =
         months[todate.value.month - 1] + "-" + todate.value.year.toString();
     print(selectedmonths.value);
+    summaryAnalytics();
     update();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-    tabController!.dispose();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  //   tabController!.dispose();
+  // }
 
   @override
   void onInit() {

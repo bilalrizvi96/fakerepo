@@ -21,16 +21,16 @@ class SummaryScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          width: width,
-          height: height,
-          color: Colors.white,
-          padding: EdgeInsets.only(
-            right: 20.0,
-            left: 22.0,
-          ),
-          child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
+        child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Container(
+            width: width,
+            height: height,
+            color: Colors.white,
+            padding: EdgeInsets.only(
+              right: 20.0,
+              left: 22.0,
+            ),
             child: GetBuilder(
                 init: summaryController,
                 builder: (_) {
@@ -591,6 +591,7 @@ class Analytics extends StatelessWidget {
 
   final double width;
   final double height;
+  SummaryController _summaryController = Get.put(SummaryController());
 
   @override
   Widget build(BuildContext context) {
@@ -640,9 +641,7 @@ class Analytics extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'For every single dark'
-                              " night there is a"
-                              ' brighter day.',
+                              _summaryController.message.value,
                               maxLines: 4,
                               style: GoogleFonts.poppins(
                                   color: Color(0XFF1B236B),

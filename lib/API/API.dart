@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:attendencesystem/API/Error.dart';
+import 'package:attendencesystem/Model/SummaryAnalyticsModel.dart';
 import 'package:dio/dio.dart';
 import 'BaseURl.dart';
 
@@ -113,6 +114,29 @@ class API {
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
         BaseUrl.baseurl + 'notifications',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future Summaryanalytic({
+    var month,
+    var year,
+  }) async {
+    try {
+      Map data = {"month": month, "year": year};
+      print(data);
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = "BEARER " +
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoiMDcwMzAwMTYiLCJpYXQiOjE2NDkxNDMzNzcsImV4cCI6MTY0OTc0ODE3N30.Us0rV-Vje2yE2mIUW5EmNIR-oqu8YGtFxPb3qX-pTV8";
+      final response = await dio.post(
+        BaseUrl.baseurl + 'analytics',
         data: data,
       );
       if (response.statusCode == 200) {
