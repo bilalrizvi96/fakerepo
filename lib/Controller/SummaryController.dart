@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../API/API.dart';
+import '../Model/SummaryDetailsModel.dart';
 
 class SummaryController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -15,7 +16,9 @@ class SummaryController extends GetxController
   var weeklist = [].obs;
   var selectedmonths = ''.obs;
   var summarydata = [].obs;
-  var message = ''.obs;
+  var summarydetaildata = [].obs;
+  var weekupdate = 0.obs;
+  // var message = ''.obs;
   List months = [
     'JAN',
     'FEB',
@@ -35,16 +38,6 @@ class SummaryController extends GetxController
     todate.value = date;
     if (todate.value == date) {
       Loading.value = true;
-      print(todate.value);
-      weeklist.value = [
-        WeekModel(range: '1 - 7', selected: true),
-        WeekModel(range: '8 - 14', selected: false),
-        WeekModel(range: '15 - 21', selected: false),
-        WeekModel(
-            range:
-                '21 - ${DateTime(todate.value.year, todate.value.month + 1, 0).day}',
-            selected: false),
-      ];
       selectedmonths.value =
           months[todate.value.month - 1] + "-" + todate.value.year.toString();
       // summary();
@@ -61,6 +54,7 @@ class SummaryController extends GetxController
 
         } else {
           weeklist.value[i].selected = true;
+          weekupdate.value = i;
         }
       } else {
         weeklist.value[i].selected = false;
@@ -70,15 +64,60 @@ class SummaryController extends GetxController
   }
 
   summaryAnalytics() async {
+    weekupdate.value = 0;
     var response = await API().Summaryanalytic(
         month: todate.value.month.toString(),
         year: todate.value.year.toString());
     if (response.statusCode == 200) {
       Loading.value = false;
-      response = await SummaryAnalytics.fromJson(response.data);
-      message.value = response.data.messages.message;
-      summarydata.value = response;
-      print(message.value);
+      response = await SummaryAnalyticsModel.fromJson(response.data);
+      summarydata.value = response.data;
+      weeklist.value = [
+        WeekModel(
+          range: '1 - 7',
+          selected: true,
+          weekdata: summarydata.value[0].firstWeek,
+        ),
+        WeekModel(
+            range: '8 - 14',
+            selected: false,
+            weekdata: summarydata.value[0].secondWeek),
+        WeekModel(
+            range: '15 - 21',
+            selected: false,
+            weekdata: summarydata.value[0].thirdWeek),
+        WeekModel(
+            range:
+                '21 - ${DateTime(todate.value.year, todate.value.month + 1, 0).day}',
+            weekdata: summarydata.value[0].fourthWeek,
+            selected: false),
+      ];
+      summaryDetails();
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", response.data['message'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
+  }
+
+  summaryDetails() async {
+    var response = await API().Summarydetail(
+        start: '1' +
+            '/' +
+            todate.value.month.toString() +
+            '/' +
+            todate.value.year.toString(),
+        end: '${DateTime(todate.value.year, todate.value.month + 1, 0).day}' +
+            '/' +
+            todate.value.month.toString() +
+            '/' +
+            todate.value.year.toString());
+    if (response.statusCode == 200) {
+      Loading.value = false;
+      response = await SummaryDetailsModel.fromJson(response.data);
+
+      summarydetaildata.value = response.dailyDetails;
     } else {
       Loading.value = false;
       Get.snackbar("Error ", response.data['message'].toString(),
@@ -89,15 +128,7 @@ class SummaryController extends GetxController
 
   init() {
     tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    weeklist.value = [
-      WeekModel(range: '1 - 7', selected: true),
-      WeekModel(range: '8 - 14', selected: false),
-      WeekModel(range: '15 - 21', selected: false),
-      WeekModel(
-          range:
-              '21 - ${DateTime(todate.value.year, todate.value.month + 1, 0).day}',
-          selected: false),
-    ];
+
     selectedmonths.value =
         months[todate.value.month - 1] + "-" + todate.value.year.toString();
     print(selectedmonths.value);

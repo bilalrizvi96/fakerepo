@@ -25,6 +25,8 @@ class HomeController extends GetxController {
   var clockindate;
   var clockindate2;
   var Loading = false.obs;
+  var reasonFormKey = GlobalKey<FormState>();
+  var reasoncontroller = TextEditingController();
   List months = [
     'JAN',
     'FEB',
@@ -39,8 +41,12 @@ class HomeController extends GetxController {
     'NOV',
     'DEC'
   ];
-
-  // var valcheck = ''.obs;
+  String? validators(var values) {
+    if (values.isEmpty) {
+      return "Please this field must be filled";
+    }
+    return null;
+  }
 
   CurrentLocation() async {
     final location = new Location();
@@ -181,6 +187,53 @@ class HomeController extends GetxController {
       Loading.value = false;
       Get.snackbar("Error", "Location is empty kindly scan Qr",
           colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
+  }
+
+  reason() async {
+    Loading.value = true;
+    update();
+    var date = DateTime.now();
+    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    var outputDate = outputFormat.format(date);
+    var outputFormat1 = DateFormat('hh:mm a');
+    var outputDate1 = outputFormat1.format(date);
+
+    await CurrentLocation();
+    if (reasonFormKey.currentState!.validate() &&
+        reasonFormKey.currentState!.validate()) {
+      if (sites.value != "") {
+        var response = await API().CheckOut(
+            latlng: center.value.latitude.toString() +
+                "," +
+                center.value.longitude.toString(),
+            siteId: sites.value.toString(),
+            reason: reasoncontroller.text.toString(),
+            date: outputDate);
+        if (response.statusCode == 200) {
+          print('bilal');
+          BaseUrl.storage.write("status", false);
+          Loading.value = false;
+          BaseUrl.clockout = outputDate1.toString();
+          BaseUrl.storage.write("clockout", BaseUrl.clockout);
+          //print(response);
+
+          // Get.back();
+          Get.snackbar(
+            "Attendance ",
+            "Clock Out Successfully",
+          );
+        } else {
+          Loading.value = false;
+          Get.snackbar("Error ", response.data['error'].toString(),
+              colorText: Colors.white, backgroundColor: Colors.red);
+        }
+      } else {
+        Loading.value = false;
+        Get.snackbar("Error", "Location is empty kindly scan Qr",
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
     }
     update();
   }

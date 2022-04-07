@@ -1,5 +1,6 @@
 class WeekModel {
   var range;
   var selected;
-  WeekModel({this.range, this.selected});
+  var weekdata;
+  WeekModel({this.range, this.selected, this.weekdata});
 }

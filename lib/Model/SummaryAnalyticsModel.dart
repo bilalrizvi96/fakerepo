@@ -1,17 +1,17 @@
 // To parse this JSON data, do
 //
-//     final summaryAnalytics = summaryAnalyticsFromJson(jsonString);
+//     final summaryAnalyticsModel = summaryAnalyticsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SummaryAnalytics summaryAnalyticsFromJson(String str) =>
-    SummaryAnalytics.fromJson(json.decode(str));
+SummaryAnalyticsModel summaryAnalyticsModelFromJson(String str) =>
+    SummaryAnalyticsModel.fromJson(json.decode(str));
 
-String summaryAnalyticsToJson(SummaryAnalytics data) =>
+String summaryAnalyticsModelToJson(SummaryAnalyticsModel data) =>
     json.encode(data.toJson());
 
-class SummaryAnalytics {
-  SummaryAnalytics({
+class SummaryAnalyticsModel {
+  SummaryAnalyticsModel({
     this.status,
     this.data,
     this.message,
@@ -23,24 +23,24 @@ class SummaryAnalytics {
   var message;
   var code;
 
-  factory SummaryAnalytics.fromJson(Map<String, dynamic> json) =>
-      SummaryAnalytics(
+  factory SummaryAnalyticsModel.fromJson(Map<String, dynamic> json) =>
+      SummaryAnalyticsModel(
         status: json["status"],
-        data: Data.fromJson(json["data"]),
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         message: json["message"],
         code: json["code"],
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "data": data.toJson(),
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "message": message,
         "code": code,
       };
 }
 
-class Data {
-  Data({
+class Datum {
+  Datum({
     this.annualLeaves,
     this.sickLeaves,
     this.casualLeaves,
@@ -80,7 +80,7 @@ class Data {
   var secondWeek;
   var firstWeek;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         annualLeaves: json["annualLeaves"],
         sickLeaves: json["sickLeaves"],
         casualLeaves: json["casualLeaves"],
@@ -95,10 +95,14 @@ class Data {
         monthShortHours: json["monthShortHours"],
         monthOverTime: json["monthOverTime"],
         messages: Messages.fromJson(json["messages"]),
-        fourthWeek: Week.fromJson(json["fourthWeek"]),
-        thirdWeek: Week.fromJson(json["thirdWeek"]),
-        secondWeek: Week.fromJson(json["secondWeek"]),
-        firstWeek: Week.fromJson(json["firstWeek"]),
+        fourthWeek:
+            List<Week>.from(json["fourthWeek"].map((x) => Week.fromJson(x))),
+        thirdWeek:
+            List<Week>.from(json["thirdWeek"].map((x) => Week.fromJson(x))),
+        secondWeek:
+            List<Week>.from(json["secondWeek"].map((x) => Week.fromJson(x))),
+        firstWeek:
+            List<Week>.from(json["firstWeek"].map((x) => Week.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -116,10 +120,10 @@ class Data {
         "monthShortHours": monthShortHours,
         "monthOverTime": monthOverTime,
         "messages": messages.toJson(),
-        "fourthWeek": fourthWeek.toJson(),
-        "thirdWeek": thirdWeek.toJson(),
-        "secondWeek": secondWeek.toJson(),
-        "firstWeek": firstWeek.toJson(),
+        "fourthWeek": List<dynamic>.from(fourthWeek.map((x) => x.toJson())),
+        "thirdWeek": List<dynamic>.from(thirdWeek.map((x) => x.toJson())),
+        "secondWeek": List<dynamic>.from(secondWeek.map((x) => x.toJson())),
+        "firstWeek": List<dynamic>.from(firstWeek.map((x) => x.toJson())),
       };
 }
 
@@ -132,6 +136,7 @@ class Week {
     this.weekShortHours,
     this.weekOverTime,
     this.message,
+    this.alert,
   });
 
   var weekPresentDays;
@@ -141,6 +146,7 @@ class Week {
   var weekShortHours;
   var weekOverTime;
   var message;
+  var alert;
 
   factory Week.fromJson(Map<String, dynamic> json) => Week(
         weekPresentDays: json["weekPresentDays"],
@@ -150,6 +156,7 @@ class Week {
         weekShortHours: json["weekShortHours"],
         weekOverTime: json["weekOverTime"],
         message: json["message"],
+        alert: Messages.fromJson(json["alert"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -160,6 +167,7 @@ class Week {
         "weekShortHours": weekShortHours,
         "weekOverTime": weekOverTime,
         "message": message,
+        "alert": alert.toJson(),
       };
 }
 
@@ -167,30 +175,34 @@ class Messages {
   Messages({
     this.id,
     this.type,
-    this.shiftType,
+    this.subType,
     this.message,
     this.imageUrl,
+    this.shiftType,
   });
 
   var id;
   var type;
-  var shiftType;
+  var subType;
   var message;
   var imageUrl;
+  var shiftType;
 
   factory Messages.fromJson(Map<String, dynamic> json) => Messages(
         id: json["_id"],
         type: json["type"],
-        shiftType: json["shiftType"],
+        subType: json["subType"] == null ? null : json["subType"],
         message: json["message"],
         imageUrl: json["imageUrl"],
+        shiftType: json["shiftType"] == null ? null : json["shiftType"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "type": type,
-        "shiftType": shiftType,
+        "subType": subType == null ? null : subType,
         "message": message,
         "imageUrl": imageUrl,
+        "shiftType": shiftType == null ? null : shiftType,
       };
 }

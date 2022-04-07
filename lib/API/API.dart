@@ -6,30 +6,6 @@ import 'package:dio/dio.dart';
 import 'BaseURl.dart';
 
 class API {
-  // Future Registration({var email_address, var employee_Id, var check}) async {
-  //   try {
-  //     Map data = {
-  //       'code': employee_Id,
-  //       'email': email_address,
-  //       "isFace": check,
-  //       "registered": true,
-  //     };
-  //     var dio = Dio();
-  //     dio.options.headers['Accept'] = 'application/json';
-  //     final response = await dio.post(
-  //       BaseUrl.baseurl + 'register',
-  //       data: data,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       BaseUrl.token = "BEARER" + " " + response.data['token'];
-  //       BaseUrl.code = response.data['code'];
-  //
-  //       return response;
-  //     }
-  //   } catch (e) {
-  //     return onError(e);
-  //   }
-  // }
   Future RegistrationConfirmation({var email_address, var employee_Id}) async {
     try {
       Map data = {
@@ -133,8 +109,7 @@ class API {
       print(data);
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers['Authorization'] = "BEARER " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoiMDcwMzAwMTYiLCJpYXQiOjE2NDkxNDMzNzcsImV4cCI6MTY0OTc0ODE3N30.Us0rV-Vje2yE2mIUW5EmNIR-oqu8YGtFxPb3qX-pTV8";
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
         BaseUrl.baseurl + 'analytics',
         data: data,
@@ -197,18 +172,19 @@ class API {
     }
   }
 
-  Future Summary({var start, var end}) async {
+  Future Summarydetail({var start, var end}) async {
     try {
       Map data = {
         "start": start,
         "end": end,
         'empCode': BaseUrl.storage.read("empCode")
       };
+      print(data);
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'getSummary',
+        BaseUrl.baseurl + 'getReport',
         data: data,
       );
       if (response.statusCode == 200) {
@@ -293,7 +269,7 @@ class API {
     }
   }
 
-  Future CheckOut({var latlng, var siteId, var date}) async {
+  Future CheckOut({var latlng, var siteId, var date, var reason}) async {
     try {
       Map data = {
         'location': latlng,

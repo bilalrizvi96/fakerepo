@@ -18,10 +18,10 @@ class HistoryCheckPointScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.print),
-        onPressed: _checkPointController.createPdfFile,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: const Icon(Icons.print),
+      //   // onPressed: _checkPointController.createPdfFile,
+      // ),
       body: Container(
         height: height,
         width: width,

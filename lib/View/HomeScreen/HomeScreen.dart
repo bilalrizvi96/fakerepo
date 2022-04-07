@@ -768,136 +768,100 @@ class ReasonBottom extends StatelessWidget {
       : super(key: key);
   final double width;
   final double height;
-
+  HomeController _homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    var outputFormat1 = DateFormat('hh:mm a');
-    var outputDate1 = outputFormat1.format(DateTime.now());
-
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: height / 50,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 45.0,
+      child: Form(
+        key: _homeController.reasonFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: height / 50,
             ),
-            child: Text(
-              '${outputDate1 + 10.toString()}',
-              style: Theme.of(context).textTheme.caption!.copyWith(
-                  color: Colors.black,
-                  fontSize: width / 22,
-                  fontWeight: FontWeight.w900),
-            ),
-          ),
-          SizedBox(
-            height: height / 80,
-          ),
-          Center(
-            child: Container(
-              width: width / 1.2,
-              height: height / 15,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(13.0),
-                  border: Border.all(color: Color(0xFFDEDEDE))),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: width / 20,
-                  ),
-                  // Text(
-                  //   branchname,
-                  //   style: Theme.of(context).textTheme.caption!.copyWith(
-                  //       color: DynamicColor().primarycolor,
-                  //       fontSize: width / 25,
-                  //       fontWeight: FontWeight.bold),
-                  // ),
-                  SizedBox(
-                    width: width / 20,
-                  ),
-                  // Icon(
-                  //   Icons.keyboard_arrow_down_sharp,
-                  //   color: Colors.black,
-                  // ),
-                  // SizedBox(
-                  //   width: width / 20,
-                  // ),
-                ],
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 45.0,
+              ),
+              child: Text(
+                BaseUrl.storage.read("endTiming").toString(),
+                style: Theme.of(context).textTheme.caption!.copyWith(
+                    color: Colors.black,
+                    fontSize: width / 22,
+                    fontWeight: FontWeight.w900),
               ),
             ),
-          ),
-          SizedBox(
-            height: height / 80,
-          ),
-          SizedBox(
-            height: height / 80,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 45.0,
+            SizedBox(
+              height: height / 80,
             ),
-            child: Text(
-              'Reason',
-              style: Theme.of(context).textTheme.caption!.copyWith(
-                  color: Colors.black,
-                  fontSize: width / 22,
-                  fontWeight: FontWeight.w900),
+            SizedBox(
+              height: height / 80,
             ),
-          ),
-          SizedBox(
-            height: height / 80,
-          ),
-          Center(
-            child: Container(
-              width: width / 1.2,
-              child: TextFormField(
-                // controller: _feedbackController.feedbackcontroller,
-                // validator: _feedbackController.validators,
-                maxLines: 6,
-                maxLength: 1000,
-                decoration: new InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: DynamicColor().titletextcolor, width: 1.2),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 45.0,
+              ),
+              child: Text(
+                'Reason',
+                style: Theme.of(context).textTheme.caption!.copyWith(
+                    color: Colors.black,
+                    fontSize: width / 22,
+                    fontWeight: FontWeight.w900),
+              ),
+            ),
+            SizedBox(
+              height: height / 80,
+            ),
+            Center(
+              child: Container(
+                width: width / 1.2,
+                child: TextFormField(
+                  controller: _homeController.reasoncontroller,
+                  validator: _homeController.validators,
+                  maxLines: 6,
+                  maxLength: 1000,
+                  decoration: new InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: DynamicColor().titletextcolor, width: 1.2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: DynamicColor().titletextcolor, width: 1.0),
+                    ),
+                    hintText: 'Write your reason',
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: DynamicColor().titletextcolor, width: 1.0),
-                  ),
-                  hintText: 'Write your reason',
                 ),
               ),
             ),
-          ),
-          Spacer(),
-          Center(
-            child: TextButton(
-                onPressed: () {},
-                child: Container(
-                  width: width / 1.25,
-                  height: height / 15,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: DynamicColor().primarycolor,
-                      borderRadius: BorderRadius.circular(15.0)),
-                  child: Text(
-                    'Submit',
-                    style: Theme.of(context).textTheme.caption!.copyWith(
-                        color: Colors.white,
-                        fontSize: width / 25,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )),
-          ),
-          SizedBox(
-            height: height / 80,
-          ),
-        ],
+            Spacer(),
+            Center(
+              child: TextButton(
+                  onPressed: () {
+                    _homeController.reason();
+                  },
+                  child: Container(
+                    width: width / 1.25,
+                    height: height / 15,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: DynamicColor().primarycolor,
+                        borderRadius: BorderRadius.circular(15.0)),
+                    child: Text(
+                      'Submit',
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: Colors.white,
+                          fontSize: width / 25,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  )),
+            ),
+            SizedBox(
+              height: height / 80,
+            ),
+          ],
+        ),
       ),
     );
   }
