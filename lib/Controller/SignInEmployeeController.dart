@@ -146,6 +146,13 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage.write("shiftTiming", response.user[0].shiftType);
       BaseUrl.storage.write("clockin", response.user[0].checkIn);
       BaseUrl.storage.write("clockout", response.user[0].checkOut);
+      BaseUrl.storage.write("ismessage", response.user[0].isMessageAvailable);
+      BaseUrl.storage.write("popupimage", response.user[0].message.imageUrl);
+
+      BaseUrl.storage.write("firstAttendanceRecordDate",
+          response.user[0].firstAttendanceRecordDate);
+      BaseUrl.storage.write("lastAttendanceRecordDate",
+          response.user[0].lastAttendanceRecordDate);
 
       Get.snackbar("Login ", "Login Successfully");
       Get.offAllNamed('/home');

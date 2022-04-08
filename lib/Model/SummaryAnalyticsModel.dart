@@ -178,15 +178,19 @@ class Messages {
     this.subType,
     this.message,
     this.imageUrl,
+    this.color,
     this.shiftType,
+    this.textcolor,
   });
 
   var id;
   var type;
+  var color;
   var subType;
   var message;
   var imageUrl;
   var shiftType;
+  var textcolor;
 
   factory Messages.fromJson(Map<String, dynamic> json) => Messages(
         id: json["_id"],
@@ -195,6 +199,8 @@ class Messages {
         message: json["message"],
         imageUrl: json["imageUrl"],
         shiftType: json["shiftType"] == null ? null : json["shiftType"],
+        color: json["color"] == null ? null : json["color"],
+        textcolor: json["textcolor"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -203,6 +209,8 @@ class Messages {
         "subType": subType == null ? null : subType,
         "message": message,
         "imageUrl": imageUrl,
+        "color": color,
+        "textcolor": textcolor,
         "shiftType": shiftType == null ? null : shiftType,
       };
 }

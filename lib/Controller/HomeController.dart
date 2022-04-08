@@ -1,3 +1,4 @@
+import 'package:attendencesystem/Model/SitesModel.dart';
 import 'package:get/get.dart';
 
 import '../API/BaseURl.dart';
@@ -25,8 +26,11 @@ class HomeController extends GetxController {
   var clockindate;
   var clockindate2;
   var Loading = false.obs;
+  var dropdownValue = ''.obs;
   var reasonFormKey = GlobalKey<FormState>();
   var reasoncontroller = TextEditingController();
+  var sitelist = [].obs;
+
   List months = [
     'JAN',
     'FEB',
@@ -46,6 +50,35 @@ class HomeController extends GetxController {
       return "Please this field must be filled";
     }
     return null;
+  }
+
+  valueupdate(val) {
+    dropdownValue.value = val;
+    update();
+  }
+
+  popups(context) {
+    if (BaseUrl.storage.read('ismessage') == false) {
+      return showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => AlertDialog(
+                actions: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Icon(Icons.clear)),
+                    ),
+                  ),
+                  Image.network(BaseUrl.storage.read("popupimage"),
+                      fit: BoxFit.cover)
+                ],
+              ));
+    }
   }
 
   CurrentLocation() async {
@@ -148,6 +181,24 @@ class HomeController extends GetxController {
     update();
   }
 
+  getSites() async {
+    var response = await API().Getsites();
+    if (response.statusCode == 200) {
+      Loading.value = false;
+      response = await SitesModel.fromJson(response.data);
+      for (var val in response.data) {
+        sitelist.value.add(val.sitesName);
+      }
+      dropdownValue.value = sitelist.value.first;
+      print(sitelist.value);
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", response.data['message'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
+  }
+
   clockout() async {
     Loading.value = true;
     update();
@@ -191,11 +242,13 @@ class HomeController extends GetxController {
     update();
   }
 
-  reason() async {
+  reasonCheckOut() async {
     Loading.value = true;
     update();
+
     var date = DateTime.now();
-    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    var outputFormat = DateFormat(
+        "${BaseUrl.storage.read("lastAttendanceRecordDate")}'T'${BaseUrl.storage.read("endTiming").toString().split(' ')[0]}:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
@@ -203,23 +256,28 @@ class HomeController extends GetxController {
     await CurrentLocation();
     if (reasonFormKey.currentState!.validate() &&
         reasonFormKey.currentState!.validate()) {
-      if (sites.value != "") {
-        var response = await API().CheckOut(
+      if (dropdownValue.value != "") {
+        var response = await API().Reasoncheckout(
             latlng: center.value.latitude.toString() +
                 "," +
                 center.value.longitude.toString(),
-            siteId: sites.value.toString(),
+            siteId: dropdownValue.value.toString(),
             reason: reasoncontroller.text.toString(),
             date: outputDate);
         if (response.statusCode == 200) {
-          print('bilal');
           BaseUrl.storage.write("status", false);
           Loading.value = false;
+          reasoncontroller.clear();
           BaseUrl.clockout = outputDate1.toString();
           BaseUrl.storage.write("clockout", BaseUrl.clockout);
-          //print(response);
-
-          // Get.back();
+          var dates = date.year.toString() +
+              '-' +
+              date.month.toString() +
+              '-' +
+              date.day.toString();
+          BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+          print(BaseUrl.storage.read("lastAttendanceRecordDate"));
+          Get.back();
           Get.snackbar(
             "Attendance ",
             "Clock Out Successfully",
@@ -231,7 +289,7 @@ class HomeController extends GetxController {
         }
       } else {
         Loading.value = false;
-        Get.snackbar("Error", "Location is empty kindly scan Qr",
+        Get.snackbar("Error", "Dropdown value is empty kindly select",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
     }
@@ -244,7 +302,11 @@ class HomeController extends GetxController {
     Loading.value = false;
     current.value =
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();
+
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
+    getSites();
+    print(BaseUrl.storage.read('ismessage'));
+    print("BaseUrl.storage.read('ismessage')");
   }
 }

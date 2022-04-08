@@ -1,6 +1,11 @@
+// To parse this JSON data, do
+//
+//     final loginModel = loginModelFromJson(jsonString);
+
 import 'dart:convert';
 
-LoginModel loginModelFromJson(var str) => LoginModel.fromJson(json.decode(str));
+LoginModel loginModelFromJson(String str) =>
+    LoginModel.fromJson(json.decode(str));
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
@@ -25,100 +30,181 @@ class LoginModel {
 }
 
 class User {
-  User(
-      {this.id,
-      this.empCode,
-      this.eMail,
-      this.name,
-      this.phoneNo,
-      this.registered,
-      this.designation,
-      this.endTiming,
-      this.firstName,
-      this.hoursPerDay,
-      this.hoursPerWeek,
-      this.lastName,
-      this.offDay,
-      this.offPerYear,
-      this.shiftType,
-      this.startTiming,
-      this.status,
-      this.checkIn,
-      this.checkOut,
-      this.presentDays,
-      this.absentDays,
-      this.address});
+  User({
+    this.id,
+    this.empCode,
+    this.name,
+    this.designation,
+    this.phoneNo,
+    this.eMail,
+    this.region,
+    this.firstName,
+    this.lastName,
+    this.startTiming,
+    this.endTiming,
+    this.active,
+    this.status,
+    this.registered,
+    this.shiftType,
+    this.offPerYear,
+    this.hoursPerDay,
+    this.hoursPerWeek,
+    this.offDay,
+    this.address,
+    this.points,
+    this.consumeAnnualLeaves,
+    this.consumeSickLeaves,
+    this.consumeCasualLeaves,
+    this.checkpointAccess,
+    this.lastAttendanceRecordDate,
+    this.isMessageAvailable,
+    this.message,
+    this.firstAttendanceRecordDate,
+    this.checkIn,
+    this.checkOut,
+    this.checkOutMissing,
+    this.presentDays,
+    this.absentDays,
+  });
 
   var id;
   var empCode;
-  var eMail;
   var name;
-  var phoneNo;
-  var registered;
   var designation;
-  var endTiming;
+  var phoneNo;
+  var eMail;
+  var region;
   var firstName;
+  var lastName;
+  var startTiming;
+  var endTiming;
+  var active;
+  var status;
+  var registered;
+  var shiftType;
+  var offPerYear;
   var hoursPerDay;
   var hoursPerWeek;
-  var lastName;
   var offDay;
-  var offPerYear;
-  var shiftType;
-  var startTiming;
-  var status;
+  var address;
+  var points;
+  var consumeAnnualLeaves;
+  var consumeSickLeaves;
+  var consumeCasualLeaves;
+  var checkpointAccess;
+  var lastAttendanceRecordDate;
+  var isMessageAvailable;
+  var message;
+  var firstAttendanceRecordDate;
   var checkIn;
   var checkOut;
+  var checkOutMissing;
   var presentDays;
   var absentDays;
-  var address;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
         empCode: json["EmpCode"],
-        eMail: json["EMail"],
         name: json["Name"],
-        phoneNo: json["PhoneNo"],
-        registered: json["Registered"],
         designation: json["designation"],
-        endTiming: json["end_timing"],
+        phoneNo: json["PhoneNo"],
+        eMail: json["EMail"],
+        region: json["region"],
         firstName: json["first_name"],
+        lastName: json["last_name"],
+        startTiming: json["start_timing"],
+        endTiming: json["end_timing"],
+        active: json["active"],
+        status: json["status"],
+        registered: json["Registered"],
+        shiftType: json["shift_type"],
+        offPerYear: json["off_per_year"],
         hoursPerDay: json["hours_per_day"],
         hoursPerWeek: json["hours_per_week"],
-        lastName: json["last_name"],
         offDay: List<String>.from(json["off_day"].map((x) => x)),
-        offPerYear: json["off_per_year"],
-        shiftType: json["shift_type"],
-        startTiming: json["start_timing"],
-        status: json["status"],
+        address: json["address"],
+        points: json["points"],
+        consumeAnnualLeaves: json["consumeAnnualLeaves"],
+        consumeSickLeaves: json["consumeSickLeaves"],
+        consumeCasualLeaves: json["consumeCasualLeaves"],
+        checkpointAccess: json["checkpointAccess"],
+        lastAttendanceRecordDate: json["lastAttendanceRecordDate"],
+        isMessageAvailable: json["isMessageAvailable"],
+        message: Message.fromJson(json["message"]),
+        firstAttendanceRecordDate: json["firstAttendanceRecordDate"],
         checkIn: json["checkIn"],
         checkOut: json["checkOut"],
+        checkOutMissing: json["checkOutMissing"],
         presentDays: json["present_days"],
         absentDays: json["absent_days"],
-        address: json["address"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "EmpCode": empCode,
-        "EMail": eMail,
         "Name": name,
-        "PhoneNo": phoneNo,
-        "Registered": registered,
         "designation": designation,
-        "end_timing": endTiming,
+        "PhoneNo": phoneNo,
+        "EMail": eMail,
+        "region": region,
         "first_name": firstName,
+        "last_name": lastName,
+        "start_timing": startTiming,
+        "end_timing": endTiming,
+        "active": active,
+        "status": status,
+        "Registered": registered,
+        "shift_type": shiftType,
+        "off_per_year": offPerYear,
         "hours_per_day": hoursPerDay,
         "hours_per_week": hoursPerWeek,
-        "last_name": lastName,
         "off_day": List<dynamic>.from(offDay.map((x) => x)),
-        "off_per_year": offPerYear,
-        "shift_type": shiftType,
-        "start_timing": startTiming,
-        "status": status,
+        "address": address,
+        "points": points,
+        "consumeAnnualLeaves": consumeAnnualLeaves,
+        "consumeSickLeaves": consumeSickLeaves,
+        "consumeCasualLeaves": consumeCasualLeaves,
+        "checkpointAccess": checkpointAccess,
+        "lastAttendanceRecordDate": lastAttendanceRecordDate,
+        "isMessageAvailable": isMessageAvailable,
+        "message": message.toJson(),
+        "firstAttendanceRecordDate": firstAttendanceRecordDate,
         "checkIn": checkIn,
         "checkOut": checkOut,
+        "checkOutMissing": checkOutMissing,
         "present_days": presentDays,
         "absent_days": absentDays,
-        "address": address,
+      };
+}
+
+class Message {
+  Message({
+    this.id,
+    this.type,
+    this.shiftType,
+    this.message,
+    this.imageUrl,
+  });
+
+  var id;
+  var type;
+  var shiftType;
+  var message;
+  var imageUrl;
+
+  factory Message.fromJson(Map<String, dynamic> json) => Message(
+        id: json["_id"],
+        type: json["type"],
+        shiftType: json["shiftType"],
+        message: json["message"],
+        imageUrl: json["imageUrl"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "type": type,
+        "shiftType": shiftType,
+        "message": message,
+        "imageUrl": imageUrl,
       };
 }

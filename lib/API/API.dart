@@ -269,14 +269,46 @@ class API {
     }
   }
 
-  Future CheckOut({var latlng, var siteId, var date, var reason}) async {
+  Future CheckOut({var latlng, var siteId, var date}) async {
     try {
       Map data = {
         'location': latlng,
         "siteId": siteId,
-        "date": date.toString()
+        "date": date.toString(),
+        "isCheckoutForget": false
       };
+      print(data);
+      print("data");
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
+        BaseUrl.baseurl + 'end',
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        var status = response;
+        return status;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
 
+  Future Reasoncheckout({var latlng, var siteId, var date, var reason}) async {
+    try {
+      Map data = {
+        "location": latlng,
+        "siteId": siteId,
+        "date": date,
+        "isCheckoutForget": true,
+        "reason": reason,
+        "missedCheckoutDate": BaseUrl.storage.read("lastAttendanceRecordDate"),
+        "points": BaseUrl.storage.read('points')
+      };
+      print(data);
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
@@ -301,6 +333,24 @@ class API {
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
         BaseUrl.baseurl + 'absentPresent',
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future Getsites() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'manage_site',
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),

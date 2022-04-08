@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/SummaryAnalyticsModel.dart';
 import 'package:attendencesystem/Model/WeekModel.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class SummaryController extends GetxController
   var summarydata = [].obs;
   var summarydetaildata = [].obs;
   var weekupdate = 0.obs;
+  var tabindex = 0.obs;
   // var message = ''.obs;
   List months = [
     'JAN',
@@ -40,7 +42,7 @@ class SummaryController extends GetxController
       Loading.value = true;
       selectedmonths.value =
           months[todate.value.month - 1] + "-" + todate.value.year.toString();
-      // summary();
+
       summaryAnalytics();
     }
     update();
@@ -65,6 +67,7 @@ class SummaryController extends GetxController
 
   summaryAnalytics() async {
     weekupdate.value = 0;
+    summarydata.value.clear();
     var response = await API().Summaryanalytic(
         month: todate.value.month.toString(),
         year: todate.value.year.toString());
@@ -92,6 +95,7 @@ class SummaryController extends GetxController
             weekdata: summarydata.value[0].fourthWeek,
             selected: false),
       ];
+      BaseUrl.storage.write('points', summarydata.value[0].points);
       summaryDetails();
     } else {
       Loading.value = false;
@@ -102,6 +106,7 @@ class SummaryController extends GetxController
   }
 
   summaryDetails() async {
+    summarydetaildata.value.clear();
     var response = await API().Summarydetail(
         start: '1' +
             '/' +
@@ -127,7 +132,12 @@ class SummaryController extends GetxController
   }
 
   init() {
-    tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    tabController =
+        TabController(length: 2, vsync: this, initialIndex: tabindex.value)
+          ..addListener(() {
+            tabindex.value = tabController!.index;
+            update();
+          });
 
     selectedmonths.value =
         months[todate.value.month - 1] + "-" + todate.value.year.toString();

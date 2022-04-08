@@ -152,6 +152,7 @@ class FeedbackScreen extends StatelessWidget {
                                   padding:
                                       EdgeInsets.only(right: 10.0, left: 10),
                                   child: DropdownButton<String>(
+                                    borderRadius: BorderRadius.circular(20.0),
                                     value:
                                         _feedbackController.dropdownValue.value,
                                     isExpanded: true,

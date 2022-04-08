@@ -658,13 +658,21 @@ class HomeScreen extends StatelessWidget {
                                             GestureDetector(
                                               onTap: () {
                                                 homeController.clockindate2 =
-                                                    DateTime.now().hour;
+                                                    DateTime.now().day;
                                                 var check = BaseUrl.storage
-                                                        .read('clockindate') -
-                                                    homeController.clockindate2;
-                                                if (check < 10) {
-                                                  print(true);
-                                                  print(check);
+                                                    .read(
+                                                        "lastAttendanceRecordDate")
+                                                    .toString()
+                                                    .split('-')[2];
+                                                print(check);
+
+                                                if (homeController
+                                                        .clockindate2 ==
+                                                    int.parse(check)) {
+                                                  homeController.scan();
+                                                  homeController.Loading.value =
+                                                      true;
+                                                } else {
                                                   Get.bottomSheet(
                                                       ReasonBottom(
                                                         width: width,
@@ -686,10 +694,6 @@ class HomeScreen extends StatelessWidget {
                                                             Radius.circular(
                                                                 15.0),
                                                       )));
-                                                } else {
-                                                  homeController.scan();
-                                                  homeController.Loading.value =
-                                                      true;
                                                 }
 
                                                 // homeController.valcheck.val
@@ -769,99 +773,152 @@ class ReasonBottom extends StatelessWidget {
   final double width;
   final double height;
   HomeController _homeController = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Form(
         key: _homeController.reasonFormKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: height / 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 45.0,
-              ),
-              child: Text(
-                BaseUrl.storage.read("endTiming").toString(),
-                style: Theme.of(context).textTheme.caption!.copyWith(
-                    color: Colors.black,
-                    fontSize: width / 22,
-                    fontWeight: FontWeight.w900),
-              ),
-            ),
-            SizedBox(
-              height: height / 80,
-            ),
-            SizedBox(
-              height: height / 80,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 45.0,
-              ),
-              child: Text(
-                'Reason',
-                style: Theme.of(context).textTheme.caption!.copyWith(
-                    color: Colors.black,
-                    fontSize: width / 22,
-                    fontWeight: FontWeight.w900),
-              ),
-            ),
-            SizedBox(
-              height: height / 80,
-            ),
-            Center(
-              child: Container(
-                width: width / 1.2,
-                child: TextFormField(
-                  controller: _homeController.reasoncontroller,
-                  validator: _homeController.validators,
-                  maxLines: 6,
-                  maxLength: 1000,
-                  decoration: new InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: DynamicColor().titletextcolor, width: 1.2),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: DynamicColor().titletextcolor, width: 1.0),
-                    ),
-                    hintText: 'Write your reason',
+        child: GetBuilder(
+            init: _homeController,
+            builder: (_) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: height / 50,
                   ),
-                ),
-              ),
-            ),
-            Spacer(),
-            Center(
-              child: TextButton(
-                  onPressed: () {
-                    _homeController.reason();
-                  },
-                  child: Container(
-                    width: width / 1.25,
-                    height: height / 15,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: DynamicColor().primarycolor,
-                        borderRadius: BorderRadius.circular(15.0)),
-                    child: Text(
-                      'Submit',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: Colors.white,
-                          fontSize: width / 25,
-                          fontWeight: FontWeight.w600),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 45.0,
                     ),
-                  )),
-            ),
-            SizedBox(
-              height: height / 80,
-            ),
-          ],
-        ),
+                    child: Text(
+                      BaseUrl.storage.read("lastAttendanceRecordDate"),
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: Colors.black,
+                          fontSize: width / 22,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height / 80,
+                  ),
+                  Center(
+                    child: Container(
+                      width: width / 1.2,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border:
+                            Border.all(color: DynamicColor().titletextcolor),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      padding: EdgeInsets.only(right: 10.0, left: 10),
+                      child: DropdownButton<String>(
+                        borderRadius: BorderRadius.circular(20.0),
+                        value: _homeController.dropdownValue.value,
+                        isExpanded: true,
+                        icon: Icon(
+                          Icons.keyboard_arrow_down_sharp,
+                          color: DynamicColor().primarycolor,
+                        ),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                        underline: Container(
+                          height: 2,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(500.0)),
+                        ),
+                        focusColor: Colors.black,
+                        dropdownColor: Colors.white,
+                        onChanged: (newValue) {
+                          _homeController.valueupdate(newValue);
+                          // FocusScope.of(context).nextFocus();
+                        },
+                        items: _homeController.sitelist.value.map((value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height / 80,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 45.0,
+                    ),
+                    child: Text(
+                      'Reason',
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: Colors.black,
+                          fontSize: width / 22,
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height / 80,
+                  ),
+                  Center(
+                    child: Container(
+                      width: width / 1.2,
+                      child: TextFormField(
+                        controller: _homeController.reasoncontroller,
+                        validator: _homeController.validators,
+                        maxLines: 6,
+                        maxLength: 1000,
+                        decoration: new InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: DynamicColor().titletextcolor,
+                                width: 1.2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: DynamicColor().titletextcolor,
+                                width: 1.0),
+                          ),
+                          hintText: 'Write your reason',
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Center(
+                    child: TextButton(
+                        onPressed: () {
+                          _homeController.reasonCheckOut();
+                        },
+                        child: Container(
+                          width: width / 1.25,
+                          height: height / 15,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: DynamicColor().primarycolor,
+                              borderRadius: BorderRadius.circular(15.0)),
+                          child: Text(
+                            'Submit',
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(
+                                    color: Colors.white,
+                                    fontSize: width / 25,
+                                    fontWeight: FontWeight.w600),
+                          ),
+                        )),
+                  ),
+                  SizedBox(
+                    height: height / 80,
+                  ),
+                ],
+              );
+            }),
       ),
     );
   }
