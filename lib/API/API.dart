@@ -84,7 +84,7 @@ class API {
         "type": "faceDuplication",
         "time": time.toString(),
         "employeeId": empId.toString(),
-        "message": message
+        "message": message.toString().trim()
       };
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
@@ -136,7 +136,7 @@ class API {
         "type": type,
         "time": time.toString(),
         "employeeId": empId.toString(),
-        "message": message,
+        "message": message.toString().trim(),
         "image": file != '' ? file : ''
       };
 
@@ -180,6 +180,7 @@ class API {
         'empCode': BaseUrl.storage.read("empCode")
       };
       print(data);
+      print('123');
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       dio.options.headers['Accept'] = 'application/json';
@@ -275,7 +276,7 @@ class API {
         'location': latlng,
         "siteId": siteId,
         "date": date.toString(),
-        "isCheckoutForget": false
+        // "isCheckoutForget": false
       };
       print(data);
       print("data");
@@ -293,6 +294,7 @@ class API {
         return status;
       }
     } catch (e) {
+      print(e);
       return onError(e);
     }
   }
@@ -375,7 +377,7 @@ class API {
       Map data = {
         'location': latlng,
         "siteName": sitename,
-        "notes": note,
+        "notes": note.toString().trim(),
         'image': file != '' ? file : '',
       };
       print(data);

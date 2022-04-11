@@ -664,7 +664,6 @@ class HomeScreen extends StatelessWidget {
                                                         "lastAttendanceRecordDate")
                                                     .toString()
                                                     .split('-')[2];
-                                                print(check);
 
                                                 if (homeController
                                                         .clockindate2 ==

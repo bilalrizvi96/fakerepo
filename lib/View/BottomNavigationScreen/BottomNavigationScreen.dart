@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../API/BaseURl.dart';
+
 class BottomNavigationScreen extends StatelessWidget {
   BottomNavigationController bottomNavigationController =
       Get.put(BottomNavigationController());

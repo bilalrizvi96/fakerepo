@@ -1,5 +1,6 @@
 import 'package:attendencesystem/Model/SitesModel.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../API/BaseURl.dart';
 import 'package:attendencesystem/API/API.dart';
@@ -13,6 +14,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../Component/DynamicColor.dart';
 
 class HomeController extends GetxController {
   var selectedyear = DateTime.now().year.obs;
@@ -57,28 +60,56 @@ class HomeController extends GetxController {
     update();
   }
 
-  popups(context) {
-    if (BaseUrl.storage.read('ismessage') == false) {
-      return showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) => AlertDialog(
-                actions: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Icon(Icons.clear)),
-                    ),
+  popups({var image, var message, var isMessageAvailable}) {
+    if (isMessageAvailable == true) {
+      WidgetsBinding.instance!.addPostFrameCallback((duration) async {
+        return Get.bottomSheet(
+          Container(
+            height: 700,
+            alignment: Alignment.bottomCenter,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0)),
+                image: DecorationImage(
+                  image: NetworkImage(image),
+                  fit: BoxFit.cover,
+                )),
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Kudos',
+                  style: GoogleFonts.poppins(
+                      color: Color(0xFFEE696A),
+                      fontWeight: FontWeight.w900,
+                      fontSize: 25),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '${message} ',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w300, fontSize: 12),
                   ),
-                  Image.network(BaseUrl.storage.read("popupimage"),
-                      fit: BoxFit.cover)
-                ],
-              ));
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
+          ),
+        );
+      });
     }
+    update();
   }
 
   CurrentLocation() async {
@@ -159,6 +190,12 @@ class HomeController extends GetxController {
 
           BaseUrl.storage.write("status", true);
           BaseUrl.storage.write("clockin", BaseUrl.clockin);
+          var dates = DateTime.now().year.toString() +
+              "-" +
+              DateTime.now().month.toString() +
+              "-" +
+              DateTime.now().day.toString();
+          BaseUrl.storage.write("lastAttendanceRecordDate", dates);
 
           // Get.back();
           Get.snackbar("Attendance", "Clock In Successfully");
@@ -214,17 +251,19 @@ class HomeController extends GetxController {
           latlng: center.value.latitude.toString() +
               "," +
               center.value.longitude.toString(),
-          siteId: sites.value.toString(),
+          siteId: sites.value.toString().trim(),
           date: outputDate);
       if (response.statusCode == 200) {
         print('bilal');
+        popups(
+            image: response.data['data'][0]['messages'][0]['imageUrl'],
+            message: response.data['data'][0]['messages'][0]['message'],
+            isMessageAvailable: response.data['data'][0]['isMessageAvailable']);
         BaseUrl.storage.write("status", false);
         Loading.value = false;
         BaseUrl.clockout = outputDate1.toString();
         BaseUrl.storage.write("clockout", BaseUrl.clockout);
-        //print(response);
 
-        // Get.back();
         Get.snackbar(
           "Attendance ",
           "Clock Out Successfully",
@@ -306,7 +345,5 @@ class HomeController extends GetxController {
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
     getSites();
-    print(BaseUrl.storage.read('ismessage'));
-    print("BaseUrl.storage.read('ismessage')");
   }
 }

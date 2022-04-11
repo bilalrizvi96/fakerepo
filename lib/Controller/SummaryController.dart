@@ -1,4 +1,5 @@
 import 'package:attendencesystem/API/BaseURl.dart';
+import 'package:attendencesystem/Model/PointsModel.dart';
 import 'package:attendencesystem/Model/SummaryAnalyticsModel.dart';
 import 'package:attendencesystem/Model/WeekModel.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,50 @@ class SummaryController extends GetxController
   var summarydetaildata = [].obs;
   var weekupdate = 0.obs;
   var tabindex = 0.obs;
+  var pointlist = [
+    PointsModel(
+        Title: 'Registration',
+        color: Color(0xFFFFF6C2),
+        textcolor: Color(0xFFB66B2A),
+        decription: 'Get 10 points on registration',
+        point: '+10'),
+    PointsModel(
+        Title: 'Weekly Hours',
+        color: Color(0xFFFFF6C2),
+        textcolor: Color(0xFFB66B2A),
+        decription: 'Complete your weekly hours'
+            ' target and get reward points,',
+        point: '+10'),
+    PointsModel(
+        Title: 'No Absent',
+        color: Color(0xFFFFF6C2),
+        textcolor: Color(0xFFB66B2A),
+        decription: 'When you complete a month without'
+            'any absent then you will get a point.',
+        point: '+10'),
+    PointsModel(
+        Title: 'Overtime',
+        color: Color(0xFFFFF6C2),
+        textcolor: Color(0xFFB66B2A),
+        decription: 'Hurray! Get rewards when ever you'
+            'complete a day with extra hours.',
+        point: '+10'),
+    PointsModel(
+        Title: 'Target Not Achieved',
+        color: Color(0xFFE61756),
+        textcolor: Colors.white.withOpacity(0.80),
+        decription: 'If somehow you missed to win the'
+            'weekly target then there will be a'
+            'deduction.',
+        point: '+10'),
+    PointsModel(
+        Title: 'Absent Day',
+        color: Color(0xFFE61756),
+        textcolor: Colors.white.withOpacity(0.80),
+        decription: 'Absents other than sick leave will mark'
+            'a deduction.',
+        point: '+10'),
+  ];
   // var message = ''.obs;
   List months = [
     'JAN',
@@ -42,8 +87,8 @@ class SummaryController extends GetxController
       Loading.value = true;
       selectedmonths.value =
           months[todate.value.month - 1] + "-" + todate.value.year.toString();
-
       summaryAnalytics();
+      summaryDetails();
     }
     update();
   }
@@ -96,7 +141,6 @@ class SummaryController extends GetxController
             selected: false),
       ];
       BaseUrl.storage.write('points', summarydata.value[0].points);
-      summaryDetails();
     } else {
       Loading.value = false;
       Get.snackbar("Error ", response.data['message'].toString(),
@@ -121,7 +165,6 @@ class SummaryController extends GetxController
     if (response.statusCode == 200) {
       Loading.value = false;
       response = await SummaryDetailsModel.fromJson(response.data);
-
       summarydetaildata.value = response.dailyDetails;
     } else {
       Loading.value = false;
@@ -143,6 +186,7 @@ class SummaryController extends GetxController
         months[todate.value.month - 1] + "-" + todate.value.year.toString();
     print(selectedmonths.value);
     summaryAnalytics();
+    summaryDetails();
     update();
   }
 
