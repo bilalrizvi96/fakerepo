@@ -5,12 +5,13 @@ import 'package:attendencesystem/Model/WeekModel.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../API/API.dart';
 import '../Model/SummaryDetailsModel.dart';
 
 class SummaryController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+    with GetTickerProviderStateMixin {
   var todate = DateTime(DateTime.now().year, DateTime.now().month).obs;
   var Loading = false.obs;
   TabController? tabController;
@@ -21,6 +22,8 @@ class SummaryController extends GetxController
   var summarydetaildata = [].obs;
   var weekupdate = 0.obs;
   var tabindex = 0.obs;
+  var day, month, year;
+
   var pointlist = [
     PointsModel(
         Title: 'Registration',
@@ -112,6 +115,7 @@ class SummaryController extends GetxController
 
   summaryAnalytics() async {
     weekupdate.value = 0;
+    weeklist.value.clear();
     summarydata.value.clear();
     var response = await API().Summaryanalytic(
         month: todate.value.month.toString(),
@@ -143,8 +147,8 @@ class SummaryController extends GetxController
       BaseUrl.storage.write('points', summarydata.value[0].points);
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['message'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
+      // Get.snackbar("Error ", response.data['message'].toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
@@ -168,8 +172,8 @@ class SummaryController extends GetxController
       summarydetaildata.value = response.dailyDetails;
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['message'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
+      // Get.snackbar("Error ", response.data['message'].toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
@@ -187,6 +191,12 @@ class SummaryController extends GetxController
     print(selectedmonths.value);
     summaryAnalytics();
     summaryDetails();
+    day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
+    month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
+    year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
+    print(DateTime(int.parse(year), int.parse(month), int.parse(day)));
+    print(DateTime(DateTime.now().year - 1, DateTime.now().month + 12, 1));
+
     update();
   }
 

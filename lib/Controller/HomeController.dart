@@ -22,9 +22,11 @@ class HomeController extends GetxController {
   var selectedmonth = DateTime.now().month.obs;
   var current = "".obs;
   var name;
+  var updates = false.obs;
   var center = new LatLng(33.652100, 75.123398).obs;
   ScanResult? scanResult;
   var sites = "".obs;
+  var url = ''.obs;
   var date = DateTime.now();
   var clockindate;
   var clockindate2;
@@ -60,7 +62,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  popups({var image, var message, var isMessageAvailable}) {
+  popups({var image, var message, var isMessageAvailable, var title}) {
     if (isMessageAvailable == true) {
       WidgetsBinding.instance!.addPostFrameCallback((duration) async {
         return Get.bottomSheet(
@@ -82,7 +84,7 @@ class HomeController extends GetxController {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  'Kudos',
+                  "${title.toString()}",
                   style: GoogleFonts.poppins(
                       color: Color(0xFFEE696A),
                       fontWeight: FontWeight.w900,
@@ -129,7 +131,9 @@ class HomeController extends GetxController {
       scanResult = result;
       sites.value = scanResult!.rawContent;
       if (sites.value != "") {
-        BaseUrl.storage.read("status") == false ? clockin() : clockout();
+        BaseUrl.storage.read("status") == false
+            ? clockin()
+            : clockout(check: false);
         // Get.toNamed('/attendance');
       } else {
         Loading.value = false;
@@ -174,6 +178,7 @@ class HomeController extends GetxController {
             siteId: sites.value.toString(),
             date: outputDate);
         if (response.statusCode == 200) {
+          BaseUrl.storage.write("ismessage", false);
           var resp = await API().AbsentPresent();
           if (resp.statusCode == 200) {
             print('bilal');
@@ -236,7 +241,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  clockout() async {
+  clockout({var check}) async {
     Loading.value = true;
     update();
     var date = DateTime.now();
@@ -244,21 +249,50 @@ class HomeController extends GetxController {
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
+    if (check == false) {
+      await CurrentLocation();
+      if (sites.value != "") {
+        var response = await API().CheckOut(
+            latlng: center.value.latitude.toString() +
+                "," +
+                center.value.longitude.toString(),
+            siteId: sites.value.toString().trim(),
+            date: outputDate,
+            check: check);
+        if (response.statusCode == 200) {
+          print('bilal');
+          popups(
+              image: response.data['data'][0]['messages'][0]['imageUrl'],
+              title: response.data['data'][0]['messages'][0]['title'],
+              message: response.data['data'][0]['messages'][0]['message'],
+              isMessageAvailable: response.data['data'][0]
+                  ['isMessageAvailable']);
+          BaseUrl.storage.write("status", false);
+          Loading.value = false;
+          BaseUrl.clockout = outputDate1.toString();
+          BaseUrl.storage.write("clockout", BaseUrl.clockout);
 
-    await CurrentLocation();
-    if (sites.value != "") {
+          Get.snackbar(
+            "Attendance ",
+            "Clock Out Successfully",
+          );
+        } else {
+          Loading.value = false;
+          Get.snackbar("Error ", response.data['error'].toString(),
+              colorText: Colors.white, backgroundColor: Colors.red);
+        }
+      } else {
+        Loading.value = false;
+        Get.snackbar("Error", "Location is empty kindly scan Qr",
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
+    } else {
       var response = await API().CheckOut(
-          latlng: center.value.latitude.toString() +
-              "," +
-              center.value.longitude.toString(),
-          siteId: sites.value.toString().trim(),
-          date: outputDate);
+          siteId: BaseUrl.storage.read("sitecheckpoint"),
+          latlng: BaseUrl.storage.read("latlngcheckpoint"),
+          date: outputDate,
+          check: check);
       if (response.statusCode == 200) {
-        print('bilal');
-        popups(
-            image: response.data['data'][0]['messages'][0]['imageUrl'],
-            message: response.data['data'][0]['messages'][0]['message'],
-            isMessageAvailable: response.data['data'][0]['isMessageAvailable']);
         BaseUrl.storage.write("status", false);
         Loading.value = false;
         BaseUrl.clockout = outputDate1.toString();
@@ -273,12 +307,30 @@ class HomeController extends GetxController {
         Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+    }
+
+    update();
+  }
+
+  checkUpdate() async {
+    var response = await API().CheckUpdate();
+    if (response.statusCode == 200) {
+      print('bilal');
+      updates.value = response.data['response']['updateAvailability'];
+      if (updates.value == true) {
+        Get.offAllNamed('/updatescreen');
+
+        url.value = response.data['response']['link'];
+        BaseUrl.url = url.value;
+        // print(updateController.url);
+      } else {
+        scan();
+      }
+      // checks();
     } else {
-      Loading.value = false;
-      Get.snackbar("Error", "Location is empty kindly scan Qr",
+      Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
-    update();
   }
 
   reasonCheckOut() async {

@@ -178,19 +178,20 @@ class User {
 }
 
 class Message {
-  Message({
-    this.id,
-    this.type,
-    this.shiftType,
-    this.message,
-    this.imageUrl,
-  });
+  Message(
+      {this.id,
+      this.type,
+      this.shiftType,
+      this.message,
+      this.imageUrl,
+      this.title});
 
   var id;
   var type;
   var shiftType;
   var message;
   var imageUrl;
+  var title;
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
         id: json["_id"],
@@ -198,6 +199,7 @@ class Message {
         shiftType: json["shiftType"],
         message: json["message"],
         imageUrl: json["imageUrl"],
+        title: json["title"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -206,5 +208,6 @@ class Message {
         "shiftType": shiftType,
         "message": message,
         "imageUrl": imageUrl,
+        "title": title,
       };
 }

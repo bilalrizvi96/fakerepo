@@ -91,10 +91,6 @@ class SummaryScreen extends StatelessWidget {
                                 onTap: () {
                                   DatePicker.showDatePicker(
                                     context,
-                                    minTime: DateTime(
-                                      DateTime.now().year - 25,
-                                      DateTime.now().month + 12,
-                                    ),
                                     maxTime: DateTime(DateTime.now().year - 1,
                                         DateTime.now().month + 12, 1),
                                     showTitleActions: true,
@@ -221,113 +217,117 @@ class SummaryScreen extends StatelessWidget {
                         SizedBox(
                           height: height / 50,
                         ),
-                        summaryController.tabindex.value == 0
-                            ? Padding(
-                                padding: EdgeInsets.only(
-                                  right: 5.0,
-                                  left: 5.0,
-                                ),
-                                child: DelayedDisplay(
-                                  fadeIn: true,
-                                  fadingDuration: Duration(milliseconds: 1200),
-                                  child: Container(
-                                    height: height / 10,
-                                    child: ListView.builder(
-                                        itemCount:
-                                            summaryController.weeklist.length,
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemBuilder: (_, index) {
-                                          return Padding(
-                                            padding: EdgeInsets.only(
-                                              right: 5.0,
-                                              left: 5.0,
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  "Week " + '${index + 1}',
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.black
-                                                          .withOpacity(0.50),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: width / 32),
-                                                ),
-                                                SizedBox(
-                                                  height: height / 50,
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    summaryController
-                                                        .weekSelection(index);
-                                                  },
-                                                  child: Container(
-                                                    width: width / 5.5,
-                                                    height: height / 25,
-                                                    alignment: Alignment.center,
-                                                    decoration: summaryController
-                                                                .weeklist
-                                                                .value[index]
-                                                                .selected ==
-                                                            true
-                                                        ? BoxDecoration(
-                                                            gradient: LinearGradient(
-                                                                begin: Alignment
-                                                                    .topCenter,
-                                                                end: Alignment
-                                                                    .topRight,
-                                                                colors:
-                                                                    DynamicColor()
-                                                                        .gradient),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0),
-                                                            // border: Border.all(
-                                                            //     color: Colors.black)
-                                                          )
-                                                        : BoxDecoration(
-                                                            color: Color(
-                                                                0xFFDBE3FF),
-                                                            // gradient: LinearGradient(
-                                                            //     begin: Alignment.topCenter,
-                                                            //     end: Alignment.topRight,
-                                                            //     colors:
-                                                            //     DynamicColor().gradient),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0),
-                                                            // border: Border.all(
-                                                            //     color: Colors.black)
-                                                          ),
-                                                    child: Text(
+                        if (summaryController.weeklist.value.isNotEmpty)
+                          summaryController.tabindex.value == 0
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    right: 5.0,
+                                    left: 5.0,
+                                  ),
+                                  child: DelayedDisplay(
+                                    fadeIn: true,
+                                    fadingDuration:
+                                        Duration(milliseconds: 1200),
+                                    child: Container(
+                                      height: height / 10,
+                                      child: ListView.builder(
+                                          itemCount:
+                                              summaryController.weeklist.length,
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemBuilder: (_, index) {
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                right: 5.0,
+                                                left: 5.0,
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "Week " + '${index + 1}',
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black
+                                                            .withOpacity(0.50),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: width / 32),
+                                                  ),
+                                                  SizedBox(
+                                                    height: height / 50,
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
                                                       summaryController
-                                                          .weeklist[index]
-                                                          .range,
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              letterSpacing:
-                                                                  0.5,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize:
-                                                                  width / 25),
+                                                          .weekSelection(index);
+                                                    },
+                                                    child: Container(
+                                                      width: width / 5.5,
+                                                      height: height / 25,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration:
+                                                          summaryController
+                                                                      .weeklist
+                                                                      .value[
+                                                                          index]
+                                                                      .selected ==
+                                                                  true
+                                                              ? BoxDecoration(
+                                                                  gradient: LinearGradient(
+                                                                      begin: Alignment
+                                                                          .topCenter,
+                                                                      end: Alignment
+                                                                          .topRight,
+                                                                      colors: DynamicColor()
+                                                                          .gradient),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0),
+                                                                  // border: Border.all(
+                                                                  //     color: Colors.black)
+                                                                )
+                                                              : BoxDecoration(
+                                                                  color: Color(
+                                                                      0xFFDBE3FF),
+                                                                  // gradient: LinearGradient(
+                                                                  //     begin: Alignment.topCenter,
+                                                                  //     end: Alignment.topRight,
+                                                                  //     colors:
+                                                                  //     DynamicColor().gradient),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0),
+                                                                  // border: Border.all(
+                                                                  //     color: Colors.black)
+                                                                ),
+                                                      child: Text(
+                                                        summaryController
+                                                            .weeklist[index]
+                                                            .range,
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                letterSpacing:
+                                                                    0.5,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize:
+                                                                    width / 25),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }),
+                                                ],
+                                              ),
+                                            );
+                                          }),
+                                    ),
                                   ),
-                                ),
-                              )
-                            : Column(),
+                                )
+                              : Column(),
                         Padding(
                           padding: EdgeInsets.only(
                             right: 5.0,
@@ -687,48 +687,50 @@ class Analytics extends StatelessWidget {
                     SizedBox(
                       height: height / 50,
                     ),
-                    _summaryController
-                                .weeklist
-                                .value[_summaryController.weekupdate.value]
-                                .weekdata[0]
-                                .message ==
-                            'Data found with alert'
-                        ? DelayedDisplay(
-                            fadeIn: true,
-                            child: Container(
-                              width: width / 1.2,
-                              height: height / 5,
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.only(
-                                  top: 30, right: 25.0, left: 25.0),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  image: DecorationImage(
-                                      image: NetworkImage(_summaryController
-                                          .weeklist
-                                          .value[_summaryController
-                                              .weekupdate.value]
-                                          .weekdata[0]
-                                          .alert
-                                          .imageUrl),
-                                      fit: BoxFit.cover)),
-                              child: Text(
-                                _summaryController
-                                    .weeklist
-                                    .value[_summaryController.weekupdate.value]
-                                    .weekdata[0]
-                                    .alert
-                                    .message,
-                                textAlign: TextAlign.center,
-                                maxLines: 4,
-                                style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: width / 27),
+                    if (_summaryController.weeklist.value.isNotEmpty)
+                      _summaryController
+                                  .weeklist
+                                  .value[_summaryController.weekupdate.value]
+                                  .weekdata[0]
+                                  .message ==
+                              'Data found with alert'
+                          ? DelayedDisplay(
+                              fadeIn: true,
+                              child: Container(
+                                width: width / 1.2,
+                                height: height / 5,
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.only(
+                                    top: 30, right: 25.0, left: 25.0),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    image: DecorationImage(
+                                        image: NetworkImage(_summaryController
+                                            .weeklist
+                                            .value[_summaryController
+                                                .weekupdate.value]
+                                            .weekdata[0]
+                                            .alert
+                                            .imageUrl),
+                                        fit: BoxFit.cover)),
+                                child: Text(
+                                  _summaryController
+                                      .weeklist
+                                      .value[
+                                          _summaryController.weekupdate.value]
+                                      .weekdata[0]
+                                      .alert
+                                      .message,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 4,
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: width / 27),
+                                ),
                               ),
-                            ),
-                          )
-                        : Column(),
+                            )
+                          : Column(),
                     SizedBox(
                       height: height / 50,
                     ),
@@ -1676,7 +1678,10 @@ class Analytics extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(50.0),
                                       color: Color(0XFFE7FEEB)),
                                   child: Text(
-                                    '${_summaryController.weeklist.value[0].weekdata[0].weekOverTime}',
+                                    _summaryController
+                                            .summarydata.value.isNotEmpty
+                                        ? '${_summaryController.weeklist.value[0].weekdata[0].weekOverTime}'
+                                        : '0',
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xFF1AC137),

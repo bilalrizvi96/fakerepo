@@ -145,8 +145,13 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage.write("designation", response.user[0].designation);
       BaseUrl.storage.write("shiftTiming", response.user[0].shiftType);
       BaseUrl.storage.write("clockin", response.user[0].checkIn);
+      BaseUrl.storage
+          .write("checkpointaccess", response.user[0].checkpointAccess);
       BaseUrl.storage.write("welcomemessage", response.user[0].message.message);
+      BaseUrl.storage.write("welcometitle", response.user[0].message.title);
       BaseUrl.storage.write("clockout", response.user[0].checkOut);
+      BaseUrl.storage.write("firstAttendanceRecordDate",
+          response.user[0].firstAttendanceRecordDate);
       BaseUrl.storage.write("ismessage", response.user[0].isMessageAvailable);
       BaseUrl.storage.write("popupimage", response.user[0].message.imageUrl);
 

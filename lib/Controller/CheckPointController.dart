@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:flutter/material.dart';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +7,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart' as la;
 
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import '../API/API.dart';
+import '../API/BaseURl.dart';
 import '../Model/HistoryCheckpointModel.dart';
 
 class CheckPointController extends GetxController
@@ -24,6 +24,7 @@ class CheckPointController extends GetxController
   TabController? tabController;
   var searchhistorylist = [].obs;
   var mainhistorylist = [].obs;
+
   var checkpointFormKey = GlobalKey<FormState>();
   var todate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
@@ -54,6 +55,8 @@ class CheckPointController extends GetxController
     update();
   }
 
+  createPdfFile() {}
+
   search(val) {
     if (val.isNotEmpty) {
       searchhistorylist.value = historyList.value
@@ -70,123 +73,6 @@ class CheckPointController extends GetxController
     }
     update();
   }
-
-  // createPdfFile() {
-  //   final pdf = pw.Document();
-  //   pdf.addPage(pw.MultiPage(
-  //       header: (pw.Context context) {
-  //         return pw.Column(
-  //             // crossAxisAlignment: pw.CrossAxisAlignment.center,
-  //             mainAxisSize: pw.MainAxisSize.min,
-  //             children: [
-  //               pw.Text(
-  //                 'Star Marketing PVT LTD',
-  //                 style: pw.TextStyle(
-  //                   fontWeight: pw.FontWeight.bold,
-  //                   fontSize: 32,
-  //                 ),
-  //               ),
-  //               pw.Text(
-  //                 'phone no # +9234521*****',
-  //                 style: pw.TextStyle(
-  //                   fontWeight: pw.FontWeight.normal,
-  //                   fontSize: 22,
-  //                 ),
-  //               ),
-  //               pw.Divider(),
-  //             ]);
-  //       },
-  //       maxPages: 20,
-  //       margin: pw.EdgeInsets.all(10),
-  //       pageFormat: PdfPageFormat.a4,
-  //       build: (pw.Context context) {
-  //         return <pw.Widget>[
-  //           pw.Column(
-  //               // crossAxisAlignment: pw.CrossAxisAlignment.center,
-  //               mainAxisSize: pw.MainAxisSize.min,
-  //               children: [
-  //                 pw.ListView.builder(
-  //                     itemCount: historyList.value.length,
-  //                     itemBuilder: (_, index) {
-  //                       return pw.Padding(
-  //                         padding: const pw.EdgeInsets.all(10.0),
-  //                         child: pw.Container(
-  //                           child: pw.Column(
-  //                             crossAxisAlignment: pw.CrossAxisAlignment.start,
-  //                             mainAxisSize: pw.MainAxisSize.min,
-  //                             children: [
-  //                               pw.Row(
-  //                                 crossAxisAlignment:
-  //                                     pw.CrossAxisAlignment.start,
-  //                                 mainAxisAlignment: pw.MainAxisAlignment.start,
-  //                                 children: [
-  //                                   pw.Padding(
-  //                                     padding:
-  //                                         const pw.EdgeInsets.only(top: 20.0),
-  //                                     child: pw.Container(
-  //                                       width: 25,
-  //                                       height: 25,
-  //                                       // alignment: pw.Alignment.center,
-  //                                       decoration: pw.BoxDecoration(
-  //                                         borderRadius:
-  //                                             pw.BorderRadius.circular(20.0),
-  //                                       ),
-  //                                       child: pw.Text(
-  //                                         "${index + 1}",
-  //                                         style: pw.TextStyle(fontSize: 24),
-  //                                       ),
-  //                                     ),
-  //                                   ),
-  //                                 ],
-  //                               ),
-  //                               pw.Padding(
-  //                                 padding: const pw.EdgeInsets.all(8.0),
-  //                                 child: pw.Row(
-  //                                   children: [
-  //                                     pw.Column(
-  //                                         crossAxisAlignment:
-  //                                             pw.CrossAxisAlignment.start,
-  //                                         mainAxisSize: pw.MainAxisSize.min,
-  //                                         children: [
-  //                                           pw.Text(
-  //                                             historyList.value[index].time,
-  //                                             style: pw.TextStyle(
-  //                                               fontWeight: pw.FontWeight.bold,
-  //                                               fontSize: 30,
-  //                                             ),
-  //                                           ),
-  //                                           pw.Text(
-  //                                             historyList.value[index].siteName,
-  //                                             style: pw.TextStyle(
-  //                                               fontWeight:
-  //                                                   pw.FontWeight.normal,
-  //                                               fontSize: 30,
-  //                                             ),
-  //                                           ),
-  //                                         ]),
-  //                                     pw.Spacer(),
-  //                                     pw.Text(
-  //                                       historyList.value[index].notes,
-  //                                       style: pw.TextStyle(
-  //                                         fontWeight: pw.FontWeight.normal,
-  //                                         fontSize: 30,
-  //                                       ),
-  //                                     ),
-  //                                   ],
-  //                                 ),
-  //                               ),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                       );
-  //                     }),
-  //                 // pw.Image(image),
-  //                 pw.Divider(),
-  //               ]),
-  //         ];
-  //       }));
-  //   return pdf.save();
-  // }
 
   @override
   void onInit() {
@@ -220,6 +106,14 @@ class CheckPointController extends GetxController
         checkpointFormKey.currentState!.validate()) {
       Loading.value = true;
       update();
+      BaseUrl.storage
+          .write("sitecheckpoint", siteController.text.toString().trim());
+      BaseUrl.storage.write(
+          "latlngcheckpoint",
+          center.value.latitude.toString() +
+              ',' +
+              center.value.longitude.toString());
+
       if (faceImage != null) {
         var response = await API().CheckPoints(
           sitename: siteController.text.toString().trim(),

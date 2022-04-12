@@ -44,8 +44,6 @@ class BottomNavigationController extends GetxController {
   }
 
   popups() {
-    print(BaseUrl.storage.read("welcomemessage"));
-    print("BaseUrl.storage.read('ismessage')");
     if (BaseUrl.storage.read('ismessage') == true) {
       WidgetsBinding.instance!.addPostFrameCallback((duration) async {
         return Get.bottomSheet(

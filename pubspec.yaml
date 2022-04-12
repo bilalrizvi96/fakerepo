@@ -58,7 +58,7 @@ dependencies:
   permission_handler:
   syncfusion_flutter_gauges: ^19.4.56
   printing: ^5.7.5
-
+  pdf: ^3.7.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

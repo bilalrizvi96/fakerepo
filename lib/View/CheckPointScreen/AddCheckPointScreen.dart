@@ -266,6 +266,37 @@ class AddCheckPointScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: height / 70,
+                          ),
+                          // Row(
+                          //   children: <Widget>[
+                          //     //Text
+                          //     SizedBox(
+                          //       width: width / 20,
+                          //     ), //SizedBox
+                          //
+                          //     Checkbox(
+                          //       value:
+                          //           _checkPointController.checkboxvalue.value,
+                          //       onChanged: (bool? value) {
+                          //         _checkPointController.checkboxvalue.value =
+                          //             value!;
+                          //       },
+                          //     ),
+                          //     SizedBox(
+                          //       width: width / 50,
+                          //     ), //SizedBox
+                          //     Text(
+                          //       'Marked as last check out ',
+                          //       style: GoogleFonts.poppins(
+                          //           fontWeight: FontWeight.w300,
+                          //           fontSize: width / 30,
+                          //           color: DynamicColor().primarycolor),
+                          //     ),
+                          //     Spacer(), //Checkbox
+                          //   ], //<Widget>[]
+                          // ),
                           Spacer(),
                           GestureDetector(
                             onTap: () {

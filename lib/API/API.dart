@@ -270,12 +270,13 @@ class API {
     }
   }
 
-  Future CheckOut({var latlng, var siteId, var date}) async {
+  Future CheckOut({var latlng, var siteId, var date, var check}) async {
     try {
       Map data = {
         'location': latlng,
         "siteId": siteId,
         "date": date.toString(),
+        "checkpointAccess": check
         // "isCheckoutForget": false
       };
       print(data);

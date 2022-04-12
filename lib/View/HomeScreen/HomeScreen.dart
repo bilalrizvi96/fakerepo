@@ -62,20 +62,23 @@ class HomeScreen extends StatelessWidget {
                                       fontSize: width / 16),
                                 ),
                                 Spacer(),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed('/checkpoint');
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 8.0, left: 8.0),
-                                    child: Icon(
-                                      Icons.location_on_outlined,
-                                      size: width / 16,
-                                      color: DynamicColor().primarycolor,
-                                    ),
-                                  ),
-                                ),
+                                BaseUrl.storage.read("checkpointaccess") !=
+                                        false
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed('/checkpoint');
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 8.0, left: 8.0),
+                                          child: Icon(
+                                            Icons.location_on_outlined,
+                                            size: width / 16,
+                                            color: DynamicColor().primarycolor,
+                                          ),
+                                        ),
+                                      )
+                                    : Column(),
                                 SizedBox(
                                   width: width / 50,
                                 ),
@@ -562,7 +565,7 @@ class HomeScreen extends StatelessWidget {
                                                     false) {
                                                   homeController.Loading.value =
                                                       true;
-                                                  homeController.scan();
+                                                  homeController.checkUpdate();
                                                 }
 
                                                 // homeController.valcheck.value='clockin';
@@ -668,7 +671,12 @@ class HomeScreen extends StatelessWidget {
                                                 if (homeController
                                                         .clockindate2 ==
                                                     int.parse(check)) {
-                                                  homeController.scan();
+                                                  BaseUrl.storage.read(
+                                                              "checkpointaccess") !=
+                                                          true
+                                                      ? homeController.scan()
+                                                      : homeController.clockout(
+                                                          check: true);
                                                   homeController.Loading.value =
                                                       true;
                                                 } else {
