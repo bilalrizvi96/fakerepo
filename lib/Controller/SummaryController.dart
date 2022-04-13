@@ -23,7 +23,7 @@ class SummaryController extends GetxController
   var weekupdate = 0.obs;
   var tabindex = 0.obs;
   var day, month, year;
-
+  var mindate;
   var pointlist = [
     PointsModel(
         Title: 'Registration',
@@ -127,7 +127,7 @@ class SummaryController extends GetxController
       weeklist.value = [
         WeekModel(
           range: '1 - 7',
-          selected: true,
+          selected: false,
           weekdata: summarydata.value[0].firstWeek,
         ),
         WeekModel(
@@ -140,10 +140,23 @@ class SummaryController extends GetxController
             weekdata: summarydata.value[0].thirdWeek),
         WeekModel(
             range:
-                '21 - ${DateTime(todate.value.year, todate.value.month + 1, 0).day}',
+                '22 - ${DateTime(todate.value.year, todate.value.month + 1, 0).day}',
             weekdata: summarydata.value[0].fourthWeek,
             selected: false),
       ];
+      if (DateTime.now().day < 8) {
+        weeklist.value[0].selected = true;
+        weekupdate.value = 0;
+      } else if (DateTime.now().day < 15) {
+        weeklist.value[1].selected = true;
+        weekupdate.value = 1;
+      } else if (DateTime.now().day < 21) {
+        weeklist.value[2].selected = true;
+        weekupdate.value = 2;
+      } else {
+        weeklist.value[3].selected = true;
+        weekupdate.value = 3;
+      }
       BaseUrl.storage.write('points', summarydata.value[0].points);
     } else {
       Loading.value = false;
@@ -194,9 +207,11 @@ class SummaryController extends GetxController
     day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
     month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
     year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
-    print(DateTime(int.parse(year), int.parse(month), int.parse(day)));
-    print(DateTime(DateTime.now().year - 1, DateTime.now().month + 12, 1));
+    mindate = DateFormat('dd-MM-y').parse(day + '-' + month + '-' + year);
 
+    print(mindate.runtimeType);
+    // mindate = tempDate;
+    print(mindate);
     update();
   }
 

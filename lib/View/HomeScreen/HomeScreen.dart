@@ -671,12 +671,7 @@ class HomeScreen extends StatelessWidget {
                                                 if (homeController
                                                         .clockindate2 ==
                                                     int.parse(check)) {
-                                                  BaseUrl.storage.read(
-                                                              "checkpointaccess") !=
-                                                          true
-                                                      ? homeController.scan()
-                                                      : homeController.clockout(
-                                                          check: true);
+                                                  homeController.scan();
                                                   homeController.Loading.value =
                                                       true;
                                                 } else {

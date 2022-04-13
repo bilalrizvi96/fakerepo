@@ -2,10 +2,13 @@ import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:delayed_display/delayed_display.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -89,17 +92,85 @@ class SummaryScreen extends StatelessWidget {
                               // ),
                               GestureDetector(
                                 onTap: () {
-                                  DatePicker.showDatePicker(
-                                    context,
-                                    maxTime: DateTime(DateTime.now().year - 1,
-                                        DateTime.now().month + 12, 1),
-                                    showTitleActions: true,
-                                    onConfirm: (date) {
-                                      summaryController.toDate(date);
-                                    },
-                                    currentTime: DateTime.now(),
-                                    locale: LocaleType.en,
-                                  );
+                                  print(summaryController.day +
+                                      '-' +
+                                      summaryController.month +
+                                      '-' +
+                                      summaryController.year);
+                                  showCupertinoModalPopup(
+                                      context: context,
+                                      builder: (_) => Container(
+                                            height: 400,
+                                            color: const Color.fromARGB(
+                                                255, 255, 255, 255),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 300,
+                                                  child: CupertinoDatePicker(
+                                                    mode:
+                                                        CupertinoDatePickerMode
+                                                            .date,
+                                                    minimumDate: DateTime(
+                                                      int.parse(
+                                                          summaryController
+                                                              .year),
+                                                      int.parse(
+                                                          summaryController
+                                                              .month),
+                                                      int.parse(
+                                                          summaryController
+                                                              .day),
+                                                    ),
+                                                    initialDateTime:
+                                                        DateTime.now(),
+                                                    maximumDate:
+                                                        DateTime(2022, 12, 31),
+                                                    // minimumDate: summaryController.mindate,
+                                                    onDateTimeChanged:
+                                                        (DateTime value) {
+                                                      summaryController
+                                                          .toDate(value);
+                                                    },
+                                                  ),
+                                                ),
+
+                                                // Close the modal
+                                                CupertinoButton(
+                                                  child: const Text('OK'),
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(),
+                                                )
+                                              ],
+                                            ),
+                                          ));
+
+                                  // DatePickerWidget(
+                                  //   initialDateTime: DateTime.now(),
+                                  //   // dateFormat: ,
+                                  //   minDateTime: summaryController.mindate,
+                                  //   maxDateTime: DateTime(
+                                  //       DateTime.now().year - 1,
+                                  //       DateTime.now().month + 12,
+                                  //       1),
+                                  //   onConfirm: (date, val) {
+                                  //     summaryController.toDate(date);
+                                  //   },
+                                  // );
+                                  // DatePicker.showDatePicker(
+                                  //   context,
+                                  //   minTime:
+                                  //       DateTime.parse('2022-04-12 00:00:00'),
+                                  //   maxTime: DateTime(DateTime.now().year - 1,
+                                  //       DateTime.now().month + 12, 1),
+                                  //   showTitleActions: true,
+                                  //   onConfirm: (date) {
+                                  //     summaryController.toDate(date);
+                                  //   },
+                                  //   currentTime: DateTime.now(),
+                                  //   locale: LocaleType.en,
+                                  // );
                                 },
                                 child: Container(
                                   height: height / 19,

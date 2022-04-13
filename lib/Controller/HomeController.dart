@@ -182,16 +182,17 @@ class HomeController extends GetxController {
           var resp = await API().AbsentPresent();
           if (resp.statusCode == 200) {
             print('bilal');
+            BaseUrl.clockin = outputDate1.toString();
+            BaseUrl.storage.write("clockin", BaseUrl.clockin);
             BaseUrl.storage
                 .write("totalPresent", resp.data['present_days'].toString());
             BaseUrl.storage
                 .write("totalAbsent", resp.data['absent_days'].toString());
           }
-          clockindate = DateTime.now().hour;
-          BaseUrl.storage.write('clockindate', clockindate);
+          // clockindate = DateTime.now().hour;
+          // BaseUrl.storage.write('clockindate', clockindate);
           BaseUrl.storage.write("clockout", "00:00");
           Loading.value = false;
-          BaseUrl.clockin = outputDate1.toString();
 
           BaseUrl.storage.write("status", true);
           BaseUrl.storage.write("clockin", BaseUrl.clockin);
@@ -297,7 +298,11 @@ class HomeController extends GetxController {
         Loading.value = false;
         BaseUrl.clockout = outputDate1.toString();
         BaseUrl.storage.write("clockout", BaseUrl.clockout);
-
+        popups(
+            image: response.data['data'][0]['messages'][0]['imageUrl'],
+            title: response.data['data'][0]['messages'][0]['title'],
+            message: response.data['data'][0]['messages'][0]['message'],
+            isMessageAvailable: response.data['data'][0]['isMessageAvailable']);
         Get.snackbar(
           "Attendance ",
           "Clock Out Successfully",

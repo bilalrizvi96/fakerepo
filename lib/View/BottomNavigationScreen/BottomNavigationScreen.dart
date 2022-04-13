@@ -5,10 +5,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../API/BaseURl.dart';
+import '../FeedbackScreen/FeedbackScreen.dart';
+import '../HomeScreen/HomeScreen.dart';
+import '../MyProfileScreen/MyProfileScreen.dart';
+import '../SummaryScreen/SummaryScreen.dart';
 
 class BottomNavigationScreen extends StatelessWidget {
   BottomNavigationController bottomNavigationController =
-      Get.put(BottomNavigationController());
+      Get.put(BottomNavigationController(), permanent: false);
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +84,17 @@ class BottomNavigationScreen extends StatelessWidget {
                         // ),
                       ],
                     ),
-                    body: bottomNavigationController.children.elementAt(
-                        bottomNavigationController.selectedIndex.value),
+                    body: IndexedStack(
+                      index: bottomNavigationController.selectedIndex.value,
+                      children: [
+                        HomeScreen(),
+                        SummaryScreen(),
+                        FeedbackScreen(
+                          check: true,
+                        ),
+                        MyProfileScreen(),
+                      ],
+                    ),
                   )
                 : Scaffold(
                     body: Container(

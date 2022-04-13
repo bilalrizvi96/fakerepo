@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../API/BaseURl.dart';
 import '../../Controller/CheckPointController.dart';
 import '../../Controller/MapController.dart';
 
@@ -99,7 +100,7 @@ class AddCheckPointScreen extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(30.0)),
                                         child: _checkPointController
-                                                    .faceImage ==
+                                                    .checkpointImage ==
                                                 null
                                             ? Column(
                                                 crossAxisAlignment:
@@ -135,7 +136,7 @@ class AddCheckPointScreen extends StatelessWidget {
                                                     BorderRadius.circular(30.0),
                                                 child: Image.file(
                                                     File(_checkPointController
-                                                        .faceImage!.path),
+                                                        .checkpointImage!.path),
                                                     fit: BoxFit.cover),
                                               )),
                                     Align(
@@ -149,11 +150,11 @@ class AddCheckPointScreen extends StatelessWidget {
                                             _checkPointController
                                                 .imgFromCameras();
                                           },
-                                          child: Icon(
-                                              _checkPointController.faceImage ==
-                                                      null
-                                                  ? Icons.add
-                                                  : Icons.refresh_sharp)),
+                                          child: Icon(_checkPointController
+                                                      .checkpointImage ==
+                                                  null
+                                              ? Icons.add
+                                              : Icons.refresh_sharp)),
                                     ),
                                   ],
                                 ),
@@ -269,38 +270,46 @@ class AddCheckPointScreen extends StatelessWidget {
                           SizedBox(
                             height: height / 70,
                           ),
-                          // Row(
-                          //   children: <Widget>[
-                          //     //Text
-                          //     SizedBox(
-                          //       width: width / 20,
-                          //     ), //SizedBox
-                          //
-                          //     Checkbox(
-                          //       value:
-                          //           _checkPointController.checkboxvalue.value,
-                          //       onChanged: (bool? value) {
-                          //         _checkPointController.checkboxvalue.value =
-                          //             value!;
-                          //       },
-                          //     ),
-                          //     SizedBox(
-                          //       width: width / 50,
-                          //     ), //SizedBox
-                          //     Text(
-                          //       'Marked as last check out ',
-                          //       style: GoogleFonts.poppins(
-                          //           fontWeight: FontWeight.w300,
-                          //           fontSize: width / 30,
-                          //           color: DynamicColor().primarycolor),
-                          //     ),
-                          //     Spacer(), //Checkbox
-                          //   ], //<Widget>[]
-                          // ),
+                          BaseUrl.storage.read("status")
+                              ? Row(
+                                  children: <Widget>[
+                                    //Text
+                                    SizedBox(
+                                      width: width / 20,
+                                    ), //SizedBox
+
+                                    Checkbox(
+                                      value: _checkPointController
+                                          .checkboxvalue.value,
+                                      onChanged: (bool? value) {
+                                        _checkPointController
+                                            .checkboxUpdate(value);
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: width / 50,
+                                    ), //SizedBox
+                                    Text(
+                                      'Marked as last clock out ',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: width / 30,
+                                          color: DynamicColor().primarycolor),
+                                    ),
+                                    Spacer(), //Checkbox1
+                                  ], //<Widget>[]
+                                )
+                              : Column(),
                           Spacer(),
                           GestureDetector(
                             onTap: () {
-                              _checkPointController.checkpoint();
+                              if (BaseUrl.storage.read("status") == true) {
+                                _checkPointController.checkpoint();
+                              } else {
+                                Get.snackbar("Error ", 'Please Clock In first',
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.red);
+                              }
                             },
                             child: Container(
                               width: width / 1.2,

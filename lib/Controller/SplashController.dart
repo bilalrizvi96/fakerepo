@@ -8,9 +8,10 @@ import 'package:get/get.dart';
 class SplashController extends GetxController {
   var updates = false.obs;
   var url = ''.obs;
-  var context;
-  var connection = true.obs;
+  // var context;
+  // var connection = true.obs;
 
+/*
   check() async {
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
@@ -24,11 +25,12 @@ class SplashController extends GetxController {
     });
     update();
   }
+*/
 
   @override
   void onInit() {
     super.onInit();
-    check();
+    checks();
   }
 
   // checkUpdate() async {

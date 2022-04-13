@@ -6,25 +6,28 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart' as la;
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+// import 'package:pdf/pdf.dart';
+// import 'package:pdf/widgets.dart' as pw;
+// import 'package:printing/printing.dart';
 import '../API/API.dart';
 import '../API/BaseURl.dart';
 import '../Model/HistoryCheckpointModel.dart';
+import 'HomeController.dart';
 
 class CheckPointController extends GetxController
     with GetSingleTickerProviderStateMixin {
+  HomeController homeController = Get.put(HomeController());
   final ImagePicker _picker = ImagePicker();
-  XFile? faceImage;
+  XFile? checkpointImage;
   var first = ''.obs;
   var finaldate = ''.obs;
   var printKey = GlobalKey();
   TabController? tabController;
   var searchhistorylist = [].obs;
   var mainhistorylist = [].obs;
-
+  var checkboxvalue = false.obs;
   var checkpointFormKey = GlobalKey<FormState>();
   var todate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
@@ -45,6 +48,28 @@ class CheckPointController extends GetxController
   final colors = [DynamicColor().primarycolor, DynamicColor().primarycolor];
   Color? indicatorColor;
   var historyList = [].obs;
+  checkboxUpdate(value) {
+    checkboxvalue.value = value!;
+    update();
+  }
+
+  Future<void> createPDF() async {
+    //Create a new PDF document
+    PdfDocument document = PdfDocument();
+
+    //Add a new page and draw text
+    document.pages.add().graphics.drawString(
+        'Hello World!', PdfStandardFont(PdfFontFamily.helvetica, 20),
+        brush: PdfSolidBrush(PdfColor(0, 0, 0)),
+        bounds: Rect.fromLTWH(0, 0, 500, 50));
+
+    //Save the document
+    List<int> bytes = document.save();
+
+    //Dispose the document
+    document.dispose();
+  }
+
   toDate(date) {
     todate.value = date;
     print(todate.value);
@@ -54,8 +79,6 @@ class CheckPointController extends GetxController
     }
     update();
   }
-
-  createPdfFile() {}
 
   search(val) {
     if (val.isNotEmpty) {
@@ -114,11 +137,11 @@ class CheckPointController extends GetxController
               ',' +
               center.value.longitude.toString());
 
-      if (faceImage != null) {
+      if (checkpointImage != null) {
         var response = await API().CheckPoints(
           sitename: siteController.text.toString().trim(),
           note: noteController.text.toString().trim(),
-          image: faceImage,
+          image: checkpointImage,
           latlng: center.value.latitude.toString() +
               ',' +
               center.value.longitude.toString(),
@@ -127,12 +150,13 @@ class CheckPointController extends GetxController
           siteController.clear();
           noteController.clear();
           historycheckpoint();
-          faceImage = null;
+          checkpointImage = null;
           Loading.value = false;
           Get.snackbar(
             "Checkpoints ",
             'Successfully Added',
           );
+          homeController.clockout(check: checkboxvalue);
           // Get.back();
         } else {
           Loading.value = false;
@@ -299,7 +323,7 @@ class CheckPointController extends GetxController
         preferredCameraDevice: CameraDevice.front,
         maxWidth: 1024);
     if (image != null) {
-      faceImage = image;
+      checkpointImage = image;
     }
     update();
   }

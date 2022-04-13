@@ -20,7 +20,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.print),
-        onPressed: _checkPointController.createPdfFile,
+        onPressed: _checkPointController.createPDF,
       ),
       body: Container(
         height: height,
