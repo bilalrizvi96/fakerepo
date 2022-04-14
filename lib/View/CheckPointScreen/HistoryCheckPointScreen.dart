@@ -255,7 +255,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                           const EdgeInsets.only(
                                                               top: 10.0),
                                                       child: GestureDetector(
-                                                        onTap: () {
+                                                        onTap: () async {
                                                           showDialog(
                                                               context: context,
                                                               barrierDismissible:

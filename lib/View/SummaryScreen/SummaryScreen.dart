@@ -97,54 +97,54 @@ class SummaryScreen extends StatelessWidget {
                                       summaryController.month +
                                       '-' +
                                       summaryController.year);
-                                  showCupertinoModalPopup(
-                                      context: context,
-                                      builder: (_) => Container(
-                                            height: 400,
-                                            color: const Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            child: Column(
-                                              children: [
-                                                SizedBox(
-                                                  height: 300,
-                                                  child: CupertinoDatePicker(
-                                                    mode:
-                                                        CupertinoDatePickerMode
-                                                            .date,
-                                                    minimumDate: DateTime(
-                                                      int.parse(
-                                                          summaryController
-                                                              .year),
-                                                      int.parse(
-                                                          summaryController
-                                                              .month),
-                                                      int.parse(
-                                                          summaryController
-                                                              .day),
-                                                    ),
-                                                    initialDateTime:
-                                                        DateTime.now(),
-                                                    maximumDate:
-                                                        DateTime(2022, 12, 31),
-                                                    // minimumDate: summaryController.mindate,
-                                                    onDateTimeChanged:
-                                                        (DateTime value) {
-                                                      summaryController
-                                                          .toDate(value);
-                                                    },
-                                                  ),
-                                                ),
-
-                                                // Close the modal
-                                                CupertinoButton(
-                                                  child: const Text('OK'),
-                                                  onPressed: () =>
-                                                      Navigator.of(context)
-                                                          .pop(),
-                                                )
-                                              ],
-                                            ),
-                                          ));
+                                  // showCupertinoModalPopup(
+                                  //     context: context,
+                                  //     builder: (_) => Container(
+                                  //           height: 400,
+                                  //           color: const Color.fromARGB(
+                                  //               255, 255, 255, 255),
+                                  //           child: Column(
+                                  //             children: [
+                                  //               SizedBox(
+                                  //                 height: 300,
+                                  //                 child: CupertinoDatePicker(
+                                  //                   mode:
+                                  //                       CupertinoDatePickerMode
+                                  //                           .date,
+                                  //                   minimumDate: DateTime(
+                                  //                     int.parse(
+                                  //                         summaryController
+                                  //                             .year),
+                                  //                     int.parse(
+                                  //                         summaryController
+                                  //                             .month),
+                                  //                     int.parse(
+                                  //                         summaryController
+                                  //                             .day),
+                                  //                   ),
+                                  //                   initialDateTime:
+                                  //                       DateTime.now(),
+                                  //                   maximumDate:
+                                  //                       DateTime(2022, 12, 31),
+                                  //                   // minimumDate: summaryController.mindate,
+                                  //                   onDateTimeChanged:
+                                  //                       (DateTime value) {
+                                  //                     summaryController
+                                  //                         .toDate(value);
+                                  //                   },
+                                  //                 ),
+                                  //               ),
+                                  //
+                                  //               // Close the modal
+                                  //               CupertinoButton(
+                                  //                 child: const Text('OK'),
+                                  //                 onPressed: () =>
+                                  //                     Navigator.of(context)
+                                  //                         .pop(),
+                                  //               )
+                                  //             ],
+                                  //           ),
+                                  //         ));
 
                                   // DatePickerWidget(
                                   //   initialDateTime: DateTime.now(),
@@ -158,19 +158,20 @@ class SummaryScreen extends StatelessWidget {
                                   //     summaryController.toDate(date);
                                   //   },
                                   // );
-                                  // DatePicker.showDatePicker(
-                                  //   context,
-                                  //   minTime:
-                                  //       DateTime.parse('2022-04-12 00:00:00'),
-                                  //   maxTime: DateTime(DateTime.now().year - 1,
-                                  //       DateTime.now().month + 12, 1),
-                                  //   showTitleActions: true,
-                                  //   onConfirm: (date) {
-                                  //     summaryController.toDate(date);
-                                  //   },
-                                  //   currentTime: DateTime.now(),
-                                  //   locale: LocaleType.en,
-                                  // );
+                                  DatePicker.showDatePicker(
+                                    context,
+                                    minTime: DateTime(
+                                        int.parse(summaryController.year),
+                                        int.parse(summaryController.month),
+                                        int.parse(summaryController.day)),
+                                    maxTime: DateTime.now(),
+                                    showTitleActions: true,
+                                    onConfirm: (date) {
+                                      summaryController.toDate(date);
+                                    },
+                                    currentTime: DateTime.now(),
+                                    locale: LocaleType.en,
+                                  );
                                 },
                                 child: Container(
                                   height: height / 19,
@@ -680,41 +681,41 @@ class Details extends StatelessWidget {
                     SizedBox(
                       height: height / 50,
                     ),
-                    _summaryController.summarydetaildata.value.isNotEmpty
-                        ? Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black.withOpacity(0.12),
-                                ),
-                                borderRadius: BorderRadius.circular(50.0)),
-                            child: SliderButton(
-                              height: 70.0,
-                              radius: 50.0,
-                              dismissible: true,
-                              disable: false,
-                              width: width / 1.2,
-                              buttonColor: DynamicColor().primarycolor,
-                              vibrationFlag: true,
-                              backgroundColor: Colors.white.withOpacity(0.25),
-                              baseColor: Colors.red,
-                              action: () {
-                                Get.back();
-                              },
-                              label: Text(
-                                "Swipe right to export pdf",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Color(0xFFAFAFAF).withOpacity(0.25),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 18),
-                              ),
-                              icon: Icon(
-                                Icons.arrow_forward_ios_sharp,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        : Column(),
+                    // _summaryController.summarydetaildata.value.isNotEmpty
+                    //     ? Container(
+                    //         decoration: BoxDecoration(
+                    //             border: Border.all(
+                    //               color: Colors.black.withOpacity(0.12),
+                    //             ),
+                    //             borderRadius: BorderRadius.circular(50.0)),
+                    //         child: SliderButton(
+                    //           height: 70.0,
+                    //           radius: 50.0,
+                    //           dismissible: true,
+                    //           disable: false,
+                    //           width: width / 1.2,
+                    //           buttonColor: DynamicColor().primarycolor,
+                    //           vibrationFlag: true,
+                    //           backgroundColor: Colors.white.withOpacity(0.25),
+                    //           baseColor: Colors.red,
+                    //           action: () {
+                    //             Get.back();
+                    //           },
+                    //           label: Text(
+                    //             "Swipe right to export pdf",
+                    //             textAlign: TextAlign.center,
+                    //             style: TextStyle(
+                    //                 color: Color(0xFFAFAFAF).withOpacity(0.25),
+                    //                 fontWeight: FontWeight.w400,
+                    //                 fontSize: 18),
+                    //           ),
+                    //           icon: Icon(
+                    //             Icons.arrow_forward_ios_sharp,
+                    //             color: Colors.white,
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : Column(),
                     SizedBox(
                       height: height / 2,
                     ),
