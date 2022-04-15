@@ -8,9 +8,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../../Controller/SummaryController.dart';
+
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
-
+  SummaryController _summaryController = Get.put(SummaryController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -660,44 +662,47 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                             GestureDetector(
                                               onTap: () {
-                                                homeController.clockindate2 =
-                                                    DateTime.now().day;
-                                                var check = BaseUrl.storage
-                                                    .read(
-                                                        "lastAttendanceRecordDate")
-                                                    .toString()
-                                                    .split('-')[2];
+                                                if (BaseUrl.storage
+                                                        .read("status") ==
+                                                    true) {
+                                                  homeController.clockindate2 =
+                                                      DateTime.now().day;
+                                                  var check = BaseUrl.storage
+                                                      .read(
+                                                          "lastAttendanceRecordDate")
+                                                      .toString()
+                                                      .split('/')[0];
 
-                                                if (homeController
-                                                        .clockindate2 ==
-                                                    int.parse(check)) {
-                                                  homeController.scan();
-                                                  homeController.Loading.value =
-                                                      true;
-                                                } else {
-                                                  Get.bottomSheet(
-                                                      ReasonBottom(
-                                                        width: width,
-                                                        height: height,
-                                                      ),
-                                                      elevation: 20.0,
-                                                      enableDrag: false,
-                                                      backgroundColor:
-                                                          Colors.white,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                15.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                15.0),
-                                                      )));
+                                                  if (homeController
+                                                          .clockindate2 ==
+                                                      int.parse(check)) {
+                                                    homeController.scan();
+                                                    homeController
+                                                        .Loading.value = true;
+                                                  } else {
+                                                    Get.bottomSheet(
+                                                        ReasonBottom(
+                                                          width: width,
+                                                          height: height,
+                                                        ),
+                                                        elevation: 20.0,
+                                                        enableDrag: false,
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  15.0),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  15.0),
+                                                        )));
+                                                  }
                                                 }
-
                                                 // homeController.valcheck.val
                                               },
                                               child: DelayedDisplay(

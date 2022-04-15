@@ -275,11 +275,11 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                                               child: Icon(Icons.clear)),
                                                                         ),
                                                                       ),
-                                                                      Image.memory(
-                                                                          base64Decode(_checkPointController
+                                                                      Image.network(
+                                                                          _checkPointController
                                                                               .historyList
                                                                               .value[index]
-                                                                              .image),
+                                                                              .image,
                                                                           fit: BoxFit.cover)
                                                                     ],
                                                                   ));
@@ -295,13 +295,12 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                                     BorderRadius
                                                                         .circular(
                                                                             8.0)),
-                                                            child: Image.memory(
-                                                                base64Decode(
-                                                                    _checkPointController
-                                                                        .historyList
-                                                                        .value[
-                                                                            index]
-                                                                        .image),
+                                                            child: Image.network(
+                                                                _checkPointController
+                                                                    .historyList
+                                                                    .value[
+                                                                        index]
+                                                                    .image,
                                                                 fit: BoxFit
                                                                     .cover)),
                                                       ),

@@ -66,20 +66,13 @@ class CheckPointController extends GetxController
     PdfGraphics graphics = page.graphics;
     document.pageSettings.orientation = PdfPageOrientation.landscape;
     document.pageSettings.margins.all = 10;
-    //Add a new page and draw text
-    // document.pages.add().graphics.drawString(
-    //     'Hello World!', PdfStandardFont(PdfFontFamily.helvetica, 20),
-    //     brush: PdfSolidBrush(PdfColor(0, 0, 0)),
-    //     bounds: Rect.fromLTWH(0, 0, 500, 50));
-
-    //Add grid
     grid.columns.add(count: 4);
     grid.headers.add(1);
     PdfGridRow header = grid.headers[0];
     header.cells[0].value = 'Time';
     header.cells[1].value = 'Site Name';
     header.cells[2].value = 'Notes';
-    // header.cells[3].value = 'Image';
+    header.cells[3].value = 'Image';
 
 //Creates the header style
     PdfGridCellStyle headerStyle = PdfGridCellStyle();
@@ -88,8 +81,6 @@ class CheckPointController extends GetxController
     headerStyle.textBrush = PdfBrushes.white;
     headerStyle.font = PdfStandardFont(PdfFontFamily.timesRoman, 14,
         style: PdfFontStyle.regular);
-
-//Adds cell customizations
     for (int i = 0; i < header.cells.count; i++) {
       if (i == 0 || i == 1) {
         header.cells[i].stringFormat = PdfStringFormat(
@@ -104,20 +95,28 @@ class CheckPointController extends GetxController
     }
     PdfBrush solidBrush = PdfSolidBrush(PdfColor(126, 151, 173));
     Rect bounds = Rect.fromLTWH(0, 160, graphics.clientSize.width, 30);
-
-//Draws a rectangle to place the heading in that region
     graphics.drawRectangle(brush: solidBrush, bounds: bounds);
-
-//Creates a font for adding the heading in the page
     PdfFont subHeadingFont = PdfStandardFont(PdfFontFamily.timesRoman, 14);
 //Add rows to grid
+
+    for (var val in historyList) {
+      PdfTextWebLink(
+          url: val.image,
+          text: 'Download',
+          font: PdfStandardFont(PdfFontFamily.timesRoman, 14),
+          brush: PdfSolidBrush(PdfColor(126, 155, 203)),
+          pen: PdfPens.blue,
+          format: PdfStringFormat(
+              alignment: PdfTextAlignment.center,
+              lineAlignment: PdfVerticalAlignment.middle));
+    }
     PdfGridRow row;
     for (var val in historyList) {
       row = grid.rows.add();
       row.cells[0].value = val.time;
       row.cells[1].value = val.siteName;
       row.cells[2].value = val.notes;
-      // row.cells[3].value = PdfBitmap.fromBase64String(val.image);
+      row.cells[3].value = val.image;
 
 //Set padding for grid cells
       grid.style.cellPadding =
@@ -170,58 +169,6 @@ class CheckPointController extends GetxController
         subHeadingFont,
         brush: PdfSolidBrush(PdfColor(126, 155, 203)),
         bounds: Rect.fromLTWH(520, gridResult.bounds.bottom + 30, 0, 0));
-    //
-    // gridResult.page.graphics.drawString(
-    //     '${DateTime.now().day.toString() + "-" + DateTime.now().month.toString()}',
-    //     subHeadingFont,
-    //     brush: PdfBrushes.black,
-    //     bounds: Rect.fromLTWH(520, gridResult.bounds.bottom + 60, 0, 0));
-
-    //end
-    // grid.columns.add(count: 3);
-    //
-    // //Add header to the grid
-    // grid.headers.add(1);
-    // grid.headers.applyStyle(PdfGridCellStyle(
-    //     backgroundBrush: PdfBrushes.azure,
-    //     textBrush: PdfBrushes.black,
-    //     cellPadding: PdfPaddings(left: 3, right: 3, top: 6, bottom: 6),
-    //     font: PdfStandardFont(PdfFontFamily.helvetica, 30)));
-    // //Add the rows to the grid
-    // PdfGridRow header = grid.headers[0];
-    // header.cells[0].value = 'Time';
-    // header.cells[1].value = 'Site Name';
-    // header.cells[2].value = 'Notes';
-    // // header.cells[4].value = 'image';
-    //
-    // //Add rows to grid
-    // PdfGridRow row;
-    //
-    // PdfPage page = document.pages.add();
-    //
-    // for (var val in historyList) {
-    //   row = grid.rows.add();
-    //   row.cells[0].value = val.time;
-    //   row.cells[1].value = val.siteName;
-    //   row.cells[2].value = val.notes;
-    //   // row.cells[3].value = page.graphics.drawImage(
-    //   //     PdfBitmap.fromBase64String(val.image),
-    //   //     Rect.fromLTWH(176, 0, 390, 400));
-    //
-    //   page.graphics.drawImage(PdfBitmap.fromBase64String(val.image),
-    //       Rect.fromLTWH(176, 0, 390, 400));
-    // }
-    //
-    // grid.style = PdfGridStyle(
-    //     cellPadding: PdfPaddings(left: 2, right: 3, top: 4, bottom: 5),
-    //     backgroundBrush: PdfBrushes.lightCyan,
-    //     textBrush: PdfBrushes.black,
-    //     font: PdfStandardFont(PdfFontFamily.timesRoman, 25));
-    //
-    // //Draw the grid
-    // grid.draw(
-    //     page: document.pages.add(), bounds: const Rect.fromLTWH(0, 0, 0, 0));
-    //Save the document
     List<int> bytes = document.save();
     final directory = await getApplicationDocumentsDirectory();
 
@@ -322,7 +269,10 @@ class CheckPointController extends GetxController
             "Checkpoints ",
             'Successfully Added',
           );
-          homeController.clockout(check: checkboxvalue);
+          if (checkboxvalue.value == true) {
+            homeController.clockout(check: checkboxvalue);
+          }
+
           // Get.back();
         } else {
           Loading.value = false;
@@ -485,7 +435,7 @@ class CheckPointController extends GetxController
     var image = await _picker.pickImage(
         source: ImageSource.camera,
         maxHeight: 1024,
-        imageQuality: 10,
+        imageQuality: 60,
         preferredCameraDevice: CameraDevice.front,
         maxWidth: 1024);
     if (image != null) {

@@ -59,14 +59,14 @@ class SummaryController extends GetxController
         decription: 'If somehow you missed to win the'
             'weekly target then there will be a'
             'deduction.',
-        point: '+10'),
+        point: '-10'),
     PointsModel(
         Title: 'Absent Day',
         color: Color(0xFFE61756),
         textcolor: Colors.white.withOpacity(0.80),
         decription: 'Absents other than sick leave will mark'
             'a deduction.',
-        point: '+10'),
+        point: '-10'),
   ];
   // var message = ''.obs;
   List months = [
@@ -114,6 +114,7 @@ class SummaryController extends GetxController
   }
 
   summaryAnalytics() async {
+    Loading.value = true;
     weekupdate.value = 0;
     weeklist.value.clear();
     summarydata.value.clear();
@@ -167,22 +168,26 @@ class SummaryController extends GetxController
   }
 
   summaryDetails() async {
+    Loading.value = true;
     summarydetaildata.value.clear();
     var response = await API().Summarydetail(
-        start: '1' +
-            '/' +
-            todate.value.month.toString() +
-            '/' +
-            todate.value.year.toString(),
-        end: '${DateTime(todate.value.year, todate.value.month + 1, 0).day}' +
-            '/' +
-            todate.value.month.toString() +
-            '/' +
-            todate.value.year.toString());
+        start:
+            '${todate.value.month == DateTime.now().month && todate.value.year == DateTime.now().year ? day : "1"}' +
+                '/' +
+                todate.value.month.toString() +
+                '/' +
+                todate.value.year.toString(),
+        end:
+            '${todate.value.month == DateTime.now().month ? DateTime.now().day : DateTime(todate.value.year, todate.value.month + 1, 0).day}' +
+                '/' +
+                todate.value.month.toString() +
+                '/' +
+                todate.value.year.toString());
     if (response.statusCode == 200) {
       Loading.value = false;
       response = await SummaryDetailsModel.fromJson(response.data);
       summarydetaildata.value = response.dailyDetails;
+      summarydetaildata.value.removeWhere((item) => item.dayStatus == 'Off');
     } else {
       Loading.value = false;
       // Get.snackbar("Error ", response.data['message'].toString(),
@@ -202,16 +207,13 @@ class SummaryController extends GetxController
     selectedmonths.value =
         months[todate.value.month - 1] + "-" + todate.value.year.toString();
     print(selectedmonths.value);
-    summaryAnalytics();
-    summaryDetails();
     day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
     month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
     year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
     mindate = DateFormat('dd-MM-y').parse(day + '-' + month + '-' + year);
+    summaryAnalytics();
+    summaryDetails();
 
-    print(mindate.runtimeType);
-    // mindate = tempDate;
-    print(mindate);
     update();
   }
 

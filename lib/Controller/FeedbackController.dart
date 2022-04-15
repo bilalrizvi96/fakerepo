@@ -54,6 +54,7 @@ class FeedbackController extends GetxController {
           Loading.value = false;
           if (check == false) {
             namecontroller.clear();
+            faceImage = null;
             Get.back();
           }
           feedbackcontroller.clear();

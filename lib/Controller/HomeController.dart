@@ -16,6 +16,7 @@ import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../Component/DynamicColor.dart';
+import 'SummaryController.dart';
 
 class HomeController extends GetxController {
   var selectedyear = DateTime.now().year.obs;
@@ -196,11 +197,11 @@ class HomeController extends GetxController {
 
           BaseUrl.storage.write("status", true);
           BaseUrl.storage.write("clockin", BaseUrl.clockin);
-          var dates = DateTime.now().year.toString() +
-              "-" +
+          var dates = DateTime.now().day.toString() +
+              "/" +
               DateTime.now().month.toString() +
-              "-" +
-              DateTime.now().day.toString();
+              "/" +
+              DateTime.now().year.toString();
           BaseUrl.storage.write("lastAttendanceRecordDate", dates);
 
           // Get.back();
@@ -327,7 +328,6 @@ class HomeController extends GetxController {
 
         url.value = response.data['response']['link'];
         BaseUrl.url = url.value;
-        // print(updateController.url);
       } else {
         scan();
       }

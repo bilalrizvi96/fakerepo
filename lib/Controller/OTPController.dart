@@ -11,7 +11,7 @@ class OTPController extends GetxController {
   var otptextcontroller = TextEditingController();
   Timer? _timer;
   var start = 30.obs;
-  String _commingSms = 'Unknown';
+
   submit() async {
     code = BaseUrl.storage.read("code");
 

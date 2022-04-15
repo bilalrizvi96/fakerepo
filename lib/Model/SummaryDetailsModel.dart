@@ -90,6 +90,7 @@ class DailyDetail {
     this.empCode,
     this.name,
     this.date,
+    this.mobileDate,
     this.dayStatus,
     this.checkInDate,
     this.checkInLocation,
@@ -108,6 +109,7 @@ class DailyDetail {
   var name;
   var dayInWords;
   var date;
+  var mobileDate;
   var dayStatus;
   var checkInDate;
   var checkInLocation;
@@ -124,6 +126,7 @@ class DailyDetail {
         empCode: json["EmpCode"],
         name: json["Name"],
         date: json["Date"],
+        mobileDate: json["mobileDate"],
         dayStatus: json["dayStatus"],
         checkInDate: json["CheckIn_date"],
         checkInLocation: json["CheckIn_location"],
@@ -142,6 +145,7 @@ class DailyDetail {
         "EmpCode": empCode,
         "Name": name,
         "Date": date,
+        "mobileDate": mobileDate,
         "dayStatus": dayStatus,
         "CheckIn_date": checkInDate,
         "CheckIn_location": checkInLocation,

@@ -17,9 +17,9 @@ class SummaryScreen extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  SummaryController summaryController = Get.put(SummaryController());
   @override
   Widget build(BuildContext context) {
+    SummaryController summaryController = Get.put(SummaryController());
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -459,8 +459,24 @@ class SummaryScreen extends StatelessWidget {
                             child: TabBarView(
                               controller: summaryController.tabController,
                               children: [
-                                Analytics(width: width, height: height),
-                                Details(height: height, width: width),
+                                summaryController.Loading.value != true
+                                    ? Analytics(width: width, height: height)
+                                    : Center(
+                                        child: Image.asset(
+                                          "assets/1.gif",
+                                          height: 200,
+                                          width: 200,
+                                        ),
+                                      ),
+                                summaryController.Loading.value != true
+                                    ? Details(height: height, width: width)
+                                    : Center(
+                                        child: Image.asset(
+                                          "assets/1.gif",
+                                          height: 200,
+                                          width: 200,
+                                        ),
+                                      ),
                               ],
                             ),
                           ),
@@ -485,9 +501,10 @@ class Details extends StatelessWidget {
 
   final double height;
   final double width;
-  SummaryController _summaryController = Get.put(SummaryController());
+
   @override
   Widget build(BuildContext context) {
+    SummaryController _summaryController = Get.put(SummaryController());
     return Padding(
       padding: EdgeInsets.only(
         right: 5.0,
@@ -520,7 +537,24 @@ class Details extends StatelessWidget {
                                   color: _summaryController.summarydetaildata
                                               .value[index].dayStatus !=
                                           "Absent"
-                                      ? Color(0xFFF2F2F2)
+                                      ? _summaryController.summarydetaildata
+                                                      .value[index].mobileDate
+                                                      .toString()
+                                                      .split('-')[0] ==
+                                                  DateTime.now()
+                                                      .day
+                                                      .toString() &&
+                                              _summaryController
+                                                      .summarydetaildata
+                                                      .value[index]
+                                                      .mobileDate
+                                                      .toString()
+                                                      .split('-')[1] ==
+                                                  DateTime.now()
+                                                      .month
+                                                      .toString()
+                                          ? Color(0xFF3C70BF)
+                                          : Color(0xFFF2F2F2)
                                       : Color(0xFFE61756),
                                   borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(35.0),
@@ -562,7 +596,7 @@ class Details extends StatelessWidget {
                                               height: height / 50,
                                             ),
                                             Text(
-                                              '${index + 1}',
+                                              '${_summaryController.summarydetaildata.value[index].date.toString().split('-')[0]}',
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w600,
                                                   letterSpacing: 0.5,
@@ -605,7 +639,28 @@ class Details extends StatelessWidget {
                                                           .value[index]
                                                           .dayStatus !=
                                                       "Absent"
-                                                  ? Colors.black
+                                                  ? _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .mobileDate
+                                                                  .toString()
+                                                                  .split(
+                                                                      '-')[0] ==
+                                                              DateTime.now()
+                                                                  .day
+                                                                  .toString() &&
+                                                          _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .mobileDate
+                                                                  .toString()
+                                                                  .split(
+                                                                      '-')[1] ==
+                                                              DateTime.now()
+                                                                  .month
+                                                                  .toString()
+                                                      ? Colors.white
+                                                      : Colors.black
                                                   : Colors.white,
                                               fontSize: width / 27),
                                         ),
@@ -622,7 +677,28 @@ class Details extends StatelessWidget {
                                                           .value[index]
                                                           .dayStatus !=
                                                       "Absent"
-                                                  ? Color(0XFF5B5B5B)
+                                                  ? _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .mobileDate
+                                                                  .toString()
+                                                                  .split(
+                                                                      '-')[0] ==
+                                                              DateTime.now()
+                                                                  .day
+                                                                  .toString() &&
+                                                          _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .mobileDate
+                                                                  .toString()
+                                                                  .split(
+                                                                      '-')[1] ==
+                                                              DateTime.now()
+                                                                  .month
+                                                                  .toString()
+                                                      ? Colors.white
+                                                      : Colors.black
                                                   : Colors.white,
                                               fontSize: width / 25),
                                         ),
@@ -647,7 +723,28 @@ class Details extends StatelessWidget {
                                                           .value[index]
                                                           .dayStatus !=
                                                       "Absent"
-                                                  ? Colors.black
+                                                  ? _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .mobileDate
+                                                                  .toString()
+                                                                  .split(
+                                                                      '-')[0] ==
+                                                              DateTime.now()
+                                                                  .day
+                                                                  .toString() &&
+                                                          _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .mobileDate
+                                                                  .toString()
+                                                                  .split(
+                                                                      '-')[1] ==
+                                                              DateTime.now()
+                                                                  .month
+                                                                  .toString()
+                                                      ? Colors.white
+                                                      : Colors.black
                                                   : Colors.white,
                                               fontSize: width / 27),
                                         ),
@@ -664,7 +761,28 @@ class Details extends StatelessWidget {
                                                           .value[index]
                                                           .dayStatus !=
                                                       "Absent"
-                                                  ? Color(0XFF5B5B5B)
+                                                  ? _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .mobileDate
+                                                                  .toString()
+                                                                  .split(
+                                                                      '-')[0] ==
+                                                              DateTime.now()
+                                                                  .day
+                                                                  .toString() &&
+                                                          _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .mobileDate
+                                                                  .toString()
+                                                                  .split(
+                                                                      '-')[1] ==
+                                                              DateTime.now()
+                                                                  .month
+                                                                  .toString()
+                                                      ? Colors.white
+                                                      : Colors.black
                                                   : Colors.white,
                                               fontSize: width / 25),
                                         ),
@@ -737,13 +855,13 @@ class Analytics extends StatelessWidget {
 
   final double width;
   final double height;
-  SummaryController _summaryController = Get.put(SummaryController());
 
   @override
   Widget build(BuildContext context) {
+    SummaryController _summaryController = Get.put(SummaryController());
     return Padding(
       padding: EdgeInsets.only(
-        right: 8.0,
+        right: 5.0,
         left: 8.0,
       ),
       child: SizedBox(
@@ -773,7 +891,7 @@ class Analytics extends StatelessWidget {
                                 height: height / 5,
                                 alignment: Alignment.center,
                                 padding: EdgeInsets.only(
-                                    top: 30, right: 25.0, left: 25.0),
+                                    top: 30, right: 22.0, left: 25.0),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20.0),
                                     image: DecorationImage(
