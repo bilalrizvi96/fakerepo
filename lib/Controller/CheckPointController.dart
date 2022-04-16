@@ -305,8 +305,8 @@ class CheckPointController extends GetxController
       mainhistorylist.value = historyList.value;
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['error'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
+      // Get.snackbar("Error ", response.data['error'].toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }

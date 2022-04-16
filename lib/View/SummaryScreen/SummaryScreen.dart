@@ -660,7 +660,13 @@ class Details extends StatelessWidget {
                                                                   .month
                                                                   .toString()
                                                       ? Colors.white
-                                                      : Colors.black
+                                                      : _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .dayStatus ==
+                                                              'Off'
+                                                          ? Colors.black12
+                                                          : Colors.black
                                                   : Colors.white,
                                               fontSize: width / 27),
                                         ),
@@ -698,7 +704,13 @@ class Details extends StatelessWidget {
                                                                   .month
                                                                   .toString()
                                                       ? Colors.white
-                                                      : Colors.black
+                                                      : _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .dayStatus ==
+                                                              'Off'
+                                                          ? Colors.black12
+                                                          : Colors.black
                                                   : Colors.white,
                                               fontSize: width / 25),
                                         ),
@@ -744,7 +756,13 @@ class Details extends StatelessWidget {
                                                                   .month
                                                                   .toString()
                                                       ? Colors.white
-                                                      : Colors.black
+                                                      : _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .dayStatus ==
+                                                              'Off'
+                                                          ? Colors.black12
+                                                          : Colors.black
                                                   : Colors.white,
                                               fontSize: width / 27),
                                         ),
@@ -782,7 +800,13 @@ class Details extends StatelessWidget {
                                                                   .month
                                                                   .toString()
                                                       ? Colors.white
-                                                      : Colors.black
+                                                      : _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .dayStatus ==
+                                                              'Off'
+                                                          ? Colors.black12
+                                                          : Colors.black
                                                   : Colors.white,
                                               fontSize: width / 25),
                                         ),

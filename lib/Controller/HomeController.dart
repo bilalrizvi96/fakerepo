@@ -367,9 +367,9 @@ class HomeController extends GetxController {
           BaseUrl.clockout = outputDate1.toString();
           BaseUrl.storage.write("clockout", BaseUrl.clockout);
           var dates = date.year.toString() +
-              '-' +
+              '/' +
               date.month.toString() +
-              '-' +
+              '/' +
               date.day.toString();
           BaseUrl.storage.write("lastAttendanceRecordDate", dates);
           print(BaseUrl.storage.read("lastAttendanceRecordDate"));

@@ -305,10 +305,13 @@ class API {
       Map data = {
         "location": latlng,
         "siteId": siteId,
-        "date": date,
+        "date": date.toString().replaceAll('/', '-'),
         "isCheckoutForget": true,
         "reason": reason,
-        "missedCheckoutDate": BaseUrl.storage.read("lastAttendanceRecordDate"),
+        "missedCheckoutDate": BaseUrl.storage
+            .read("lastAttendanceRecordDate")
+            .toString()
+            .replaceAll('/', '-'),
         "points": BaseUrl.storage.read('points')
       };
       print(data);
