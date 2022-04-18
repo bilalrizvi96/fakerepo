@@ -41,9 +41,8 @@ dependencies:
   dots_indicator: ^2.0.0
   delayed_display: ^2.0.0
   flutter_datetime_picker: ^1.5.1
-
   dio: ^4.0.1
-  barcode_scan:
+  barcode_scan2:
   get_storage: ^2.0.3
   geolocator: ^7.7.1
   location: ^4.3.0

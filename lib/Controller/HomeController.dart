@@ -1,11 +1,12 @@
 import 'package:attendencesystem/Model/SitesModel.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../API/BaseURl.dart';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
-import 'package:barcode_scan/barcode_scan.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -88,7 +89,7 @@ class HomeController extends GetxController {
                   "${title.toString()}",
                   style: GoogleFonts.poppins(
                       color: Color(0xFFEE696A),
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.bold,
                       fontSize: 25),
                 ),
                 SizedBox(
@@ -100,11 +101,11 @@ class HomeController extends GetxController {
                     '${message} ',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w300, fontSize: 12),
+                        fontWeight: FontWeight.w500, fontSize: 12),
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
               ],
             ),
@@ -132,9 +133,11 @@ class HomeController extends GetxController {
       scanResult = result;
       sites.value = scanResult!.rawContent;
       if (sites.value != "") {
-        BaseUrl.storage.read("status") == false
-            ? clockin()
-            : clockout(check: false);
+        if (BaseUrl.storage.read("status") == false) {
+          clockin();
+        } else {
+          clockout(check: false);
+        }
         // Get.toNamed('/attendance');
       } else {
         Loading.value = false;
@@ -329,7 +332,7 @@ class HomeController extends GetxController {
         url.value = response.data['response']['link'];
         BaseUrl.url = url.value;
       } else {
-        scan();
+        clockin();
       }
       // checks();
     } else {

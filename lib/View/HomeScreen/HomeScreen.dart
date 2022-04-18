@@ -567,7 +567,7 @@ class HomeScreen extends StatelessWidget {
                                                     false) {
                                                   homeController.Loading.value =
                                                       true;
-                                                  homeController.checkUpdate();
+                                                  homeController.scan();
                                                 }
 
                                                 // homeController.valcheck.value='clockin';
