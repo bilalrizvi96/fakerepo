@@ -62,6 +62,7 @@ class User {
     this.firstAttendanceRecordDate,
     this.checkIn,
     this.checkOut,
+    this.dateForMissingCheckout,
     this.checkOutMissing,
     this.presentDays,
     this.absentDays,
@@ -98,6 +99,7 @@ class User {
   var firstAttendanceRecordDate;
   var checkIn;
   var checkOut;
+  var dateForMissingCheckout;
   var checkOutMissing;
   var presentDays;
   var absentDays;
@@ -134,6 +136,7 @@ class User {
         firstAttendanceRecordDate: json["firstAttendanceRecordDate"],
         checkIn: json["checkIn"],
         checkOut: json["checkOut"],
+        dateForMissingCheckout: json["dateForMissingCheckout"],
         checkOutMissing: json["checkOutMissing"],
         presentDays: json["present_days"],
         absentDays: json["absent_days"],
@@ -171,6 +174,7 @@ class User {
         "firstAttendanceRecordDate": firstAttendanceRecordDate,
         "checkIn": checkIn,
         "checkOut": checkOut,
+        "checkOut": dateForMissingCheckout,
         "checkOutMissing": checkOutMissing,
         "present_days": presentDays,
         "absent_days": absentDays,

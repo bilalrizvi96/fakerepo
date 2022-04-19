@@ -159,6 +159,8 @@ class SignInEmployeeController extends GetxController {
           response.user[0].firstAttendanceRecordDate);
       BaseUrl.storage.write("lastAttendanceRecordDate",
           response.user[0].lastAttendanceRecordDate);
+      BaseUrl.storage.write(
+          "dateForMissingCheckout", response.user[0].dateForMissingCheckout);
 
       Get.snackbar("Login ", "Login Successfully");
       Get.offAllNamed('/home');

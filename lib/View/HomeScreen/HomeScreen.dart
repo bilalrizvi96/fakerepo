@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.only(
-                                              right: 8.0, left: 8.0),
+                                              right: 6.0, left: 10.0),
                                           child: Icon(
                                             Icons.location_on_outlined,
                                             size: width / 16,
@@ -89,10 +89,14 @@ class HomeScreen extends StatelessWidget {
                                     BaseUrl.storage.write("token", "out");
                                     Get.offAllNamed('/signinemp');
                                   },
-                                  child: Icon(
-                                    Icons.logout,
-                                    size: width / 16,
-                                    color: Colors.red,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 2.0, left: 10.0),
+                                    child: Icon(
+                                      Icons.logout,
+                                      size: width / 16,
+                                      color: Colors.red,
+                                    ),
                                   ),
                                 ),
                               ],

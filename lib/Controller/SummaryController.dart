@@ -171,7 +171,7 @@ class SummaryController extends GetxController
     Loading.value = true;
     summarydetaildata.value.clear();
     var response = await API().Summarydetail(
-        start: '${todate.value.month == month ? day : "1"}' +
+        start: '1' +
             '/' +
             todate.value.month.toString() +
             '/' +
@@ -186,7 +186,8 @@ class SummaryController extends GetxController
       Loading.value = false;
       response = await SummaryDetailsModel.fromJson(response.data);
       summarydetaildata.value = response.dailyDetails;
-      // summarydetaildata.value.removeWhere((item) => item.dayStatus == 'Off');
+      summarydetaildata.value.removeWhere((item) =>
+          int.parse(item.mobileDate.toString().split('-')[0]) < int.parse(day));
     } else {
       Loading.value = false;
       // Get.snackbar("Error ", response.data['message'].toString(),

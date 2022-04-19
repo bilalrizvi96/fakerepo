@@ -53,10 +53,11 @@ class FeedbackController extends GetxController {
         if (response.statusCode == 201) {
           Loading.value = false;
           if (check == false) {
-            namecontroller.clear();
+            // namecontroller.clear();
             faceImage = null;
             Get.back();
           }
+          faceImage = null;
           feedbackcontroller.clear();
           Get.snackbar(
             "Feedback",
@@ -96,7 +97,7 @@ class FeedbackController extends GetxController {
         maxWidth: 1024);
     if (image != null) {
       faceImage = image;
-    } else {}
+    }
     update();
   }
 }

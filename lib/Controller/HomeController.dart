@@ -16,9 +16,6 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../Component/DynamicColor.dart';
-import 'SummaryController.dart';
-
 class HomeController extends GetxController {
   var selectedyear = DateTime.now().year.obs;
   var selectedmonth = DateTime.now().month.obs;
@@ -134,7 +131,7 @@ class HomeController extends GetxController {
       sites.value = scanResult!.rawContent;
       if (sites.value != "") {
         if (BaseUrl.storage.read("status") == false) {
-          clockin();
+          checkUpdate();
         } else {
           clockout(check: false);
         }
@@ -324,11 +321,9 @@ class HomeController extends GetxController {
   checkUpdate() async {
     var response = await API().CheckUpdate();
     if (response.statusCode == 200) {
-      print('bilal');
       updates.value = response.data['response']['updateAvailability'];
       if (updates.value == true) {
         Get.offAllNamed('/updatescreen');
-
         url.value = response.data['response']['link'];
         BaseUrl.url = url.value;
       } else {
@@ -347,7 +342,7 @@ class HomeController extends GetxController {
 
     var date = DateTime.now();
     var outputFormat = DateFormat(
-        "${BaseUrl.storage.read("lastAttendanceRecordDate")}'T'${BaseUrl.storage.read("endTiming").toString().split(' ')[0]}:ss.SSS'Z'");
+        "${BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[2] + "-" + BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[1] + "-" + BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[0]}'T'${BaseUrl.storage.read("endTiming").toString().split(' ')[0]}:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
@@ -365,6 +360,7 @@ class HomeController extends GetxController {
             date: outputDate);
         if (response.statusCode == 200) {
           BaseUrl.storage.write("status", false);
+          Get.back();
           Loading.value = false;
           reasoncontroller.clear();
           BaseUrl.clockout = outputDate1.toString();

@@ -65,13 +65,34 @@ class SummaryScreen extends StatelessWidget {
                               Spacer(),
                               GestureDetector(
                                 onTap: () {
+                                  summaryController.init();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 6.0, left: 10.0),
+                                  child: Icon(
+                                    Icons.refresh_sharp,
+                                    size: width / 16,
+                                    color: DynamicColor().primarycolor,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: width / 50,
+                              ),
+                              GestureDetector(
+                                onTap: () {
                                   BaseUrl.storage.write("token", "out");
                                   Get.offAllNamed('/signinemp');
                                 },
-                                child: Icon(
-                                  Icons.logout,
-                                  size: width / 16,
-                                  color: Color(0xFFEC4A22),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 2.0, left: 10.0),
+                                  child: Icon(
+                                    Icons.logout,
+                                    size: width / 16,
+                                    color: Color(0xFFEC4A22),
+                                  ),
                                 ),
                               ),
                             ],
@@ -518,308 +539,361 @@ class Details extends StatelessWidget {
               builder: (_) {
                 return Column(
                   children: [
-                    ListView.builder(
-                        itemCount:
-                            _summaryController.summarydetaildata.value.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (_, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                                right: 15.0, left: 15.0, top: 10, bottom: 10),
-                            child: DelayedDisplay(
-                              fadeIn: true,
-                              fadingDuration: Duration(milliseconds: 1200),
-                              child: Container(
-                                height: height / 5.5,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xFFF2F2F2)),
-                                  color: _summaryController.summarydetaildata
-                                              .value[index].dayStatus !=
-                                          "Absent"
-                                      ? _summaryController.summarydetaildata
-                                                      .value[index].mobileDate
-                                                      .toString()
-                                                      .split('-')[0] ==
-                                                  DateTime.now()
-                                                      .day
-                                                      .toString() &&
-                                              _summaryController
-                                                      .summarydetaildata
-                                                      .value[index]
-                                                      .mobileDate
-                                                      .toString()
-                                                      .split('-')[1] ==
-                                                  DateTime.now()
-                                                      .month
-                                                      .toString()
-                                          ? Color(0xFF3C70BF)
-                                          : Color(0xFFF2F2F2)
-                                      : Color(0xFFE61756),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(35.0),
-                                    topLeft: Radius.circular(35.0),
-                                    bottomLeft: Radius.circular(35.0),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: width / 35,
+                    _summaryController.summarydetaildata.value.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: _summaryController
+                                .summarydetaildata.value.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    right: 15.0,
+                                    left: 15.0,
+                                    top: 10,
+                                    bottom: 10),
+                                child: DelayedDisplay(
+                                  fadeIn: true,
+                                  fadingDuration: Duration(milliseconds: 1200),
+                                  child: Container(
+                                    height: height / 5.5,
+                                    decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Color(0xFFF2F2F2)),
+                                      color: _summaryController
+                                                  .summarydetaildata
+                                                  .value[index]
+                                                  .dayStatus !=
+                                              "Absent"
+                                          ? _summaryController
+                                                          .summarydetaildata
+                                                          .value[index]
+                                                          .mobileDate
+                                                          .toString()
+                                                          .split('-')[0] ==
+                                                      DateTime.now()
+                                                          .day
+                                                          .toString() &&
+                                                  _summaryController
+                                                          .summarydetaildata
+                                                          .value[index]
+                                                          .mobileDate
+                                                          .toString()
+                                                          .split('-')[1] ==
+                                                      DateTime.now()
+                                                          .month
+                                                          .toString()
+                                              ? Color(0xFF3C70BF)
+                                              : Color(0xFFF2F2F2)
+                                          : Color(0xFFE61756),
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(35.0),
+                                        topLeft: Radius.circular(35.0),
+                                        bottomLeft: Radius.circular(35.0),
+                                      ),
                                     ),
-                                    Container(
-                                      width: width / 4.5,
-                                      height: height / 7.5,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(35.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.grey
-                                                    .withOpacity(0.30),
-                                                blurRadius: 12,
-                                                spreadRadius: 5,
-                                                offset: Offset(0, 1))
-                                          ],
-                                          color: Colors.white),
-                                      child: SingleChildScrollView(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        child: Column(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: width / 35,
+                                        ),
+                                        Container(
+                                          width: width / 4.5,
+                                          height: height / 7.5,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(35.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.30),
+                                                    blurRadius: 12,
+                                                    spreadRadius: 5,
+                                                    offset: Offset(0, 1))
+                                              ],
+                                              color: Colors.white),
+                                          child: SingleChildScrollView(
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: height / 50,
+                                                ),
+                                                Text(
+                                                  '${_summaryController.summarydetaildata.value[index].date.toString().split('-')[0]}',
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      letterSpacing: 0.5,
+                                                      color: Colors.black,
+                                                      fontSize: width / 22),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 50,
+                                                ),
+                                                Text(
+                                                  '${_summaryController.summarydetaildata.value[index].dayInWords}',
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      letterSpacing: 0.5,
+                                                      color: Colors.black,
+                                                      fontSize: width / 21),
+                                                ),
+                                                SizedBox(
+                                                  height: height / 50,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
+                                            Spacer(),
+                                            Text(
+                                              'Clock In',
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.bold,
+                                                  letterSpacing: 0.5,
+                                                  color: _summaryController
+                                                              .summarydetaildata
+                                                              .value[index]
+                                                              .dayStatus !=
+                                                          "Absent"
+                                                      ? _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .mobileDate
+                                                                          .toString()
+                                                                          .split(
+                                                                              '-')[
+                                                                      0] ==
+                                                                  DateTime.now()
+                                                                      .day
+                                                                      .toString() &&
+                                                              _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .mobileDate
+                                                                          .toString()
+                                                                          .split(
+                                                                              '-')[
+                                                                      1] ==
+                                                                  DateTime.now()
+                                                                      .month
+                                                                      .toString()
+                                                          ? Colors.white
+                                                          : _summaryController
+                                                                      .summarydetaildata
+                                                                      .value[
+                                                                          index]
+                                                                      .dayStatus ==
+                                                                  'Off'
+                                                              ? Colors.black12
+                                                              : Colors.black
+                                                      : Colors.white,
+                                                  fontSize: width / 27),
+                                            ),
                                             SizedBox(
                                               height: height / 50,
                                             ),
                                             Text(
-                                              '${_summaryController.summarydetaildata.value[index].date.toString().split('-')[0]}',
+                                              '${_summaryController.summarydetaildata.value[index].checkInDate}',
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w600,
                                                   letterSpacing: 0.5,
-                                                  color: Colors.black,
-                                                  fontSize: width / 22),
+                                                  color: _summaryController
+                                                              .summarydetaildata
+                                                              .value[index]
+                                                              .dayStatus !=
+                                                          "Absent"
+                                                      ? _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .mobileDate
+                                                                          .toString()
+                                                                          .split(
+                                                                              '-')[
+                                                                      0] ==
+                                                                  DateTime.now()
+                                                                      .day
+                                                                      .toString() &&
+                                                              _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .mobileDate
+                                                                          .toString()
+                                                                          .split(
+                                                                              '-')[
+                                                                      1] ==
+                                                                  DateTime.now()
+                                                                      .month
+                                                                      .toString()
+                                                          ? Colors.white
+                                                          : _summaryController
+                                                                      .summarydetaildata
+                                                                      .value[
+                                                                          index]
+                                                                      .dayStatus ==
+                                                                  'Off'
+                                                              ? Colors.black12
+                                                              : Colors.black
+                                                      : Colors.white,
+                                                  fontSize: width / 25),
                                             ),
-                                            SizedBox(
-                                              height: height / 50,
-                                            ),
-                                            Text(
-                                              '${_summaryController.summarydetaildata.value[index].dayInWords}',
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w600,
-                                                  letterSpacing: 0.5,
-                                                  color: Colors.black,
-                                                  fontSize: width / 21),
-                                            ),
-                                            SizedBox(
-                                              height: height / 50,
-                                            ),
+                                            Spacer(),
                                           ],
                                         ),
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
                                         Spacer(),
-                                        Text(
-                                          'Clock In',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.bold,
-                                              letterSpacing: 0.5,
-                                              color: _summaryController
-                                                          .summarydetaildata
-                                                          .value[index]
-                                                          .dayStatus !=
-                                                      "Absent"
-                                                  ? _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .mobileDate
-                                                                  .toString()
-                                                                  .split(
-                                                                      '-')[0] ==
-                                                              DateTime.now()
-                                                                  .day
-                                                                  .toString() &&
-                                                          _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .mobileDate
-                                                                  .toString()
-                                                                  .split(
-                                                                      '-')[1] ==
-                                                              DateTime.now()
-                                                                  .month
-                                                                  .toString()
-                                                      ? Colors.white
-                                                      : _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .dayStatus ==
-                                                              'Off'
-                                                          ? Colors.black12
-                                                          : Colors.black
-                                                  : Colors.white,
-                                              fontSize: width / 27),
-                                        ),
-                                        SizedBox(
-                                          height: height / 50,
-                                        ),
-                                        Text(
-                                          '${_summaryController.summarydetaildata.value[index].checkInDate}',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              letterSpacing: 0.5,
-                                              color: _summaryController
-                                                          .summarydetaildata
-                                                          .value[index]
-                                                          .dayStatus !=
-                                                      "Absent"
-                                                  ? _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .mobileDate
-                                                                  .toString()
-                                                                  .split(
-                                                                      '-')[0] ==
-                                                              DateTime.now()
-                                                                  .day
-                                                                  .toString() &&
-                                                          _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .mobileDate
-                                                                  .toString()
-                                                                  .split(
-                                                                      '-')[1] ==
-                                                              DateTime.now()
-                                                                  .month
-                                                                  .toString()
-                                                      ? Colors.white
-                                                      : _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .dayStatus ==
-                                                              'Off'
-                                                          ? Colors.black12
-                                                          : Colors.black
-                                                  : Colors.white,
-                                              fontSize: width / 25),
-                                        ),
-                                        Spacer(),
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Spacer(),
-                                        Text(
-                                          'Clock Out',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.bold,
-                                              letterSpacing: 0.5,
-                                              color: _summaryController
-                                                          .summarydetaildata
-                                                          .value[index]
-                                                          .dayStatus !=
-                                                      "Absent"
-                                                  ? _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .mobileDate
-                                                                  .toString()
-                                                                  .split(
-                                                                      '-')[0] ==
-                                                              DateTime.now()
-                                                                  .day
-                                                                  .toString() &&
-                                                          _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .mobileDate
-                                                                  .toString()
-                                                                  .split(
-                                                                      '-')[1] ==
-                                                              DateTime.now()
-                                                                  .month
-                                                                  .toString()
-                                                      ? Colors.white
-                                                      : _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .dayStatus ==
-                                                              'Off'
-                                                          ? Colors.black12
-                                                          : Colors.black
-                                                  : Colors.white,
-                                              fontSize: width / 27),
-                                        ),
-                                        SizedBox(
-                                          height: height / 50,
-                                        ),
-                                        Text(
-                                          '${_summaryController.summarydetaildata.value[index].checkOutDate}',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              letterSpacing: 0.5,
-                                              color: _summaryController
-                                                          .summarydetaildata
-                                                          .value[index]
-                                                          .dayStatus !=
-                                                      "Absent"
-                                                  ? _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .mobileDate
-                                                                  .toString()
-                                                                  .split(
-                                                                      '-')[0] ==
-                                                              DateTime.now()
-                                                                  .day
-                                                                  .toString() &&
-                                                          _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .mobileDate
-                                                                  .toString()
-                                                                  .split(
-                                                                      '-')[1] ==
-                                                              DateTime.now()
-                                                                  .month
-                                                                  .toString()
-                                                      ? Colors.white
-                                                      : _summaryController
-                                                                  .summarydetaildata
-                                                                  .value[index]
-                                                                  .dayStatus ==
-                                                              'Off'
-                                                          ? Colors.black12
-                                                          : Colors.black
-                                                  : Colors.white,
-                                              fontSize: width / 25),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Spacer(),
+                                            Text(
+                                              'Clock Out',
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.bold,
+                                                  letterSpacing: 0.5,
+                                                  color: _summaryController
+                                                              .summarydetaildata
+                                                              .value[index]
+                                                              .dayStatus !=
+                                                          "Absent"
+                                                      ? _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .mobileDate
+                                                                          .toString()
+                                                                          .split(
+                                                                              '-')[
+                                                                      0] ==
+                                                                  DateTime.now()
+                                                                      .day
+                                                                      .toString() &&
+                                                              _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .mobileDate
+                                                                          .toString()
+                                                                          .split(
+                                                                              '-')[
+                                                                      1] ==
+                                                                  DateTime.now()
+                                                                      .month
+                                                                      .toString()
+                                                          ? Colors.white
+                                                          : _summaryController
+                                                                      .summarydetaildata
+                                                                      .value[
+                                                                          index]
+                                                                      .dayStatus ==
+                                                                  'Off'
+                                                              ? Colors.black12
+                                                              : Colors.black
+                                                      : Colors.white,
+                                                  fontSize: width / 27),
+                                            ),
+                                            SizedBox(
+                                              height: height / 50,
+                                            ),
+                                            Text(
+                                              '${_summaryController.summarydetaildata.value[index].checkOutDate}',
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w600,
+                                                  letterSpacing: 0.5,
+                                                  color: _summaryController
+                                                              .summarydetaildata
+                                                              .value[index]
+                                                              .dayStatus !=
+                                                          "Absent"
+                                                      ? _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .mobileDate
+                                                                          .toString()
+                                                                          .split(
+                                                                              '-')[
+                                                                      0] ==
+                                                                  DateTime.now()
+                                                                      .day
+                                                                      .toString() &&
+                                                              _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .mobileDate
+                                                                          .toString()
+                                                                          .split(
+                                                                              '-')[
+                                                                      1] ==
+                                                                  DateTime.now()
+                                                                      .month
+                                                                      .toString()
+                                                          ? Colors.white
+                                                          : _summaryController
+                                                                      .summarydetaildata
+                                                                      .value[
+                                                                          index]
+                                                                      .dayStatus ==
+                                                                  'Off'
+                                                              ? Colors.black12
+                                                              : Colors.black
+                                                      : Colors.white,
+                                                  fontSize: width / 25),
+                                            ),
+                                            Spacer(),
+                                          ],
                                         ),
                                         Spacer(),
                                       ],
                                     ),
-                                    Spacer(),
-                                  ],
+                                  ),
                                 ),
+                              );
+                            })
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: height / 15,
                               ),
-                            ),
-                          );
-                        }),
+                              Image.asset('assets/nodatafound.png'),
+                              // Spacer(),
+                              Text(
+                                "No Data Found",
+                                style: GoogleFonts.poppins(
+                                    color: Colors.black.withOpacity(0.50),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: width / 22),
+                              ),
+                              // Spacer(),
+                            ],
+                          ),
                     SizedBox(
                       height: height / 50,
                     ),
@@ -951,151 +1025,162 @@ class Analytics extends StatelessWidget {
                     DelayedDisplay(
                       fadeIn: true,
                       fadingDuration: Duration(milliseconds: 1200),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              width: width / 1.5,
-                              height: height / 5,
-                              padding: EdgeInsets.only(left: 70, right: 10),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: Color(0xFFF4F9FF),
-                                  borderRadius: BorderRadius.circular(20.0)),
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Transform.rotate(
-                                      angle: 9.4,
-                                      child: Text(
-                                        ',,',
-                                        maxLines: 4,
-                                        style: GoogleFonts.poppins(
-                                            color: Color(0XFFBACADC),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: width / 7),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
+                      child: _summaryController.summarydata.value.isNotEmpty
+                          ? Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    width: width / 1.5,
+                                    height: height / 5,
+                                    padding:
+                                        EdgeInsets.only(left: 70, right: 10),
                                     alignment: Alignment.center,
-                                    child: Text(
-                                      _summaryController
-                                              .summarydata.value.isNotEmpty
-                                          ? ' ${_summaryController.summarydata.value[0].messages.message}'
-                                          : '',
-                                      maxLines: 4,
-                                      style: GoogleFonts.poppins(
-                                          color: Color(0XFF1B236B),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: width / 27),
+                                    decoration: BoxDecoration(
+                                        color: Color(0xFFF4F9FF),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Transform.rotate(
+                                            angle: 9.4,
+                                            child: Text(
+                                              ',,',
+                                              maxLines: 4,
+                                              style: GoogleFonts.poppins(
+                                                  color: Color(0XFFBACADC),
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: width / 7),
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            _summaryController.summarydata.value
+                                                    .isNotEmpty
+                                                ? ' ${_summaryController.summarydata.value[0].messages.message}'
+                                                : '',
+                                            maxLines: 4,
+                                            style: GoogleFonts.poppins(
+                                                color: Color(0XFF1B236B),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: width / 27),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Text(
+                                            ',,',
+                                            maxLines: 4,
+                                            style: GoogleFonts.poppins(
+                                                color: Color(0XFFBACADC),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: width / 7),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                      ',,',
-                                      maxLines: 4,
-                                      style: GoogleFonts.poppins(
-                                          color: Color(0XFFBACADC),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: width / 7),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 15.0),
-                              child: Container(
-                                width: width / 3.5,
-                                height: height / 6.5,
-                                decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.10),
-                                        spreadRadius: -12.0,
-                                        blurRadius: 12.0,
-                                      ),
-                                    ],
-                                    color: _summaryController
-                                            .summarydata.value.isNotEmpty
-                                        ? Color(int.parse(_summaryController
-                                            .summarydata
-                                            .value[0]
-                                            .messages
-                                            .color))
-                                        : Color(0xFFFFF9DF),
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(15.0),
-                                        topRight: Radius.circular(15.0),
-                                        bottomLeft: Radius.circular(15.0))),
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: height / 50,
-                                    ),
-                                    _summaryController
-                                            .summarydata.value.isNotEmpty
-                                        ? Image.network(
-                                            _summaryController.summarydata
-                                                .value[0].messages.imageUrl,
-                                            fit: BoxFit.scaleDown,
-                                            width: width / 12,
-                                          )
-                                        : Column(),
-                                    SizedBox(
-                                      height: height / 50,
-                                    ),
-                                    Text(
-                                      'Shift',
-                                      style: GoogleFonts.poppins(
-                                          color: _summaryController
-                                                  .summarydata.value.isNotEmpty
-                                              ? Color(int.parse(
-                                                  _summaryController
-                                                      .summarydata
-                                                      .value[0]
-                                                      .messages
-                                                      .textcolor))
-                                              : Color(0xFFFFF9DF),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: width / 28),
-                                    ),
-                                    Text(
-                                      _summaryController
-                                              .summarydata.value.isNotEmpty
-                                          ? '${_summaryController.summarydata.value[0].messages.shiftType}'
-                                          : '',
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w700,
-                                          color: _summaryController
-                                                  .summarydata.value.isNotEmpty
-                                              ? Color(int.parse(
-                                                  _summaryController
-                                                      .summarydata
-                                                      .value[0]
-                                                      .messages
-                                                      .textcolor))
-                                              : Color(0xFFFFF9DF),
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: width / 28),
-                                    ),
-                                    SizedBox(
-                                      height: height / 50,
-                                    ),
-                                  ],
                                 ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 15.0),
+                                    child: Container(
+                                      width: width / 3.5,
+                                      height: height / 6.5,
+                                      decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.10),
+                                              spreadRadius: -12.0,
+                                              blurRadius: 12.0,
+                                            ),
+                                          ],
+                                          color: _summaryController
+                                                  .summarydata.value.isNotEmpty
+                                              ? Color(int.parse(
+                                                  _summaryController.summarydata
+                                                      .value[0].messages.color))
+                                              : Color(0xFFFFF9DF),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(15.0),
+                                              topRight: Radius.circular(15.0),
+                                              bottomLeft:
+                                                  Radius.circular(15.0))),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: height / 50,
+                                          ),
+                                          _summaryController
+                                                  .summarydata.value.isNotEmpty
+                                              ? Image.network(
+                                                  _summaryController
+                                                      .summarydata
+                                                      .value[0]
+                                                      .messages
+                                                      .imageUrl,
+                                                  fit: BoxFit.scaleDown,
+                                                  width: width / 12,
+                                                )
+                                              : Column(),
+                                          SizedBox(
+                                            height: height / 50,
+                                          ),
+                                          Text(
+                                            'Shift',
+                                            style: GoogleFonts.poppins(
+                                                color: _summaryController
+                                                        .summarydata
+                                                        .value
+                                                        .isNotEmpty
+                                                    ? Color(int.parse(
+                                                        _summaryController
+                                                            .summarydata
+                                                            .value[0]
+                                                            .messages
+                                                            .textcolor))
+                                                    : Color(0xFFFFF9DF),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: width / 28),
+                                          ),
+                                          Text(
+                                            _summaryController.summarydata.value
+                                                    .isNotEmpty
+                                                ? '${_summaryController.summarydata.value[0].messages.shiftType}'
+                                                : '',
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w700,
+                                                color: _summaryController
+                                                        .summarydata
+                                                        .value
+                                                        .isNotEmpty
+                                                    ? Color(int.parse(
+                                                        _summaryController
+                                                            .summarydata
+                                                            .value[0]
+                                                            .messages
+                                                            .textcolor))
+                                                    : Color(0xFFFFF9DF),
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: width / 28),
+                                          ),
+                                          SizedBox(
+                                            height: height / 50,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Column(),
                     ),
                     SizedBox(
                       height: height / 50,
@@ -1117,13 +1202,13 @@ class Analytics extends StatelessWidget {
                                           .value[0]
                                           .consumeAnnualLeaves
                                           .toString())
-                                      : 0,
+                                      : 0.0,
                                   maximum: _summaryController
                                           .summarydata.value.isNotEmpty
                                       ? double.parse(_summaryController
                                           .summarydata.value[0].annualLeaves
                                           .toString())
-                                      : 20,
+                                      : 20.0,
                                   startAngle: width / 1.5,
                                   endAngle: width / 1.5,
                                   showLabels: false,
@@ -1142,7 +1227,7 @@ class Analytics extends StatelessWidget {
                                                 .value[0]
                                                 .consumeAnnualLeaves
                                                 .toString())
-                                            : 0,
+                                            : 0.0,
                                         cornerStyle: CornerStyle.bothFlat,
                                         width: width / 45,
                                         sizeUnit: GaugeSizeUnit.logicalPixel,
@@ -1174,7 +1259,7 @@ class Analytics extends StatelessWidget {
                                             _summaryController.summarydata.value
                                                     .isNotEmpty
                                                 ? '${_summaryController.summarydata.value[0].consumeAnnualLeaves.toString() + '/' + _summaryController.summarydata.value[0].annualLeaves.toString()}'
-                                                : "${0 / 0}",
+                                                : "${0}/${0}",
                                             style: TextStyle(
                                                 fontSize: width / 27,
                                                 fontWeight: FontWeight.bold,
@@ -1268,7 +1353,7 @@ class Analytics extends StatelessWidget {
                                             _summaryController.summarydata.value
                                                     .isNotEmpty
                                                 ? '${_summaryController.summarydata.value[0].consumeSickLeaves.toString() + '/' + _summaryController.summarydata.value[0].sickLeaves.toString()}'
-                                                : "${0 / 0}",
+                                                : "${0}/${0}",
                                             style: TextStyle(
                                                 fontSize: width / 27,
                                                 fontWeight: FontWeight.bold,
@@ -1359,7 +1444,7 @@ class Analytics extends StatelessWidget {
                                             _summaryController.summarydata.value
                                                     .isNotEmpty
                                                 ? '${_summaryController.summarydata.value[0].consumeCasualLeaves.toString() + '/' + _summaryController.summarydata.value[0].casualLeaves.toString()}'
-                                                : "${0 / 0}",
+                                                : "${0}/${0}",
                                             style: TextStyle(
                                                 fontSize: width / 27,
                                                 fontWeight: FontWeight.bold,
