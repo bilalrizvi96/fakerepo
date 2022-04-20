@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:attendencesystem/Component/DynamicColor.dart';
@@ -12,6 +13,7 @@ import 'package:location/location.dart' as la;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // import 'package:pdf/pdf.dart';
 // import 'package:pdf/widgets.dart' as pw;
@@ -42,6 +44,7 @@ class CheckPointController extends GetxController
   var center = new LatLng(33.652100, 75.123398).obs;
   var Loading = false.obs;
   GoogleMapController? controller;
+  var day, month, year;
   var initialCameraPosition = CameraPosition(
           zoom: 20,
           tilt: 0,
@@ -58,130 +61,130 @@ class CheckPointController extends GetxController
     update();
   }
 
-  Future<void> createPDF() async {
-    //Create a new PDF document
-    PdfDocument document = PdfDocument();
-    PdfGrid grid = PdfGrid();
-    PdfPage page = document.pages.add();
-    PdfGraphics graphics = page.graphics;
-    document.pageSettings.orientation = PdfPageOrientation.landscape;
-    document.pageSettings.margins.all = 10;
-    grid.columns.add(count: 4);
-    grid.headers.add(1);
-    PdfGridRow header = grid.headers[0];
-    header.cells[0].value = 'Time';
-    header.cells[1].value = 'Site Name';
-    header.cells[2].value = 'Notes';
-    header.cells[3].value = 'Image';
-
-//Creates the header style
-    PdfGridCellStyle headerStyle = PdfGridCellStyle();
-    headerStyle.borders.all = PdfPen(PdfColor(126, 151, 173));
-    headerStyle.backgroundBrush = PdfSolidBrush(PdfColor(126, 151, 173));
-    headerStyle.textBrush = PdfBrushes.white;
-    headerStyle.font = PdfStandardFont(PdfFontFamily.timesRoman, 14,
-        style: PdfFontStyle.regular);
-    for (int i = 0; i < header.cells.count; i++) {
-      if (i == 0 || i == 1) {
-        header.cells[i].stringFormat = PdfStringFormat(
-            alignment: PdfTextAlignment.left,
-            lineAlignment: PdfVerticalAlignment.middle);
-      } else {
-        header.cells[i].stringFormat = PdfStringFormat(
-            alignment: PdfTextAlignment.right,
-            lineAlignment: PdfVerticalAlignment.middle);
-      }
-      header.cells[i].style = headerStyle;
-    }
-    PdfBrush solidBrush = PdfSolidBrush(PdfColor(126, 151, 173));
-    Rect bounds = Rect.fromLTWH(0, 160, graphics.clientSize.width, 30);
-    graphics.drawRectangle(brush: solidBrush, bounds: bounds);
-    PdfFont subHeadingFont = PdfStandardFont(PdfFontFamily.timesRoman, 14);
-//Add rows to grid
-
-    for (var val in historyList) {
-      PdfTextWebLink(
-          url: val.image,
-          text: 'Download',
-          font: PdfStandardFont(PdfFontFamily.timesRoman, 14),
-          brush: PdfSolidBrush(PdfColor(126, 155, 203)),
-          pen: PdfPens.blue,
-          format: PdfStringFormat(
-              alignment: PdfTextAlignment.center,
-              lineAlignment: PdfVerticalAlignment.middle));
-    }
-    PdfGridRow row;
-    for (var val in historyList) {
-      row = grid.rows.add();
-      row.cells[0].value = val.time;
-      row.cells[1].value = val.siteName;
-      row.cells[2].value = val.notes;
-      row.cells[3].value = val.image;
-
-//Set padding for grid cells
-      grid.style.cellPadding =
-          PdfPaddings(left: 2, right: 2, top: 2, bottom: 2);
-
-//Creates the grid cell styles
-      PdfGridCellStyle cellStyle = PdfGridCellStyle();
-      cellStyle.borders.all = PdfPens.white;
-      cellStyle.borders.bottom = PdfPen(PdfColor(217, 217, 217), width: 0.70);
-      cellStyle.font = PdfStandardFont(PdfFontFamily.timesRoman, 12);
-      cellStyle.textBrush = PdfSolidBrush(PdfColor(131, 130, 136));
-//Adds cell customizations
-      for (int i = 0; i < grid.rows.count; i++) {
-        PdfGridRow row = grid.rows[i];
-        for (int j = 0; j < row.cells.count; j++) {
-          row.cells[j].style = cellStyle;
-          if (j == 0 || j == 1) {
-            row.cells[j].stringFormat = PdfStringFormat(
-                alignment: PdfTextAlignment.left,
-                lineAlignment: PdfVerticalAlignment.middle);
-          } else {
-            row.cells[j].stringFormat = PdfStringFormat(
-                alignment: PdfTextAlignment.right,
-                lineAlignment: PdfVerticalAlignment.middle);
-          }
-        }
-      }
-    }
-//Creates layout format settings to allow the table pagination
-    PdfLayoutFormat layoutFormat =
-        PdfLayoutFormat(layoutType: PdfLayoutType.paginate);
-    PdfTextElement element = PdfTextElement(
-        text:
-            "${BaseUrl.storage.read('empCode').toString()}                             StarMarketing PVT LTD",
-        font: subHeadingFont);
-    element.brush = PdfBrushes.white;
-
-//Draws the heading on the page
-    PdfLayoutResult result = element.draw(
-        page: page, bounds: Rect.fromLTWH(10, bounds.top + 8, 0, 0))!;
-//Draws the grid to the PDF page
-    PdfLayoutResult gridResult = grid.draw(
-        page: page,
-        bounds: Rect.fromLTWH(0, result.bounds.bottom + 20,
-            graphics.clientSize.width, graphics.clientSize.height - 100),
-        format: layoutFormat)!;
-
-    gridResult.page.graphics.drawString(
-        '                             ${DateTime.now().day.toString() + "-" + DateTime.now().month.toString()}',
-        subHeadingFont,
-        brush: PdfSolidBrush(PdfColor(126, 155, 203)),
-        bounds: Rect.fromLTWH(520, gridResult.bounds.bottom + 30, 0, 0));
-    List<int> bytes = document.save();
-    final directory = await getApplicationDocumentsDirectory();
-
-    //Get directory path
-    final path = directory.path;
-
-    //Create an empty file to write PDF data
-    File file = File('$path/Checkpoints.pdf');
-    file.writeAsBytes(bytes);
-    OpenFile.open('$path/Checkpoints.pdf');
-    //Dispose the document
-    document.dispose();
-  }
+//   Future<void> createPDF() async {
+//     //Create a new PDF document
+//     PdfDocument document = PdfDocument();
+//     PdfGrid grid = PdfGrid();
+//     PdfPage page = document.pages.add();
+//     PdfGraphics graphics = page.graphics;
+//     document.pageSettings.orientation = PdfPageOrientation.landscape;
+//     document.pageSettings.margins.all = 10;
+//     grid.columns.add(count: 4);
+//     grid.headers.add(1);
+//     PdfGridRow header = grid.headers[0];
+//     header.cells[0].value = 'Time';
+//     header.cells[1].value = 'Site Name';
+//     header.cells[2].value = 'Notes';
+//     header.cells[3].value = 'Image';
+//
+// //Creates the header style
+//     PdfGridCellStyle headerStyle = PdfGridCellStyle();
+//     headerStyle.borders.all = PdfPen(PdfColor(126, 151, 173));
+//     headerStyle.backgroundBrush = PdfSolidBrush(PdfColor(126, 151, 173));
+//     headerStyle.textBrush = PdfBrushes.white;
+//     headerStyle.font = PdfStandardFont(PdfFontFamily.timesRoman, 14,
+//         style: PdfFontStyle.regular);
+//     for (int i = 0; i < header.cells.count; i++) {
+//       if (i == 0 || i == 1) {
+//         header.cells[i].stringFormat = PdfStringFormat(
+//             alignment: PdfTextAlignment.left,
+//             lineAlignment: PdfVerticalAlignment.middle);
+//       } else {
+//         header.cells[i].stringFormat = PdfStringFormat(
+//             alignment: PdfTextAlignment.right,
+//             lineAlignment: PdfVerticalAlignment.middle);
+//       }
+//       header.cells[i].style = headerStyle;
+//     }
+//     PdfBrush solidBrush = PdfSolidBrush(PdfColor(126, 151, 173));
+//     Rect bounds = Rect.fromLTWH(0, 160, graphics.clientSize.width, 30);
+//     graphics.drawRectangle(brush: solidBrush, bounds: bounds);
+//     PdfFont subHeadingFont = PdfStandardFont(PdfFontFamily.timesRoman, 14);
+// //Add rows to grid
+//
+//     for (var val in historyList) {
+//       PdfTextWebLink(
+//           url: val.image,
+//           text: 'Download',
+//           font: PdfStandardFont(PdfFontFamily.timesRoman, 14),
+//           brush: PdfSolidBrush(PdfColor(126, 155, 203)),
+//           pen: PdfPens.blue,
+//           format: PdfStringFormat(
+//               alignment: PdfTextAlignment.center,
+//               lineAlignment: PdfVerticalAlignment.middle));
+//     }
+//     PdfGridRow row;
+//     for (var val in historyList) {
+//       row = grid.rows.add();
+//       row.cells[0].value = val.time;
+//       row.cells[1].value = val.siteName;
+//       row.cells[2].value = val.notes;
+//       row.cells[3].value = val.image;
+//
+// //Set padding for grid cells
+//       grid.style.cellPadding =
+//           PdfPaddings(left: 2, right: 2, top: 2, bottom: 2);
+//
+// //Creates the grid cell styles
+//       PdfGridCellStyle cellStyle = PdfGridCellStyle();
+//       cellStyle.borders.all = PdfPens.white;
+//       cellStyle.borders.bottom = PdfPen(PdfColor(217, 217, 217), width: 0.70);
+//       cellStyle.font = PdfStandardFont(PdfFontFamily.timesRoman, 12);
+//       cellStyle.textBrush = PdfSolidBrush(PdfColor(131, 130, 136));
+// //Adds cell customizations
+//       for (int i = 0; i < grid.rows.count; i++) {
+//         PdfGridRow row = grid.rows[i];
+//         for (int j = 0; j < row.cells.count; j++) {
+//           row.cells[j].style = cellStyle;
+//           if (j == 0 || j == 1) {
+//             row.cells[j].stringFormat = PdfStringFormat(
+//                 alignment: PdfTextAlignment.left,
+//                 lineAlignment: PdfVerticalAlignment.middle);
+//           } else {
+//             row.cells[j].stringFormat = PdfStringFormat(
+//                 alignment: PdfTextAlignment.right,
+//                 lineAlignment: PdfVerticalAlignment.middle);
+//           }
+//         }
+//       }
+//     }
+// //Creates layout format settings to allow the table pagination
+//     PdfLayoutFormat layoutFormat =
+//         PdfLayoutFormat(layoutType: PdfLayoutType.paginate);
+//     PdfTextElement element = PdfTextElement(
+//         text:
+//             "${BaseUrl.storage.read('empCode').toString()}                             StarMarketing PVT LTD",
+//         font: subHeadingFont);
+//     element.brush = PdfBrushes.white;
+//
+// //Draws the heading on the page
+//     PdfLayoutResult result = element.draw(
+//         page: page, bounds: Rect.fromLTWH(10, bounds.top + 8, 0, 0))!;
+// //Draws the grid to the PDF page
+//     PdfLayoutResult gridResult = grid.draw(
+//         page: page,
+//         bounds: Rect.fromLTWH(0, result.bounds.bottom + 20,
+//             graphics.clientSize.width, graphics.clientSize.height - 100),
+//         format: layoutFormat)!;
+//
+//     gridResult.page.graphics.drawString(
+//         '                             ${DateTime.now().day.toString() + "-" + DateTime.now().month.toString()}',
+//         subHeadingFont,
+//         brush: PdfSolidBrush(PdfColor(126, 155, 203)),
+//         bounds: Rect.fromLTWH(520, gridResult.bounds.bottom + 30, 0, 0));
+//     List<int> bytes = document.save();
+//     final directory = await getApplicationDocumentsDirectory();
+//
+//     //Get directory path
+//     final path = directory.path;
+//
+//     //Create an empty file to write PDF data
+//     File file = File('$path/Checkpoints.pdf');
+//     file.writeAsBytes(bytes);
+//     OpenFile.open('$path/Checkpoints.pdf');
+//     //Dispose the document
+//     document.dispose();
+//   }
 
   toDate(date) {
     todate.value = date;
@@ -222,7 +225,9 @@ class CheckPointController extends GetxController
     Future.delayed(Duration(milliseconds: 200), () {
       mapupdate();
     });
-
+    day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
+    month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
+    year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
     update();
   }
 
@@ -307,6 +312,29 @@ class CheckPointController extends GetxController
       Loading.value = false;
       // Get.snackbar("Error ", response.data['error'].toString(),
       //     colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
+  }
+
+  checkpointPdf() async {
+    var date = todate.value.toString().split(' ');
+    finaldate.value = date[0].toString();
+    var response = await API().CheckPointPDf(date: finaldate.toString());
+    if (response.statusCode == 200) {
+      var urls = response.data['data'][0]['url'];
+
+      print(urls);
+      if (!await launch(
+        urls,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      )) {
+        throw 'Could not launch $urls';
+      }
+    } else {
+      Get.snackbar("Error ", response.data['error'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }

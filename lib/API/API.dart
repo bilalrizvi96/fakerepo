@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:attendencesystem/API/Error.dart';
-import 'package:attendencesystem/Model/SummaryAnalyticsModel.dart';
 import 'package:dio/dio.dart';
 import 'BaseURl.dart';
 
@@ -360,6 +359,28 @@ class API {
         return response;
       }
     } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future CheckPointPDf({var date}) async {
+    try {
+      Map data = {"date": date, "name": BaseUrl.storage.read("name")};
+      print(data);
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
+        BaseUrl.baseurl + 'checkPointsPDFGenerate',
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      print(e);
       return onError(e);
     }
   }

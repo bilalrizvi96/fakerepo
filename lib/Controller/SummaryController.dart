@@ -36,36 +36,36 @@ class SummaryController extends GetxController
         color: Color(0xFFFFF6C2),
         textcolor: Color(0xFFB66B2A),
         decription: 'Complete your weekly hours'
-            ' target and get reward points,',
+            ' target and get reward point,',
         point: '+10'),
     PointsModel(
         Title: 'No Absent',
         color: Color(0xFFFFF6C2),
         textcolor: Color(0xFFB66B2A),
         decription: 'When you complete a month without'
-            'any absent then you will get a point.',
+            ' any absent then you will get a point.',
         point: '+10'),
     PointsModel(
         Title: 'Overtime',
         color: Color(0xFFFFF6C2),
         textcolor: Color(0xFFB66B2A),
         decription: 'Hurray! Get rewards when ever you'
-            'complete a day with extra hours.',
+            ' complete a day with extra hours.',
         point: '+10'),
     PointsModel(
         Title: 'Target Not Achieved',
         color: Color(0xFFE61756),
         textcolor: Colors.white.withOpacity(0.80),
         decription: 'If somehow you missed to win the'
-            'weekly target then there will be a'
-            'deduction.',
+            ' weekly target then there will be a'
+            ' deduction.',
         point: '-10'),
     PointsModel(
         Title: 'Absent Day',
         color: Color(0xFFE61756),
         textcolor: Colors.white.withOpacity(0.80),
         decription: 'Absents other than sick leave will mark'
-            'a deduction.',
+            ' a deduction.',
         point: '-10'),
   ];
   // var message = ''.obs;
@@ -186,8 +186,11 @@ class SummaryController extends GetxController
       Loading.value = false;
       response = await SummaryDetailsModel.fromJson(response.data);
       summarydetaildata.value = response.dailyDetails;
-      summarydetaildata.value.removeWhere((item) =>
-          int.parse(item.mobileDate.toString().split('-')[0]) < int.parse(day));
+      if (todate.value.month == int.parse(month)) {
+        summarydetaildata.value.removeWhere((item) =>
+            int.parse(item.mobileDate.toString().split('-')[0]) <
+            int.parse(day));
+      }
     } else {
       Loading.value = false;
       // Get.snackbar("Error ", response.data['message'].toString(),

@@ -20,7 +20,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.print),
-        onPressed: _checkPointController.createPDF,
+        onPressed: _checkPointController.checkpointPdf,
       ),
       body: Container(
         height: height,
@@ -96,10 +96,11 @@ class HistoryCheckPointScreen extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () {
                               DatePicker.showDatePicker(context,
-                                  maxTime: DateTime(
-                                      DateTime.now().year - 1,
-                                      DateTime.now().month + 12,
-                                      DateTime.now().day),
+                                  minTime: DateTime(
+                                      int.parse(_checkPointController.year),
+                                      int.parse(_checkPointController.month),
+                                      int.parse(_checkPointController.day)),
+                                  maxTime: DateTime.now(),
                                   showTitleActions: true, onConfirm: (date) {
                                 _checkPointController.toDate(date);
                               },
@@ -459,7 +460,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                     );
                                   })
                               : Text(
-                                  'No data founded',
+                                  'No data found',
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
                                       fontSize: width / 25,

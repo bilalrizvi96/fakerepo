@@ -10,7 +10,6 @@ import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
@@ -190,8 +189,7 @@ class HomeController extends GetxController {
             BaseUrl.storage
                 .write("totalAbsent", resp.data['absent_days'].toString());
           }
-          // clockindate = DateTime.now().hour;
-          // BaseUrl.storage.write('clockindate', clockindate);
+
           BaseUrl.storage.write("clockout", "00:00");
           Loading.value = false;
 
@@ -202,7 +200,15 @@ class HomeController extends GetxController {
               DateTime.now().month.toString() +
               "/" +
               DateTime.now().year.toString();
+          var day = outputDate.toString().split('T')[0] +
+              "T" +
+              BaseUrl.storage
+                  .read("dateForMissingCheckout")
+                  .toString()
+                  .split('T')[1];
           BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+          BaseUrl.storage.write("dateForMissingCheckout", day);
+          print(BaseUrl.storage.read("dateForMissingCheckout"));
 
           // Get.back();
           Get.snackbar("Attendance", "Clock In Successfully");
@@ -356,7 +362,7 @@ class HomeController extends GetxController {
                 "," +
                 center.value.longitude.toString(),
             siteId: dropdownValue.value.toString(),
-            reason: reasoncontroller.text.toString(),
+            reason: reasoncontroller.text.toString().trim(),
             date: outputDate);
         if (response.statusCode == 200) {
           BaseUrl.storage.write("status", false);
