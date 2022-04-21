@@ -707,7 +707,6 @@ class HomeScreen extends StatelessWidget {
                                                         )));
                                                   }
                                                 }
-                                                // homeController.valcheck.val
                                               },
                                               child: DelayedDisplay(
                                                 fadeIn: true,

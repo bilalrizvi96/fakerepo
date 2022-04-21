@@ -15,6 +15,8 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'SummaryController.dart';
+
 class HomeController extends GetxController {
   var selectedyear = DateTime.now().year.obs;
   var selectedmonth = DateTime.now().month.obs;
@@ -25,7 +27,7 @@ class HomeController extends GetxController {
   ScanResult? scanResult;
   var sites = "".obs;
   var url = ''.obs;
-  var date = DateTime.now();
+
   var clockindate;
   var clockindate2;
   var Loading = false.obs;
@@ -33,7 +35,7 @@ class HomeController extends GetxController {
   var reasonFormKey = GlobalKey<FormState>();
   var reasoncontroller = TextEditingController();
   var sitelist = [].obs;
-
+  SummaryController _summaryController = Get.put(SummaryController());
   List months = [
     'JAN',
     'FEB',
@@ -161,6 +163,7 @@ class HomeController extends GetxController {
   void clockin() async {
     Loading.value = true;
     update();
+    var date = DateTime.now();
     var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
@@ -169,7 +172,7 @@ class HomeController extends GetxController {
     var status = await Permission.location.status;
     if (status.isGranted) {
       await CurrentLocation();
-
+      print(outputDate.toString());
       if (sites.value != "") {
         var response = await API().CheckIn(
             latlng: center.value.latitude.toString() +
@@ -178,23 +181,22 @@ class HomeController extends GetxController {
             siteId: sites.value.toString(),
             date: outputDate);
         if (response.statusCode == 200) {
+          Loading.value = false;
           BaseUrl.storage.write("ismessage", false);
+          BaseUrl.clockin = outputDate1.toString();
+          BaseUrl.storage.write("clockin", BaseUrl.clockin);
+          BaseUrl.storage.write("clockout", "00:00");
+          BaseUrl.storage.write("status", true);
           var resp = await API().AbsentPresent();
           if (resp.statusCode == 200) {
             print('bilal');
-            BaseUrl.clockin = outputDate1.toString();
-            BaseUrl.storage.write("clockin", BaseUrl.clockin);
+
             BaseUrl.storage
                 .write("totalPresent", resp.data['present_days'].toString());
             BaseUrl.storage
                 .write("totalAbsent", resp.data['absent_days'].toString());
           }
 
-          BaseUrl.storage.write("clockout", "00:00");
-          Loading.value = false;
-
-          BaseUrl.storage.write("status", true);
-          BaseUrl.storage.write("clockin", BaseUrl.clockin);
           var dates = DateTime.now().day.toString() +
               "/" +
               DateTime.now().month.toString() +
@@ -209,7 +211,8 @@ class HomeController extends GetxController {
           BaseUrl.storage.write("lastAttendanceRecordDate", dates);
           BaseUrl.storage.write("dateForMissingCheckout", day);
           print(BaseUrl.storage.read("dateForMissingCheckout"));
-
+          _summaryController.init();
+          update();
           // Get.back();
           Get.snackbar("Attendance", "Clock In Successfully");
         } else {
@@ -279,7 +282,7 @@ class HomeController extends GetxController {
           Loading.value = false;
           BaseUrl.clockout = outputDate1.toString();
           BaseUrl.storage.write("clockout", BaseUrl.clockout);
-
+          _summaryController.init();
           Get.snackbar(
             "Attendance ",
             "Clock Out Successfully",
@@ -331,7 +334,12 @@ class HomeController extends GetxController {
       if (updates.value == true) {
         Get.offAllNamed('/updatescreen');
         url.value = response.data['response']['link'];
+
         BaseUrl.url = url.value;
+        BaseUrl.message = response.data['response']['message'];
+        BaseUrl.currentRelease = response.data['response']['currentRelease'];
+        BaseUrl.availableRelease =
+            response.data['response']['availableRelease'];
       } else {
         clockin();
       }

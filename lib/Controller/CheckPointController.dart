@@ -56,6 +56,8 @@ class CheckPointController extends GetxController
   final colors = [DynamicColor().primarycolor, DynamicColor().primarycolor];
   Color? indicatorColor;
   var historyList = [].obs;
+  var clockindate2, check;
+
   checkboxUpdate(value) {
     checkboxvalue.value = value!;
     update();
@@ -228,6 +230,12 @@ class CheckPointController extends GetxController
     day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
     month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
     year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
+    clockindate2 = DateTime.now().day;
+    check = BaseUrl.storage
+        .read("lastAttendanceRecordDate")
+        .toString()
+        .split('/')[0];
+
     update();
   }
 
@@ -256,38 +264,43 @@ class CheckPointController extends GetxController
               center.value.longitude.toString());
 
       if (checkpointImage != null) {
-        var response = await API().CheckPoints(
-          sitename: siteController.text.toString().trim(),
-          note: noteController.text.toString().trim(),
-          image: checkpointImage,
-          latlng: center.value.latitude.toString() +
-              ',' +
-              center.value.longitude.toString(),
-        );
-        if (response.statusCode == 201) {
-          siteController.clear();
-          noteController.clear();
-          historycheckpoint();
-          checkpointImage = null;
-          Loading.value = false;
-          Get.snackbar(
-            "Checkpoints ",
-            'Successfully Added',
+        if (clockindate2 == int.parse(check)) {
+          var response = await API().CheckPoints(
+            sitename: siteController.text.toString().trim(),
+            note: noteController.text.toString().trim(),
+            image: checkpointImage,
+            latlng: center.value.latitude.toString() +
+                ',' +
+                center.value.longitude.toString(),
           );
-          if (checkboxvalue.value == true) {
-            homeController.clockout(check: checkboxvalue);
-          }
+          if (response.statusCode == 201) {
+            siteController.clear();
+            noteController.clear();
+            historycheckpoint();
+            checkpointImage = null;
+            Loading.value = false;
+            Get.snackbar(
+              "Checkpoints ",
+              'Successfully Added',
+            );
+            if (checkboxvalue.value == true) {
+              homeController.clockout(check: checkboxvalue);
+            }
 
-          // Get.back();
+            // Get.back();
+          } else {
+            Loading.value = false;
+            Get.snackbar("Error ", response.data['error'].toString(),
+                colorText: Colors.white, backgroundColor: Colors.red);
+          }
         } else {
           Loading.value = false;
-
-          Get.snackbar("Error ", response.data['error'].toString(),
+          Get.snackbar("Error ", "Please Do Previous Checkout",
               colorText: Colors.white, backgroundColor: Colors.red);
         }
       } else {
         Loading.value = false;
-        Get.snackbar("Error ", "Please Upload Image",
+        Get.snackbar("Error ", "Please Capture Image",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
     }

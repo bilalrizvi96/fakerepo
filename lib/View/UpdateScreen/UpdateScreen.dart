@@ -27,7 +27,7 @@ class UpdateScreen extends StatelessWidget {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 1.4,
+                    height: MediaQuery.of(context).size.height / 1.3,
                     padding: EdgeInsets.only(
                       top: 150.0,
                     ),
@@ -43,8 +43,7 @@ class UpdateScreen extends StatelessWidget {
                               left: 25.0, right: 25.0, top: 12.0),
                           child: Text(
                             'This update includes improvements to function as listed below.\n\nThe exact changes may differ depending on your device model,region and service provider.'
-                            '\n\n*  Fixed splash bug on older phones.'
-                            '\n*  Add network conectivity.',
+                            '\n\n${BaseUrl.message}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w300,
                                 fontSize:
@@ -72,7 +71,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            'V 1.0.7',
+                            '${BaseUrl.currentRelease}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
@@ -103,7 +102,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            BaseUrl.version,
+                            '${BaseUrl.availableRelease}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,

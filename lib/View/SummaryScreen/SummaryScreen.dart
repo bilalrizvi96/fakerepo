@@ -268,9 +268,10 @@ class SummaryScreen extends StatelessWidget {
                                           topRight: Radius.circular(10.0)),
                                     ),
                                     child: Text(
-                                      summaryController.summarydata.isNotEmpty
-                                          ? '${summaryController.summarydata.value[0].points}'
-                                          : '0',
+                                      BaseUrl.storage.read("points").toString(),
+                                      // summaryController.summarydata.isNotEmpty
+                                      //     ? '${summaryController.summarydata.value[0].points}'
+                                      //     : '0',
                                       style: GoogleFonts.poppins(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,

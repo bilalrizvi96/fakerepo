@@ -8,9 +8,12 @@ class BaseUrl {
   static var clockin = '';
   static var clockout = '';
   static var url = '';
+  static var message = '';
+  static var availableRelease = '';
+  static var currentRelease = '';
   static var baseurl =
       "https://fn8tsd4pbh.execute-api.us-east-2.amazonaws.com/dev/";
   static var baseurl_Face =
       "http://flask-env.eba-iaxsivgi.us-east-2.elasticbeanstalk.com/";
-  static var version = '1.0.8';
+  static var version = '1.1.0';
 }

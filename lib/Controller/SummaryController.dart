@@ -24,6 +24,7 @@ class SummaryController extends GetxController
   var tabindex = 0.obs;
   var day, month, year;
   var mindate;
+
   var pointlist = [
     PointsModel(
         Title: 'Registration',
@@ -151,7 +152,7 @@ class SummaryController extends GetxController
       } else if (DateTime.now().day < 15) {
         weeklist.value[1].selected = true;
         weekupdate.value = 1;
-      } else if (DateTime.now().day < 21) {
+      } else if (DateTime.now().day < 22) {
         weeklist.value[2].selected = true;
         weekupdate.value = 2;
       } else {
@@ -230,7 +231,5 @@ class SummaryController extends GetxController
   void onInit() {
     super.onInit();
     init();
-    // summary();
-    // update();
   }
 }
