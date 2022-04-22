@@ -3,6 +3,8 @@ import 'package:attendencesystem/Component/DynamicColor.dart';
 
 import 'package:attendencesystem/Controller/HomeController.dart';
 import 'package:delayed_display/delayed_display.dart';
+
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -803,61 +805,40 @@ class ReasonBottom extends StatelessWidget {
                       left: 45.0,
                     ),
                     child: Text(
-                      BaseUrl.storage.read("lastAttendanceRecordDate"),
+                      'Site *',
                       style: Theme.of(context).textTheme.caption!.copyWith(
                           color: Colors.black,
                           fontSize: width / 22,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w900),
                     ),
                   ),
                   SizedBox(
-                    height: height / 80,
+                    height: height / 50,
                   ),
                   Center(
                     child: Container(
                       width: width / 1.2,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border:
-                            Border.all(color: DynamicColor().titletextcolor),
+                        // border:
+                        //     Border.all(color: DynamicColor().titletextcolor),
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                       padding: EdgeInsets.only(right: 10.0, left: 10),
-                      child: DropdownButton<String>(
-                        borderRadius: BorderRadius.circular(20.0),
-                        value: _homeController.dropdownValue.value,
-                        isExpanded: true,
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_sharp,
-                          color: DynamicColor().primarycolor,
-                        ),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                        underline: Container(
-                          height: 2,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(500.0)),
-                        ),
-                        focusColor: Colors.black,
-                        dropdownColor: Colors.white,
-                        onChanged: (newValue) {
-                          _homeController.valueupdate(newValue);
-                          // FocusScope.of(context).nextFocus();
-                        },
-                        items: _homeController.sitelist.value.map((value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
+                      child: DropdownSearch<String>(
+                          mode: Mode.DIALOG,
+                          showSelectedItems: true,
+                          showSearchBox: true,
+                          selectedItem: _homeController.dropdownValue.value,
+                          onChanged: (newValue) {
+                            _homeController.valueupdate(newValue);
+                            // FocusScope.of(context).nextFocus();
+                          },
+                          items: _homeController.sitelist),
                     ),
                   ),
                   SizedBox(
-                    height: height / 80,
+                    height: height / 50,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -872,16 +853,16 @@ class ReasonBottom extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: height / 80,
+                    height: height / 50,
                   ),
                   Center(
                     child: Container(
-                      width: width / 1.2,
+                      width: width / 1.3,
                       child: TextFormField(
                         controller: _homeController.reasoncontroller,
-                        validator: _homeController.validators,
-                        maxLines: 6,
-                        maxLength: 1000,
+                        // validator: _homeController.validators,
+                        maxLines: 5,
+                        maxLength: 500,
                         decoration: new InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -898,6 +879,34 @@ class ReasonBottom extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: height / 50,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: width / 9,
+                      ),
+                      Text(
+                        BaseUrl.storage.read("lastAttendanceRecordDate"),
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                            color: Colors.black,
+                            fontSize: width / 25,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Spacer(),
+                      Text(
+                        BaseUrl.storage.read("endTiming"),
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                            color: Colors.black,
+                            fontSize: width / 25,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        width: width / 9,
+                      ),
+                    ],
+                  ),
                   Spacer(),
                   Center(
                     child: TextButton(
@@ -905,14 +914,14 @@ class ReasonBottom extends StatelessWidget {
                           _homeController.reasonCheckOut();
                         },
                         child: Container(
-                          width: width / 1.25,
+                          width: width / 1.3,
                           height: height / 15,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: DynamicColor().primarycolor,
+                              color: Color(0xFFEE6969),
                               borderRadius: BorderRadius.circular(15.0)),
                           child: Text(
-                            'Submit',
+                            'Clock out'.toUpperCase(),
                             style: Theme.of(context)
                                 .textTheme
                                 .caption!

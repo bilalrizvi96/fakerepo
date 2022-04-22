@@ -33,7 +33,7 @@ class SplashScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    'Beta Release',
+                    'v ${BaseUrl.version}',
                     style: GoogleFonts.poppins(
                         color: DynamicColor().white,
                         fontWeight: FontWeight.w300,

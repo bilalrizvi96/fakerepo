@@ -34,7 +34,7 @@ class HomeController extends GetxController {
   var dropdownValue = ''.obs;
   var reasonFormKey = GlobalKey<FormState>();
   var reasoncontroller = TextEditingController();
-  var sitelist = [].obs;
+  List<String> sitelist = [];
   SummaryController _summaryController = Get.put(SummaryController());
   List months = [
     'JAN',
@@ -240,10 +240,14 @@ class HomeController extends GetxController {
       Loading.value = false;
       response = await SitesModel.fromJson(response.data);
       for (var val in response.data) {
-        sitelist.value.add(val.sitesName);
+        sitelist.add(val.sitesName.toString());
+        sitelist.sort((a, b) {
+          return a.toLowerCase().compareTo(b.toLowerCase());
+        });
       }
-      dropdownValue.value = sitelist.value.first;
-      print(sitelist.value);
+
+      dropdownValue.value = sitelist.first;
+      print(sitelist);
     } else {
       Loading.value = false;
       Get.snackbar("Error ", response.data['message'].toString(),
@@ -362,46 +366,46 @@ class HomeController extends GetxController {
     var outputDate1 = outputFormat1.format(date);
 
     await CurrentLocation();
-    if (reasonFormKey.currentState!.validate() &&
-        reasonFormKey.currentState!.validate()) {
-      if (dropdownValue.value != "") {
-        var response = await API().Reasoncheckout(
-            latlng: center.value.latitude.toString() +
-                "," +
-                center.value.longitude.toString(),
-            siteId: dropdownValue.value.toString(),
-            reason: reasoncontroller.text.toString().trim(),
-            date: outputDate);
-        if (response.statusCode == 200) {
-          BaseUrl.storage.write("status", false);
-          Get.back();
-          Loading.value = false;
-          reasoncontroller.clear();
-          BaseUrl.clockout = outputDate1.toString();
-          BaseUrl.storage.write("clockout", BaseUrl.clockout);
-          var dates = date.year.toString() +
-              '/' +
-              date.month.toString() +
-              '/' +
-              date.day.toString();
-          BaseUrl.storage.write("lastAttendanceRecordDate", dates);
-          print(BaseUrl.storage.read("lastAttendanceRecordDate"));
-          Get.back();
-          Get.snackbar(
-            "Attendance ",
-            "Clock Out Successfully",
-          );
-        } else {
-          Loading.value = false;
-          Get.snackbar("Error ", response.data['error'].toString(),
-              colorText: Colors.white, backgroundColor: Colors.red);
-        }
+    // if (reasonFormKey.currentState!.validate() &&
+    //     reasonFormKey.currentState!.validate()) {
+    if (dropdownValue.value != "") {
+      var response = await API().Reasoncheckout(
+          latlng: center.value.latitude.toString() +
+              "," +
+              center.value.longitude.toString(),
+          siteId: dropdownValue.value.toString(),
+          reason: reasoncontroller.text.toString().trim(),
+          date: outputDate);
+      if (response.statusCode == 200) {
+        BaseUrl.storage.write("status", false);
+        Get.back();
+        Loading.value = false;
+        reasoncontroller.clear();
+        BaseUrl.clockout = outputDate1.toString();
+        BaseUrl.storage.write("clockout", BaseUrl.clockout);
+        var dates = date.year.toString() +
+            '/' +
+            date.month.toString() +
+            '/' +
+            date.day.toString();
+        BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+        print(BaseUrl.storage.read("lastAttendanceRecordDate"));
+        Get.back();
+        Get.snackbar(
+          "Attendance ",
+          "Clock Out Successfully",
+        );
       } else {
         Loading.value = false;
-        Get.snackbar("Error", "Dropdown value is empty kindly select",
+        Get.snackbar("Error ", response.data['error'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error", "Dropdown value is empty kindly select",
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
+    // }
     update();
   }
 

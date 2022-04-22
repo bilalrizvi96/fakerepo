@@ -278,7 +278,7 @@ class API {
         "checkpointAccess": check
         // "isCheckoutForget": false
       };
-      print(data);
+      print(data['checkpointAccess'].runtimeType);
       print("data");
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');

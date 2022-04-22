@@ -85,7 +85,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                 //fillColor: Colors.green
                                 ),
                             onChanged: (val) {
-                              FocusScope.of(context).nextFocus();
+                              // FocusScope.of(context).nextFocus();
                               _checkPointController.search(val);
                             },
                             // keyboardType: TextInputType.none,
