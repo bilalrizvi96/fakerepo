@@ -179,7 +179,7 @@ class SignInEmployeeController extends GetxController {
         verification: faceImage,
       );
       if (response.statusCode == 200) {
-        Get.snackbar("Log In ", "Verified Successfully");
+        // Get.snackbar("Log In ", "Verified Successfully");
         await sigin(true);
       } else {
         Get.snackbar("Login ", response.data['error'].toString(),

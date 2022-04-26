@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import '../View/CheckPointScreen/CheckPointScreen.dart';
+import '../View/FAQ\'s/FAQsScreen.dart';
 import '../View/FeedbackScreen/FeedbackScreen.dart';
 
 class Routes {
@@ -51,14 +52,19 @@ class Routes {
         page: () => CheckPointScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
-    // GetPage(
-    //     name: "/profile",
-    //     page: () => MyProfileScreen(),
-    //     transition: Transition.rightToLeft,
-    //     curve: Curves.easeInQuart),
+    GetPage(
+        name: "/profile",
+        page: () => MyProfileScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
     GetPage(
         name: "/updatescreen",
         page: () => UpdateScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/faqs",
+        page: () => FAQsScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
   ];

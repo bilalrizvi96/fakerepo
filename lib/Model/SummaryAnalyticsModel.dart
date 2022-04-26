@@ -135,6 +135,10 @@ class Week {
     this.weekHoursWorked,
     this.weekShortHours,
     this.weekOverTime,
+    this.todayDataAvailability,
+    this.todayWorkHours,
+    this.todayOverTime,
+    this.todayShortHours,
     this.message,
     this.alert,
   });
@@ -146,6 +150,10 @@ class Week {
   var weekShortHours;
   var weekOverTime;
   var message;
+  var todayDataAvailability;
+  var todayWorkHours;
+  var todayShortHours;
+  var todayOverTime;
   var alert;
 
   factory Week.fromJson(Map<String, dynamic> json) => Week(
@@ -154,6 +162,10 @@ class Week {
         weekTargetedHours: json["weekTargetedHours"],
         weekHoursWorked: json["weekHoursWorked"],
         weekShortHours: json["weekShortHours"],
+        todayDataAvailability: json["todayDataAvailability"],
+        todayWorkHours: json["todayWorkHours"],
+        todayShortHours: json["todayShortHours"],
+        todayOverTime: json["todayOverTime"],
         weekOverTime: json["weekOverTime"],
         message: json["message"],
         alert: Messages.fromJson(json["alert"]),
@@ -165,6 +177,10 @@ class Week {
         "weekTargetedHours": weekTargetedHours,
         "weekHoursWorked": weekHoursWorked,
         "weekShortHours": weekShortHours,
+        "todayDataAvailability": todayDataAvailability,
+        "todayWorkHours": todayWorkHours,
+        "todayShortHours": todayShortHours,
+        "todayOverTime": todayOverTime,
         "weekOverTime": weekOverTime,
         "message": message,
         "alert": alert.toJson(),

@@ -1,6 +1,7 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/PointsModel.dart';
 import 'package:attendencesystem/Model/SummaryAnalyticsModel.dart';
+import 'package:attendencesystem/Model/SummaryGuidelineModel.dart';
 import 'package:attendencesystem/Model/WeekModel.dart';
 import 'package:flutter/material.dart';
 
@@ -19,56 +20,57 @@ class SummaryController extends GetxController
   var weeklist = [].obs;
   var selectedmonths = ''.obs;
   var summarydata = [].obs;
+  var summaryguidelinelist = [].obs;
   var summarydetaildata = [].obs;
   var weekupdate = 0.obs;
   var tabindex = 0.obs;
   var day, month, year;
   var mindate;
 
-  var pointlist = [
-    PointsModel(
-        Title: 'Registration',
-        color: Color(0xFFFFF6C2),
-        textcolor: Color(0xFFB66B2A),
-        decription: 'Get 10 points on registration',
-        point: '+10'),
-    PointsModel(
-        Title: 'Weekly Hours',
-        color: Color(0xFFFFF6C2),
-        textcolor: Color(0xFFB66B2A),
-        decription: 'Complete your weekly hours'
-            ' target and get reward point,',
-        point: '+10'),
-    PointsModel(
-        Title: 'No Absent',
-        color: Color(0xFFFFF6C2),
-        textcolor: Color(0xFFB66B2A),
-        decription: 'When you complete a month without'
-            ' any absent then you will get a point.',
-        point: '+10'),
-    PointsModel(
-        Title: 'Overtime',
-        color: Color(0xFFFFF6C2),
-        textcolor: Color(0xFFB66B2A),
-        decription: 'Hurray! Get rewards when ever you'
-            ' complete a day with extra hours.',
-        point: '+10'),
-    PointsModel(
-        Title: 'Target Not Achieved',
-        color: Color(0xFFE61756),
-        textcolor: Colors.white.withOpacity(0.80),
-        decription: 'If somehow you missed to win the'
-            ' weekly target then there will be a'
-            ' deduction.',
-        point: '-10'),
-    PointsModel(
-        Title: 'Absent Day',
-        color: Color(0xFFE61756),
-        textcolor: Colors.white.withOpacity(0.80),
-        decription: 'Absents other than sick leave will mark'
-            ' a deduction.',
-        point: '-10'),
-  ];
+  // var pointlist = [
+  //   PointsModel(
+  //       Title: 'Registration',
+  //       color: Color(0xFFFFF6C2),
+  //       textcolor: Color(0xFFB66B2A),
+  //       decription: 'Get 10 points on registration',
+  //       point: '+10'),
+  //   PointsModel(
+  //       Title: 'Weekly Hours',
+  //       color: Color(0xFFFFF6C2),
+  //       textcolor: Color(0xFFB66B2A),
+  //       decription: 'Complete your weekly hours'
+  //           ' target and get reward point,',
+  //       point: '+10'),
+  //   PointsModel(
+  //       Title: 'No Absent',
+  //       color: Color(0xFFFFF6C2),
+  //       textcolor: Color(0xFFB66B2A),
+  //       decription: 'When you complete a month without'
+  //           ' any absent then you will get a point.',
+  //       point: '+10'),
+  //   PointsModel(
+  //       Title: 'Overtime',
+  //       color: Color(0xFFFFF6C2),
+  //       textcolor: Color(0xFFB66B2A),
+  //       decription: 'Hurray! Get rewards when ever you'
+  //           ' complete a day with extra hours.',
+  //       point: '+10'),
+  //   PointsModel(
+  //       Title: 'Target Not Achieved',
+  //       color: Color(0xFFE61756),
+  //       textcolor: Colors.white.withOpacity(0.80),
+  //       decription: 'If somehow you missed to win the'
+  //           ' weekly target then there will be a'
+  //           ' deduction.',
+  //       point: '-10'),
+  //   PointsModel(
+  //       Title: 'Absent Day',
+  //       color: Color(0xFFE61756),
+  //       textcolor: Colors.white.withOpacity(0.80),
+  //       decription: 'Absents other than sick leave will mark'
+  //           ' a deduction.',
+  //       point: '-10'),
+  // ];
   // var message = ''.obs;
   List months = [
     'JAN',
@@ -126,6 +128,8 @@ class SummaryController extends GetxController
       Loading.value = false;
       response = await SummaryAnalyticsModel.fromJson(response.data);
       summarydata.value = response.data;
+      print(weeklist.value[weekupdate.value].weekdata[0].weekPresentDays);
+      print('asdsad');
       weeklist.value = [
         WeekModel(
           range: '1 - 7',
@@ -200,6 +204,20 @@ class SummaryController extends GetxController
     update();
   }
 
+  summaryGuideline() async {
+    summaryguidelinelist.value.clear();
+    var response = await API().SummaryGuideline();
+    if (response.statusCode == 200) {
+      Loading.value = false;
+      response = await SummaryGuidelineModel.fromJson(response.data);
+      summaryguidelinelist.value = response.data;
+      print(summaryguidelinelist.value[0].decription);
+    } else {
+      Loading.value = false;
+    }
+    update();
+  }
+
   init() {
     tabController =
         TabController(length: 2, vsync: this, initialIndex: tabindex.value)
@@ -230,6 +248,7 @@ class SummaryController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    summaryGuideline();
     init();
   }
 }

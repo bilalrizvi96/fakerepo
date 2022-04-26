@@ -898,41 +898,41 @@ class Details extends StatelessWidget {
                     SizedBox(
                       height: height / 50,
                     ),
-                    // _summaryController.summarydetaildata.value.isNotEmpty
-                    //     ? Container(
-                    //         decoration: BoxDecoration(
-                    //             border: Border.all(
-                    //               color: Colors.black.withOpacity(0.12),
-                    //             ),
-                    //             borderRadius: BorderRadius.circular(50.0)),
-                    //         child: SliderButton(
-                    //           height: 70.0,
-                    //           radius: 50.0,
-                    //           dismissible: true,
-                    //           disable: false,
-                    //           width: width / 1.2,
-                    //           buttonColor: DynamicColor().primarycolor,
-                    //           vibrationFlag: true,
-                    //           backgroundColor: Colors.white.withOpacity(0.25),
-                    //           baseColor: Colors.red,
-                    //           action: () {
-                    //             Get.back();
-                    //           },
-                    //           label: Text(
-                    //             "Swipe right to export pdf",
-                    //             textAlign: TextAlign.center,
-                    //             style: TextStyle(
-                    //                 color: Color(0xFFAFAFAF).withOpacity(0.25),
-                    //                 fontWeight: FontWeight.w400,
-                    //                 fontSize: 18),
-                    //           ),
-                    //           icon: Icon(
-                    //             Icons.arrow_forward_ios_sharp,
-                    //             color: Colors.white,
-                    //           ),
-                    //         ),
-                    //       )
-                    //     : Column(),
+                    _summaryController.summarydetaildata.value.isNotEmpty
+                        ? Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black.withOpacity(0.12),
+                                ),
+                                borderRadius: BorderRadius.circular(50.0)),
+                            child: SliderButton(
+                              height: 70.0,
+                              radius: 50.0,
+                              dismissible: true,
+                              disable: false,
+                              width: width / 1.2,
+                              buttonColor: DynamicColor().primarycolor,
+                              vibrationFlag: true,
+                              backgroundColor: Colors.white.withOpacity(0.25),
+                              baseColor: Colors.red,
+                              action: () {
+                                Get.back();
+                              },
+                              label: Text(
+                                "Swipe right to export pdf",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Color(0xFFAFAFAF).withOpacity(0.25),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 18),
+                              ),
+                              icon: Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : Column(),
                     SizedBox(
                       height: height / 2,
                     ),
@@ -1742,7 +1742,15 @@ class Analytics extends StatelessWidget {
                         children: [
                           Container(
                             width: width / 3.7,
-                            height: height / 2.5,
+                            height: _summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true
+                                ? height / 2.0
+                                : height / 2.3,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Color(0xFFCDDBFA)),
                                 borderRadius: BorderRadius.only(
@@ -1821,12 +1829,73 @@ class Analytics extends StatelessWidget {
                                         fontSize: width / 27),
                                   ),
                                 ),
+                                SizedBox(
+                                  height: height / 80,
+                                ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  Text(
+                                    'Today',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontSize: width / 29),
+                                  ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  SizedBox(
+                                    height: height / 80,
+                                  ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                        color: Color(0XFFFBE4FE)),
+                                    child: Text(
+                                      _summaryController
+                                              .summarydata.value.isNotEmpty
+                                          ? '${_summaryController.weeklist.value[_summaryController.weekupdate.value].weekdata[0].todayWorkHours}'
+                                          : '0',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0XFFA24AAE),
+                                          fontSize: width / 27),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
                           Container(
                             width: width / 3.7,
-                            height: height / 2.5,
+                            height: _summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true
+                                ? height / 2.0
+                                : height / 2.3,
                             decoration: BoxDecoration(
                               border: Border.all(color: Color(0xFFCDDBFA)),
                             ),
@@ -1903,12 +1972,73 @@ class Analytics extends StatelessWidget {
                                         fontSize: width / 27),
                                   ),
                                 ),
+                                SizedBox(
+                                  height: height / 80,
+                                ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  Text(
+                                    'Today',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontSize: width / 29),
+                                  ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  SizedBox(
+                                    height: height / 80,
+                                  ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                        color: Color(0XFFEBE4FE)),
+                                    child: Text(
+                                      _summaryController
+                                              .summarydata.value.isNotEmpty
+                                          ? '${_summaryController.weeklist.value[_summaryController.weekupdate.value].weekdata[0].todayShortHours}'
+                                          : '0',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFFAE1CE4),
+                                          fontSize: width / 27),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
                           Container(
                             width: width / 3.7,
-                            height: height / 2.5,
+                            height: _summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true
+                                ? height / 2.0
+                                : height / 2.3,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Color(0xFFCDDBFA)),
                                 borderRadius: BorderRadius.only(
@@ -1988,6 +2118,59 @@ class Analytics extends StatelessWidget {
                                         fontSize: width / 27),
                                   ),
                                 ),
+                                SizedBox(
+                                  height: height / 80,
+                                ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  Text(
+                                    'Today',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontSize: width / 29),
+                                  ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  SizedBox(
+                                    height: height / 80,
+                                  ),
+                                if (_summaryController
+                                        .weeklist
+                                        .value[
+                                            _summaryController.weekupdate.value]
+                                        .weekdata[0]
+                                        .todayDataAvailability ==
+                                    true)
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                        color: Color(0XFFE7FEEB)),
+                                    child: Text(
+                                      _summaryController
+                                              .summarydata.value.isNotEmpty
+                                          ? '${_summaryController.weeklist.value[_summaryController.weekupdate.value].weekdata[0].weekOverTime}'
+                                          : '0',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF1AC137),
+                                          fontSize: width / 27),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
@@ -2072,7 +2255,7 @@ class InformationBottom extends StatelessWidget {
         ),
         Expanded(
             child: ListView.builder(
-                itemCount: _summaryController.pointlist.length,
+                itemCount: _summaryController.summaryguidelinelist.value.length,
                 shrinkWrap: true,
                 itemBuilder: (_, index) {
                   return Padding(
@@ -2118,7 +2301,8 @@ class InformationBottom extends StatelessWidget {
                                 height: height / 50,
                               ),
                               Text(
-                                _summaryController.pointlist[index].Title,
+                                _summaryController
+                                    .summaryguidelinelist.value[index].title,
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -2127,8 +2311,8 @@ class InformationBottom extends StatelessWidget {
                               Container(
                                 width: width / 2,
                                 child: Text(
-                                  _summaryController
-                                      .pointlist[index].decription,
+                                  _summaryController.summaryguidelinelist
+                                      .value[index].decription,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w300,
                                       color: Colors.black,
@@ -2146,10 +2330,8 @@ class InformationBottom extends StatelessWidget {
                             height: height / 19,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: _summaryController
-                                      .pointlist[index].textcolor),
-                              color: _summaryController.pointlist[index].color,
+                              border: Border.all(color: Color(0xFFFFF9DF)),
+                              color: Color(0xFFFFF9DF),
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10.0),
                                 topLeft: Radius.circular(10.0),
@@ -2157,10 +2339,10 @@ class InformationBottom extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              _summaryController.pointlist[index].point,
+                              _summaryController
+                                  .summaryguidelinelist[index].point,
                               style: GoogleFonts.poppins(
-                                  color: _summaryController
-                                      .pointlist[index].textcolor,
+                                  color: Color(0xFFFFF9DF),
                                   fontWeight: FontWeight.w500,
                                   fontSize: width / 24),
                             ),

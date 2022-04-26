@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../../Component/SideMenu.dart';
 import '../../Controller/SummaryController.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,6 +21,7 @@ class HomeScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      drawer: SideMenu(),
       body: SafeArea(
         child: Container(
             width: width,
@@ -57,7 +59,22 @@ class HomeScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 SizedBox(
-                                  width: width / 20,
+                                  width: width / 80,
+                                ),
+                                Builder(builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Scaffold.of(context).openDrawer();
+                                    },
+                                    child: Icon(
+                                      Icons.menu,
+                                      size: width / 16,
+                                      color: DynamicColor().titletextcolor,
+                                    ),
+                                  );
+                                }),
+                                SizedBox(
+                                  width: width / 50,
                                 ),
                                 Text(
                                   'Dashboard',
@@ -794,149 +811,184 @@ class ReasonBottom extends StatelessWidget {
         child: GetBuilder(
             init: _homeController,
             builder: (_) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: height / 50,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 45.0,
-                    ),
-                    child: Text(
-                      'Site *',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: Colors.black,
-                          fontSize: width / 22,
-                          fontWeight: FontWeight.w900),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 50,
-                  ),
-                  Center(
-                    child: Container(
-                      width: width / 1.2,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        // border:
-                        //     Border.all(color: DynamicColor().titletextcolor),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      padding: EdgeInsets.only(right: 10.0, left: 10),
-                      child: DropdownSearch<String>(
-                          mode: Mode.DIALOG,
-                          showSelectedItems: true,
-                          showSearchBox: true,
-                          selectedItem: _homeController.dropdownValue.value,
-                          onChanged: (newValue) {
-                            _homeController.valueupdate(newValue);
-                            // FocusScope.of(context).nextFocus();
-                          },
-                          items: _homeController.sitelist),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 50,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 45.0,
-                    ),
-                    child: Text(
-                      'Reason',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: Colors.black,
-                          fontSize: width / 22,
-                          fontWeight: FontWeight.w900),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 50,
-                  ),
-                  Center(
-                    child: Container(
-                      width: width / 1.3,
-                      child: TextFormField(
-                        controller: _homeController.reasoncontroller,
-                        // validator: _homeController.validators,
-                        maxLines: 5,
-                        maxLength: 500,
-                        decoration: new InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: DynamicColor().titletextcolor,
-                                width: 1.2),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: DynamicColor().titletextcolor,
-                                width: 1.0),
-                          ),
-                          hintText: 'Write your reason',
+              return _homeController.Loading.value == false
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: height / 50,
                         ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 50,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: width / 9,
-                      ),
-                      Text(
-                        BaseUrl.storage.read("lastAttendanceRecordDate"),
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: Colors.black,
-                            fontSize: width / 25,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      Spacer(),
-                      Text(
-                        BaseUrl.storage.read("endTiming"),
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: Colors.black,
-                            fontSize: width / 25,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        width: width / 9,
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Center(
-                    child: TextButton(
-                        onPressed: () {
-                          _homeController.reasonCheckOut();
-                        },
-                        child: Container(
-                          width: width / 1.3,
-                          height: height / 15,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFEE6969),
-                              borderRadius: BorderRadius.circular(15.0)),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 45.0,
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Site',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(
+                                        color: Colors.black,
+                                        fontSize: width / 22,
+                                        fontWeight: FontWeight.w900),
+                              ),
+                              Text(
+                                ' *',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(
+                                        color: Colors.red,
+                                        fontSize: width / 22,
+                                        fontWeight: FontWeight.w900),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: height / 50,
+                        ),
+                        Center(
+                          child: Container(
+                            width: width / 1.2,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              // border:
+                              //     Border.all(color: DynamicColor().titletextcolor),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            padding: EdgeInsets.only(right: 10.0, left: 10),
+                            child: DropdownSearch<String>(
+                                mode: Mode.DIALOG,
+                                showSelectedItems: true,
+                                showSearchBox: true,
+                                selectedItem:
+                                    _homeController.dropdownValue.value,
+                                onChanged: (newValue) {
+                                  _homeController.valueupdate(newValue);
+                                  // FocusScope.of(context).nextFocus();
+                                },
+                                items: _homeController.sitelist),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height / 50,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 45.0,
+                          ),
                           child: Text(
-                            'Clock out'.toUpperCase(),
+                            'Reason',
                             style: Theme.of(context)
                                 .textTheme
                                 .caption!
                                 .copyWith(
-                                    color: Colors.white,
-                                    fontSize: width / 25,
-                                    fontWeight: FontWeight.w600),
+                                    color: Colors.black,
+                                    fontSize: width / 22,
+                                    fontWeight: FontWeight.w900),
                           ),
-                        )),
-                  ),
-                  SizedBox(
-                    height: height / 80,
-                  ),
-                ],
-              );
+                        ),
+                        SizedBox(
+                          height: height / 50,
+                        ),
+                        Center(
+                          child: Container(
+                            width: width / 1.3,
+                            child: TextFormField(
+                              controller: _homeController.reasoncontroller,
+                              // validator: _homeController.validators,
+                              maxLines: 5,
+                              maxLength: 500,
+                              decoration: new InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: DynamicColor().titletextcolor,
+                                      width: 1.2),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: DynamicColor().titletextcolor,
+                                      width: 1.0),
+                                ),
+                                hintText: 'Write your reason',
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height / 50,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: width / 9,
+                            ),
+                            Text(
+                              BaseUrl.storage.read("lastAttendanceRecordDate"),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption!
+                                  .copyWith(
+                                      color: Colors.black,
+                                      fontSize: width / 25,
+                                      fontWeight: FontWeight.w500),
+                            ),
+                            Spacer(),
+                            Text(
+                              BaseUrl.storage.read("endTiming"),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption!
+                                  .copyWith(
+                                      color: Colors.black,
+                                      fontSize: width / 25,
+                                      fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(
+                              width: width / 9,
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Center(
+                          child: TextButton(
+                              onPressed: () {
+                                _homeController.reasonCheckOut();
+                              },
+                              child: Container(
+                                width: width / 1.3,
+                                height: height / 15,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: Color(0xFFEE6969),
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                child: Text(
+                                  'Clock out'.toUpperCase(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption!
+                                      .copyWith(
+                                          color: Colors.white,
+                                          fontSize: width / 25,
+                                          fontWeight: FontWeight.w600),
+                                ),
+                              )),
+                        ),
+                        SizedBox(
+                          height: height / 80,
+                        ),
+                      ],
+                    )
+                  : Center(
+                      child: Image.asset(
+                        "assets/1.gif",
+                        height: 200,
+                        width: 200,
+                      ),
+                    );
             }),
       ),
     );

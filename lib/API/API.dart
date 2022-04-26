@@ -121,6 +121,25 @@ class API {
     }
   }
 
+  Future SummaryGuideline({
+    var month,
+    var year,
+  }) async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'summaryGuideline',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
   Future Feedback(
       {var time, var empId, var message, var type, var image}) async {
     var file;

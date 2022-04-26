@@ -142,6 +142,42 @@ class FeedbackScreen extends StatelessWidget {
                                   height: height / 50,
                                 ),
                                 Container(
+                                    width: width / 1.2,
+                                    child: check == false
+                                        ? TextFormField(
+                                            keyboardType: TextInputType.phone,
+                                            controller: _feedbackController
+                                                .phonecontroller,
+                                            validator:
+                                                _feedbackController.validators,
+                                            readOnly:
+                                                check == false ? false : true,
+                                            decoration: new InputDecoration(
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: DynamicColor()
+                                                          .titletextcolor,
+                                                      width: 1.2),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: DynamicColor()
+                                                          .titletextcolor,
+                                                      width: 1.0),
+                                                ),
+                                                hintText: "Phone Number",
+                                                hintStyle: GoogleFonts.poppins(
+                                                    color: DynamicColor().black,
+                                                    fontWeight: FontWeight.w300,
+                                                    fontSize: width / 25)),
+                                          )
+                                        : Column()),
+                                SizedBox(
+                                  height: height / 50,
+                                ),
+                                Container(
                                   width: width / 1.2,
                                   decoration: BoxDecoration(
                                     color: Colors.white,

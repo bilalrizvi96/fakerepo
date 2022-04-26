@@ -8,6 +8,7 @@ import '../API/BaseURl.dart';
 class FeedbackController extends GetxController {
   var feedbackcontroller = TextEditingController();
   var namecontroller = TextEditingController();
+  var phonecontroller = TextEditingController();
   var feedbackFormKey = GlobalKey<FormState>();
   var dropdownValue = 'Choose Category'.obs;
   XFile? faceImage;

@@ -96,7 +96,7 @@ class HomeController extends GetxController {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '${message} ',
+                    '${message}',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500, fontSize: 12),
