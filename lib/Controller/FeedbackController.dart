@@ -46,6 +46,7 @@ class FeedbackController extends GetxController {
                 date.month.toString() +
                 "-" +
                 date.year.toString(),
+            phone: phonecontroller.text.toString().trim(),
             message: namecontroller.text.toString() +
                 '~|~' +
                 feedbackcontroller.text.toString(),
@@ -60,6 +61,7 @@ class FeedbackController extends GetxController {
           }
           faceImage = null;
           feedbackcontroller.clear();
+          phonecontroller.clear();
           Get.snackbar(
             "Feedback",
             "Thank You for your feedback",

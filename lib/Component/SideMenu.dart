@@ -26,7 +26,7 @@ class SideMenu extends StatelessWidget {
               icon: Icon(Icons.star, color: DynamicColor().primarycolor),
               press: () async {
                 Get.back();
-                Get.toNamed('/faqs');
+                Get.toNamed('/mypoints');
               },
             ),
             // DrawerListTile(
@@ -49,6 +49,7 @@ class SideMenu extends StatelessWidget {
                   color: DynamicColor().primarycolor),
               press: () async {
                 Get.back();
+                Get.toNamed('/notification');
               },
             ),
           ],

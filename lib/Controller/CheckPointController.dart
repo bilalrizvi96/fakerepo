@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -57,7 +58,7 @@ class CheckPointController extends GetxController
   Color? indicatorColor;
   var historyList = [].obs;
   var clockindate2, check;
-
+  var connection = true.obs;
   checkboxUpdate(value) {
     checkboxvalue.value = value!;
     update();
@@ -187,6 +188,17 @@ class CheckPointController extends GetxController
 //     //Dispose the document
 //     document.dispose();
 //   }
+  connectionCheck() async {
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        connection.value = true;
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+    });
+  }
 
   toDate(date) {
     todate.value = date;
@@ -198,7 +210,7 @@ class CheckPointController extends GetxController
     update();
   }
 
-  search(val) {
+  search(val, context) {
     if (val.isNotEmpty) {
       searchhistorylist.value = historyList.value
           .where((history) =>
@@ -206,6 +218,7 @@ class CheckPointController extends GetxController
           .toList();
       print(searchhistorylist.value.map((e) => e.siteName));
       historyList.value = searchhistorylist.value;
+      FocusScope.of(context).nextFocus();
       update();
     } else {
       searchhistorylist.value.clear();
@@ -224,6 +237,7 @@ class CheckPointController extends GetxController
       });
 
     super.onInit();
+    connectionCheck();
     Future.delayed(Duration(milliseconds: 200), () {
       mapupdate();
     });
@@ -231,6 +245,7 @@ class CheckPointController extends GetxController
     month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
     year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
     clockindate2 = DateTime.now().day;
+
     check = BaseUrl.storage
         .read("lastAttendanceRecordDate")
         .toString()
@@ -285,6 +300,8 @@ class CheckPointController extends GetxController
             );
             if (checkboxvalue.value == true) {
               homeController.clockout(check: checkboxvalue);
+            } else {
+              homeController.clockin();
             }
 
             // Get.back();

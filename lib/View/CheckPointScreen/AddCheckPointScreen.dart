@@ -303,13 +303,13 @@ class AddCheckPointScreen extends StatelessWidget {
                           Spacer(),
                           GestureDetector(
                             onTap: () {
-                              if (BaseUrl.storage.read("status") == true) {
-                                _checkPointController.checkpoint();
-                              } else {
-                                Get.snackbar("Error ", 'Please Clock In first',
-                                    colorText: Colors.white,
-                                    backgroundColor: Colors.red);
-                              }
+                              // if (BaseUrl.storage.read("status") == true) {
+                              _checkPointController.checkpoint();
+                              // } else {
+                              //   Get.snackbar("Error ", 'Please Clock In first',
+                              //       colorText: Colors.white,
+                              //       backgroundColor: Colors.red);
+                              // }
                             },
                             child: Container(
                               width: width / 1.2,

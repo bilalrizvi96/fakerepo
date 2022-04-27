@@ -86,7 +86,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                 ),
                             onChanged: (val) {
                               // FocusScope.of(context).nextFocus();
-                              _checkPointController.search(val);
+                              _checkPointController.search(val, context);
                             },
                             // keyboardType: TextInputType.none,
                           ),
@@ -157,159 +157,162 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                           height: height / 3.5,
                                           child: Stack(
                                             children: [
-                                              Container(
-                                                width: width / 1.2,
-                                                height: height / 3.8,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.0),
-                                                  color: DynamicColor()
-                                                      .primarycolor,
-                                                ),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: width / 10,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 20.0),
-                                                      child: Container(
-                                                        width: 25,
-                                                        height: 25,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20.0),
-                                                            color:
-                                                                DynamicColor()
-                                                                    .white),
-                                                        child: Text(
-                                                          "${index + 1}",
-                                                          style: GoogleFonts.poppins(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                              fontSize:
-                                                                  width / 32,
-                                                              color: DynamicColor()
-                                                                  .primarycolor),
-                                                        ),
+                                              Center(
+                                                child: Container(
+                                                  width: width / 1.2,
+                                                  height: height / 3.8,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0),
+                                                    color: DynamicColor()
+                                                        .primarycolor,
+                                                  ),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: width / 10,
                                                       ),
-                                                    ),
-                                                    Spacer(),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10.0),
-                                                      child: Container(
-                                                        width: width / 6,
-                                                        height: height / 9,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    8),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    8),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    8),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    8),
-                                                          ),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              _checkPointController
-                                                                  .mapdialog(
-                                                                      index,
-                                                                      context,
-                                                                      width,
-                                                                      height);
-                                                            },
-                                                            child: Image.asset(
-                                                                'assets/map.jpg',
-                                                                fit: BoxFit
-                                                                    .cover),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: width / 50,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10.0),
-                                                      child: GestureDetector(
-                                                        onTap: () async {
-                                                          showDialog(
-                                                              context: context,
-                                                              barrierDismissible:
-                                                                  false,
-                                                              builder: (_) =>
-                                                                  AlertDialog(
-                                                                    actions: [
-                                                                      Center(
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(8.0),
-                                                                          child: GestureDetector(
-                                                                              onTap: () {
-                                                                                Get.back();
-                                                                              },
-                                                                              child: Icon(Icons.clear)),
-                                                                        ),
-                                                                      ),
-                                                                      Image.network(
-                                                                          _checkPointController
-                                                                              .historyList
-                                                                              .value[index]
-                                                                              .image,
-                                                                          fit: BoxFit.cover)
-                                                                    ],
-                                                                  ));
-                                                        },
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8.0),
                                                         child: Container(
-                                                            width: width / 6,
-                                                            height: height / 9,
-                                                            decoration: BoxDecoration(
-                                                                color:
-                                                                    DynamicColor()
-                                                                        .white,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0)),
-                                                            child: Image.network(
-                                                                _checkPointController
-                                                                    .historyList
-                                                                    .value[
-                                                                        index]
-                                                                    .image,
-                                                                fit: BoxFit
-                                                                    .cover)),
+                                                          width: 25,
+                                                          height: 25,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20.0),
+                                                              color:
+                                                                  DynamicColor()
+                                                                      .white),
+                                                          child: Text(
+                                                            "${index + 1}",
+                                                            style: GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800,
+                                                                fontSize:
+                                                                    width / 32,
+                                                                color: DynamicColor()
+                                                                    .primarycolor),
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: width / 25,
-                                                    ),
-                                                  ],
+                                                      Spacer(),
+                                                      // Padding(
+                                                      //   padding:
+                                                      //       const EdgeInsets.only(
+                                                      //           top: 10.0),
+                                                      //   child: Container(
+                                                      //     width: width / 6,
+                                                      //     height: height / 9,
+                                                      //     child: ClipRRect(
+                                                      //       borderRadius:
+                                                      //           BorderRadius.only(
+                                                      //         topLeft:
+                                                      //             Radius.circular(
+                                                      //                 8),
+                                                      //         topRight:
+                                                      //             Radius.circular(
+                                                      //                 8),
+                                                      //         bottomRight:
+                                                      //             Radius.circular(
+                                                      //                 8),
+                                                      //         bottomLeft:
+                                                      //             Radius.circular(
+                                                      //                 8),
+                                                      //       ),
+                                                      //       child:
+                                                      //           GestureDetector(
+                                                      //         onTap: () {
+                                                      //           _checkPointController
+                                                      //               .mapdialog(
+                                                      //                   index,
+                                                      //                   context,
+                                                      //                   width,
+                                                      //                   height);
+                                                      //         },
+                                                      //         child: Image.asset(
+                                                      //             'assets/map.jpg',
+                                                      //             fit: BoxFit
+                                                      //                 .cover),
+                                                      //       ),
+                                                      //     ),
+                                                      //   ),
+                                                      // ),
+                                                      // SizedBox(
+                                                      //   width: width / 50,
+                                                      // ),
+                                                      // Padding(
+                                                      //   padding:
+                                                      //       const EdgeInsets.only(
+                                                      //           top: 10.0),
+                                                      //   child: GestureDetector(
+                                                      //     onTap: () async {
+                                                      //       showDialog(
+                                                      //           context: context,
+                                                      //           barrierDismissible:
+                                                      //               false,
+                                                      //           builder: (_) =>
+                                                      //               AlertDialog(
+                                                      //                 actions: [
+                                                      //                   Center(
+                                                      //                     child:
+                                                      //                         Padding(
+                                                      //                       padding:
+                                                      //                           const EdgeInsets.all(8.0),
+                                                      //                       child: GestureDetector(
+                                                      //                           onTap: () {
+                                                      //                             Get.back();
+                                                      //                           },
+                                                      //                           child: Icon(Icons.clear)),
+                                                      //                     ),
+                                                      //                   ),
+                                                      //                   Image.network(
+                                                      //                       _checkPointController
+                                                      //                           .historyList
+                                                      //                           .value[index]
+                                                      //                           .image,
+                                                      //                       fit: BoxFit.cover)
+                                                      //                 ],
+                                                      //               ));
+                                                      //     },
+                                                      //     child: Container(
+                                                      //         width: width / 6,
+                                                      //         height: height / 9,
+                                                      //         decoration: BoxDecoration(
+                                                      //             color:
+                                                      //                 DynamicColor()
+                                                      //                     .white,
+                                                      //             borderRadius:
+                                                      //                 BorderRadius
+                                                      //                     .circular(
+                                                      //                         8.0)),
+                                                      //         child: Image.network(
+                                                      //             _checkPointController
+                                                      //                 .historyList
+                                                      //                 .value[
+                                                      //                     index]
+                                                      //                 .image,
+                                                      //             fit: BoxFit
+                                                      //                 .cover)),
+                                                      //   ),
+                                                      // ),
+                                                      SizedBox(
+                                                        width: width / 25,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Positioned(
@@ -453,6 +456,120 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
+                                              Positioned(
+                                                top: height / 120,
+                                                right: width / 12,
+                                                child: Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 10.0),
+                                                      child: Container(
+                                                        width: width / 6,
+                                                        height: height / 9,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    8),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    8),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    8),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    8),
+                                                          ),
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              _checkPointController
+                                                                  .mapdialog(
+                                                                      index,
+                                                                      context,
+                                                                      width,
+                                                                      height);
+                                                            },
+                                                            child: Image.asset(
+                                                                'assets/map.jpg',
+                                                                fit: BoxFit
+                                                                    .cover),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: width / 50,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 10.0),
+                                                      child: GestureDetector(
+                                                        onTap: () async {
+                                                          showDialog(
+                                                              context: context,
+                                                              barrierDismissible:
+                                                                  false,
+                                                              builder: (_) =>
+                                                                  AlertDialog(
+                                                                    actions: [
+                                                                      Center(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child: GestureDetector(
+                                                                              onTap: () {
+                                                                                Get.back();
+                                                                              },
+                                                                              child: Icon(Icons.clear)),
+                                                                        ),
+                                                                      ),
+                                                                      Image.network(
+                                                                          _checkPointController
+                                                                              .historyList
+                                                                              .value[index]
+                                                                              .image,
+                                                                          fit: BoxFit.cover)
+                                                                    ],
+                                                                  ));
+                                                        },
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          child: Container(
+                                                              width: width / 6,
+                                                              height:
+                                                                  height / 9,
+                                                              decoration: BoxDecoration(
+                                                                  color:
+                                                                      DynamicColor()
+                                                                          .white,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              13.0)),
+                                                              child: Image.network(
+                                                                  _checkPointController
+                                                                      .historyList
+                                                                      .value[
+                                                                          index]
+                                                                      .image,
+                                                                  fit: BoxFit
+                                                                      .cover)),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ),

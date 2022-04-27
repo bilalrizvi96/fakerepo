@@ -157,6 +157,7 @@ class UpdateScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         elevation: 1.0, primary: DynamicColor().primarycolor),
                     onPressed: () async {
+                      BaseUrl.storage.erase();
                       BaseUrl.url;
                       print(BaseUrl.url);
                       if (await canLaunch(BaseUrl.url)) {

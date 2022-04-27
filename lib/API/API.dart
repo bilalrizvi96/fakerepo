@@ -141,7 +141,12 @@ class API {
   }
 
   Future Feedback(
-      {var time, var empId, var message, var type, var image}) async {
+      {var time,
+      var empId,
+      var message,
+      var type,
+      var image,
+      var phone}) async {
     var file;
     if (image != null) {
       Uint8List imagebytes = await image.readAsBytes();
@@ -155,6 +160,7 @@ class API {
         "time": time.toString(),
         "employeeId": empId.toString(),
         "message": message.toString().trim(),
+        'phone': phone != '' ? phone : '',
         "image": file != '' ? file : ''
       };
 

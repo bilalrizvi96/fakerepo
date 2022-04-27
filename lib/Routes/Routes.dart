@@ -14,6 +14,8 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import '../View/CheckPointScreen/CheckPointScreen.dart';
 import '../View/FAQ\'s/FAQsScreen.dart';
 import '../View/FeedbackScreen/FeedbackScreen.dart';
+import '../View/MyPointScreen/MyPointScreen.dart';
+import '../View/NotificationScreen/NotificationScreen.dart';
 
 class Routes {
   final routes = [
@@ -65,6 +67,16 @@ class Routes {
     GetPage(
         name: "/faqs",
         page: () => FAQsScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/mypoints",
+        page: () => MyPointScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/notification",
+        page: () => NotificationScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
   ];

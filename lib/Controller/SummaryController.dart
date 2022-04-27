@@ -128,8 +128,6 @@ class SummaryController extends GetxController
       Loading.value = false;
       response = await SummaryAnalyticsModel.fromJson(response.data);
       summarydata.value = response.data;
-      print(weeklist.value[weekupdate.value].weekdata[0].weekPresentDays);
-      print('asdsad');
       weeklist.value = [
         WeekModel(
           range: '1 - 7',

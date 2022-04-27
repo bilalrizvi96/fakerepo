@@ -1742,15 +1742,18 @@ class Analytics extends StatelessWidget {
                         children: [
                           Container(
                             width: width / 3.7,
-                            height: _summaryController
-                                        .weeklist
-                                        .value[
-                                            _summaryController.weekupdate.value]
-                                        .weekdata[0]
-                                        .todayDataAvailability ==
-                                    true
-                                ? height / 2.0
-                                : height / 2.3,
+                            height:
+                                _summaryController.summarydata.value.isNotEmpty
+                                    ? _summaryController
+                                                .weeklist
+                                                .value[_summaryController
+                                                    .weekupdate.value]
+                                                .weekdata[0]
+                                                .todayDataAvailability ==
+                                            true
+                                        ? height / 2.0
+                                        : height / 2.3
+                                    : height / 2.3,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Color(0xFFCDDBFA)),
                                 borderRadius: BorderRadius.only(
@@ -1833,69 +1836,78 @@ class Analytics extends StatelessWidget {
                                   height: height / 80,
                                 ),
                                 if (_summaryController
-                                        .weeklist
-                                        .value[
-                                            _summaryController.weekupdate.value]
-                                        .weekdata[0]
-                                        .todayDataAvailability ==
-                                    true)
-                                  Text(
-                                    'Today',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                        fontSize: width / 29),
-                                  ),
-                                if (_summaryController
-                                        .weeklist
-                                        .value[
-                                            _summaryController.weekupdate.value]
-                                        .weekdata[0]
-                                        .todayDataAvailability ==
-                                    true)
-                                  SizedBox(
-                                    height: height / 80,
-                                  ),
-                                if (_summaryController
-                                        .weeklist
-                                        .value[
-                                            _summaryController.weekupdate.value]
-                                        .weekdata[0]
-                                        .todayDataAvailability ==
-                                    true)
-                                  Container(
-                                    width: 80,
-                                    height: 80,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(50.0),
-                                        color: Color(0XFFFBE4FE)),
-                                    child: Text(
-                                      _summaryController
-                                              .summarydata.value.isNotEmpty
-                                          ? '${_summaryController.weeklist.value[_summaryController.weekupdate.value].weekdata[0].todayWorkHours}'
-                                          : '0',
+                                    .summarydata.value.isNotEmpty)
+                                  if (_summaryController
+                                          .weeklist
+                                          .value[_summaryController
+                                              .weekupdate.value]
+                                          .weekdata[0]
+                                          .todayDataAvailability ==
+                                      true)
+                                    Text(
+                                      'Today',
                                       style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0XFFA24AAE),
-                                          fontSize: width / 27),
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                          fontSize: width / 29),
                                     ),
-                                  ),
+                                if (_summaryController
+                                    .summarydata.value.isNotEmpty)
+                                  if (_summaryController
+                                          .weeklist
+                                          .value[_summaryController
+                                              .weekupdate.value]
+                                          .weekdata[0]
+                                          .todayDataAvailability ==
+                                      true)
+                                    SizedBox(
+                                      height: height / 80,
+                                    ),
+                                if (_summaryController
+                                    .summarydata.value.isNotEmpty)
+                                  if (_summaryController
+                                          .weeklist
+                                          .value[_summaryController
+                                              .weekupdate.value]
+                                          .weekdata[0]
+                                          .todayDataAvailability ==
+                                      true)
+                                    Container(
+                                      width: 80,
+                                      height: 80,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50.0),
+                                          color: Color(0XFFFBE4FE)),
+                                      child: Text(
+                                        _summaryController
+                                                .summarydata.value.isNotEmpty
+                                            ? '${_summaryController.weeklist.value[_summaryController.weekupdate.value].weekdata[0].todayWorkHours}'
+                                            : '0',
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0XFFA24AAE),
+                                            fontSize: width / 27),
+                                      ),
+                                    ),
                               ],
                             ),
                           ),
                           Container(
                             width: width / 3.7,
-                            height: _summaryController
-                                        .weeklist
-                                        .value[
-                                            _summaryController.weekupdate.value]
-                                        .weekdata[0]
-                                        .todayDataAvailability ==
-                                    true
-                                ? height / 2.0
-                                : height / 2.3,
+                            height:
+                                _summaryController.summarydata.value.isNotEmpty
+                                    ? _summaryController
+                                                .weeklist
+                                                .value[_summaryController
+                                                    .weekupdate.value]
+                                                .weekdata[0]
+                                                .todayDataAvailability ==
+                                            true
+                                        ? height / 2.0
+                                        : height / 2.3
+                                    : height / 2.3,
                             decoration: BoxDecoration(
                               border: Border.all(color: Color(0xFFCDDBFA)),
                             ),
@@ -2030,15 +2042,18 @@ class Analytics extends StatelessWidget {
                           ),
                           Container(
                             width: width / 3.7,
-                            height: _summaryController
-                                        .weeklist
-                                        .value[
-                                            _summaryController.weekupdate.value]
-                                        .weekdata[0]
-                                        .todayDataAvailability ==
-                                    true
-                                ? height / 2.0
-                                : height / 2.3,
+                            height:
+                                _summaryController.summarydata.value.isNotEmpty
+                                    ? _summaryController
+                                                .weeklist
+                                                .value[_summaryController
+                                                    .weekupdate.value]
+                                                .weekdata[0]
+                                                .todayDataAvailability ==
+                                            true
+                                        ? height / 2.0
+                                        : height / 2.3
+                                    : height / 2.3,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Color(0xFFCDDBFA)),
                                 borderRadius: BorderRadius.only(
@@ -2330,8 +2345,11 @@ class InformationBottom extends StatelessWidget {
                             height: height / 19,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xFFFFF9DF)),
-                              color: Color(0xFFFFF9DF),
+                              border: Border.all(
+                                  color: Color(int.parse(_summaryController
+                                      .summaryguidelinelist[index].textcolor))),
+                              color: Color(int.parse(_summaryController
+                                  .summaryguidelinelist[index].color)),
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10.0),
                                 topLeft: Radius.circular(10.0),
@@ -2342,7 +2360,8 @@ class InformationBottom extends StatelessWidget {
                               _summaryController
                                   .summaryguidelinelist[index].point,
                               style: GoogleFonts.poppins(
-                                  color: Color(0xFFFFF9DF),
+                                  color: Color(int.parse(_summaryController
+                                      .summaryguidelinelist[index].textcolor)),
                                   fontWeight: FontWeight.w500,
                                   fontSize: width / 24),
                             ),
