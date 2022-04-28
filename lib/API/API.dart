@@ -140,6 +140,38 @@ class API {
     }
   }
 
+  Future Notification() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'mobileNotifications',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future MyPoint() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'walletForMobile',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
   Future Feedback(
       {var time,
       var empId,

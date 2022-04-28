@@ -173,7 +173,15 @@ class FeedbackScreen extends StatelessWidget {
                                                     fontWeight: FontWeight.w300,
                                                     fontSize: width / 25)),
                                           )
-                                        : Column()),
+                                        : Text(
+                                            _feedbackController
+                                                .phonecontroller.text
+                                                .toUpperCase(),
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black),
+                                          )),
                                 SizedBox(
                                   height: height / 50,
                                 ),

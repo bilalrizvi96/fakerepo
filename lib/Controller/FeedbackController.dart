@@ -23,8 +23,11 @@ class FeedbackController extends GetxController {
     if (BaseUrl.storage.read('name') != null) {
       namecontroller.text =
           BaseUrl.storage.read('name').toString().toUpperCase();
+      phonecontroller.text =
+          BaseUrl.storage.read('phoneNo').toString().toUpperCase();
     } else {
       namecontroller.text = '';
+      phonecontroller.text = '';
     }
   }
 
