@@ -34,7 +34,7 @@ class BottomNavigationController extends GetxController {
     FeedbackScreen(
       check: true,
     ),
-    MyProfileScreen(),
+    // MyProfileScreen(),
   ];
 
   @override

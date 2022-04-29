@@ -22,6 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../API/API.dart';
 import '../API/BaseURl.dart';
 import '../Model/HistoryCheckpointModel.dart';
+import '../View/HomeScreen/HomeScreen.dart';
 import 'HomeController.dart';
 
 class CheckPointController extends GetxController
@@ -299,9 +300,13 @@ class CheckPointController extends GetxController
               'Successfully Added',
             );
             if (checkboxvalue.value == true) {
-              homeController.clockout(check: checkboxvalue);
-            } else {
-              homeController.clockin();
+              homeController.clockindate2 = DateTime.now().day;
+              var check = BaseUrl.storage
+                  .read("lastAttendanceRecordDate")
+                  .toString()
+                  .split('/')[0];
+            } else if (BaseUrl.storage.read("status") == false) {
+              homeController.clockin(check: true);
             }
 
             // Get.back();

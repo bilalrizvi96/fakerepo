@@ -160,7 +160,7 @@ class HomeController extends GetxController {
     }
   }
 
-  void clockin() async {
+  void clockin({var check}) async {
     Loading.value = true;
     update();
     var date = DateTime.now();
@@ -168,68 +168,117 @@ class HomeController extends GetxController {
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
-    await CurrentLocation();
-    var status = await Permission.location.status;
-    if (status.isGranted) {
+    if (check == false) {
       await CurrentLocation();
-      print(outputDate.toString());
-      if (sites.value != "") {
-        var response = await API().CheckIn(
-            latlng: center.value.latitude.toString() +
-                "," +
-                center.value.longitude.toString(),
-            siteId: sites.value.toString(),
-            date: outputDate);
-        if (response.statusCode == 200) {
-          Loading.value = false;
-          BaseUrl.storage.write("ismessage", false);
-          BaseUrl.clockin = outputDate1.toString();
-          BaseUrl.storage.write("clockin", BaseUrl.clockin);
-          BaseUrl.storage.write("clockout", "00:00");
-          BaseUrl.storage.write("status", true);
-          var resp = await API().AbsentPresent();
-          if (resp.statusCode == 200) {
-            print('bilal');
+      var status = await Permission.location.status;
+      if (status.isGranted) {
+        await CurrentLocation();
+        print(outputDate.toString());
+        if (sites.value != "") {
+          var response = await API().CheckIn(
+              latlng: center.value.latitude.toString() +
+                  "," +
+                  center.value.longitude.toString(),
+              siteId: sites.value.toString(),
+              check: check,
+              date: outputDate);
+          if (response.statusCode == 200) {
+            Loading.value = false;
+            BaseUrl.storage.write("ismessage", false);
+            BaseUrl.clockin = outputDate1.toString();
+            BaseUrl.storage.write("clockin", BaseUrl.clockin);
+            BaseUrl.storage.write("clockout", "00:00");
+            BaseUrl.storage.write("status", true);
+            var resp = await API().AbsentPresent();
+            if (resp.statusCode == 200) {
+              print('bilal');
 
-            BaseUrl.storage
-                .write("totalPresent", resp.data['present_days'].toString());
-            BaseUrl.storage
-                .write("totalAbsent", resp.data['absent_days'].toString());
-          }
-
-          var dates = DateTime.now().day.toString() +
-              "/" +
-              DateTime.now().month.toString() +
-              "/" +
-              DateTime.now().year.toString();
-          var day = outputDate.toString().split('T')[0] +
-              "T" +
               BaseUrl.storage
-                  .read("dateForMissingCheckout")
-                  .toString()
-                  .split('T')[1];
-          BaseUrl.storage.write("lastAttendanceRecordDate", dates);
-          BaseUrl.storage.write("dateForMissingCheckout", day);
-          print(BaseUrl.storage.read("dateForMissingCheckout"));
-          _summaryController.init();
-          update();
-          // Get.back();
-          Get.snackbar("Attendance", "Clock In Successfully");
+                  .write("totalPresent", resp.data['present_days'].toString());
+              BaseUrl.storage
+                  .write("totalAbsent", resp.data['absent_days'].toString());
+            }
+
+            var dates = DateTime.now().day.toString() +
+                "/" +
+                DateTime.now().month.toString() +
+                "/" +
+                DateTime.now().year.toString();
+            var day = outputDate.toString().split('T')[0] +
+                "T" +
+                BaseUrl.storage
+                    .read("dateForMissingCheckout")
+                    .toString()
+                    .split('T')[1];
+            BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+            BaseUrl.storage.write("dateForMissingCheckout", day);
+            print(BaseUrl.storage.read("dateForMissingCheckout"));
+            _summaryController.init();
+            update();
+            // Get.back();
+            Get.snackbar("Attendance", "Clock In Successfully");
+          } else {
+            Loading.value = false;
+            Get.snackbar("Error ", response.data['error'].toString(),
+                colorText: Colors.white, backgroundColor: Colors.red);
+          }
         } else {
           Loading.value = false;
-          Get.snackbar("Error ", response.data['error'].toString(),
+          Get.snackbar("Error", "Location is empty kindly scan Qr",
               colorText: Colors.white, backgroundColor: Colors.red);
         }
       } else {
         Loading.value = false;
-        Get.snackbar("Error", "Location is empty kindly scan Qr",
+        Get.snackbar("Error ",
+            'The user did not grant the location permission!'.toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
     } else {
-      Loading.value = false;
-      Get.snackbar("Error ",
-          'The user did not grant the location permission!'.toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
+      var response = await API().CheckIn(
+          siteId: BaseUrl.storage.read("sitecheckpoint"),
+          latlng: BaseUrl.storage.read("latlngcheckpoint"),
+          date: outputDate,
+          check: check);
+      if (response.statusCode == 200) {
+        Loading.value = false;
+        BaseUrl.storage.write("ismessage", false);
+        BaseUrl.clockin = outputDate1.toString();
+        BaseUrl.storage.write("clockin", BaseUrl.clockin);
+        BaseUrl.storage.write("clockout", "00:00");
+        BaseUrl.storage.write("status", true);
+        var resp = await API().AbsentPresent();
+        if (resp.statusCode == 200) {
+          print('bilal');
+
+          BaseUrl.storage
+              .write("totalPresent", resp.data['present_days'].toString());
+          BaseUrl.storage
+              .write("totalAbsent", resp.data['absent_days'].toString());
+        }
+
+        var dates = DateTime.now().day.toString() +
+            "/" +
+            DateTime.now().month.toString() +
+            "/" +
+            DateTime.now().year.toString();
+        var day = outputDate.toString().split('T')[0] +
+            "T" +
+            BaseUrl.storage
+                .read("dateForMissingCheckout")
+                .toString()
+                .split('T')[1];
+        BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+        BaseUrl.storage.write("dateForMissingCheckout", day);
+        print(BaseUrl.storage.read("dateForMissingCheckout"));
+        _summaryController.init();
+        update();
+        // Get.back();
+        Get.snackbar("Attendance", "Clock In Successfully");
+      } else {
+        Loading.value = false;
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
     }
     update();
   }
@@ -345,7 +394,7 @@ class HomeController extends GetxController {
         BaseUrl.availableRelease =
             response.data['response']['availableRelease'];
       } else {
-        clockin();
+        clockin(check: false);
       }
       // checks();
     } else {

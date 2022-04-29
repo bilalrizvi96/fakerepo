@@ -300,12 +300,13 @@ class API {
     }
   }
 
-  Future CheckIn({var latlng, var siteId, var date}) async {
+  Future CheckIn({var latlng, var siteId, var date, var check}) async {
     try {
       Map data = {
         'location': latlng,
         "siteId": siteId,
-        "date": date.toString()
+        "date": date.toString(),
+        "forceAction": check
       };
 
       var dio = Dio();
@@ -332,7 +333,7 @@ class API {
         'location': latlng,
         "siteId": siteId,
         "date": date.toString(),
-        "checkpointAccess": check
+        "forceAction": check
         // "isCheckoutForget": false
       };
       print(data['checkpointAccess'].runtimeType);
