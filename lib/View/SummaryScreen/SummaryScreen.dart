@@ -240,45 +240,50 @@ class SummaryScreen extends StatelessWidget {
                               Spacer(),
 
                               Spacer(),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: width / 8,
-                                    height: height / 19,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Color(0xFFEC4A22)),
+                              GestureDetector(
+
+                               onTap: (){
+                                 Get.toNamed('/mypoints');
+                               }, child: Row(
+                                  children: [
+                                    Container(
+                                      width: width / 8,
+                                      height: height / 19,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Color(0xFFEC4A22)),
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(10.0),
+                                              topLeft: Radius.circular(10.0))),
+                                      child: Icon(
+                                        Icons.stars_rounded,
+                                        color: Color(0xFFEC4A22),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width / 8,
+                                      height: height / 19,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        border:
+                                            Border.all(color: Color(0xFFEC4A22)),
+                                        color: Color(0xFFEC4A22),
                                         borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(10.0),
-                                            topLeft: Radius.circular(10.0))),
-                                    child: Icon(
-                                      Icons.stars_rounded,
-                                      color: Color(0xFFEC4A22),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: width / 8,
-                                    height: height / 19,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xFFEC4A22)),
-                                      color: Color(0xFFEC4A22),
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10.0)),
-                                    ),
-                                    child: Text(
-                                      BaseUrl.storage.read("points").toString(),
-                                      // summaryController.summarydata.isNotEmpty
-                                      //     ? '${summaryController.summarydata.value[0].points}'
-                                      //     : '0',
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: width / 24),
-                                    ),
-                                  )
-                                ],
+                                            topRight: Radius.circular(10.0)),
+                                      ),
+                                      child: Text(
+                                        BaseUrl.storage.read("points").toString(),
+                                        // summaryController.summarydata.isNotEmpty
+                                        //     ? '${summaryController.summarydata.value[0].points}'
+                                        //     : '0',
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: width / 24),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                               Spacer(),
                               GestureDetector(
@@ -565,28 +570,41 @@ class Details extends StatelessWidget {
                                                   .summarydetaildata
                                                   .value[index]
                                                   .dayStatus !=
-                                              "Absent"
-                                          ? _summaryController
+                                              "Annual"
+                                          ? _summaryController.summarydetaildata
+                                                      .value[index].dayStatus !=
+                                                  "Sick"
+                                              ? _summaryController
                                                           .summarydetaildata
                                                           .value[index]
-                                                          .mobileDate
-                                                          .toString()
-                                                          .split('-')[0] ==
-                                                      DateTime.now()
-                                                          .day
-                                                          .toString() &&
-                                                  _summaryController
-                                                          .summarydetaildata
-                                                          .value[index]
-                                                          .mobileDate
-                                                          .toString()
-                                                          .split('-')[1] ==
-                                                      DateTime.now()
-                                                          .month
-                                                          .toString()
-                                              ? Color(0xFF3C70BF)
-                                              : Color(0xFFF2F2F2)
-                                          : Color(0xFFE61756),
+                                                          .dayStatus !=
+                                                      "Casual"
+                                                  ? _summaryController
+                                                              .summarydetaildata
+                                                              .value[index]
+                                                              .dayStatus !=
+                                                          "Absent"
+                                                      ? _summaryController.summarydetaildata.value[index].mobileDate
+                                                                          .toString()
+                                                                          .split('-')[
+                                                                      0] ==
+                                                                  DateTime.now()
+                                                                      .day
+                                                                      .toString() &&
+                                                              _summaryController
+                                                                      .summarydetaildata
+                                                                      .value[
+                                                                          index]
+                                                                      .mobileDate
+                                                                      .toString()
+                                                                      .split('-')[1] ==
+                                                                  DateTime.now().month.toString()
+                                                          ? Color(0xFF3C70BF)
+                                                          : Color(0xFFF2F2F2)
+                                                      : Color(0xFFE61756)
+                                                  : Color(0xFF1E7E2E)
+                                              : Color(0xFF1E7E2E)
+                                          : Color(0xFF1E7E2E),
                                       borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(35.0),
                                         topLeft: Radius.circular(35.0),
@@ -674,40 +692,38 @@ class Details extends StatelessWidget {
                                                               .summarydetaildata
                                                               .value[index]
                                                               .dayStatus !=
-                                                          "Absent"
+                                                          "Annual"
                                                       ? _summaryController
-                                                                          .summarydetaildata
-                                                                          .value[
-                                                                              index]
-                                                                          .mobileDate
-                                                                          .toString()
-                                                                          .split(
-                                                                              '-')[
-                                                                      0] ==
-                                                                  DateTime.now()
-                                                                      .day
-                                                                      .toString() &&
-                                                              _summaryController
-                                                                          .summarydetaildata
-                                                                          .value[
-                                                                              index]
-                                                                          .mobileDate
-                                                                          .toString()
-                                                                          .split(
-                                                                              '-')[
-                                                                      1] ==
-                                                                  DateTime.now()
-                                                                      .month
-                                                                      .toString()
-                                                          ? Colors.white
-                                                          : _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .dayStatus !=
+                                                              "Sick"
+                                                          ? _summaryController
                                                                       .summarydetaildata
                                                                       .value[
                                                                           index]
-                                                                      .dayStatus ==
-                                                                  'Off'
-                                                              ? Colors.black12
-                                                              : Colors.black
+                                                                      .dayStatus !=
+                                                                  "Casual"
+                                                              ? _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .dayStatus !=
+                                                                      "Absent"
+                                                                  ? _summaryController.summarydetaildata.value[index].mobileDate.toString().split('-')[0] == DateTime.now().day.toString() &&
+                                                                          _summaryController.summarydetaildata.value[index].mobileDate.toString().split('-')[1] ==
+                                                                              DateTime.now()
+                                                                                  .month
+                                                                                  .toString()
+                                                                      ? Colors
+                                                                          .white
+                                                                      : _summaryController.summarydetaildata.value[index].dayStatus ==
+                                                                              'Off'
+                                                                          ? Colors.black12
+                                                                          : Colors.black
+                                                                  : Colors.white
+                                                              : Colors.white
+                                                          : Colors.white
                                                       : Colors.white,
                                                   fontSize: width / 27),
                                             ),
@@ -723,40 +739,38 @@ class Details extends StatelessWidget {
                                                               .summarydetaildata
                                                               .value[index]
                                                               .dayStatus !=
-                                                          "Absent"
+                                                          "Annual"
                                                       ? _summaryController
-                                                                          .summarydetaildata
-                                                                          .value[
-                                                                              index]
-                                                                          .mobileDate
-                                                                          .toString()
-                                                                          .split(
-                                                                              '-')[
-                                                                      0] ==
-                                                                  DateTime.now()
-                                                                      .day
-                                                                      .toString() &&
-                                                              _summaryController
-                                                                          .summarydetaildata
-                                                                          .value[
-                                                                              index]
-                                                                          .mobileDate
-                                                                          .toString()
-                                                                          .split(
-                                                                              '-')[
-                                                                      1] ==
-                                                                  DateTime.now()
-                                                                      .month
-                                                                      .toString()
-                                                          ? Colors.white
-                                                          : _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .dayStatus !=
+                                                              "Sick"
+                                                          ? _summaryController
                                                                       .summarydetaildata
                                                                       .value[
                                                                           index]
-                                                                      .dayStatus ==
-                                                                  'Off'
-                                                              ? Colors.black12
-                                                              : Colors.black
+                                                                      .dayStatus !=
+                                                                  "Casual"
+                                                              ? _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .dayStatus !=
+                                                                      "Absent"
+                                                                  ? _summaryController.summarydetaildata.value[index].mobileDate.toString().split('-')[0] == DateTime.now().day.toString() &&
+                                                                          _summaryController.summarydetaildata.value[index].mobileDate.toString().split('-')[1] ==
+                                                                              DateTime.now()
+                                                                                  .month
+                                                                                  .toString()
+                                                                      ? Colors
+                                                                          .white
+                                                                      : _summaryController.summarydetaildata.value[index].dayStatus ==
+                                                                              'Off'
+                                                                          ? Colors.black12
+                                                                          : Colors.black
+                                                                  : Colors.white
+                                                              : Colors.white
+                                                          : Colors.white
                                                       : Colors.white,
                                                   fontSize: width / 25),
                                             ),
@@ -780,40 +794,38 @@ class Details extends StatelessWidget {
                                                               .summarydetaildata
                                                               .value[index]
                                                               .dayStatus !=
-                                                          "Absent"
+                                                          "Annual"
                                                       ? _summaryController
-                                                                          .summarydetaildata
-                                                                          .value[
-                                                                              index]
-                                                                          .mobileDate
-                                                                          .toString()
-                                                                          .split(
-                                                                              '-')[
-                                                                      0] ==
-                                                                  DateTime.now()
-                                                                      .day
-                                                                      .toString() &&
-                                                              _summaryController
-                                                                          .summarydetaildata
-                                                                          .value[
-                                                                              index]
-                                                                          .mobileDate
-                                                                          .toString()
-                                                                          .split(
-                                                                              '-')[
-                                                                      1] ==
-                                                                  DateTime.now()
-                                                                      .month
-                                                                      .toString()
-                                                          ? Colors.white
-                                                          : _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .dayStatus !=
+                                                              "Sick"
+                                                          ? _summaryController
                                                                       .summarydetaildata
                                                                       .value[
                                                                           index]
-                                                                      .dayStatus ==
-                                                                  'Off'
-                                                              ? Colors.black12
-                                                              : Colors.black
+                                                                      .dayStatus !=
+                                                                  "Casual"
+                                                              ? _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .dayStatus !=
+                                                                      "Absent"
+                                                                  ? _summaryController.summarydetaildata.value[index].mobileDate.toString().split('-')[0] == DateTime.now().day.toString() &&
+                                                                          _summaryController.summarydetaildata.value[index].mobileDate.toString().split('-')[1] ==
+                                                                              DateTime.now()
+                                                                                  .month
+                                                                                  .toString()
+                                                                      ? Colors
+                                                                          .white
+                                                                      : _summaryController.summarydetaildata.value[index].dayStatus ==
+                                                                              'Off'
+                                                                          ? Colors.black12
+                                                                          : Colors.black
+                                                                  : Colors.white
+                                                              : Colors.white
+                                                          : Colors.white
                                                       : Colors.white,
                                                   fontSize: width / 27),
                                             ),
@@ -829,40 +841,38 @@ class Details extends StatelessWidget {
                                                               .summarydetaildata
                                                               .value[index]
                                                               .dayStatus !=
-                                                          "Absent"
+                                                          "Annual"
                                                       ? _summaryController
-                                                                          .summarydetaildata
-                                                                          .value[
-                                                                              index]
-                                                                          .mobileDate
-                                                                          .toString()
-                                                                          .split(
-                                                                              '-')[
-                                                                      0] ==
-                                                                  DateTime.now()
-                                                                      .day
-                                                                      .toString() &&
-                                                              _summaryController
-                                                                          .summarydetaildata
-                                                                          .value[
-                                                                              index]
-                                                                          .mobileDate
-                                                                          .toString()
-                                                                          .split(
-                                                                              '-')[
-                                                                      1] ==
-                                                                  DateTime.now()
-                                                                      .month
-                                                                      .toString()
-                                                          ? Colors.white
-                                                          : _summaryController
+                                                                  .summarydetaildata
+                                                                  .value[index]
+                                                                  .dayStatus !=
+                                                              "Sick"
+                                                          ? _summaryController
                                                                       .summarydetaildata
                                                                       .value[
                                                                           index]
-                                                                      .dayStatus ==
-                                                                  'Off'
-                                                              ? Colors.black12
-                                                              : Colors.black
+                                                                      .dayStatus !=
+                                                                  "Casual"
+                                                              ? _summaryController
+                                                                          .summarydetaildata
+                                                                          .value[
+                                                                              index]
+                                                                          .dayStatus !=
+                                                                      "Absent"
+                                                                  ? _summaryController.summarydetaildata.value[index].mobileDate.toString().split('-')[0] == DateTime.now().day.toString() &&
+                                                                          _summaryController.summarydetaildata.value[index].mobileDate.toString().split('-')[1] ==
+                                                                              DateTime.now()
+                                                                                  .month
+                                                                                  .toString()
+                                                                      ? Colors
+                                                                          .white
+                                                                      : _summaryController.summarydetaildata.value[index].dayStatus ==
+                                                                              'Off'
+                                                                          ? Colors.black12
+                                                                          : Colors.black
+                                                                  : Colors.white
+                                                              : Colors.white
+                                                          : Colors.white
                                                       : Colors.white,
                                                   fontSize: width / 25),
                                             ),
@@ -899,37 +909,30 @@ class Details extends StatelessWidget {
                       height: height / 50,
                     ),
                     _summaryController.summarydetaildata.value.isNotEmpty
-                        ? Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black.withOpacity(0.12),
-                                ),
-                                borderRadius: BorderRadius.circular(50.0)),
-                            child: SliderButton(
-                              height: 70.0,
-                              radius: 50.0,
-                              dismissible: true,
-                              disable: false,
-                              width: width / 1.2,
-                              buttonColor: DynamicColor().primarycolor,
-                              vibrationFlag: true,
-                              backgroundColor: Colors.white.withOpacity(0.25),
-                              baseColor: Colors.red,
-                              action: () {
-                                Get.back();
-                              },
-                              label: Text(
-                                "Swipe right to export pdf",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Color(0xFFAFAFAF).withOpacity(0.25),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 18),
-                              ),
-                              icon: Icon(
-                                Icons.arrow_forward_ios_sharp,
-                                color: Colors.white,
-                              ),
+                        ? SliderButton(
+                            height: 70.0,
+                            radius: 50.0,
+                            dismissible: true,
+                            disable: false,
+                            width: width / 1.2,
+                            buttonColor: DynamicColor().primarycolor,
+                            vibrationFlag: true,
+                            backgroundColor: Colors.white.withOpacity(0.25),
+                            baseColor: Colors.red,
+                            action: () {
+                              _summaryController.summaryPdf();
+                            },
+                            label: Text(
+                              "Swipe right to export pdf",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Color(0xFFAFAFAF).withOpacity(0.25),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18),
+                            ),
+                            icon: Icon(
+                              Icons.arrow_forward_ios_sharp,
+                              color: Colors.white,
                             ),
                           )
                         : Column(),
@@ -1751,7 +1754,7 @@ class Analytics extends StatelessWidget {
                                                 .weekdata[0]
                                                 .todayDataAvailability ==
                                             true
-                                        ? height / 2.0
+                                        ? height / 1.9
                                         : height / 2.3
                                     : height / 2.3,
                             decoration: BoxDecoration(
@@ -1905,7 +1908,7 @@ class Analytics extends StatelessWidget {
                                                 .weekdata[0]
                                                 .todayDataAvailability ==
                                             true
-                                        ? height / 2.0
+                                        ? height / 1.9
                                         : height / 2.3
                                     : height / 2.3,
                             decoration: BoxDecoration(
@@ -1987,6 +1990,8 @@ class Analytics extends StatelessWidget {
                                 SizedBox(
                                   height: height / 80,
                                 ),
+                                if(  _summaryController
+                                    .summarydata.value.isNotEmpty)
                                 if (_summaryController
                                         .weeklist
                                         .value[
@@ -2001,6 +2006,8 @@ class Analytics extends StatelessWidget {
                                         color: Colors.black,
                                         fontSize: width / 29),
                                   ),
+                                if(  _summaryController
+                                    .summarydata.value.isNotEmpty)
                                 if (_summaryController
                                         .weeklist
                                         .value[
@@ -2011,6 +2018,8 @@ class Analytics extends StatelessWidget {
                                   SizedBox(
                                     height: height / 80,
                                   ),
+                                if(  _summaryController
+                                    .summarydata.value.isNotEmpty)
                                 if (_summaryController
                                         .weeklist
                                         .value[
@@ -2051,7 +2060,7 @@ class Analytics extends StatelessWidget {
                                                 .weekdata[0]
                                                 .todayDataAvailability ==
                                             true
-                                        ? height / 2.0
+                                        ? height / 1.9
                                         : height / 2.3
                                     : height / 2.3,
                             decoration: BoxDecoration(
@@ -2136,6 +2145,8 @@ class Analytics extends StatelessWidget {
                                 SizedBox(
                                   height: height / 80,
                                 ),
+                                if(  _summaryController
+                                    .summarydata.value.isNotEmpty)
                                 if (_summaryController
                                         .weeklist
                                         .value[
@@ -2150,6 +2161,8 @@ class Analytics extends StatelessWidget {
                                         color: Colors.black,
                                         fontSize: width / 29),
                                   ),
+                                if(  _summaryController
+                                    .summarydata.value.isNotEmpty)
                                 if (_summaryController
                                         .weeklist
                                         .value[
@@ -2160,6 +2173,8 @@ class Analytics extends StatelessWidget {
                                   SizedBox(
                                     height: height / 80,
                                   ),
+                                if(  _summaryController
+                                    .summarydata.value.isNotEmpty)
                                 if (_summaryController
                                         .weeklist
                                         .value[

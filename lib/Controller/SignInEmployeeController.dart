@@ -158,6 +158,8 @@ class SignInEmployeeController extends GetxController {
 
       BaseUrl.storage.write("firstAttendanceRecordDate",
           response.user[0].firstAttendanceRecordDate);
+      BaseUrl.storage
+          .write("checkOutMissing", response.user[0].checkOutMissing);
       BaseUrl.storage.write("lastAttendanceRecordDate",
           response.user[0].lastAttendanceRecordDate);
       BaseUrl.storage.write(

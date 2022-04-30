@@ -11,16 +11,20 @@ class SideMenu extends StatelessWidget {
         child: ListView(
           children: [
             DrawerHeader(
-              child: Image.asset('assets/updatebg.png', fit: BoxFit.cover),
+              padding: const EdgeInsets.all(18.0),
+              decoration: BoxDecoration(
+                color: DynamicColor().primarycolor,
+              ),
+              child: Image.asset('assets/logo.png'),
             ),
-            DrawerListTile(
-              title: "Help center",
-              icon: Icon(Icons.help, color: DynamicColor().primarycolor),
-              press: () {
-                Get.back();
-                Get.toNamed('/faqs');
-              },
-            ),
+            // DrawerListTile(
+            //   title: "Help center",
+            //   icon: Icon(Icons.help, color: DynamicColor().primarycolor),
+            //   press: () {
+            //     Get.back();
+            //     Get.toNamed('/faqs');
+            //   },
+            // ),
             DrawerListTile(
               title: "My Points",
               icon: Icon(Icons.star, color: DynamicColor().primarycolor),
@@ -44,7 +48,7 @@ class SideMenu extends StatelessWidget {
               },
             ),
             DrawerListTile(
-              title: "Notificationse",
+              title: "Notification",
               icon: Icon(Icons.notification_important,
                   color: DynamicColor().primarycolor),
               press: () async {

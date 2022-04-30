@@ -1,14 +1,14 @@
-import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:attendencesystem/Controller/FaqsController.dart';
-import 'package:expansion_card/expansion_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'FAQsDetailScreen.dart';
 
-class FAQsScreen extends StatelessWidget {
+import '../../Component/DynamicColor.dart';
+import '../../Controller/FaqsController.dart';
+
+class FAQssubdetailScreen extends StatelessWidget {
+  var index, title;
   FaqsController faqsController = Get.put(FaqsController());
-
+  FAQssubdetailScreen({this.index, this.title});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -43,7 +43,7 @@ class FAQsScreen extends StatelessWidget {
                     width: width / 20,
                   ),
                   Text(
-                    'F.A.Q\'s',
+                    title.toString(),
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500, fontSize: width / 16),
                   ),
@@ -59,16 +59,17 @@ class FAQsScreen extends StatelessWidget {
                     left: 25.0,
                   ),
                   child: ListView.builder(
-                      itemCount: faqsController.faqlist.value.length,
-                      itemBuilder: (context, index) {
+                      itemCount: index.length,
+                      itemBuilder: (context, indexs) {
                         return GestureDetector(
                           onTap: () {
-                            Get.to(() => FAQsDetailScreen(
-                                  index: faqsController
-                                      .faqlist.value[index].subcat,
-                                  title:
-                                      faqsController.faqlist.value[index].title,
-                                ));
+                            Get.bottomSheet(
+                              Bottom(index: index[indexs], height: height),
+                            );
+                            // Get.to(() => FAQsDetailScreen(
+                            //       index: faqsController
+                            //           .faqlist.value[index].subcat,
+                            //     ));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -92,16 +93,13 @@ class FAQsScreen extends StatelessWidget {
                                   SizedBox(
                                     width: width / 20,
                                   ),
-                                  Icon(Icons.perm_contact_cal_rounded,
-                                      color: DynamicColor().primarycolor),
-                                  SizedBox(
-                                    width: width / 20,
-                                  ),
-                                  Text(
-                                    faqsController.faqlist.value[index].title,
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: width / 22),
+                                  Expanded(
+                                    child: Text(
+                                      index[indexs].title,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: width / 27),
+                                    ),
                                   ),
                                   Spacer(),
                                   Icon(Icons.arrow_forward_ios_sharp,
@@ -121,6 +119,50 @@ class FAQsScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container Bottom({var index, var height}) {
+    return Container(
+      height: 700,
+      alignment: Alignment.bottomCenter,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+      ),
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: height / 12,
+          ),
+          Text(
+            "${index.title}",
+            style: GoogleFonts.poppins(
+                color: Color(0xFFEE696A),
+                fontWeight: FontWeight.bold,
+                fontSize: 25),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '${index.subString}',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500, fontSize: 16),
+            ),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+        ],
       ),
     );
   }

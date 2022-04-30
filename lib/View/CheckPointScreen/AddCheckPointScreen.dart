@@ -24,7 +24,7 @@ class AddCheckPointScreen extends StatelessWidget {
         height: height,
         width: width,
         color: Color(0xFFEBEFFF),
-        child: GetBuilder(
+        child: GetBuilder<CheckPointController>(
             init: _checkPointController,
             builder: (_) {
               return Form(
@@ -270,7 +270,7 @@ class AddCheckPointScreen extends StatelessWidget {
                           SizedBox(
                             height: height / 70,
                           ),
-                          BaseUrl.storage.read("status")
+                          _checkPointController.status.value == true
                               ? Row(
                                   children: <Widget>[
                                     //Text

@@ -10,16 +10,13 @@ class MyProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return new Scaffold(
-
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
               width: width,
-
               color: Color(0xFFEBEFFF),
               padding: EdgeInsets.only(top: 15.0),
               child: GetBuilder(
@@ -35,7 +32,17 @@ class MyProfileScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                    width: width / 20,
+                                    width: width / 50,
+                                  ),
+
+                                  GestureDetector(
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      child: Icon(Icons.arrow_back_ios,
+                                          color: Colors.grey[600])),
+                                  SizedBox(
+                                    width: width / 50,
                                   ),
                                   Text(
                                     'My Profile',
@@ -393,9 +400,7 @@ class MyProfileScreen extends StatelessWidget {
                                         hoverColor: DynamicColor().primarycolor,
                                         fillColor: Colors.white,
                                         filled: true,
-                                        border: InputBorder.none
-
-                                        ),
+                                        border: InputBorder.none),
                                     // keyboardType: TextInputType.none,
                                   ),
                                 ),
@@ -434,7 +439,6 @@ class MyProfileScreen extends StatelessWidget {
                                     keyboardType: TextInputType.datetime,
                                     controller: myProfileController
                                         .date_of_joiningController,
-
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
                                         color: DynamicColor().primarycolor,

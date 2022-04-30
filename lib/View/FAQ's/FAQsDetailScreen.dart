@@ -4,24 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../Component/DynamicColor.dart';
 import '../../Component/ExpandedWideget.dart';
-import '../../Model/item.dart';
+import '../../Controller/FaqsController.dart';
+import 'FAQssubdetailScreen.dart';
 
-class FAQsDetailScreen extends StatefulWidget {
-  const FAQsDetailScreen({Key? key}) : super(key: key);
-
-  @override
-  State<FAQsDetailScreen> createState() => _FAQsDetailScreenState();
-}
-
-class _FAQsDetailScreenState extends State<FAQsDetailScreen> {
-  List<ItemModel> itemData = <ItemModel>[
-    ItemModel(
-        headerItem: 'Phone Number',
-        discription: "Please contact your regional HR for this action..",
-        colorsItem: Colors.green,
-        expanded: false),
-  ];
-
+class FAQsDetailScreen extends StatelessWidget {
+  var index, title;
+  FaqsController faqsController = Get.put(FaqsController());
+  FAQsDetailScreen({this.index, this.title});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -46,12 +35,17 @@ class _FAQsDetailScreenState extends State<FAQsDetailScreen> {
                   SizedBox(
                     width: width / 20,
                   ),
-                  Icon(Icons.arrow_back_ios, color: Colors.grey[600]),
+                  GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child:
+                          Icon(Icons.arrow_back_ios, color: Colors.grey[600])),
                   SizedBox(
                     width: width / 20,
                   ),
                   Text(
-                    'My Account',
+                    title.toString(),
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500, fontSize: width / 16),
                   ),
@@ -62,88 +56,113 @@ class _FAQsDetailScreenState extends State<FAQsDetailScreen> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.only(
+                    right: 25.0,
+                    left: 25.0,
+                  ),
                   child: ListView.builder(
-                    itemCount: itemData.length,
-                    itemBuilder: (context, index) {
-                      return ExpansionPanelList(
-                        // expandedHeaderPadding: EdgeInsets.all(10),
-                        // elevation: 6.0,
-                        animationDuration: Duration(milliseconds: 500),
-                        children: [
-                          ExpansionPanel(
-                            canTapOnHeader: true,
-                            headerBuilder:
-                                (BuildContext context, bool isExpanded) {
-                              return Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                padding: EdgeInsets.all(10),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      itemData[index].headerItem,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                      ),
+                      itemCount: index.length,
+                      itemBuilder: (context, indexs) {
+                        return GestureDetector(
+                          onTap: () {
+                            // Get.bottomSheet(
+                            //   Bottom(index: index[indexs].subsubcat),
+                            // );
+                            Get.to(() => FAQssubdetailScreen(
+                                  index: index[indexs].subsubcat,
+                                  title: title.toString(),
+                                ));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: width / 1.23,
+                              height: height / 10,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 4,
+                                      blurRadius: 6,
+                                      offset: Offset(
+                                          0, 2), // changes position of shadow
                                     ),
                                   ],
-                                ),
-                              );
-                            },
-                            body: Container(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      itemData[index].discription,
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontSize: 15,
-                                        height: 1.3,
-                                      ),
+                                  color: Colors.white),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: width / 20,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      index[indexs].title,
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: width / 27),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        width: 100,
-                                        height: 40,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: DynamicColor().primarycolor,
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        child: Text(
-                                          'View',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  Spacer(),
+                                  Icon(Icons.arrow_forward_ios_sharp,
+                                      size: 30,
+                                      color: DynamicColor().primarycolor),
+                                  SizedBox(
+                                    width: width / 20,
+                                  ),
+                                ],
                               ),
                             ),
-                            isExpanded: itemData[index].expanded,
-                          )
-                        ],
-                        expansionCallback: (int item, bool status) {
-                          setState(() {
-                            itemData[index].expanded =
-                                !itemData[index].expanded;
-                          });
-                        },
-                      );
-                    },
-                  ),
+                          ),
+                        );
+                      }),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
+  //
+  // Container Bottom({var index}) {
+  //   return Container(
+  //     height: 700,
+  //     alignment: Alignment.bottomCenter,
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       borderRadius: BorderRadius.only(
+  //           topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+  //     ),
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       mainAxisAlignment: MainAxisAlignment.end,
+  //       children: [
+  //         Text(
+  //           "${title.toString()}",
+  //           style: GoogleFonts.poppins(
+  //               color: Color(0xFFEE696A),
+  //               fontWeight: FontWeight.bold,
+  //               fontSize: 25),
+  //         ),
+  //         SizedBox(
+  //           height: 20,
+  //         ),
+  //         Padding(
+  //           padding: const EdgeInsets.all(8.0),
+  //           child: Text(
+  //             '${index[0].title}',
+  //             textAlign: TextAlign.center,
+  //             style: GoogleFonts.poppins(
+  //                 fontWeight: FontWeight.w500, fontSize: 12),
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 50,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

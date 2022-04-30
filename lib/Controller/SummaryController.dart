@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../API/API.dart';
 import '../Model/SummaryDetailsModel.dart';
@@ -41,6 +42,28 @@ class SummaryController extends GetxController
     'NOV',
     'DEC'
   ];
+  summaryPdf() async {
+    var response = await API().SummaryPDf(
+        month: todate.value.month.toString(),
+        year: todate.value.year.toString());
+    if (response.statusCode == 200) {
+      var urls = response.data['data'][0]['url'];
+
+      print(urls);
+      if (!await launch(
+        urls,
+        forceSafariVC: false,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      )) {
+        throw 'Could not launch $urls';
+      }
+    } else {
+      Get.snackbar("Error ", response.data['error'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
+  }
 
   toDate(date) {
     todate.value = date;

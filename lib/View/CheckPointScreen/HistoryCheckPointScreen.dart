@@ -80,12 +80,8 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                     color: Colors.grey[400]),
                                 fillColor: Colors.white,
                                 filled: true,
-                                border: InputBorder.none
-
-                                //fillColor: Colors.green
-                                ),
+                                border: InputBorder.none),
                             onChanged: (val) {
-                              // FocusScope.of(context).nextFocus();
                               _checkPointController.search(val, context);
                             },
                             // keyboardType: TextInputType.none,
@@ -209,105 +205,6 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                         ),
                                                       ),
                                                       Spacer(),
-                                                      // Padding(
-                                                      //   padding:
-                                                      //       const EdgeInsets.only(
-                                                      //           top: 10.0),
-                                                      //   child: Container(
-                                                      //     width: width / 6,
-                                                      //     height: height / 9,
-                                                      //     child: ClipRRect(
-                                                      //       borderRadius:
-                                                      //           BorderRadius.only(
-                                                      //         topLeft:
-                                                      //             Radius.circular(
-                                                      //                 8),
-                                                      //         topRight:
-                                                      //             Radius.circular(
-                                                      //                 8),
-                                                      //         bottomRight:
-                                                      //             Radius.circular(
-                                                      //                 8),
-                                                      //         bottomLeft:
-                                                      //             Radius.circular(
-                                                      //                 8),
-                                                      //       ),
-                                                      //       child:
-                                                      //           GestureDetector(
-                                                      //         onTap: () {
-                                                      //           _checkPointController
-                                                      //               .mapdialog(
-                                                      //                   index,
-                                                      //                   context,
-                                                      //                   width,
-                                                      //                   height);
-                                                      //         },
-                                                      //         child: Image.asset(
-                                                      //             'assets/map.jpg',
-                                                      //             fit: BoxFit
-                                                      //                 .cover),
-                                                      //       ),
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
-                                                      // SizedBox(
-                                                      //   width: width / 50,
-                                                      // ),
-                                                      // Padding(
-                                                      //   padding:
-                                                      //       const EdgeInsets.only(
-                                                      //           top: 10.0),
-                                                      //   child: GestureDetector(
-                                                      //     onTap: () async {
-                                                      //       showDialog(
-                                                      //           context: context,
-                                                      //           barrierDismissible:
-                                                      //               false,
-                                                      //           builder: (_) =>
-                                                      //               AlertDialog(
-                                                      //                 actions: [
-                                                      //                   Center(
-                                                      //                     child:
-                                                      //                         Padding(
-                                                      //                       padding:
-                                                      //                           const EdgeInsets.all(8.0),
-                                                      //                       child: GestureDetector(
-                                                      //                           onTap: () {
-                                                      //                             Get.back();
-                                                      //                           },
-                                                      //                           child: Icon(Icons.clear)),
-                                                      //                     ),
-                                                      //                   ),
-                                                      //                   Image.network(
-                                                      //                       _checkPointController
-                                                      //                           .historyList
-                                                      //                           .value[index]
-                                                      //                           .image,
-                                                      //                       fit: BoxFit.cover)
-                                                      //                 ],
-                                                      //               ));
-                                                      //     },
-                                                      //     child: Container(
-                                                      //         width: width / 6,
-                                                      //         height: height / 9,
-                                                      //         decoration: BoxDecoration(
-                                                      //             color:
-                                                      //                 DynamicColor()
-                                                      //                     .white,
-                                                      //             borderRadius:
-                                                      //                 BorderRadius
-                                                      //                     .circular(
-                                                      //                         8.0)),
-                                                      //         child: Image.network(
-                                                      //             _checkPointController
-                                                      //                 .historyList
-                                                      //                 .value[
-                                                      //                     index]
-                                                      //                 .image,
-                                                      //             fit: BoxFit
-                                                      //                 .cover)),
-                                                      //   ),
-                                                      // ),
                                                       SizedBox(
                                                         width: width / 25,
                                                       ),

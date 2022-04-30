@@ -42,18 +42,21 @@ class Datum {
     this.type,
     this.points,
     this.date,
+    this.walletTitle,
     this.color,
   });
 
   var type;
   var points;
   var date;
+  var walletTitle;
   var color;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         type: json["type"],
         points: json["points"],
         date: json["date"],
+        walletTitle: json["walletTitle"],
         color: json["color"],
       );
 
@@ -61,6 +64,7 @@ class Datum {
         "type": type,
         "points": points,
         "date": date,
+        "walletTitle": walletTitle,
         "color": color,
       };
 }

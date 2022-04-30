@@ -443,6 +443,28 @@ class API {
     }
   }
 
+  Future SummaryPDf({var year, var month}) async {
+    try {
+      Map data = {"year": year, "month": month};
+      print(data);
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
+        BaseUrl.baseurl + 'reportPDFGenerate',
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      print(e);
+      return onError(e);
+    }
+  }
+
   Future Getsites() async {
     try {
       var dio = Dio();

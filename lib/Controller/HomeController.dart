@@ -331,6 +331,12 @@ class HomeController extends GetxController {
               message: response.data['data'][0]['messages'][0]['message'],
               isMessageAvailable: response.data['data'][0]
                   ['isMessageAvailable']);
+          var dates = DateTime.now().day.toString() +
+              "/" +
+              DateTime.now().month.toString() +
+              "/" +
+              DateTime.now().year.toString();
+          BaseUrl.storage.write("lastAttendanceRecordDate", dates);
           BaseUrl.storage.write("status", false);
           Loading.value = false;
           BaseUrl.clockout = outputDate1.toString();
@@ -366,6 +372,12 @@ class HomeController extends GetxController {
             title: response.data['data'][0]['messages'][0]['title'],
             message: response.data['data'][0]['messages'][0]['message'],
             isMessageAvailable: response.data['data'][0]['isMessageAvailable']);
+        var dates = DateTime.now().day.toString() +
+            "/" +
+            DateTime.now().month.toString() +
+            "/" +
+            DateTime.now().year.toString();
+        BaseUrl.storage.write("lastAttendanceRecordDate", dates);
         Get.snackbar(
           "Attendance ",
           "Clock Out Successfully",

@@ -60,135 +60,12 @@ class CheckPointController extends GetxController
   var historyList = [].obs;
   var clockindate2, check;
   var connection = true.obs;
+  var status = false.obs;
   checkboxUpdate(value) {
     checkboxvalue.value = value!;
     update();
   }
 
-//   Future<void> createPDF() async {
-//     //Create a new PDF document
-//     PdfDocument document = PdfDocument();
-//     PdfGrid grid = PdfGrid();
-//     PdfPage page = document.pages.add();
-//     PdfGraphics graphics = page.graphics;
-//     document.pageSettings.orientation = PdfPageOrientation.landscape;
-//     document.pageSettings.margins.all = 10;
-//     grid.columns.add(count: 4);
-//     grid.headers.add(1);
-//     PdfGridRow header = grid.headers[0];
-//     header.cells[0].value = 'Time';
-//     header.cells[1].value = 'Site Name';
-//     header.cells[2].value = 'Notes';
-//     header.cells[3].value = 'Image';
-//
-// //Creates the header style
-//     PdfGridCellStyle headerStyle = PdfGridCellStyle();
-//     headerStyle.borders.all = PdfPen(PdfColor(126, 151, 173));
-//     headerStyle.backgroundBrush = PdfSolidBrush(PdfColor(126, 151, 173));
-//     headerStyle.textBrush = PdfBrushes.white;
-//     headerStyle.font = PdfStandardFont(PdfFontFamily.timesRoman, 14,
-//         style: PdfFontStyle.regular);
-//     for (int i = 0; i < header.cells.count; i++) {
-//       if (i == 0 || i == 1) {
-//         header.cells[i].stringFormat = PdfStringFormat(
-//             alignment: PdfTextAlignment.left,
-//             lineAlignment: PdfVerticalAlignment.middle);
-//       } else {
-//         header.cells[i].stringFormat = PdfStringFormat(
-//             alignment: PdfTextAlignment.right,
-//             lineAlignment: PdfVerticalAlignment.middle);
-//       }
-//       header.cells[i].style = headerStyle;
-//     }
-//     PdfBrush solidBrush = PdfSolidBrush(PdfColor(126, 151, 173));
-//     Rect bounds = Rect.fromLTWH(0, 160, graphics.clientSize.width, 30);
-//     graphics.drawRectangle(brush: solidBrush, bounds: bounds);
-//     PdfFont subHeadingFont = PdfStandardFont(PdfFontFamily.timesRoman, 14);
-// //Add rows to grid
-//
-//     for (var val in historyList) {
-//       PdfTextWebLink(
-//           url: val.image,
-//           text: 'Download',
-//           font: PdfStandardFont(PdfFontFamily.timesRoman, 14),
-//           brush: PdfSolidBrush(PdfColor(126, 155, 203)),
-//           pen: PdfPens.blue,
-//           format: PdfStringFormat(
-//               alignment: PdfTextAlignment.center,
-//               lineAlignment: PdfVerticalAlignment.middle));
-//     }
-//     PdfGridRow row;
-//     for (var val in historyList) {
-//       row = grid.rows.add();
-//       row.cells[0].value = val.time;
-//       row.cells[1].value = val.siteName;
-//       row.cells[2].value = val.notes;
-//       row.cells[3].value = val.image;
-//
-// //Set padding for grid cells
-//       grid.style.cellPadding =
-//           PdfPaddings(left: 2, right: 2, top: 2, bottom: 2);
-//
-// //Creates the grid cell styles
-//       PdfGridCellStyle cellStyle = PdfGridCellStyle();
-//       cellStyle.borders.all = PdfPens.white;
-//       cellStyle.borders.bottom = PdfPen(PdfColor(217, 217, 217), width: 0.70);
-//       cellStyle.font = PdfStandardFont(PdfFontFamily.timesRoman, 12);
-//       cellStyle.textBrush = PdfSolidBrush(PdfColor(131, 130, 136));
-// //Adds cell customizations
-//       for (int i = 0; i < grid.rows.count; i++) {
-//         PdfGridRow row = grid.rows[i];
-//         for (int j = 0; j < row.cells.count; j++) {
-//           row.cells[j].style = cellStyle;
-//           if (j == 0 || j == 1) {
-//             row.cells[j].stringFormat = PdfStringFormat(
-//                 alignment: PdfTextAlignment.left,
-//                 lineAlignment: PdfVerticalAlignment.middle);
-//           } else {
-//             row.cells[j].stringFormat = PdfStringFormat(
-//                 alignment: PdfTextAlignment.right,
-//                 lineAlignment: PdfVerticalAlignment.middle);
-//           }
-//         }
-//       }
-//     }
-// //Creates layout format settings to allow the table pagination
-//     PdfLayoutFormat layoutFormat =
-//         PdfLayoutFormat(layoutType: PdfLayoutType.paginate);
-//     PdfTextElement element = PdfTextElement(
-//         text:
-//             "${BaseUrl.storage.read('empCode').toString()}                             StarMarketing PVT LTD",
-//         font: subHeadingFont);
-//     element.brush = PdfBrushes.white;
-//
-// //Draws the heading on the page
-//     PdfLayoutResult result = element.draw(
-//         page: page, bounds: Rect.fromLTWH(10, bounds.top + 8, 0, 0))!;
-// //Draws the grid to the PDF page
-//     PdfLayoutResult gridResult = grid.draw(
-//         page: page,
-//         bounds: Rect.fromLTWH(0, result.bounds.bottom + 20,
-//             graphics.clientSize.width, graphics.clientSize.height - 100),
-//         format: layoutFormat)!;
-//
-//     gridResult.page.graphics.drawString(
-//         '                             ${DateTime.now().day.toString() + "-" + DateTime.now().month.toString()}',
-//         subHeadingFont,
-//         brush: PdfSolidBrush(PdfColor(126, 155, 203)),
-//         bounds: Rect.fromLTWH(520, gridResult.bounds.bottom + 30, 0, 0));
-//     List<int> bytes = document.save();
-//     final directory = await getApplicationDocumentsDirectory();
-//
-//     //Get directory path
-//     final path = directory.path;
-//
-//     //Create an empty file to write PDF data
-//     File file = File('$path/Checkpoints.pdf');
-//     file.writeAsBytes(bytes);
-//     OpenFile.open('$path/Checkpoints.pdf');
-//     //Dispose the document
-//     document.dispose();
-//   }
   connectionCheck() async {
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
@@ -236,7 +113,7 @@ class CheckPointController extends GetxController
         indicatorColor = colors[tabController!.index];
         update();
       });
-
+    status.value = BaseUrl.storage.read("status");
     super.onInit();
     connectionCheck();
     Future.delayed(Duration(milliseconds: 200), () {
@@ -280,7 +157,7 @@ class CheckPointController extends GetxController
               center.value.longitude.toString());
 
       if (checkpointImage != null) {
-        if (clockindate2 == int.parse(check)) {
+        if (BaseUrl.storage.read('checkOutMissing') == false) {
           var response = await API().CheckPoints(
             sitename: siteController.text.toString().trim(),
             note: noteController.text.toString().trim(),
@@ -294,20 +171,22 @@ class CheckPointController extends GetxController
             noteController.clear();
             historycheckpoint();
             checkpointImage = null;
-            Loading.value = false;
+            if (checkboxvalue.value == true) {
+              status.value = true;
+              Loading.value = false;
+              Get.back();
+              homeController.clockout(check: true);
+              homeController.clockindate2 = DateTime.now().day;
+            } else if (BaseUrl.storage.read("status") == false) {
+              status.value = false;
+              Loading.value = false;
+              Get.back();
+              homeController.clockin(check: true);
+            }
             Get.snackbar(
               "Checkpoints ",
               'Successfully Added',
             );
-            if (checkboxvalue.value == true) {
-              homeController.clockindate2 = DateTime.now().day;
-              var check = BaseUrl.storage
-                  .read("lastAttendanceRecordDate")
-                  .toString()
-                  .split('/')[0];
-            } else if (BaseUrl.storage.read("status") == false) {
-              homeController.clockin(check: true);
-            }
 
             // Get.back();
           } else {
@@ -343,9 +222,10 @@ class CheckPointController extends GetxController
       response = HistoryCheckpointModel.fromJson(response.data);
       historyList.value = response.data[0].checkPoints;
       mainhistorylist.value = historyList.value;
+      print(mainhistorylist.value[0].image);
     } else {
       Loading.value = false;
-      // Get.snackbar("Error ", response.data['error'].toString(),
+      // Get.snackbar("Error ", response.data['error'].t oString(),
       //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();

@@ -71,11 +71,6 @@ class Routes {
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/faqsdetails",
-        page: () => FAQsDetailScreen(),
-        transition: Transition.rightToLeft,
-        curve: Curves.easeInQuart),
-    GetPage(
         name: "/mypoints",
         page: () => MyPointScreen(),
         transition: Transition.rightToLeft,
