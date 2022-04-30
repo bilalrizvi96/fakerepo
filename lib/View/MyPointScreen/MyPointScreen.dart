@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../SummaryScreen/SummaryScreen.dart';
+
 class MyPointScreen extends StatelessWidget {
   const MyPointScreen({Key? key}) : super(key: key);
 
@@ -370,10 +372,25 @@ class MyPointScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Spacer(),
-                                Icon(
-                                  Icons.help_outline,
-                                  size: width / 15,
-                                  color: Colors.white,
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.bottomSheet(
+                                        InformationBottom(
+                                            height: height, width: width),
+                                        elevation: 20.0,
+                                        enableDrag: false,
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(10.0),
+                                        )));
+                                  },
+                                  child: Icon(
+                                    Icons.help_outline,
+                                    size: width / 15,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 SizedBox(
                                   width: width / 15,

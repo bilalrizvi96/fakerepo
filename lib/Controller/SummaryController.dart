@@ -43,12 +43,13 @@ class SummaryController extends GetxController
     'DEC'
   ];
   summaryPdf() async {
+    Loading.value = true;
     var response = await API().SummaryPDf(
         month: todate.value.month.toString(),
         year: todate.value.year.toString());
     if (response.statusCode == 200) {
       var urls = response.data['data'][0]['url'];
-
+      Loading.value = false;
       print(urls);
       if (!await launch(
         urls,
@@ -59,6 +60,7 @@ class SummaryController extends GetxController
         throw 'Could not launch $urls';
       }
     } else {
+      Loading.value = false;
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }

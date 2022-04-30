@@ -332,11 +332,13 @@ class NotificationScreen extends StatelessWidget {
                                                     left: width / 2.4,
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        var b = Base64Decoder().convert(
-                                                            notificationController
-                                                                .notificationlist
-                                                                .value[index]
-                                                                .image);
+                                                        var byte = Base64Decoder()
+                                                            .convert(
+                                                                notificationController
+                                                                    .notificationlist
+                                                                    .value[
+                                                                        index]
+                                                                    .image);
                                                         showDialog(
                                                             context: context,
                                                             barrierDismissible:
@@ -357,7 +359,7 @@ class NotificationScreen extends StatelessWidget {
                                                                       ),
                                                                     ),
                                                                     Image.memory(
-                                                                        b,
+                                                                        byte,
                                                                         fit: BoxFit
                                                                             .cover)
                                                                   ],

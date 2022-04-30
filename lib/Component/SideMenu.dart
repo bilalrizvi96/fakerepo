@@ -1,6 +1,8 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SideMenu extends StatelessWidget {
   @override
@@ -8,15 +10,19 @@ class SideMenu extends StatelessWidget {
     return Drawer(
       child: Container(
         color: Colors.white,
-        child: ListView(
+        child: Column(
           children: [
-            DrawerHeader(
-              padding: const EdgeInsets.all(18.0),
-              decoration: BoxDecoration(
-                color: DynamicColor().primarycolor,
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: DrawerHeader(
+                padding: const EdgeInsets.all(18.0),
+                decoration: BoxDecoration(
+                  color: DynamicColor().primarycolor,
+                ),
+                child: Image.asset('assets/logo.png'),
               ),
-              child: Image.asset('assets/logo.png'),
             ),
+
             // DrawerListTile(
             //   title: "Help center",
             //   icon: Icon(Icons.help, color: DynamicColor().primarycolor),
@@ -55,6 +61,21 @@ class SideMenu extends StatelessWidget {
                 Get.back();
                 Get.toNamed('/notification');
               },
+            ),
+
+            Spacer(),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text("V " + BaseUrl.version.toString(),
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        color: DynamicColor().black)),
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 5,
             ),
           ],
         ),

@@ -248,6 +248,8 @@ class HomeController extends GetxController {
         BaseUrl.storage.write("status", true);
         var resp = await API().AbsentPresent();
         if (resp.statusCode == 200) {
+          _summaryController.init();
+
           print('bilal');
 
           BaseUrl.storage
@@ -324,6 +326,8 @@ class HomeController extends GetxController {
             date: outputDate,
             check: check);
         if (response.statusCode == 200) {
+          _summaryController.init();
+
           print('bilal');
           popups(
               image: response.data['data'][0]['messages'][0]['imageUrl'],
@@ -341,7 +345,7 @@ class HomeController extends GetxController {
           Loading.value = false;
           BaseUrl.clockout = outputDate1.toString();
           BaseUrl.storage.write("clockout", BaseUrl.clockout);
-          _summaryController.init();
+
           Get.snackbar(
             "Attendance ",
             "Clock Out Successfully",
@@ -363,6 +367,7 @@ class HomeController extends GetxController {
           date: outputDate,
           check: check);
       if (response.statusCode == 200) {
+        _summaryController.init();
         BaseUrl.storage.write("status", false);
         Loading.value = false;
         BaseUrl.clockout = outputDate1.toString();

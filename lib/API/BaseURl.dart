@@ -15,7 +15,7 @@ class BaseUrl {
       "https://15qh59akj4.execute-api.us-east-2.amazonaws.com/dev/";
   static var baseurl_Face =
       "http://flask-env.eba-iaxsivgi.us-east-2.elasticbeanstalk.com/";
-  static var version = '1.1.0';
+  static var version = '1.2.0';
 }
 //live
 //https://fn8tsd4pbh.execute-api.us-east-2.amazonaws.com/dev/
