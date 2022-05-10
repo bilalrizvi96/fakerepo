@@ -61,389 +61,121 @@ class NotificationScreen extends StatelessWidget {
                       height: height / 20,
                     ),
                     notificationController.Loading.value == false
-                        ? Expanded(
-                            child: notificationController
-                                    .notificationlist.value.isNotEmpty
-                                ? ListView.builder(
-                                    itemCount: notificationController
-                                        .notificationlist.value.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (_, index) {
-                                      return Center(
-                                        child: Padding(
+                        ? notificationController
+                                .notificationlist.value.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: notificationController
+                                    .notificationlist.value.length,
+                                shrinkWrap: true,
+                                itemBuilder: (_, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: width / 55,
+                                          height: height / 8.5,
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  DynamicColor().primarycolor,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0)),
+                                        ),
+                                        Container(
+                                          height: height / 8.5,
+                                          width: width / 1.1,
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            height: height / 2.6,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                            ),
-                                            child: Stack(
-                                              children: [
-                                                Container(
-                                                  width: width / 1.2,
-                                                  height: height / 2.8,
-                                                  alignment: Alignment.topLeft,
-                                                  padding: EdgeInsets.only(
-                                                      left: 20, top: 20),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                      color: Color(0xFFE7EFFE)),
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      ClipOval(
-                                                        child: Image.network(
-                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/register/' +
-                                                                BaseUrl.storage
-                                                                    .read(
-                                                                        'empCode')
-                                                                    .toString() +
-                                                                ".jpg",
-                                                            height: 40,
-                                                            width: 40,
-                                                            fit: BoxFit.cover),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width / 25,
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            '${BaseUrl.storage.read('name')}',
-                                                            style: GoogleFonts.poppins(
-                                                                color: DynamicColor()
-                                                                    .primarycolor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize:
-                                                                    width / 25),
-                                                          ),
-                                                          Text(
-                                                            '${BaseUrl.storage.read('empCode')}',
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontSize:
-                                                                        width /
-                                                                            29),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
+                                          decoration: BoxDecoration(
+                                              color: Color(0xFFF8F7F7),
+                                              border: Border.fromBorderSide(
+                                                  BorderSide(
+                                                      color:
+                                                          Color(0xFFDFDFDF))),
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(5.0),
+                                                bottomRight:
+                                                    Radius.circular(5.0),
+                                              )),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: width / 60,
                                                   ),
-                                                ),
-                                                Positioned(
-                                                  top: height / 9,
-                                                  child: Container(
-                                                    width: width / 1.2,
-                                                    height: height / 4.05,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                        color: Colors.white),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        SizedBox(
-                                                          height: height / 40,
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: width / 20,
-                                                            ),
-                                                            Icon(
-                                                                Icons
-                                                                    .access_time,
-                                                                size:
-                                                                    width / 24,
-                                                                color: Color(
-                                                                    0xFF57DDFF)),
-                                                            SizedBox(
-                                                              width: width / 40,
-                                                            ),
-                                                            Text(
-                                                              '${notificationController.notificationlist.value[index].time}',
-                                                              style: GoogleFonts.poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300,
-                                                                  fontSize:
-                                                                      width /
-                                                                          28),
-                                                            ),
-                                                            Spacer(),
-                                                            Icon(
-                                                                Icons
-                                                                    .calendar_today_outlined,
-                                                                size:
-                                                                    width / 24,
-                                                                color: Color(
-                                                                    0xFF57DDFF)),
-                                                            SizedBox(
-                                                              width: width / 40,
-                                                            ),
-                                                            Text(
-                                                              '${notificationController.notificationlist.value[index].date}',
-                                                              style: GoogleFonts.poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300,
-                                                                  fontSize:
-                                                                      width /
-                                                                          28),
-                                                            ),
-                                                            SizedBox(
-                                                              width: width / 15,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height: height / 80,
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: width / 20,
-                                                            ),
-                                                            Icon(
-                                                                Icons
-                                                                    .apartment_outlined,
-                                                                size:
-                                                                    width / 24,
-                                                                color: Color(
-                                                                    0xFF57DDFF)),
-                                                            SizedBox(
-                                                              width: width / 40,
-                                                            ),
-                                                            Expanded(
-                                                              child: Text(
-                                                                '${notificationController.notificationlist.value[index].region}',
-                                                                style: GoogleFonts.poppins(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w300,
-                                                                    fontSize:
-                                                                        width /
-                                                                            28),
-                                                              ),
-                                                            ),
-                                                            Spacer(),
-                                                            Icon(Icons.logout,
-                                                                size:
-                                                                    width / 24,
-                                                                color: Color(
-                                                                    0xFF57DDFF)),
-                                                            SizedBox(
-                                                              width: width / 40,
-                                                            ),
-                                                            Expanded(
-                                                              child: Text(
-                                                                '${notificationController.notificationlist.value[index].type}',
-                                                                style: GoogleFonts.poppins(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w300,
-                                                                    fontSize:
-                                                                        width /
-                                                                            28),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              width: width / 15,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height: height / 80,
-                                                        ),
-                                                        if (notificationController
-                                                                .notificationlist
-                                                                .value[index]
-                                                                .reason !=
-                                                            '')
-                                                          Row(
-                                                            children: [
-                                                              SizedBox(
-                                                                width:
-                                                                    width / 20,
-                                                              ),
-                                                              Icon(
-                                                                  Icons
-                                                                      .help_outline,
-                                                                  size: width /
-                                                                      24,
-                                                                  color: Color(
-                                                                      0xFF57DDFF)),
-                                                              SizedBox(
-                                                                width:
-                                                                    width / 40,
-                                                              ),
-                                                              Expanded(
-                                                                child: Text(
-                                                                  '${notificationController.notificationlist.value[index].reason}',
-                                                                  style: GoogleFonts.poppins(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w300,
-                                                                      fontSize:
-                                                                          width /
-                                                                              28),
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                width:
-                                                                    width / 15,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                      ],
-                                                    ),
+                                                  Text(
+                                                    '${notificationController.notificationlist.value[index].type}',
+                                                    style: GoogleFonts.poppins(
+                                                        color: DynamicColor()
+                                                            .primarycolor,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: width / 25),
                                                   ),
-                                                ),
-                                                if (notificationController
-                                                        .notificationlist
-                                                        .value[index]
-                                                        .image !=
-                                                    '')
-                                                  Positioned(
-                                                    top: height / 3.1,
-                                                    left: width / 2.4,
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        var byte = Base64Decoder()
-                                                            .convert(
-                                                                notificationController
-                                                                    .notificationlist
-                                                                    .value[
-                                                                        index]
-                                                                    .image);
-                                                        showDialog(
-                                                            context: context,
-                                                            barrierDismissible:
-                                                                false,
-                                                            builder: (_) =>
-                                                                AlertDialog(
-                                                                  actions: [
-                                                                    Center(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(8.0),
-                                                                        child: GestureDetector(
-                                                                            onTap: () {
-                                                                              Get.back();
-                                                                            },
-                                                                            child: Icon(Icons.clear)),
-                                                                      ),
-                                                                    ),
-                                                                    Image.memory(
-                                                                        byte,
-                                                                        fit: BoxFit
-                                                                            .cover)
-                                                                  ],
-                                                                ));
-                                                      },
-                                                      child: Container(
-                                                        width: width / 2.4,
-                                                        height: height / 17,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      30.0),
-                                                          color: DynamicColor()
-                                                              .primarycolor,
-                                                        ),
-                                                        child: Row(
-                                                          children: [
-                                                            Container(
-                                                              width: width / 10,
-                                                              height:
-                                                                  height / 17,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20),
-                                                                  color: Color(
-                                                                      0xFF80B6FC)),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .attach_file,
-                                                                color: Colors
-                                                                    .white30,
-                                                              ),
-                                                            ),
-                                                            Spacer(),
-                                                            Text(
-                                                              'View Document',
-                                                              style: GoogleFonts.poppins(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      width /
-                                                                          32),
-                                                            ),
-                                                            Spacer(),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                  Spacer(),
+                                                  Text(
+                                                    '${notificationController.notificationlist.value[index].time}',
+                                                    style: GoogleFonts.poppins(
+                                                        color: DynamicColor()
+                                                            .primarycolor,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        fontSize: width / 28),
+                                                  ),
+                                                  SizedBox(
+                                                    width: width / 60,
                                                   )
-                                              ],
-                                            ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: height / 80,
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Text(
+                                                    '${notificationController.notificationlist.value[index].reason}',
+                                                    style: GoogleFonts.poppins(
+                                                        color: DynamicColor()
+                                                            .black,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: width / 30.2),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      );
-                                    })
-                                : Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: height / 15,
-                                      ),
-                                      Image.asset('assets/nodatafound.png'),
-                                      // Spacer(),
-                                      Text(
-                                        "No Data Found",
-                                        style: GoogleFonts.poppins(
-                                            color:
-                                                Colors.black.withOpacity(0.50),
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: width / 22),
-                                      ),
-                                      // Spacer(),
-                                    ],
+                                      ],
+                                    ),
+                                  );
+                                })
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: height / 15,
                                   ),
-                          )
+                                  Image.asset('assets/nodatafound.png'),
+                                  // Spacer(),
+                                  Text(
+                                    "No Data Found",
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.black.withOpacity(0.50),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: width / 22),
+                                  ),
+                                  // Spacer(),
+                                ],
+                              )
                         : Center(
                             child: Image.asset(
                               "assets/1.gif",

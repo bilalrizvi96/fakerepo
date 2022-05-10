@@ -55,6 +55,7 @@ class BottomNavigationScreen extends StatelessWidget {
                 return willLeave;
               },
               child: Scaffold(
+                key: bottomNavigationController.scaffoldKey,
                 drawer: SideMenu(),
                 bottomNavigationBar: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
@@ -85,7 +86,7 @@ class BottomNavigationScreen extends StatelessWidget {
                     FeedbackScreen(
                       check: true,
                     ),
-                    MyProfileScreen(),
+                    // HomeScreen(),
                   ],
                 ),
               ));

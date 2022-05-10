@@ -15,7 +15,7 @@ import '../View/CheckPointScreen/CheckPointScreen.dart';
 class BottomNavigationController extends GetxController {
   var selectedIndex = 0.obs;
   var connection = true.obs;
-
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   check() async {
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
@@ -34,7 +34,6 @@ class BottomNavigationController extends GetxController {
     FeedbackScreen(
       check: true,
     ),
-    // MyProfileScreen(),
   ];
 
   @override
@@ -97,6 +96,7 @@ class BottomNavigationController extends GetxController {
 
   void ItemIndex(index) {
     selectedIndex.value = index;
+
     update();
   }
 }
