@@ -57,15 +57,18 @@ class User {
     this.consumeCasualLeaves,
     this.checkpointAccess,
     this.lastAttendanceRecordDate,
-    this.isMessageAvailable,
-    this.message,
     this.firstAttendanceRecordDate,
     this.checkIn,
     this.checkOut,
-    this.dateForMissingCheckout,
     this.checkOutMissing,
+    this.dateForMissingCheckout,
     this.presentDays,
     this.absentDays,
+    required this.sites,
+    required this.summaryGuideline,
+    this.version,
+    this.isMessageAvailable,
+    this.message,
   });
 
   var id;
@@ -94,15 +97,18 @@ class User {
   var consumeCasualLeaves;
   var checkpointAccess;
   var lastAttendanceRecordDate;
-  var isMessageAvailable;
-  var message;
   var firstAttendanceRecordDate;
   var checkIn;
   var checkOut;
-  var dateForMissingCheckout;
   var checkOutMissing;
+  var dateForMissingCheckout;
   var presentDays;
   var absentDays;
+  List<Site> sites;
+  List<SummaryGuideline> summaryGuideline;
+  var version;
+  var isMessageAvailable;
+  var message;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["_id"],
@@ -131,15 +137,19 @@ class User {
         consumeCasualLeaves: json["consumeCasualLeaves"],
         checkpointAccess: json["checkpointAccess"],
         lastAttendanceRecordDate: json["lastAttendanceRecordDate"],
-        isMessageAvailable: json["isMessageAvailable"],
-        message: Message.fromJson(json["message"]),
         firstAttendanceRecordDate: json["firstAttendanceRecordDate"],
         checkIn: json["checkIn"],
         checkOut: json["checkOut"],
-        dateForMissingCheckout: json["dateForMissingCheckout"],
         checkOutMissing: json["checkOutMissing"],
+        dateForMissingCheckout: DateTime.parse(json["dateForMissingCheckout"]),
         presentDays: json["present_days"],
         absentDays: json["absent_days"],
+        sites: List<Site>.from(json["sites"].map((x) => Site.fromJson(x))),
+        summaryGuideline: List<SummaryGuideline>.from(
+            json["summaryGuideline"].map((x) => SummaryGuideline.fromJson(x))),
+        version: Version.fromJson(json["version"]),
+        isMessageAvailable: json["isMessageAvailable"],
+        message: Message.fromJson(json["message"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -169,49 +179,171 @@ class User {
         "consumeCasualLeaves": consumeCasualLeaves,
         "checkpointAccess": checkpointAccess,
         "lastAttendanceRecordDate": lastAttendanceRecordDate,
-        "isMessageAvailable": isMessageAvailable,
-        "message": message.toJson(),
         "firstAttendanceRecordDate": firstAttendanceRecordDate,
         "checkIn": checkIn,
         "checkOut": checkOut,
-        "checkOut": dateForMissingCheckout,
         "checkOutMissing": checkOutMissing,
+        "dateForMissingCheckout": dateForMissingCheckout.toIso8601String(),
         "present_days": presentDays,
         "absent_days": absentDays,
+        "sites": List<dynamic>.from(sites.map((x) => x.toJson())),
+        "summaryGuideline":
+            List<dynamic>.from(summaryGuideline.map((x) => x.toJson())),
+        "version": version.toJson(),
+        "isMessageAvailable": isMessageAvailable,
+        "message": message.toJson(),
       };
 }
 
 class Message {
-  Message(
-      {this.id,
-      this.type,
-      this.shiftType,
-      this.message,
-      this.imageUrl,
-      this.title});
+  Message({
+    this.id,
+    this.type,
+    this.subType,
+    this.title,
+    this.message,
+    this.imageUrl,
+  });
 
   var id;
   var type;
-  var shiftType;
+  var subType;
+  var title;
   var message;
   var imageUrl;
-  var title;
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
         id: json["_id"],
         type: json["type"],
-        shiftType: json["shiftType"],
+        subType: json["subType"],
+        title: json["title"],
         message: json["message"],
         imageUrl: json["imageUrl"],
-        title: json["title"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "type": type,
-        "shiftType": shiftType,
+        "subType": subType,
+        "title": title,
         "message": message,
         "imageUrl": imageUrl,
-        "title": title,
+      };
+}
+
+class Site {
+  Site({
+    this.id,
+    this.sitesName,
+    this.address,
+    this.siteSwitch,
+    this.type,
+    this.distanceInMeters,
+    this.location,
+    this.region,
+  });
+
+  var id;
+  var sitesName;
+  var address;
+  var siteSwitch;
+  var type;
+  var distanceInMeters;
+  var location;
+  var region;
+
+  factory Site.fromJson(Map<String, dynamic> json) => Site(
+        id: json["_id"],
+        sitesName: json["SitesName"],
+        address: json["Address"],
+        siteSwitch: json["Site_switch"],
+        type: json["Type"],
+        distanceInMeters: json["distanceInMeters"],
+        location: json["location"],
+        region: json["region"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "SitesName": sitesName,
+        "Address": address,
+        "Site_switch": siteSwitch,
+        "Type": type,
+        "distanceInMeters": distanceInMeters,
+        "location": location,
+        "region": region,
+      };
+}
+
+class SummaryGuideline {
+  SummaryGuideline({
+    this.title,
+    this.decription,
+    this.point,
+    this.textcolor,
+    this.color,
+  });
+
+  var title;
+  var decription;
+  var point;
+  var textcolor;
+  var color;
+
+  factory SummaryGuideline.fromJson(Map<String, dynamic> json) =>
+      SummaryGuideline(
+        title: json["Title"],
+        decription: json["decription"],
+        point: json["point"],
+        textcolor: json["textcolor"],
+        color: json["color"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "Title": title,
+        "decription": decription,
+        "point": point,
+        "textcolor": textcolor,
+        "color": color,
+      };
+}
+
+class Version {
+  Version({
+    this.id,
+    this.version,
+    this.link,
+    this.message,
+    this.availableRelease,
+    this.currentRelease,
+    this.updateAvailability,
+  });
+
+  var id;
+  var version;
+  var link;
+  var message;
+  var availableRelease;
+  var currentRelease;
+  var updateAvailability;
+
+  factory Version.fromJson(Map<String, dynamic> json) => Version(
+        id: json["_id"],
+        version: json["version"],
+        link: json["link"],
+        message: json["message"],
+        availableRelease: json["availableRelease"],
+        currentRelease: json["currentRelease"],
+        updateAvailability: json["updateAvailability"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "version": version,
+        "link": link,
+        "message": message,
+        "availableRelease": availableRelease,
+        "currentRelease": currentRelease,
+        "updateAvailability": updateAvailability,
       };
 }

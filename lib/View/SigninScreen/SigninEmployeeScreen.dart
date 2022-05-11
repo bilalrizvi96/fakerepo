@@ -297,7 +297,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: height / 30,
+                                      height: height / 50,
                                     ),
                                     GestureDetector(
                                       onTap: () {
@@ -331,6 +331,14 @@ class SiginEmployeeScreen extends StatelessWidget {
                                     ),
                                     SizedBox(
                                       height: height / 50,
+                                    ),
+                                    Text("V " + BaseUrl.version.toString(),
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 15,
+                                            color: DynamicColor().black)),
+                                    SizedBox(
+                                      height: height / 80,
                                     ),
                                   ],
                                 )

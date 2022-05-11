@@ -1,13 +1,14 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:attendencesystem/Controller/MyProfileController.dart';
+
+import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyProfileScreen extends StatelessWidget {
-  MyProfileController myProfileController = Get.put(MyProfileController());
-
+  SignInEmployeeController _signInEmployeeController =
+      Get.put(SignInEmployeeController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -19,12 +20,12 @@ class MyProfileScreen extends StatelessWidget {
               width: width,
               color: Color(0xFFEBEFFF),
               padding: EdgeInsets.only(top: 15.0),
-              child: GetBuilder(
-                  init: myProfileController,
-                  builder: (_) {
-                    return Stack(
-                      children: [
-                        Column(
+              child: Stack(
+                children: [
+                  GetBuilder(
+                      init: _signInEmployeeController,
+                      builder: (context) {
+                        return Column(
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
@@ -101,8 +102,7 @@ class MyProfileScreen extends StatelessWidget {
                                   width: width / 1.22,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller:
-                                        myProfileController.firstnameController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
@@ -156,8 +156,7 @@ class MyProfileScreen extends StatelessWidget {
                                   width: width / 1.22,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller:
-                                        myProfileController.firstnameController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
@@ -167,13 +166,12 @@ class MyProfileScreen extends StatelessWidget {
                                       hintText:
                                           BaseUrl.storage.read("name") != ' '
                                               ? BaseUrl.storage.read("name")
-                                              : "Name",
+                                              : "First Name",
                                       focusColor: DynamicColor().primarycolor,
                                       hoverColor: DynamicColor().primarycolor,
                                       fillColor: Colors.white,
                                       filled: true,
                                       border: InputBorder.none,
-                                      //fillColor: Colors.green
                                     ),
                                     // keyboardType: TextInputType.none,
                                   ),
@@ -211,8 +209,7 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.number,
-                                    controller:
-                                        myProfileController.mobileController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
@@ -268,8 +265,7 @@ class MyProfileScreen extends StatelessWidget {
                                   width: width / 1.22,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller: myProfileController
-                                        .designationController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
@@ -323,8 +319,7 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.datetime,
-                                    controller: myProfileController
-                                        .date_of_joiningController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
@@ -383,8 +378,7 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.datetime,
-                                    controller: myProfileController
-                                        .date_of_joiningController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
@@ -437,8 +431,6 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.datetime,
-                                    controller: myProfileController
-                                        .date_of_joiningController,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
                                         color: DynamicColor().primarycolor,
@@ -490,8 +482,6 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.datetime,
-                                    controller: myProfileController
-                                        .date_of_joiningController,
 
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
@@ -545,8 +535,6 @@ class MyProfileScreen extends StatelessWidget {
                                   width: width / 1.22,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller:
-                                        myProfileController.addressController,
 
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
@@ -597,8 +585,6 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.emailAddress,
-                                    controller: myProfileController
-                                        .email_addressController,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
                                         color: DynamicColor().primarycolor,
@@ -646,8 +632,6 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.text,
-                                    controller: myProfileController
-                                        .shift_timmingController,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
                                         color: DynamicColor().primarycolor,
@@ -672,10 +656,10 @@ class MyProfileScreen extends StatelessWidget {
                               height: height / 10,
                             ),
                           ],
-                        ),
-                      ],
-                    );
-                  })),
+                        );
+                      }),
+                ],
+              )),
         ),
       ),
     );

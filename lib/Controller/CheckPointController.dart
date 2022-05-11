@@ -225,8 +225,6 @@ class CheckPointController extends GetxController
       print(mainhistorylist.value[0].image);
     } else {
       Loading.value = false;
-      // Get.snackbar("Error ", response.data['error'].t oString(),
-      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }

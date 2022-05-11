@@ -25,6 +25,29 @@ class API {
     }
   }
 
+  Future SigIn({var employee_Id, var isFace, var hash}) async {
+    try {
+      Map data = {
+        'code': employee_Id,
+        "isFace": isFace,
+        "verification": hash,
+        "version": BaseUrl.version,
+      };
+      print(data);
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      final response = await dio.post(
+        BaseUrl.baseurl + 'login',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
   Future CheckUpdate() async {
     try {
       Map data = {"version": BaseUrl.version.toString()};
@@ -146,7 +169,7 @@ class API {
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
-        BaseUrl.baseurl + 'mobileNotifications',
+        BaseUrl.baseurl + 'generalNotification',
       );
       if (response.statusCode == 200) {
         return response;
@@ -204,23 +227,6 @@ class API {
       );
 
       if (response.statusCode == 201) {
-        return response;
-      }
-    } catch (e) {
-      return onError(e);
-    }
-  }
-
-  Future SigIn({var employee_Id, var isFace, var hash}) async {
-    try {
-      Map data = {'code': employee_Id, "isFace": isFace, "verification": hash};
-      var dio = Dio();
-      dio.options.headers['Accept'] = 'application/json';
-      final response = await dio.post(
-        BaseUrl.baseurl + 'login',
-        data: data,
-      );
-      if (response.statusCode == 200) {
         return response;
       }
     } catch (e) {

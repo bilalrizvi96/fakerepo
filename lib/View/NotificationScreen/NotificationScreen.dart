@@ -108,7 +108,7 @@ class NotificationScreen extends StatelessWidget {
                                                     width: width / 60,
                                                   ),
                                                   Text(
-                                                    '${notificationController.notificationlist.value[index].type}',
+                                                    '${notificationController.notificationlist.value[index].title}',
                                                     style: GoogleFonts.poppins(
                                                         color: DynamicColor()
                                                             .primarycolor,
@@ -140,7 +140,7 @@ class NotificationScreen extends StatelessWidget {
                                                       const EdgeInsets.only(
                                                           left: 8.0),
                                                   child: Text(
-                                                    '${notificationController.notificationlist.value[index].reason}',
+                                                    '${notificationController.notificationlist.value[index].message}',
                                                     style: GoogleFonts.poppins(
                                                         color: DynamicColor()
                                                             .black,

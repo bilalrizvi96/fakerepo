@@ -12,10 +12,12 @@ class BaseUrl {
   static var availableRelease = '';
   static var currentRelease = '';
   static var baseurl =
-      "https://fn8tsd4pbh.execute-api.us-east-2.amazonaws.com/dev/";
+      "https://15qh59akj4.execute-api.us-east-2.amazonaws.com/dev/";
+  static var userdata = [];
   static var baseurl_Face =
       "http://flask-env.eba-iaxsivgi.us-east-2.elasticbeanstalk.com/";
-  static var version = '1.2.0';
+  static var version = '1.0.8';
+  static var fcm_token = '';
 }
 //live
 //https://fn8tsd4pbh.execute-api.us-east-2.amazonaws.com/dev/

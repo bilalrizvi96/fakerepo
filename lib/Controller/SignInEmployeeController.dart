@@ -20,6 +20,7 @@ class SignInEmployeeController extends GetxController {
   var deviceId = "".obs;
   var value;
   var encoded = ''.obs;
+  var userdatalist = [].obs;
   List<int>? imageBytes;
   String? imageBase64;
   var loginFormKey = GlobalKey<FormState>();
@@ -111,7 +112,7 @@ class SignInEmployeeController extends GetxController {
 
   sigin(var isface) async {
     randomss();
-
+    userdatalist.clear();
     String credentials = value;
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     encoded.value = stringToBase64.encode(credentials);
@@ -123,8 +124,12 @@ class SignInEmployeeController extends GetxController {
 
     if (response.statusCode == 200) {
       Loading.value = false;
-
+      // print(response.data.user[0].sites);
       response = await LoginModel.fromJson(response.data);
+      // userdatalist.value = response.user;
+      // update();
+      // print(userdatalist[0].name);
+      BaseUrl.userdata = response.user;
       token.value = "BEARER" + " " + response.token;
       BaseUrl.storage.write("token", token.value);
       print(BaseUrl.storage.read("token"));
@@ -166,7 +171,13 @@ class SignInEmployeeController extends GetxController {
           "dateForMissingCheckout", response.user[0].dateForMissingCheckout);
 
       Get.snackbar("Login ", "Login Successfully");
-      Get.offAllNamed('/home');
+      print(response.user[0].version.updateAvailability);
+      print('bilal');
+      if (response.user[0].version.updateAvailability == false) {
+        Get.offAllNamed('/home');
+      } else {
+        Get.offAllNamed('/updatescreen');
+      }
     } else {
       Loading.value = false;
 

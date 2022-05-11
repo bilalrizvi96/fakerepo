@@ -2,12 +2,16 @@ import 'dart:async';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
   var updates = false.obs;
   var url = ''.obs;
+  FirebaseMessaging? _firebaseMessaging;
+  LocationPermission? permission;
   // var context;
   // var connection = true.obs;
 
@@ -27,9 +31,46 @@ class SplashController extends GetxController {
   }
 */
 
+  _registerOnFirebase() async {
+    _firebaseMessaging = FirebaseMessaging.instance;
+    _firebaseMessaging!.subscribeToTopic('all');
+    await _firebaseMessaging!
+        .getToken()
+        .then((var token) => BaseUrl.fcm_token = token.toString());
+    print(BaseUrl.fcm_token.toString());
+  }
+
+  void getMessage() async {
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      RemoteNotification? notification = message.notification;
+      if (notification != null) {
+        Get.snackbar(" ${notification.title.toString()}",
+            "${notification.body.toString()}");
+      }
+      print('Message clicked!');
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      print('Message clicked!');
+      if (notification != null) {
+        Get.snackbar(" ${notification.title.toString()}",
+            "${notification.body.toString()}");
+      }
+    });
+  }
+
   @override
   void onInit() {
+    this._registerOnFirebase();
+    this.getMessage();
     super.onInit();
+
     checks();
   }
 

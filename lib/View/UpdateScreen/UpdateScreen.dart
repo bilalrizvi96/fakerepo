@@ -43,7 +43,7 @@ class UpdateScreen extends StatelessWidget {
                               left: 25.0, right: 25.0, top: 12.0),
                           child: Text(
                             'This update includes improvements to function as listed below.\n\nThe exact changes may differ depending on your device model,region and service provider.'
-                            '\n\n${BaseUrl.message}',
+                            '\n\n${BaseUrl.userdata[0].version.message}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w300,
                                 fontSize:
@@ -71,7 +71,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            '${BaseUrl.currentRelease}',
+                            '${BaseUrl.userdata[0].version.currentRelease}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
@@ -102,7 +102,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            '${BaseUrl.availableRelease}',
+                            '${BaseUrl.userdata[0].version.availableRelease}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
@@ -158,9 +158,9 @@ class UpdateScreen extends StatelessWidget {
                         elevation: 1.0, primary: DynamicColor().primarycolor),
                     onPressed: () async {
                       BaseUrl.storage.erase();
-                      BaseUrl.url;
-                      print(BaseUrl.url);
-                      if (await canLaunch(BaseUrl.url)) {
+                      // BaseUrl.url;
+                      print(BaseUrl.userdata[0].version.link);
+                      if (await canLaunch(BaseUrl.userdata[0].version.link)) {
                         await launch(
                           BaseUrl.url,
                           forceSafariVC: false,
@@ -170,7 +170,7 @@ class UpdateScreen extends StatelessWidget {
                           },
                         );
                       } else {
-                        throw 'Could not launch ${BaseUrl.url}';
+                        throw 'Could not launch ${BaseUrl.userdata[0].version.link}';
                       }
                     },
                     child: const Text('UPDATE')),
