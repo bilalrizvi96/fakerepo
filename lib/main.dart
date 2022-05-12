@@ -26,7 +26,6 @@ Future<void> main() async {
           projectId: 'attendancesystem-332409'));
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

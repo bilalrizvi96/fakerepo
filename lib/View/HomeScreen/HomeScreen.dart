@@ -697,7 +697,7 @@ class HomeScreen extends StatelessWidget {
                                                       .split('/')[0];
 
                                                   if (homeController
-                                                          .clockindate2 ==
+                                                          .clockindate2 !=
                                                       int.parse(check)) {
                                                     homeController.scan();
                                                     homeController

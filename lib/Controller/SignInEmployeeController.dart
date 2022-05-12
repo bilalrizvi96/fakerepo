@@ -20,7 +20,9 @@ class SignInEmployeeController extends GetxController {
   var deviceId = "".obs;
   var value;
   var encoded = ''.obs;
-  var userdatalist = [].obs;
+  var userdatalist;
+  var summaryguidlinedatalist;
+  var sitelist;
   List<int>? imageBytes;
   String? imageBase64;
   var loginFormKey = GlobalKey<FormState>();
@@ -38,7 +40,9 @@ class SignInEmployeeController extends GetxController {
       read.value = false;
       update();
     }
-
+    summaryguidlinedatalist = BaseUrl.storage.read('summaryguideline');
+    sitelist = BaseUrl.storage.read('sitesdata');
+    userdatalist = BaseUrl.storage.read('userdata');
     //
   }
 
@@ -112,7 +116,7 @@ class SignInEmployeeController extends GetxController {
 
   sigin(var isface) async {
     randomss();
-    userdatalist.clear();
+
     String credentials = value;
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     encoded.value = stringToBase64.encode(credentials);
@@ -126,9 +130,10 @@ class SignInEmployeeController extends GetxController {
       Loading.value = false;
       // print(response.data.user[0].sites);
       response = await LoginModel.fromJson(response.data);
-      // userdatalist.value = response.user;
-      // update();
-      // print(userdatalist[0].name);
+      BaseUrl.storage.write("summaryguideline", response.summaryGuideline);
+      BaseUrl.storage.write("userdata", response.user);
+      BaseUrl.storage.write("sitesdata", response.sites);
+      userdatalist = response.user;
 
       token.value = "BEARER" + " " + response.token;
       BaseUrl.storage.write("token", token.value);
@@ -169,14 +174,14 @@ class SignInEmployeeController extends GetxController {
           response.user[0].lastAttendanceRecordDate);
       BaseUrl.storage.write(
           "dateForMissingCheckout", response.user[0].dateForMissingCheckout);
-      BaseUrl.userdata = response.user;
-      Get.snackbar("Login ", "Login Successfully");
-      print(response.user[0].version.updateAvailability);
+
       print('bilal');
-      if (response.user[0].version.updateAvailability == false) {
-        Get.offAllNamed('/home');
-      } else {
-        Get.offAllNamed('/updatescreen');
+      if (userdatalist.isNotEmpty) {
+        if (userdatalist[0].version.updateAvailability == false) {
+          Get.offAllNamed('/home');
+        } else {
+          Get.offAllNamed('/updatescreen');
+        }
       }
     } else {
       Loading.value = false;

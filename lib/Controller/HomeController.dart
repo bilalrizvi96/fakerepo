@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'SignInEmployeeController.dart';
 import 'SummaryController.dart';
 
 class HomeController extends GetxController {
@@ -27,7 +28,8 @@ class HomeController extends GetxController {
   ScanResult? scanResult;
   var sites = "".obs;
   var url = ''.obs;
-
+  SignInEmployeeController _signInEmployeeController =
+      Get.put(SignInEmployeeController());
   var clockindate;
   var clockindate2;
   var Loading = false.obs;
@@ -475,23 +477,28 @@ class HomeController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
+  init() async {
+    // print(BaseUrl.userdata[0].sites);
     Loading.value = false;
     current.value =
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();
-
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
-    for (var val in BaseUrl.userdata[0].sites) {
-      sitelist.add(val.sitesName.toString());
+    for (int val = 0; val < _signInEmployeeController.sitelist.length; val++) {
+      sitelist
+          .add(_signInEmployeeController.sitelist[val].sitesName.toString());
       sitelist.sort((a, b) {
         return a.toLowerCase().compareTo(b.toLowerCase());
       });
     }
 
-    dropdownValue.value = sitelist.first;
+    dropdownValue.value = "sitelist.first";
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    init();
     // getSites();
   }
 }

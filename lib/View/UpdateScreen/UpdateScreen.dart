@@ -9,9 +9,12 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../API/BaseURl.dart';
 import '../../Component/DynamicColor.dart';
 
+import '../../Controller/SignInEmployeeController.dart';
 import '../FeedbackScreen/FeedbackScreen.dart';
 
 class UpdateScreen extends StatelessWidget {
+  SignInEmployeeController _signInEmployeeController =
+      Get.put(SignInEmployeeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +46,7 @@ class UpdateScreen extends StatelessWidget {
                               left: 25.0, right: 25.0, top: 12.0),
                           child: Text(
                             'This update includes improvements to function as listed below.\n\nThe exact changes may differ depending on your device model,region and service provider.'
-                            '\n\n${BaseUrl.userdata[0].version.message}',
+                            '\n\n${_signInEmployeeController.userdatalist[0].version.message}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w300,
                                 fontSize:
@@ -71,7 +74,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            '${BaseUrl.userdata[0].version.currentRelease}',
+                            '${_signInEmployeeController.userdatalist[0].version.currentRelease}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
@@ -102,7 +105,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            '${BaseUrl.userdata[0].version.availableRelease}',
+                            '${_signInEmployeeController.userdatalist[0].version.availableRelease}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
@@ -159,10 +162,13 @@ class UpdateScreen extends StatelessWidget {
                     onPressed: () async {
                       BaseUrl.storage.erase();
                       // BaseUrl.url;
-                      print(BaseUrl.userdata[0].version.link);
-                      if (await canLaunch(BaseUrl.userdata[0].version.link)) {
+                      print(_signInEmployeeController
+                          .userdatalist[0].version.link);
+                      if (await canLaunch(_signInEmployeeController
+                          .userdatalist[0].version.link)) {
                         await launch(
-                          BaseUrl.userdata[0].version.link,
+                          _signInEmployeeController
+                              .userdatalist[0].version.link,
                           forceSafariVC: false,
                           forceWebView: false,
                           headers: <String, String>{
@@ -170,7 +176,7 @@ class UpdateScreen extends StatelessWidget {
                           },
                         );
                       } else {
-                        throw 'Could not launch ${BaseUrl.userdata[0].version.link}';
+                        throw 'Could not launch ${_signInEmployeeController.userdatalist[0].version.link}';
                       }
                     },
                     child: const Text('UPDATE')),

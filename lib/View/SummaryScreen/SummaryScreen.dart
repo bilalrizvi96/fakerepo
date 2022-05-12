@@ -12,6 +12,8 @@ import 'package:intl/intl.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import '../../Controller/SignInEmployeeController.dart';
+
 class SummaryScreen extends StatelessWidget {
   SummaryScreen({
     Key? key,
@@ -2262,7 +2264,8 @@ class InformationBottom extends StatelessWidget {
     required this.height,
     required this.width,
   }) : super(key: key);
-
+  SignInEmployeeController _signInEmployeeController =
+  Get.put(SignInEmployeeController());
   final double height;
   final double width;
   @override
@@ -2321,7 +2324,7 @@ class InformationBottom extends StatelessWidget {
         ),
         Expanded(
             child: ListView.builder(
-                itemCount: BaseUrl.userdata[0].summaryGuideline.length,
+                itemCount: _signInEmployeeController.summaryguidlinedatalist.length,
                 shrinkWrap: true,
                 itemBuilder: (_, index) {
                   return Padding(
@@ -2331,27 +2334,7 @@ class InformationBottom extends StatelessWidget {
                     ),
                     child: Container(
                       height: height / 7,
-                      // decoration: BoxDecoration(
-                      //     boxShadow: [
-                      //       BoxShadow(
-                      //         color: Color(0xFFD0E4FA),
-                      //         offset: Offset(
-                      //           5.0,
-                      //           5.0,
-                      //         ),
-                      //         blurRadius: 10,
-                      //         spreadRadius: -2,
-                      //       ), //BoxShadow
-                      //       BoxShadow(
-                      //         color: Colors.white,
-                      //         offset: Offset(0.0, 0.0),
-                      //         blurRadius: 0.0,
-                      //         spreadRadius: 0.0,
-                      //       ), //BoxShadow
-                      //     ],
-                      //     borderRadius: BorderRadius.circular(10.0),
-                      //     border:
-                      //         Border.all(color: DynamicColor().primarycolor)),
+
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -2367,7 +2350,7 @@ class InformationBottom extends StatelessWidget {
                                 height: height / 50,
                               ),
                               Text(
-                                BaseUrl.userdata[0].summaryGuideline[index].title,
+                                _signInEmployeeController.summaryguidlinedatalist[index].title,
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -2376,7 +2359,7 @@ class InformationBottom extends StatelessWidget {
                               Container(
                                 width: width / 2,
                                 child: Text(
-                                  BaseUrl.userdata[0].summaryGuideline[index].decription,
+                                  _signInEmployeeController.summaryguidlinedatalist[index].decription,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w300,
                                       color: Colors.black,
@@ -2395,8 +2378,8 @@ class InformationBottom extends StatelessWidget {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                  color: Color(int.parse(BaseUrl.userdata[0].summaryGuideline[index].textcolor))),
-                              color: Color(int.parse(BaseUrl.userdata[0].summaryGuideline[index].color)),
+                                  color: Color(int.parse(_signInEmployeeController.summaryguidlinedatalist[index].textcolor))),
+                              color: Color(int.parse(_signInEmployeeController.summaryguidlinedatalist[index].color)),
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10.0),
                                 topLeft: Radius.circular(10.0),
@@ -2404,9 +2387,9 @@ class InformationBottom extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              BaseUrl.userdata[0].summaryGuideline[index].point,
+                              _signInEmployeeController.summaryguidlinedatalist[index].point,
                               style: GoogleFonts.poppins(
-                                  color: Color(int.parse(BaseUrl.userdata[0].summaryGuideline[index].textcolor)),
+                                  color: Color(int.parse(_signInEmployeeController.summaryguidlinedatalist[index].textcolor)),
                                   fontWeight: FontWeight.w500,
                                   fontSize: width / 24),
                             ),
