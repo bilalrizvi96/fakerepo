@@ -11,11 +11,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../API/BaseURl.dart';
 import '../View/CheckPointScreen/CheckPointScreen.dart';
+import 'HomeController.dart';
+import 'SummaryController.dart';
 
 class BottomNavigationController extends GetxController {
   var selectedIndex = 0.obs;
   var connection = true.obs;
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  SummaryController _summaryController = Get.put(SummaryController());
+  HomeController _homeController = Get.put(HomeController());
   check() async {
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
@@ -96,7 +100,12 @@ class BottomNavigationController extends GetxController {
 
   void ItemIndex(index) {
     selectedIndex.value = index;
-
+    if (selectedIndex.value == 2) {
+      if (_homeController.Loading.value == true) {
+        _summaryController.init();
+        update();
+      }
+    }
     update();
   }
 }

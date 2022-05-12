@@ -15,6 +15,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message,
 }
 
 Future<void> main() async {
+  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   GestureBinding.instance?.resamplingEnabled = true;
   await Firebase.initializeApp(
@@ -24,7 +25,7 @@ Future<void> main() async {
           messagingSenderId: '833414981797',
           projectId: 'attendancesystem-332409'));
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  await GetStorage.init();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 

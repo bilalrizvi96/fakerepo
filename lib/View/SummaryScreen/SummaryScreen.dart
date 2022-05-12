@@ -16,10 +16,10 @@ class SummaryScreen extends StatelessWidget {
   SummaryScreen({
     Key? key,
   }) : super(key: key);
-
+  SummaryController summaryController = Get.put(SummaryController());
   @override
   Widget build(BuildContext context) {
-    SummaryController summaryController = Get.put(SummaryController());
+
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -2265,7 +2265,6 @@ class InformationBottom extends StatelessWidget {
 
   final double height;
   final double width;
-  SummaryController _summaryController = Get.put(SummaryController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -2322,7 +2321,7 @@ class InformationBottom extends StatelessWidget {
         ),
         Expanded(
             child: ListView.builder(
-                itemCount: _summaryController.summaryguidelinelist.value.length,
+                itemCount: BaseUrl.userdata[0].summaryGuideline.length,
                 shrinkWrap: true,
                 itemBuilder: (_, index) {
                   return Padding(
@@ -2368,8 +2367,7 @@ class InformationBottom extends StatelessWidget {
                                 height: height / 50,
                               ),
                               Text(
-                                _summaryController
-                                    .summaryguidelinelist.value[index].title,
+                                BaseUrl.userdata[0].summaryGuideline[index].title,
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -2378,8 +2376,7 @@ class InformationBottom extends StatelessWidget {
                               Container(
                                 width: width / 2,
                                 child: Text(
-                                  _summaryController.summaryguidelinelist
-                                      .value[index].decription,
+                                  BaseUrl.userdata[0].summaryGuideline[index].decription,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w300,
                                       color: Colors.black,
@@ -2398,10 +2395,8 @@ class InformationBottom extends StatelessWidget {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                  color: Color(int.parse(_summaryController
-                                      .summaryguidelinelist[index].textcolor))),
-                              color: Color(int.parse(_summaryController
-                                  .summaryguidelinelist[index].color)),
+                                  color: Color(int.parse(BaseUrl.userdata[0].summaryGuideline[index].textcolor))),
+                              color: Color(int.parse(BaseUrl.userdata[0].summaryGuideline[index].color)),
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10.0),
                                 topLeft: Radius.circular(10.0),
@@ -2409,11 +2404,9 @@ class InformationBottom extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              _summaryController
-                                  .summaryguidelinelist[index].point,
+                              BaseUrl.userdata[0].summaryGuideline[index].point,
                               style: GoogleFonts.poppins(
-                                  color: Color(int.parse(_summaryController
-                                      .summaryguidelinelist[index].textcolor)),
+                                  color: Color(int.parse(BaseUrl.userdata[0].summaryGuideline[index].textcolor)),
                                   fontWeight: FontWeight.w500,
                                   fontSize: width / 24),
                             ),

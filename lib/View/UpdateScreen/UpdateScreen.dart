@@ -162,7 +162,7 @@ class UpdateScreen extends StatelessWidget {
                       print(BaseUrl.userdata[0].version.link);
                       if (await canLaunch(BaseUrl.userdata[0].version.link)) {
                         await launch(
-                          BaseUrl.url,
+                          BaseUrl.userdata[0].version.link,
                           forceSafariVC: false,
                           forceWebView: false,
                           headers: <String, String>{

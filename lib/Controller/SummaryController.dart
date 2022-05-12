@@ -97,6 +97,7 @@ class SummaryController extends GetxController
   }
 
   summaryAnalytics() async {
+    print('arsalan');
     Loading.value = true;
     weekupdate.value = 0;
     weeklist.value.clear();
@@ -151,6 +152,7 @@ class SummaryController extends GetxController
   }
 
   summaryDetails() async {
+    print('arsalan');
     Loading.value = true;
     summarydetaildata.value.clear();
     var response = await API().Summarydetail(
@@ -182,19 +184,19 @@ class SummaryController extends GetxController
     update();
   }
 
-  summaryGuideline() async {
-    summaryguidelinelist.value.clear();
-    var response = await API().SummaryGuideline();
-    if (response.statusCode == 200) {
-      Loading.value = false;
-      response = await SummaryGuidelineModel.fromJson(response.data);
-      summaryguidelinelist.value = response.data;
-      print(summaryguidelinelist.value[0].decription);
-    } else {
-      Loading.value = false;
-    }
-    update();
-  }
+  // summaryGuideline() async {
+  //   summaryguidelinelist.value.clear();
+  //   var response = await API().SummaryGuideline();
+  //   if (response.statusCode == 200) {
+  //     Loading.value = false;
+  //     response = await SummaryGuidelineModel.fromJson(response.data);
+  //     summaryguidelinelist.value = response.data;
+  //     print(summaryguidelinelist.value[0].decription);
+  //   } else {
+  //     Loading.value = false;
+  //   }
+  //   update();
+  // }
 
   init() {
     tabController =
@@ -226,7 +228,7 @@ class SummaryController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    summaryGuideline();
+    // summaryGuideline();
     init();
   }
 }

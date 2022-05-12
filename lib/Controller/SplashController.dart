@@ -67,10 +67,9 @@ class SplashController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
     this._registerOnFirebase();
     this.getMessage();
-    super.onInit();
-
     checks();
   }
 
@@ -93,6 +92,7 @@ class SplashController extends GetxController {
   checks() {
     var tokenval = BaseUrl.storage.read("token");
     BaseUrl.storage1.read('seen') ?? false;
+    print(tokenval);
     Future.delayed(new Duration(milliseconds: 700), () {
       if (tokenval != "out") {
         if (tokenval != null) {

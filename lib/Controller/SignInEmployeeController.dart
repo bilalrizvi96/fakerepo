@@ -129,7 +129,7 @@ class SignInEmployeeController extends GetxController {
       // userdatalist.value = response.user;
       // update();
       // print(userdatalist[0].name);
-      BaseUrl.userdata = response.user;
+
       token.value = "BEARER" + " " + response.token;
       BaseUrl.storage.write("token", token.value);
       print(BaseUrl.storage.read("token"));
@@ -169,7 +169,7 @@ class SignInEmployeeController extends GetxController {
           response.user[0].lastAttendanceRecordDate);
       BaseUrl.storage.write(
           "dateForMissingCheckout", response.user[0].dateForMissingCheckout);
-
+      BaseUrl.userdata = response.user;
       Get.snackbar("Login ", "Login Successfully");
       print(response.user[0].version.updateAvailability);
       print('bilal');

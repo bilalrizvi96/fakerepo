@@ -15,7 +15,7 @@ import '../../Controller/SummaryController.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
-  SummaryController _summaryController = Get.put(SummaryController());
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;

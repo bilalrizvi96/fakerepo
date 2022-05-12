@@ -132,7 +132,7 @@ class HomeController extends GetxController {
       sites.value = scanResult!.rawContent;
       if (sites.value != "") {
         if (BaseUrl.storage.read("status") == false) {
-          checkUpdate();
+          clockin(check: false);
         } else {
           clockout(check: false);
         }
@@ -213,7 +213,7 @@ class HomeController extends GetxController {
             BaseUrl.storage.write("lastAttendanceRecordDate", dates);
             BaseUrl.storage.write("dateForMissingCheckout", day);
             print(BaseUrl.storage.read("dateForMissingCheckout"));
-            _summaryController.init();
+            // _summaryController.init();
             update();
             // Get.back();
             Get.snackbar("Attendance", "Clock In Successfully");
@@ -248,7 +248,7 @@ class HomeController extends GetxController {
         BaseUrl.storage.write("status", true);
         var resp = await API().AbsentPresent();
         if (resp.statusCode == 200) {
-          _summaryController.init();
+          // _summaryController.init();
 
           print('bilal');
 
@@ -272,7 +272,7 @@ class HomeController extends GetxController {
         BaseUrl.storage.write("lastAttendanceRecordDate", dates);
         BaseUrl.storage.write("dateForMissingCheckout", day);
         print(BaseUrl.storage.read("dateForMissingCheckout"));
-        _summaryController.init();
+        // _summaryController.init();
         update();
         // Get.back();
         Get.snackbar("Attendance", "Clock In Successfully");
@@ -285,27 +285,27 @@ class HomeController extends GetxController {
     update();
   }
 
-  getSites() async {
-    var response = await API().Getsites();
-    if (response.statusCode == 200) {
-      Loading.value = false;
-      response = await SitesModel.fromJson(response.data);
-      for (var val in response.data) {
-        sitelist.add(val.sitesName.toString());
-        sitelist.sort((a, b) {
-          return a.toLowerCase().compareTo(b.toLowerCase());
-        });
-      }
-
-      dropdownValue.value = sitelist.first;
-      print(sitelist);
-    } else {
-      Loading.value = false;
-      Get.snackbar("Error ", response.data['message'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
-    }
-    update();
-  }
+  // getSites() async {
+  //   var response = await API().Getsites();
+  //   if (response.statusCode == 200) {
+  //     Loading.value = false;
+  //     response = await SitesModel.fromJson(response.data);
+  //     for (var val in response.data) {
+  //       sitelist.add(val.sitesName.toString());
+  //       sitelist.sort((a, b) {
+  //         return a.toLowerCase().compareTo(b.toLowerCase());
+  //       });
+  //     }
+  //
+  //     dropdownValue.value = sitelist.first;
+  //     print(sitelist);
+  //   } else {
+  //     Loading.value = false;
+  //     Get.snackbar("Error ", response.data['message'].toString(),
+  //         colorText: Colors.white, backgroundColor: Colors.red);
+  //   }
+  //   update();
+  // }
 
   clockout({var check}) async {
     Loading.value = true;
@@ -326,7 +326,7 @@ class HomeController extends GetxController {
             date: outputDate,
             check: check);
         if (response.statusCode == 200) {
-          _summaryController.init();
+          // _summaryController.init();
 
           print('bilal');
           popups(
@@ -367,7 +367,7 @@ class HomeController extends GetxController {
           date: outputDate,
           check: check);
       if (response.statusCode == 200) {
-        _summaryController.init();
+        // _summaryController.init();
         BaseUrl.storage.write("status", false);
         Loading.value = false;
         BaseUrl.clockout = outputDate1.toString();
@@ -397,28 +397,28 @@ class HomeController extends GetxController {
     update();
   }
 
-  checkUpdate() async {
-    var response = await API().CheckUpdate();
-    if (response.statusCode == 200) {
-      updates.value = response.data['response']['updateAvailability'];
-      if (updates.value == true) {
-        Get.offAllNamed('/updatescreen');
-        url.value = response.data['response']['link'];
-
-        BaseUrl.url = url.value;
-        BaseUrl.message = response.data['response']['message'];
-        BaseUrl.currentRelease = response.data['response']['currentRelease'];
-        BaseUrl.availableRelease =
-            response.data['response']['availableRelease'];
-      } else {
-        clockin(check: false);
-      }
-      // checks();
-    } else {
-      Get.snackbar("Error ", response.data['error'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
-    }
-  }
+  // checkUpdate() async {
+  //   var response = await API().CheckUpdate();
+  //   if (response.statusCode == 200) {
+  //     updates.value = response.data['response']['updateAvailability'];
+  //     if (updates.value == true) {
+  //       Get.offAllNamed('/updatescreen');
+  //       url.value = response.data['response']['link'];
+  //
+  //       BaseUrl.url = url.value;
+  //       BaseUrl.message = response.data['response']['message'];
+  //       BaseUrl.currentRelease = response.data['response']['currentRelease'];
+  //       BaseUrl.availableRelease =
+  //           response.data['response']['availableRelease'];
+  //     } else {
+  //       clockin(check: false);
+  //     }
+  //     // checks();
+  //   } else {
+  //     Get.snackbar("Error ", response.data['error'].toString(),
+  //         colorText: Colors.white, backgroundColor: Colors.red);
+  //   }
+  // }
 
   reasonCheckOut() async {
     Loading.value = true;
@@ -484,6 +484,14 @@ class HomeController extends GetxController {
 
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
-    getSites();
+    for (var val in BaseUrl.userdata[0].sites) {
+      sitelist.add(val.sitesName.toString());
+      sitelist.sort((a, b) {
+        return a.toLowerCase().compareTo(b.toLowerCase());
+      });
+    }
+
+    dropdownValue.value = sitelist.first;
+    // getSites();
   }
 }
