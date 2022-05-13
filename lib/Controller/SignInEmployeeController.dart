@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
+import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -40,7 +41,8 @@ class SignInEmployeeController extends GetxController {
       read.value = false;
       update();
     }
-    summaryguidlinedatalist = BaseUrl.storage.read('summaryguideline');
+
+    // summaryguidlinedatalist = BaseUrl.storage.read('summaryguideline');
     sitelist = BaseUrl.storage.read('sitesdata');
     userdatalist = BaseUrl.storage.read('userdata');
     //
@@ -127,12 +129,9 @@ class SignInEmployeeController extends GetxController {
         hash: encoded.value);
 
     if (response.statusCode == 200) {
-      Loading.value = false;
-      // print(response.data.user[0].sites);
+      Loading.value = false; // print(response.data.user[0].sites);
       response = await LoginModel.fromJson(response.data);
-      BaseUrl.storage.write("summaryguideline", response.summaryGuideline);
-      BaseUrl.storage.write("userdata", response.user);
-      BaseUrl.storage.write("sitesdata", response.sites);
+
       userdatalist = response.user;
 
       token.value = "BEARER" + " " + response.token;
@@ -180,6 +179,7 @@ class SignInEmployeeController extends GetxController {
         if (userdatalist[0].version.updateAvailability == false) {
           Get.offAllNamed('/home');
         } else {
+          BaseUrl.storage.write("token", 'out');
           Get.offAllNamed('/updatescreen');
         }
       }

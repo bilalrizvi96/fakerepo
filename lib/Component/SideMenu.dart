@@ -23,14 +23,14 @@ class SideMenu extends StatelessWidget {
               ),
             ),
 
-            // DrawerListTile(
-            //   title: "Help center",
-            //   icon: Icon(Icons.help, color: DynamicColor().primarycolor),
-            //   press: () {
-            //     Get.back();
-            //     Get.toNamed('/faqs');
-            //   },
-            // ),
+            DrawerListTile(
+              title: "Help center",
+              icon: Icon(Icons.help, color: DynamicColor().primarycolor),
+              press: () {
+                Get.back();
+                Get.toNamed('/faqs');
+              },
+            ),
             DrawerListTile(
               title: "My Points",
               icon: Icon(Icons.star, color: DynamicColor().primarycolor),

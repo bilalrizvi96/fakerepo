@@ -12,7 +12,7 @@ class BaseUrl {
 
   static var baseurl_Face =
       "http://flask-env.eba-iaxsivgi.us-east-2.elasticbeanstalk.com/";
-  static var version = '1.1.1';
+  static var version = '1.1.0';
   static var fcm_token = '';
 }
 //live

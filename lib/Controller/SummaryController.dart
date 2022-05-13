@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../API/API.dart';
 import '../Model/SummaryDetailsModel.dart';
+import 'SignInEmployeeController.dart';
 
 class SummaryController extends GetxController
     with GetTickerProviderStateMixin {
@@ -23,6 +24,7 @@ class SummaryController extends GetxController
   var summarydata = [].obs;
   var summaryguidelinelist = [].obs;
   var summarydetaildata = [].obs;
+
   var weekupdate = 0.obs;
   var tabindex = 0.obs;
   var day, month, year;
@@ -184,21 +186,23 @@ class SummaryController extends GetxController
     update();
   }
 
-  // summaryGuideline() async {
-  //   summaryguidelinelist.value.clear();
-  //   var response = await API().SummaryGuideline();
-  //   if (response.statusCode == 200) {
-  //     Loading.value = false;
-  //     response = await SummaryGuidelineModel.fromJson(response.data);
-  //     summaryguidelinelist.value = response.data;
-  //     print(summaryguidelinelist.value[0].decription);
-  //   } else {
-  //     Loading.value = false;
-  //   }
-  //   update();
-  // }
+  summaryGuideline() async {
+    summaryguidelinelist.value.clear();
+    var response = await API().SummaryGuideline();
+    if (response.statusCode == 200) {
+      Loading.value = false;
+      response = await SummaryGuidelineModel.fromJson(response.data);
+      summaryguidelinelist.value = response.data;
+
+      print(summaryguidelinelist.value[0].decription);
+    } else {
+      Loading.value = false;
+    }
+    update();
+  }
 
   init() {
+    summaryguidelinelist.value.clear();
     tabController =
         TabController(length: 2, vsync: this, initialIndex: tabindex.value)
           ..addListener(() {
@@ -215,15 +219,13 @@ class SummaryController extends GetxController
     mindate = DateFormat('dd-MM-y').parse(day + '-' + month + '-' + year);
     summaryAnalytics();
     summaryDetails();
+    print(BaseUrl.storage.read("summaryguideline"));
+    if (summaryguidelinelist.isEmpty) {
+      summaryGuideline();
+    }
 
     update();
   }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  //   tabController!.dispose();
-  // }
 
   @override
   void onInit() {

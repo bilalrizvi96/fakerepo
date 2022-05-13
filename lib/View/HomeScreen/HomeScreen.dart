@@ -684,7 +684,7 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                             ),
                                             GestureDetector(
-                                              onTap: () {
+                                              onTap: () async {
                                                 if (BaseUrl.storage
                                                         .read("status") ==
                                                     true) {
@@ -697,12 +697,19 @@ class HomeScreen extends StatelessWidget {
                                                       .split('/')[0];
 
                                                   if (homeController
-                                                          .clockindate2 !=
+                                                          .clockindate2 ==
                                                       int.parse(check)) {
                                                     homeController.scan();
                                                     homeController
                                                         .Loading.value = true;
                                                   } else {
+                                                    if (homeController
+                                                        .sitelist.isEmpty) {
+                                                      print('hello');
+                                                      await homeController
+                                                          .getSites();
+                                                    }
+
                                                     Get.bottomSheet(
                                                         ReasonBottom(
                                                           width: width,

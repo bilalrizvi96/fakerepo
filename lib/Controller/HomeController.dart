@@ -287,27 +287,27 @@ class HomeController extends GetxController {
     update();
   }
 
-  // getSites() async {
-  //   var response = await API().Getsites();
-  //   if (response.statusCode == 200) {
-  //     Loading.value = false;
-  //     response = await SitesModel.fromJson(response.data);
-  //     for (var val in response.data) {
-  //       sitelist.add(val.sitesName.toString());
-  //       sitelist.sort((a, b) {
-  //         return a.toLowerCase().compareTo(b.toLowerCase());
-  //       });
-  //     }
-  //
-  //     dropdownValue.value = sitelist.first;
-  //     print(sitelist);
-  //   } else {
-  //     Loading.value = false;
-  //     Get.snackbar("Error ", response.data['message'].toString(),
-  //         colorText: Colors.white, backgroundColor: Colors.red);
-  //   }
-  //   update();
-  // }
+  getSites() async {
+    var response = await API().Getsites();
+    if (response.statusCode == 200) {
+      Loading.value = false;
+      response = await SitesModel.fromJson(response.data);
+      for (var val in response.data) {
+        sitelist.add(val.sitesName.toString());
+        sitelist.sort((a, b) {
+          return a.toLowerCase().compareTo(b.toLowerCase());
+        });
+      }
+
+      dropdownValue.value = sitelist.first;
+      print(sitelist);
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", response.data['message'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
+  }
 
   clockout({var check}) async {
     Loading.value = true;
@@ -484,15 +484,6 @@ class HomeController extends GetxController {
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
-    for (int val = 0; val < _signInEmployeeController.sitelist.length; val++) {
-      sitelist
-          .add(_signInEmployeeController.sitelist[val].sitesName.toString());
-      sitelist.sort((a, b) {
-        return a.toLowerCase().compareTo(b.toLowerCase());
-      });
-    }
-
-    dropdownValue.value = "sitelist.first";
   }
 
   @override

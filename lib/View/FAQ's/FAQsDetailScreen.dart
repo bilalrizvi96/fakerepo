@@ -79,37 +79,38 @@ class FAQsDetailScreen extends StatelessWidget {
                               width: width / 1.23,
                               height: height / 10,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(13.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 4,
-                                      blurRadius: 6,
-                                      offset: Offset(
-                                          0, 2), // changes position of shadow
-                                    ),
-                                  ],
-                                  color: Colors.white),
-                              child: Row(
+                                borderRadius: BorderRadius.circular(13.0),
+                              ),
+                              child: Column(
                                 children: [
-                                  SizedBox(
-                                    width: width / 20,
-                                  ),
                                   Expanded(
-                                    child: Text(
-                                      index[indexs].title,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: width / 27),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: width / 120,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            index[indexs].title,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: width / 27),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Icon(Icons.arrow_forward_ios_sharp,
+                                            size: 20,
+                                            color: DynamicColor().primarycolor),
+                                        SizedBox(
+                                          width: width / 20,
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Spacer(),
-                                  Icon(Icons.arrow_forward_ios_sharp,
-                                      size: 30,
-                                      color: DynamicColor().primarycolor),
                                   SizedBox(
-                                    width: width / 20,
+                                    height: height / 40,
                                   ),
+                                  Divider(),
                                 ],
                               ),
                             ),
@@ -124,45 +125,4 @@ class FAQsDetailScreen extends StatelessWidget {
       ),
     );
   }
-  //
-  // Container Bottom({var index}) {
-  //   return Container(
-  //     height: 700,
-  //     alignment: Alignment.bottomCenter,
-  //     decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       borderRadius: BorderRadius.only(
-  //           topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-  //     ),
-  //     padding: const EdgeInsets.all(8.0),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.center,
-  //       mainAxisAlignment: MainAxisAlignment.end,
-  //       children: [
-  //         Text(
-  //           "${title.toString()}",
-  //           style: GoogleFonts.poppins(
-  //               color: Color(0xFFEE696A),
-  //               fontWeight: FontWeight.bold,
-  //               fontSize: 25),
-  //         ),
-  //         SizedBox(
-  //           height: 20,
-  //         ),
-  //         Padding(
-  //           padding: const EdgeInsets.all(8.0),
-  //           child: Text(
-  //             '${index[0].title}',
-  //             textAlign: TextAlign.center,
-  //             style: GoogleFonts.poppins(
-  //                 fontWeight: FontWeight.w500, fontSize: 12),
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           height: 50,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

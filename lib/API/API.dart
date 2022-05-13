@@ -144,24 +144,24 @@ class API {
     }
   }
 
-  // Future SummaryGuideline({
-  //   var month,
-  //   var year,
-  // }) async {
-  //   try {
-  //     var dio = Dio();
-  //     dio.options.headers['Accept'] = 'application/json';
-  //     dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-  //     final response = await dio.get(
-  //       BaseUrl.baseurl + 'summaryGuideline',
-  //     );
-  //     if (response.statusCode == 200) {
-  //       return response;
-  //     }
-  //   } catch (e) {
-  //     return onError(e);
-  //   }
-  // }
+  Future SummaryGuideline({
+    var month,
+    var year,
+  }) async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'summaryGuideline',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
 
   Future Notification() async {
     try {
@@ -471,23 +471,23 @@ class API {
     }
   }
 
-  // Future Getsites() async {
-  //   try {
-  //     var dio = Dio();
-  //     dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-  //     final response = await dio.get(
-  //       BaseUrl.baseurl + 'manage_site',
-  //       options: Options(
-  //           contentType: Headers.formUrlEncodedContentType,
-  //           headers: {Headers.acceptHeader: "application/json"}),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       return response;
-  //     }
-  //   } catch (e) {
-  //     return onError(e);
-  //   }
-  // }
+  Future Getsites() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'manage_site',
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
 
   Future CheckPoints({var latlng, var sitename, var note, var image}) async {
     var file;
