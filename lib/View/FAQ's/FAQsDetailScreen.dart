@@ -1,3 +1,4 @@
+import 'package:attendencesystem/View/FAQ\'s/FaqsAnsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,15 +65,28 @@ class FAQsDetailScreen extends StatelessWidget {
                       itemCount: index.length,
                       itemBuilder: (context, indexs) {
                         return GestureDetector(
-                          onTap: () {
-                            // Get.bottomSheet(
-                            //   Bottom(index: index[indexs].subsubcat),
-                            // );
-                            Get.to(() => FAQssubdetailScreen(
-                                  index: index[indexs].subsubcat,
-                                  title: title.toString(),
-                                ));
-                          },
+                          onTap: index[indexs].furtherSubQuestion != null
+                              ? () {
+                                  // Get.bottomSheet(
+                                  //   Bottom(index: index[indexs].subsubcat),
+                                  // );
+                                  Get.to(() => FAQssubdetailScreen(
+                                        index: index[indexs].furtherSubQuestion,
+                                        title: title.toString(),
+                                        subtittle: index[indexs].label,
+                                      ));
+                                }
+                              : () {
+                                  print(index[indexs].form);
+                                  print(index[indexs].answer);
+                                  Get.to(() => FaqsAnsScreen(
+                                        index: index[indexs],
+                                        title: title.toString(),
+                                        subtittle: index[indexs].label,
+                                        form: index[indexs].form,
+                                        answer: index[indexs].answer,
+                                      ));
+                                },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -91,7 +105,7 @@ class FAQsDetailScreen extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            index[indexs].title,
+                                            index[indexs].label,
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: width / 27),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:attendencesystem/API/Error.dart';
+import 'package:attendencesystem/Model/HelpCenterModel.dart';
 import 'package:dio/dio.dart';
 import 'BaseURl.dart';
 
@@ -477,6 +478,24 @@ class API {
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
         BaseUrl.baseurl + 'manage_site',
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future HelpCenters() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'helpcenter',
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),

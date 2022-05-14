@@ -64,6 +64,7 @@ dependencies:
   dropdown_search:
   camera:
   expansion_card:
+  cached_network_image: ^3.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
