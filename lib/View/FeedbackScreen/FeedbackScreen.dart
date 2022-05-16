@@ -19,8 +19,15 @@ class FeedbackScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
+        right: false,
+        left: false,
+        maintainBottomViewPadding: true,
+        bottom: false,
+        top: false,
+        minimum: EdgeInsets.only(top: 15.0,bottom: 5.0),
         child: Container(
           height: height,
           width: width,

@@ -24,6 +24,8 @@
 	<true/>
 	<key>io.flutter.embedded_views_preview</key>
     <true/>
+    <key>com.apple.security.network.client</key>
+    <true/>
     <key>NSCameraUsageDescription</key>
     <string>Camera permission is required for barcode scanning.</string>
     <key>NSCameraUsageDescription</key>
@@ -32,11 +34,33 @@
     <string>Can I use the camera please?</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Can I use the mic please?</string>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-    </dict>
+    <key>NSCameraUsageDescription</key>
+	<string>Need to upload image</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>To get you a nearby ride, we need to know where to pick your order</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>To get you a nearby ride, we need to know where to pick your order</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To get you a nearby ride, we need to know where to pick your order</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need to upload image</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need Photo Library For profile pictures</string>
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <false/>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>https</string>
+      <string>http</string>
+    </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app needs access to location when in the background.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open and in the background.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -56,5 +80,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>

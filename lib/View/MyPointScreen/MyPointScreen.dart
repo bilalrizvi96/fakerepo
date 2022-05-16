@@ -17,6 +17,11 @@ class MyPointScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
+        right: false,
+        left: false,
+        maintainBottomViewPadding: true,
+        bottom: false,
+        top: false,
         child: Container(
           width: width,
           height: height,

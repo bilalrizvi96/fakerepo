@@ -16,6 +16,11 @@ class UpdateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        right: false,
+        left: false,
+        maintainBottomViewPadding: true,
+        bottom: false,
+        top: false,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,

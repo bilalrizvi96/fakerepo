@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:attendencesystem/Routes/Routes.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -11,12 +13,20 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GestureBinding.instance?.resamplingEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          appId: '1:833414981797:android:4f17b315106ee54a1b054c',
-          apiKey: 'AIzaSyDtqrjtfUH4AX3LNZ7fO7PfZVmBDRQ3z0Y',
-          messagingSenderId: '833414981797',
-          projectId: 'attendancesystem-332409'));
+  if(Platform.isIOS){
+    await Firebase.initializeApp();
+
+  }else{
+    await Firebase.initializeApp(
+        name: 'Attendance',
+        options: const FirebaseOptions(
+            appId: '1:833414981797:android:4f17b315106ee54a1b054c',
+            apiKey: 'AIzaSyDtqrjtfUH4AX3LNZ7fO7PfZVmBDRQ3z0Y',
+            messagingSenderId: '833414981797',
+            projectId: 'attendancesystem-332409'));
+
+  }
+
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   await GetStorage.init();
 

@@ -9,7 +9,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:slider_button/slider_button.dart';
+
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class SummaryScreen extends StatelessWidget {
@@ -28,6 +28,11 @@ class SummaryScreen extends StatelessWidget {
       //   onPressed: () => summaryController.summaryPdf(),
       // ),
       body: SafeArea(
+        right: false,
+        left: false,
+        maintainBottomViewPadding: true,
+        bottom: false,
+        top: false,
         child: SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
           child: Container(

@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart' as la;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 // import 'package:pdf/pdf.dart';

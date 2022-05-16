@@ -18,6 +18,12 @@ class CheckPointScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
+        right: false,
+        left: false,
+        minimum: EdgeInsets.only(top: 15.0,bottom: 5.0),
+        maintainBottomViewPadding: true,
+        bottom: false,
+        top: false,
         child: Container(
           height: height,
           color: Colors.white,

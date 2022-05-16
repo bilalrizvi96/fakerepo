@@ -21,8 +21,15 @@ class HomeScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       drawer: SideMenu(),
       body: SafeArea(
+        right: false,
+        left: false,
+        minimum: EdgeInsets.only(top: 0.0,bottom: 5.0),
+        maintainBottomViewPadding: true,
+        bottom: false,
+        top: false,
         child: Container(
             width: width,
             height: height,
@@ -52,7 +59,11 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       Column(
+
                         children: [
+                          SizedBox(
+                            height: height / 80,
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(
                                 right: 22.0, left: 22.0, top: 22.0),

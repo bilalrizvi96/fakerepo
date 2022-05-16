@@ -24,6 +24,11 @@ class _IntroScreenState extends State<IntroScreen>
           init: introController,
           builder: (_) {
             return SafeArea(
+              right: false,
+              left: false,
+              maintainBottomViewPadding: true,
+              bottom: false,
+              top: false,
               child: Container(
                   width: width,
                   height: height,
@@ -175,7 +180,7 @@ class _IntroScreenState extends State<IntroScreen>
                                             alignment: Alignment.bottomCenter,
                                             child: Image.network(
                                               'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
-                                              fit: BoxFit.contain,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                           Padding(
