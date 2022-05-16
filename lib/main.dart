@@ -10,25 +10,26 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
+  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   GestureBinding.instance?.resamplingEnabled = true;
-  WidgetsFlutterBinding.ensureInitialized();
-  if(Platform.isIOS){
-    await Firebase.initializeApp();
+  // if(Platform.isIOS){
+  //   await Firebase.initializeApp();
+  //
+  // }else{
+  //   await Firebase.initializeApp(
+  //       name: 'Attendance',
+  //       options: const FirebaseOptions(
+  //           appId: '1:833414981797:android:4f17b315106ee54a1b054c',
+  //           apiKey: 'AIzaSyDtqrjtfUH4AX3LNZ7fO7PfZVmBDRQ3z0Y',
+  //           messagingSenderId: '833414981797',
+  //           projectId: 'attendancesystem-332409'));
+  //
+  // // }
+  //
+  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  // await Firebase.initializeApp();
 
-  }else{
-    await Firebase.initializeApp(
-        name: 'Attendance',
-        options: const FirebaseOptions(
-            appId: '1:833414981797:android:4f17b315106ee54a1b054c',
-            apiKey: 'AIzaSyDtqrjtfUH4AX3LNZ7fO7PfZVmBDRQ3z0Y',
-            messagingSenderId: '833414981797',
-            projectId: 'attendancesystem-332409'));
-
-  }
-
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  await GetStorage.init();
 
   runApp(MyApp());
 }
@@ -47,7 +48,6 @@ class MyApp extends StatelessWidget {
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
-      // home: Summarynew(),
       getPages: Routes().routes,
     );
   }

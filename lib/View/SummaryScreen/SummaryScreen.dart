@@ -29,10 +29,12 @@ class SummaryScreen extends StatelessWidget {
       // ),
       body: SafeArea(
         right: false,
+
         left: false,
         maintainBottomViewPadding: true,
         bottom: false,
         top: false,
+        minimum: EdgeInsets.only(top: 15.0,bottom: 5.0),
         child: SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
           child: Container(
