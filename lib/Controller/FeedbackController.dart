@@ -9,7 +9,7 @@ class FeedbackController extends GetxController {
   var feedbackcontroller = TextEditingController();
   var namecontroller = TextEditingController();
   var phonecontroller = TextEditingController();
-  var feedbackFormKey = GlobalKey<FormState>();
+  final feedbackFormKey = GlobalKey<FormState>();
   var dropdownValue = 'Choose Category'.obs;
   XFile? faceImage;
   var Loading = false.obs;
@@ -105,5 +105,11 @@ class FeedbackController extends GetxController {
       faceImage = image;
     }
     update();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+
   }
 }

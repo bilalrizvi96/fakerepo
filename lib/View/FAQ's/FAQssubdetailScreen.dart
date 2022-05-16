@@ -4,12 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../Component/DynamicColor.dart';
 import '../../Controller/FaqsController.dart';
+import '../FeedbackScreen/FeedbackScreen.dart';
 import 'FaqsAnsScreen.dart';
 
 class FAQssubdetailScreen extends StatelessWidget {
-  var index, title, subtittle;
+  var index, title, subtittle,check;
 
-  FAQssubdetailScreen({this.index, this.title, this.subtittle});
+  FAQssubdetailScreen({this.index, this.title, this.subtittle,this.check});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -85,13 +86,21 @@ class FAQssubdetailScreen extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             print(index[indexs].form);
+                            index[indexs].form=='false'?
                             Get.to(() => FaqsAnsScreen(
-                                  index: index[indexs],
-                                  title: title.toString(),
-                                  subtittle: index[indexs].label,
-                                  form: index[indexs].form,
-                                  answer: index[indexs].answer,
-                                ));
+                              index: index[indexs],
+                              title: title.toString(),
+                              subtittle: index[indexs].label,
+                              form: index[indexs].form,
+                              answer: index[indexs].answer,
+                            )):
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>  FeedbackScreen(
+                                check:true ,
+                                form: true,
+                              )),
+                            );
                             // Get.to(() => FAQsDetailScreen(
                             //       index: faqsController
                             //           .faqlist.value[index].subcat,

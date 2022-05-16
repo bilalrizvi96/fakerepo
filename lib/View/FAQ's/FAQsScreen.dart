@@ -7,6 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'FAQsDetailScreen.dart';
 
 class FAQsScreen extends StatelessWidget {
+  var check;
+  FAQsScreen({this.check});
+
   FaqsController faqsController = Get.put(FaqsController());
 
   @override
@@ -76,6 +79,7 @@ class FAQsScreen extends StatelessWidget {
                                                     .value[index].subQuestion,
                                                 title: faqsController
                                                     .faqlist.value[index].label,
+                                            check: check,
                                               ));
                                         }
                                       : () {},

@@ -67,7 +67,7 @@ class Routes {
         curve: Curves.easeInQuart),
     GetPage(
         name: "/faqs",
-        page: () => FAQsScreen(),
+        page: () => FAQsScreen(check: true),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(

@@ -8,15 +8,16 @@ import '../../API/BaseURl.dart';
 import '../../Component/DynamicColor.dart';
 
 class FeedbackScreen extends StatelessWidget {
-  FeedbackScreen({this.check});
-  var check;
+  var check,form;
+  FeedbackScreen({this.check,this.form});
+
   FeedbackController _feedbackController = Get.put(FeedbackController());
 
   @override
   Widget build(BuildContext context) {
-    check == false
-        ? _feedbackController.check = false
-        : _feedbackController.check = true;
+    // check == false
+    //     ? _feedbackController.check = false
+    //     : _feedbackController.check = true;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -81,9 +82,8 @@ class FeedbackScreen extends StatelessWidget {
                                       SizedBox(
                                         width: width / 50,
                                       ),
-                                      check == false
-                                          ? Container()
-                                          : GestureDetector(
+                                      if (check == false)
+                                        Column() else if(form==true)Column()else GestureDetector(
                                               onTap: () {
                                                 BaseUrl.storage
                                                     .write("token", "out");

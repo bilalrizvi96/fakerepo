@@ -205,26 +205,29 @@ class API {
       var phone}) async {
     var file;
     if (image != null) {
-      Uint8List imagebytes = await image.readAsBytes();
-      String base64string = base64.encode(imagebytes);
-      file = base64string.toString();
-      file.replaceAll('/', '');
+      // Uint8List imagebytes = await image.readAsBytes();
+      // String base64string = base64.encode(imagebytes);
+      // file = base64string.toString();
+      // file.replaceAll('/', '');
+       file = await MultipartFile.fromFile(image.path);
     }
     try {
-      var data = {
-        "type": type,
-        "time": time.toString(),
-        "employeeId": empId.toString(),
-        "message": message.toString().trim(),
-        'phone': phone != '' ? phone : '',
-        "image": file != '' ? file : ''
-      };
+      var formData =
+          FormData.fromMap({"type": type,
+          "time": time.toString(),
+            "employeeId": empId.toString(),
+            "message": message.toString().trim(),
+            'phone': phone != '' ? phone : '',
+            "image": file });
+      // var data = {
+      //
+      // };
 
       var dio = Dio();
 
       final response = await dio.post(
         BaseUrl.baseurl + 'feedback',
-        data: data,
+        data: formData,
       );
 
       if (response.statusCode == 201) {

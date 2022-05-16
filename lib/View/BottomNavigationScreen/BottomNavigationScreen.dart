@@ -85,6 +85,7 @@ class BottomNavigationScreen extends StatelessWidget {
                     SummaryScreen(),
                     FeedbackScreen(
                       check: true,
+                      form: false,
                     ),
                     // HomeScreen(),
                   ],

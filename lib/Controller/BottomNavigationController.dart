@@ -32,13 +32,14 @@ class BottomNavigationController extends GetxController {
     });
   }
 
-  List<Widget> children = [
-    HomeScreen(),
-    SummaryScreen(),
-    FeedbackScreen(
-      check: true,
-    ),
-  ];
+  // List<Widget> children = [
+  //   HomeScreen(),
+  //   SummaryScreen(),
+  //   FeedbackScreen(
+  //     check: true,
+  //     form: false,
+  //   ),
+  // ];
 
   @override
   void onInit() {
