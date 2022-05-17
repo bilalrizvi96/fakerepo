@@ -120,9 +120,13 @@ class HomeController extends GetxController {
     final location = new Location();
     Position position = await Geolocator.getCurrentPosition();
     center.value = LatLng(position.latitude, position.longitude);
-    location.onLocationChanged.listen((LocationData cLoc) {
-      center.value = LatLng(cLoc.latitude!, cLoc.longitude!);
-    });
+    try {
+      location.onLocationChanged.listen((LocationData cLoc) {
+        center.value = LatLng(cLoc.latitude!, cLoc.longitude!);
+      });
+    } catch (e) {
+      Loading.value = false;
+    }
 
     update();
   }
@@ -138,13 +142,11 @@ class HomeController extends GetxController {
         } else {
           clockout(check: false);
         }
-        // Get.toNamed('/attendance');
       } else {
         Loading.value = false;
         Get.snackbar("Attendance", "Location is empty kindly scan again",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
-
       update();
     } on PlatformException catch (e) {
       Get.snackbar("Error ", e.toString(),
@@ -171,70 +173,75 @@ class HomeController extends GetxController {
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
     if (check == false) {
-      await CurrentLocation();
-      var status = await Permission.location.status;
+      var status = await Permission.accessMediaLocation.status;
       if (status.isGranted) {
         await CurrentLocation();
-        print(outputDate.toString());
-        if (sites.value != "") {
-          var response = await API().CheckIn(
-              latlng: center.value.latitude.toString() +
-                  "," +
-                  center.value.longitude.toString(),
-              siteId: sites.value.toString(),
-              check: check,
-              date: outputDate);
-          if (response.statusCode == 200) {
-            Loading.value = false;
-            BaseUrl.storage.write("ismessage", false);
-            BaseUrl.clockin = outputDate1.toString();
-            BaseUrl.storage.write("clockin", BaseUrl.clockin);
-            BaseUrl.storage.write("clockout", "00:00");
-            BaseUrl.storage.write("status", true);
-            var resp = await API().AbsentPresent();
-            if (resp.statusCode == 200) {
-              print('bilal');
-
-              BaseUrl.storage
-                  .write("totalPresent", resp.data['present_days'].toString());
-              BaseUrl.storage
-                  .write("totalAbsent", resp.data['absent_days'].toString());
-            }
-
-            var dates = DateTime.now().day.toString() +
-                "/" +
-                DateTime.now().month.toString() +
-                "/" +
-                DateTime.now().year.toString();
-            var day = outputDate.toString().split('T')[0] +
-                "T" +
-                BaseUrl.storage
-                    .read("dateForMissingCheckout")
-                    .toString()
-                    .split('T')[1];
-            BaseUrl.storage.write("lastAttendanceRecordDate", dates);
-            BaseUrl.storage.write("dateForMissingCheckout", day);
-            print(BaseUrl.storage.read("dateForMissingCheckout"));
-            // _summaryController.init();
-            update();
-            // Get.back();
-            Get.snackbar("Attendance", "Clock In Successfully");
-          } else {
-            Loading.value = false;
-            Get.snackbar("Error ", response.data['error'].toString(),
-                colorText: Colors.white, backgroundColor: Colors.red);
-          }
-        } else {
-          Loading.value = false;
-          Get.snackbar("Error", "Location is empty kindly scan Qr",
-              colorText: Colors.white, backgroundColor: Colors.red);
-        }
       } else {
         Loading.value = false;
         Get.snackbar("Error ",
             'The user did not grant the location permission!'.toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+      print(outputDate.toString());
+      if (sites.value != "") {
+        var response = await API().CheckIn(
+            latlng: center.value.latitude.toString() +
+                "," +
+                center.value.longitude.toString(),
+            siteId: sites.value.toString(),
+            check: check,
+            date: outputDate);
+        if (response.statusCode == 200) {
+          Loading.value = false;
+          BaseUrl.storage.write("ismessage", false);
+          BaseUrl.clockin = outputDate1.toString();
+          BaseUrl.storage.write("clockin", BaseUrl.clockin);
+          BaseUrl.storage.write("clockout", "00:00");
+          BaseUrl.storage.write("status", true);
+          var resp = await API().AbsentPresent();
+          if (resp.statusCode == 200) {
+            print('bilal');
+
+            BaseUrl.storage
+                .write("totalPresent", resp.data['present_days'].toString());
+            BaseUrl.storage
+                .write("totalAbsent", resp.data['absent_days'].toString());
+          }
+
+          var dates = DateTime.now().day.toString() +
+              "/" +
+              DateTime.now().month.toString() +
+              "/" +
+              DateTime.now().year.toString();
+          var day = outputDate.toString().split('T')[0] +
+              "T" +
+              BaseUrl.storage
+                  .read("dateForMissingCheckout")
+                  .toString()
+                  .split('T')[1];
+          BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+          BaseUrl.storage.write("dateForMissingCheckout", day);
+          print(BaseUrl.storage.read("dateForMissingCheckout"));
+          // _summaryController.init();
+          update();
+          // Get.back();
+          Get.snackbar("Attendance", "Clock In Successfully");
+        } else {
+          Loading.value = false;
+          Get.snackbar("Error ", response.data['error'].toString(),
+              colorText: Colors.white, backgroundColor: Colors.red);
+        }
+      } else {
+        Loading.value = false;
+        Get.snackbar("Error", "Location is empty kindly scan Qr",
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
+      // } else {
+      //   Loading.value = false;
+      //   Get.snackbar("Error ",
+      //       'The user did not grant the location permission!'.toString(),
+      //       colorText: Colors.white, backgroundColor: Colors.red);
+      // }
     } else {
       var response = await API().CheckIn(
           siteId: BaseUrl.storage.read("sitecheckpoint"),
@@ -317,8 +324,17 @@ class HomeController extends GetxController {
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
+    var status = await Permission.locationWhenInUse.status;
     if (check == false) {
-      await CurrentLocation();
+      if (status.isGranted) {
+        await CurrentLocation();
+      } else {
+        Loading.value = false;
+        Get.snackbar("Error ",
+            'The user did not grant the location permission!'.toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
+
       if (sites.value != "") {
         var response = await API().CheckOut(
             latlng: center.value.latitude.toString() +
@@ -362,6 +378,12 @@ class HomeController extends GetxController {
         Get.snackbar("Error", "Location is empty kindly scan Qr",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+      // } else {
+      //   Loading.value = false;
+      //   Get.snackbar("Error ",
+      //       'The user did not grant the location permission!'.toString(),
+      //       colorText: Colors.white, backgroundColor: Colors.red);
+      // }
     } else {
       var response = await API().CheckOut(
           siteId: BaseUrl.storage.read("sitecheckpoint"),

@@ -37,18 +37,18 @@ class FeedbackController extends GetxController {
       Loading.value = true;
       update();
       if (dropdownValue.value != 'Choose Category') {
-        var date = DateTime.now();
+        // var date = DateTime.now();
         var response = await API().Feedback(
             empId: check != false ? BaseUrl.storage.read("empCode") : "00000",
-            time: date.hour.toString() +
-                ":" +
-                date.minute.toString() +
-                " " +
-                date.day.toString() +
-                "-" +
-                date.month.toString() +
-                "-" +
-                date.year.toString(),
+            // time: date.hour.toString() +
+            //     ":" +
+            //     date.minute.toString() +
+            //     " " +
+            //     date.day.toString() +
+            //     "-" +
+            //     date.month.toString() +
+            //     "-" +
+            //     date.year.toString(),
             phone: phonecontroller.text.toString().trim(),
             message: namecontroller.text.toString() +
                 '~|~' +

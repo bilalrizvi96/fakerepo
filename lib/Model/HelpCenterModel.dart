@@ -33,18 +33,21 @@ class Response {
     this.key,
     this.label,
     this.value,
+    this.show,
     this.subQuestion,
   });
 
   var key;
   var label;
   var value;
+  var show;
   var subQuestion;
 
   factory Response.fromJson(Map<String, dynamic> json) => Response(
         key: json["key"],
         label: json["label"],
         value: json["value"],
+    show: json["show"],
         subQuestion: json["subQuestion"] == null
             ? null
             : List<SubQuestion>.from(
@@ -55,6 +58,7 @@ class Response {
         "key": key,
         "label": label,
         "value": value,
+        "show": show,
         "subQuestion": subQuestion == null
             ? null
             : List<dynamic>.from(subQuestion.map((x) => x.toJson())),

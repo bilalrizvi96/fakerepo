@@ -138,6 +138,7 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage.write("token", token.value);
       print(BaseUrl.storage.read("token"));
       BaseUrl.storage.write("name", response.user[0].name);
+      BaseUrl.storage.write("region", response.user[0].region);
       BaseUrl.storage.write("empCode", response.user[0].empCode);
       BaseUrl.storage
           .write("totalAbsent", response.user[0].absentDays.toString());
@@ -173,8 +174,6 @@ class SignInEmployeeController extends GetxController {
           response.user[0].lastAttendanceRecordDate);
       BaseUrl.storage.write(
           "dateForMissingCheckout", response.user[0].dateForMissingCheckout);
-
-      print('bilal');
       if (userdatalist.isNotEmpty) {
         if (userdatalist[0].version.updateAvailability == false) {
           Get.offAllNamed('/home');

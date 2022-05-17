@@ -15,6 +15,7 @@ class FaqsController extends GetxController {
       Loading.value = false;
       response = await HelpCenterModel.fromJson(response.data);
       faqlist.value = response.response;
+      faqlist.value.removeWhere((element) => element.show=='false');
       print(faqlist.value);
     } else {
       Loading.value = false;

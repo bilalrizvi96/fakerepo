@@ -101,19 +101,37 @@ class API {
     }
   }
 
-  Future NotificationSend({var time, var empId, var message}) async {
+  Future NotificationSend(
+      {
+      // var time,
+      var empId,
+      var message}) async {
     try {
-      Map data = {
+      // Map data = {
+      //   "type": "faceDuplication",
+      //   // "time": time.toString(),
+      //   "employeeId": empId.toString(),
+      //   "message": message.toString().trim(),
+      //   'resolve': false,
+      //   'region':"",
+      //   'name':'',
+      // };
+      var formData = FormData.fromMap({
         "type": "faceDuplication",
-        "time": time.toString(),
+        // "time": time.toString(),
         "employeeId": empId.toString(),
-        "message": message.toString().trim()
-      };
+        "message": message.toString().trim(),
+        'resolved': false,
+        'phone': '',
+        'region': "",
+        'name': '',
+        "image": "",
+      });
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'notifications',
-        data: data,
+        BaseUrl.baseurl + 'support',
+        data: formData,
       );
       if (response.statusCode == 200) {
         return response;
@@ -170,7 +188,7 @@ class API {
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
-        BaseUrl.baseurl + 'generalNotification',
+        BaseUrl.baseurl + 'announcements',
       );
       if (response.statusCode == 200) {
         return response;
@@ -197,7 +215,8 @@ class API {
   }
 
   Future Feedback(
-      {var time,
+      {
+      // var time,
       var empId,
       var message,
       var type,
@@ -209,16 +228,20 @@ class API {
       // String base64string = base64.encode(imagebytes);
       // file = base64string.toString();
       // file.replaceAll('/', '');
-       file = await MultipartFile.fromFile(image.path);
+      file = await MultipartFile.fromFile(image.path);
     }
     try {
-      var formData =
-          FormData.fromMap({"type": type,
-          "time": time.toString(),
-            "employeeId": empId.toString(),
-            "message": message.toString().trim(),
-            'phone': phone != '' ? phone : '',
-            "image": file });
+      var formData = FormData.fromMap({
+        "type": type,
+        // "time": time.toString(),
+        "employeeId": empId.toString(),
+        "message": message.toString().trim(),
+        'phone': phone != '' ? phone : '',
+        'resolved': false,
+        'region': BaseUrl.storage.read('region'),
+        'name': BaseUrl.storage.read('name'),
+        "image": file,
+      });
       // var data = {
       //
       // };
@@ -226,7 +249,7 @@ class API {
       var dio = Dio();
 
       final response = await dio.post(
-        BaseUrl.baseurl + 'feedback',
+        BaseUrl.baseurl + 'support',
         data: formData,
       );
 
@@ -498,7 +521,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
-        BaseUrl.baseurl + 'helpcenter',
+        BaseUrl.baseurl + 'helpCenter',
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),

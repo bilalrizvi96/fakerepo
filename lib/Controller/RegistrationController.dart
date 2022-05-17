@@ -85,15 +85,15 @@ class RegistrationController extends GetxController {
         var date = DateTime.now();
         await API().NotificationSend(
           empId: BaseUrl.storage.read("empCode"),
-          time: date.hour.toString() +
-              ":" +
-              date.minute.toString() +
-              " " +
-              date.day.toString() +
-              "-" +
-              date.month.toString() +
-              "-" +
-              date.year.toString(),
+          // time: date.hour.toString() +
+          //     ":" +
+          //     date.minute.toString() +
+          //     " " +
+          //     date.day.toString() +
+          //     "-" +
+          //     date.month.toString() +
+          //     "-" +
+          //     date.year.toString(),
           message: cheaterID.toString() +
               " is trying to register on " +
               employee_IdController.text.toString(),

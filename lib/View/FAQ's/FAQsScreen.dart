@@ -49,7 +49,7 @@ class FAQsScreen extends StatelessWidget {
                           width: width / 20,
                         ),
                         Text(
-                          'F.A.Q\'s',
+                          'Help Center',
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               fontSize: width / 16),
