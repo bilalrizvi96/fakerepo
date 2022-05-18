@@ -79,7 +79,7 @@ class FAQsScreen extends StatelessWidget {
                                                     .value[index].subQuestion,
                                                 title: faqsController
                                                     .faqlist.value[index].label,
-                                            check: check,
+                                                check: check,
                                               ));
                                         }
                                       : () {},

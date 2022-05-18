@@ -17,6 +17,7 @@ import '../View/FAQ\'s/FAQsScreen.dart';
 
 import '../View/MyPointScreen/MyPointScreen.dart';
 import '../View/NotificationScreen/NotificationScreen.dart';
+import '../View/TrackUserScreen/TrackUserScreen.dart';
 
 class Routes {
   final routes = [
@@ -53,6 +54,11 @@ class Routes {
     GetPage(
         name: "/checkpoint",
         page: () => CheckPointScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/trackuser",
+        page: () => TrackUserScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(

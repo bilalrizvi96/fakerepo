@@ -160,6 +160,7 @@ class User {
     this.presentDays,
     this.absentDays,
     this.version,
+    this.role,
   });
 
   var id;
@@ -189,6 +190,7 @@ class User {
   var checkpointAccess;
   var deviceToken;
   var department;
+  var role;
   var lastAttendanceRecordDate;
   var isMessageAvailable;
   var message;
@@ -229,6 +231,7 @@ class User {
         checkpointAccess: json["checkpointAccess"],
         deviceToken: json["deviceToken"],
         department: json["department"],
+        role: json["role"],
         lastAttendanceRecordDate: json["lastAttendanceRecordDate"],
         isMessageAvailable: json["isMessageAvailable"],
         message: Message.fromJson(json["message"]),
@@ -270,6 +273,7 @@ class User {
         "checkpointAccess": checkpointAccess,
         "deviceToken": deviceToken,
         "department": department,
+        "role": role,
         "lastAttendanceRecordDate": lastAttendanceRecordDate,
         "isMessageAvailable": isMessageAvailable,
         "message": message.toJson(),

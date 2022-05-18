@@ -138,6 +138,7 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage.write("token", token.value);
       print(BaseUrl.storage.read("token"));
       BaseUrl.storage.write("name", response.user[0].name);
+      BaseUrl.storage.write("role", response.user[0].name);
       BaseUrl.storage.write("region", response.user[0].region);
       BaseUrl.storage.write("empCode", response.user[0].empCode);
       BaseUrl.storage

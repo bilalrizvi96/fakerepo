@@ -22,7 +22,6 @@ class SideMenu extends StatelessWidget {
                 child: Image.asset('assets/logo.png'),
               ),
             ),
-
             DrawerListTile(
               title: "Help center",
               icon: Icon(Icons.help, color: DynamicColor().primarycolor),
@@ -39,12 +38,25 @@ class SideMenu extends StatelessWidget {
                 Get.toNamed('/mypoints');
               },
             ),
-            // DrawerListTile(
-            //   title: "Sites",
-            //   imgSrc: "assets/images/managesites.png",
-            //   press: () {},
-            // ),
-
+            DrawerListTile(
+              title: "Track",
+              icon: Icon(Icons.location_searching,
+                  color: DynamicColor().primarycolor),
+              press: () async {
+                Get.back();
+                Get.toNamed('/trackuser');
+              },
+            ),
+            if (BaseUrl.storage.read("checkpointaccess") != false)
+              DrawerListTile(
+                title: "Check Point",
+                press: () {
+                  Get.back();
+                  Get.toNamed('/checkpoint');
+                },
+                icon:
+                    Icon(Icons.location_on, color: DynamicColor().primarycolor),
+              ),
             DrawerListTile(
               title: "Profile",
               icon: Icon(Icons.person, color: DynamicColor().primarycolor),
@@ -62,7 +74,6 @@ class SideMenu extends StatelessWidget {
                 Get.toNamed('/notification');
               },
             ),
-
             Spacer(),
             Expanded(
               child: Align(

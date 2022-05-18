@@ -83,26 +83,24 @@ class HomeScreen extends StatelessWidget {
                                       fontSize: width / 16),
                                 ),
                                 Spacer(),
-                                BaseUrl.storage.read("checkpointaccess") !=
-                                        false
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          Get.toNamed('/checkpoint');
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 6.0, left: 10.0),
-                                          child: Icon(
-                                            Icons.location_on_outlined,
-                                            size: width / 16,
-                                            color: DynamicColor().primarycolor,
-                                          ),
-                                        ),
-                                      )
-                                    : Column(),
-                                SizedBox(
-                                  width: width / 50,
-                                ),
+                                // BaseUrl.storage.read("checkpointaccess") !=
+                                //         false
+                                //     ? GestureDetector(
+                                //         onTap: () {
+                                //           Get.toNamed('/checkpoint');
+                                //         },
+                                //         child: Padding(
+                                //           padding: const EdgeInsets.only(
+                                //               right: 6.0, left: 10.0),
+                                //           child: Icon(
+                                //             Icons.location_on_outlined,
+                                //             size: width / 16,
+                                //             color: DynamicColor().primarycolor,
+                                //           ),
+                                //         ),
+                                //       )
+                                //     : Column(),
+
                                 GestureDetector(
                                   onTap: () {
                                     BaseUrl.storage.write("token", "out");
