@@ -59,8 +59,10 @@ class SplashController extends GetxController {
       RemoteNotification? notification = message.notification;
       print('Message clicked!');
       if (notification != null) {
-        Get.snackbar(" ${notification.title.toString()}",
-            "${notification.body.toString()}");
+        Get.snackbar(
+          " ${notification.title.toString()}",
+          "${notification.body.toString()}",
+        );
       }
     });
   }

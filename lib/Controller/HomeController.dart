@@ -37,7 +37,8 @@ class HomeController extends GetxController {
   var reasonFormKey = GlobalKey<FormState>();
   var reasoncontroller = TextEditingController();
   List<String> sitelist = [];
-  SummaryController _summaryController = Get.put(SummaryController());
+  var sitedatalist = [].obs;
+
   List months = [
     'JAN',
     'FEB',
@@ -299,6 +300,7 @@ class HomeController extends GetxController {
     if (response.statusCode == 200) {
       Loading.value = false;
       response = await SitesModel.fromJson(response.data);
+      sitedatalist.value = response.data;
       for (var val in response.data) {
         sitelist.add(val.sitesName.toString());
         sitelist.sort((a, b) {
@@ -348,8 +350,6 @@ class HomeController extends GetxController {
             date: outputDate,
             check: check);
         if (response.statusCode == 200) {
-          // _summaryController.init();
-
           print('bilal');
           popups(
               image: response.data['data'][0]['messages'][0]['imageUrl'],
@@ -452,53 +452,58 @@ class HomeController extends GetxController {
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
     var status = await Permission.location.status;
-
-    if (status.isDenied) {
-      Loading.value = false;
-      Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
-    } else {
-      await CurrentLocation();
-
-      if (dropdownValue.value != "") {
-        var response = await API().Reasoncheckout(
-            latlng: center.value.latitude.toString() +
-                "," +
-                center.value.longitude.toString(),
-            siteId: dropdownValue.value.toString(),
-            reason: reasoncontroller.text.toString().trim(),
-            date: outputDate);
-        if (response.statusCode == 200) {
-          BaseUrl.storage.write('checkOutMissing', true);
-          BaseUrl.storage.write("status", false);
-          Get.back();
+    sitedatalist.value.forEach((element) async {
+      if (dropdownValue.value == element.sitesName) {
+        if (status.isDenied) {
           Loading.value = false;
-          reasoncontroller.clear();
-          BaseUrl.clockout = outputDate1.toString();
-          BaseUrl.storage.write("clockout", BaseUrl.clockout);
-          var dates = date.year.toString() +
-              '/' +
-              date.month.toString() +
-              '/' +
-              date.day.toString();
-          BaseUrl.storage.write("lastAttendanceRecordDate", dates);
-          print(BaseUrl.storage.read("lastAttendanceRecordDate"));
-          Get.back();
           Get.snackbar(
-            "Attendance ",
-            "Clock Out Successfully",
-          );
-        } else {
-          Loading.value = false;
-          Get.snackbar("Error ", response.data['error'].toString(),
+              "Error ", 'Kindly grant the location permission!'.toString(),
               colorText: Colors.white, backgroundColor: Colors.red);
+        } else {
+          await CurrentLocation();
+
+          if (dropdownValue.value != "") {
+            var response = await API().Reasoncheckout(
+                latlng: element.location.split(',')[0].toString() +
+                    "," +
+                    element.location.split(',')[1].toString(),
+                siteId: dropdownValue.value.toString(),
+                reason: reasoncontroller.text.toString().trim(),
+                date: outputDate);
+            if (response.statusCode == 200) {
+              BaseUrl.storage.write('checkOutMissing', true);
+              BaseUrl.storage.write("status", false);
+              Get.back();
+              Loading.value = false;
+              reasoncontroller.clear();
+              BaseUrl.clockout = outputDate1.toString();
+              BaseUrl.storage.write("clockout", BaseUrl.clockout);
+              var dates = date.year.toString() +
+                  '/' +
+                  date.month.toString() +
+                  '/' +
+                  date.day.toString();
+              BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+              print(BaseUrl.storage.read("lastAttendanceRecordDate"));
+              Get.back();
+              Get.snackbar(
+                "Attendance ",
+                "Clock Out Successfully",
+              );
+            } else {
+              Loading.value = false;
+              Get.snackbar("Error ", response.data['error'].toString(),
+                  colorText: Colors.white, backgroundColor: Colors.red);
+            }
+          } else {
+            Loading.value = false;
+            Get.snackbar("Error", "Dropdown value is empty kindly select",
+                colorText: Colors.white, backgroundColor: Colors.red);
+          }
         }
-      } else {
-        Loading.value = false;
-        Get.snackbar("Error", "Dropdown value is empty kindly select",
-            colorText: Colors.white, backgroundColor: Colors.red);
       }
-    }
+    });
+
     // }
     update();
   }

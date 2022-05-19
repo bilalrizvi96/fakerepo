@@ -163,6 +163,25 @@ class API {
     }
   }
 
+  Future GetEmployees() async {
+    try {
+      Map data = {"require": "list"};
+      print(data);
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
+        BaseUrl.baseurl + 'getCheckPoints',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
   Future SummaryGuideline({
     var month,
     var year,
