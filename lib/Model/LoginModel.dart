@@ -13,110 +13,19 @@ class LoginModel {
   LoginModel({
     this.token,
     this.user,
-    this.sites,
-    this.summaryGuideline,
   });
 
   var token;
   var user;
-  var sites;
-  var summaryGuideline;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
         token: json["token"],
         user: List<User>.from(json["user"].map((x) => User.fromJson(x))),
-        sites: List<Site>.from(json["sites"].map((x) => Site.fromJson(x))),
-        summaryGuideline: List<SummaryGuideline>.from(
-            json["summaryGuideline"].map((x) => SummaryGuideline.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "token": token,
         "user": List<dynamic>.from(user.map((x) => x.toJson())),
-        "sites": List<dynamic>.from(sites.map((x) => x.toJson())),
-        "summaryGuideline":
-            List<dynamic>.from(summaryGuideline.map((x) => x.toJson())),
-      };
-}
-
-class Site {
-  Site({
-    this.id,
-    this.sitesName,
-    this.address,
-    this.siteSwitch,
-    this.type,
-    this.distanceInMeters,
-    this.location,
-    this.region,
-  });
-
-  var id;
-  var sitesName;
-  var address;
-  var siteSwitch;
-  var type;
-  var distanceInMeters;
-  var location;
-  var region;
-
-  factory Site.fromJson(Map<String, dynamic> json) => Site(
-        id: json["_id"],
-        sitesName: json["SitesName"],
-        address: json["Address"],
-        siteSwitch: json["Site_switch"],
-        type: json["Type"],
-        distanceInMeters: json["distanceInMeters"],
-        location: json["location"],
-        region: json["region"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "SitesName": sitesName,
-        "Address": address,
-        "Site_switch": siteSwitch,
-        "Type": type,
-        "distanceInMeters": distanceInMeters,
-        "location": location,
-        "region": region,
-      };
-}
-
-class SummaryGuideline {
-  SummaryGuideline({
-    this.id,
-    this.title,
-    this.decription,
-    this.point,
-    this.textcolor,
-    this.color,
-  });
-
-  var id;
-  var title;
-  var decription;
-  var point;
-  var textcolor;
-  var color;
-
-  factory SummaryGuideline.fromJson(Map<String, dynamic> json) =>
-      SummaryGuideline(
-        id: json["_id"],
-        title: json["Title"],
-        decription: json["decription"],
-        point: json["point"],
-        textcolor: json["textcolor"],
-        color: json["color"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "Title": title,
-        "decription": decription,
-        "point": point,
-        "textcolor": textcolor,
-        "color": color,
       };
 }
 

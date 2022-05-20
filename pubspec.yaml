@@ -65,6 +65,8 @@ dependencies:
   camera:
   expansion_card:
   cached_network_image: ^3.2.0
+  device_info_plus:
+  slide_countdown:
 dev_dependencies:
   flutter_test:
     sdk: flutter

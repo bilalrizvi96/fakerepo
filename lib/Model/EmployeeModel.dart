@@ -47,12 +47,12 @@ class Datum {
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         empCode: json["empCode"],
         name: json["name"],
-        location: json["Location"],
+        location: json["location"],
       );
 
   Map<String, dynamic> toJson() => {
         "empCode": empCode,
         "name": name,
-        "Location": location,
+        "location": location,
       };
 }

@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+
+import 'package:device_info_plus/device_info_plus.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -41,6 +45,16 @@ class SplashController extends GetxController {
   }
 
   void getMessage() async {
+    // var info, devicename;
+    // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    // if (Platform.isAndroid) {
+    //   info = await deviceInfo.androidInfo;
+    //   print(info.model);
+    //   devicename = 'android';
+    // } else if (Platform.isIOS) {
+    //   info = await deviceInfo.iosInfo;
+    //   devicename = 'ios';
+    // }
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
       alert: true,
@@ -72,6 +86,7 @@ class SplashController extends GetxController {
     super.onInit();
     this._registerOnFirebase();
     this.getMessage();
+
     checks();
   }
 

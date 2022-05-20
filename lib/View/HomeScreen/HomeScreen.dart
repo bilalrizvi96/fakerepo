@@ -540,243 +540,434 @@ class HomeScreen extends StatelessWidget {
                                         SizedBox(
                                           width: width / 15,
                                         ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Spacer(),
-                                            DelayedDisplay(
-                                              fadeIn: true,
-                                              fadingDuration:
-                                                  Duration(milliseconds: 1200),
-                                              child: Container(
-                                                width: width / 2.5,
-                                                height: height / 25,
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                    color: BaseUrl.storage.read(
-                                                                "status") ==
-                                                            false
-                                                        ? Color(0xFF85A0F8)
-                                                        : Colors.grey
-                                                            .withOpacity(0.50),
-                                                    borderRadius: BorderRadius
-                                                        .only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    5.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    5.0))),
-                                                child: Text(
-                                                  'Clock In',
-                                                  style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: width / 25,
-                                                      color:
-                                                          DynamicColor().white),
-                                                ),
-                                              ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                if (BaseUrl.storage
-                                                        .read("status") ==
-                                                    false) {
-                                                  homeController.Loading.value =
-                                                      true;
-                                                  homeController.scan();
-                                                }
-
-                                                // homeController.valcheck.value='clockin';
-                                                // homeController.clockin();
-                                              },
-                                              child: DelayedDisplay(
-                                                fadeIn: true,
-                                                fadingDuration: Duration(
-                                                    milliseconds: 1200),
-                                                child: Container(
-                                                  width: width / 2.5,
-                                                  height: height / 6,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.only(
-                                                          bottomRight: Radius.circular(
-                                                              5.0),
-                                                          bottomLeft: Radius.circular(
-                                                              5.0)),
-                                                      border: Border.all(
-                                                          color: BaseUrl.storage.read("status") == false
-                                                              ? Color(0xFF85A0F8)
-                                                                  .withOpacity(
-                                                                      0.48)
+                                        BaseUrl.clockin == false
+                                            ? Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Spacer(),
+                                                  DelayedDisplay(
+                                                    fadeIn: true,
+                                                    fadingDuration: Duration(
+                                                        milliseconds: 1200),
+                                                    child: Container(
+                                                      width: width / 2.5,
+                                                      height: height / 25,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          color: BaseUrl.storage
+                                                                      .read(
+                                                                          "status") ==
+                                                                  false
+                                                              ? Color(
+                                                                  0xFF85A0F8)
                                                               : Colors.grey
                                                                   .withOpacity(
-                                                                      0.1)),
-                                                      color: BaseUrl.storage.read("status") == false
-                                                          ? Color(0xFFBBD7F5FF)
-                                                              .withOpacity(0.10)
-                                                          : Color(0xFFEAEAEAFF)
-                                                              .withOpacity(0.1)),
-                                                  child: Center(
-                                                    child: BaseUrl.storage.read(
-                                                                "status") ==
-                                                            false
-                                                        ? Image.network(
-                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
-                                                            height: height / 12,
-                                                          )
-                                                        : Image.network(
-                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
-                                                            height: height / 12,
-                                                          ),
+                                                                      0.50),
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          5.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          5.0))),
+                                                      child: Text(
+                                                        'Clock In',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize:
+                                                                    width / 25,
+                                                                color:
+                                                                    DynamicColor()
+                                                                        .white),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                            Spacer(),
-                                          ],
-                                        ),
-                                        Spacer(),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Spacer(),
-                                            DelayedDisplay(
-                                              fadeIn: true,
-                                              fadingDuration:
-                                                  Duration(milliseconds: 1200),
-                                              child: Container(
-                                                width: width / 2.5,
-                                                height: height / 25,
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                    color: BaseUrl.storage.read(
-                                                                "status") ==
-                                                            true
-                                                        ? Color(0xFFEE6969)
-                                                        : Colors.grey
-                                                            .withOpacity(0.50),
-                                                    borderRadius: BorderRadius
-                                                        .only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    5.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    5.0))),
-                                                child: Text(
-                                                  'Clock Out',
-                                                  style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: width / 25,
-                                                      color:
-                                                          DynamicColor().white),
-                                                ),
-                                              ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () async {
-                                                if (BaseUrl.storage
-                                                        .read("status") ==
-                                                    true) {
-                                                  homeController.clockindate2 =
-                                                      DateTime.now().day;
-                                                  var check = BaseUrl.storage
-                                                      .read(
-                                                          "lastAttendanceRecordDate")
-                                                      .toString()
-                                                      .split('/')[0];
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      if (BaseUrl.storage
+                                                              .read("status") ==
+                                                          false) {
+                                                        homeController.Loading
+                                                            .value = true;
+                                                        homeController.scan();
+                                                      }
 
-                                                  if (homeController
-                                                          .clockindate2 ==
-                                                      int.parse(check)) {
-                                                    homeController.scan();
-                                                    homeController
-                                                        .Loading.value = true;
-                                                  } else {
-                                                    if (homeController
-                                                        .sitelist.isEmpty) {
-                                                      print('hello');
-                                                      await homeController
-                                                          .getSites();
-                                                    }
-
-                                                    Get.bottomSheet(
-                                                        ReasonBottom(
-                                                          width: width,
-                                                          height: height,
+                                                      // homeController.valcheck.value='clockin';
+                                                      // homeController.clockin();
+                                                    },
+                                                    child: DelayedDisplay(
+                                                      fadeIn: true,
+                                                      fadingDuration: Duration(
+                                                          milliseconds: 1200),
+                                                      child: Container(
+                                                        width: width / 2.5,
+                                                        height: height / 6,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.only(
+                                                                bottomRight:
+                                                                    Radius.circular(
+                                                                        5.0),
+                                                                bottomLeft:
+                                                                    Radius.circular(
+                                                                        5.0)),
+                                                            border: Border.all(
+                                                                color: BaseUrl.storage.read("status") == false
+                                                                    ? Color(0xFF85A0F8)
+                                                                        .withOpacity(
+                                                                            0.48)
+                                                                    : Colors.grey
+                                                                        .withOpacity(
+                                                                            0.1)),
+                                                            color: BaseUrl.storage.read("status") == false
+                                                                ? Color(0xFFBBD7F5FF)
+                                                                    .withOpacity(0.10)
+                                                                : Color(0xFFEAEAEAFF).withOpacity(0.1)),
+                                                        child: Center(
+                                                          child: BaseUrl.storage
+                                                                      .read(
+                                                                          "status") ==
+                                                                  false
+                                                              ? Image.network(
+                                                                  'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
+                                                                  height:
+                                                                      height /
+                                                                          12,
+                                                                )
+                                                              : Image.network(
+                                                                  'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                                                  height:
+                                                                      height /
+                                                                          12,
+                                                                ),
                                                         ),
-                                                        elevation: 20.0,
-                                                        enableDrag: false,
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  15.0),
-                                                        )));
-                                                  }
-                                                }
-                                              },
-                                              child: DelayedDisplay(
-                                                fadeIn: true,
-                                                fadingDuration: Duration(
-                                                    milliseconds: 1200),
-                                                child: Container(
-                                                  width: width / 2.5,
-                                                  height: height / 6,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.only(
-                                                          bottomLeft: Radius.circular(
-                                                              5.0),
-                                                          bottomRight: Radius.circular(
-                                                              5.0)),
-                                                      border: Border.all(
-                                                          color: BaseUrl.storage.read("status") == true
-                                                              ? Color(0xFFEE6969)
-                                                                  .withOpacity(
-                                                                      0.46)
-                                                              : Colors.grey
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                ],
+                                              )
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Spacer(),
+                                                  DelayedDisplay(
+                                                    fadeIn: true,
+                                                    fadingDuration: Duration(
+                                                        milliseconds: 1200),
+                                                    child: Container(
+                                                      width: width / 2.5,
+                                                      height: height / 25,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.50),
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          5.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          5.0))),
+                                                      child: Text(
+                                                        'Clock In',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize:
+                                                                    width / 25,
+                                                                color:
+                                                                    DynamicColor()
+                                                                        .white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  DelayedDisplay(
+                                                    fadeIn: true,
+                                                    fadingDuration: Duration(
+                                                        milliseconds: 1200),
+                                                    child: Container(
+                                                      width: width / 2.5,
+                                                      height: height / 6,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  bottomRight:
+                                                                      Radius.circular(
+                                                                          5.0),
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          5.0)),
+                                                          border: Border.all(
+                                                              color: Colors.grey
                                                                   .withOpacity(
                                                                       0.1)),
-                                                      color: BaseUrl.storage.read("status") == true
-                                                          ? Color(0xFFFAC5C5)
-                                                              .withOpacity(0.10)
-                                                          : Color(0xFFEAEAEAFF)
+                                                          color: Color(
+                                                                  0xFFEAEAEAFF)
                                                               .withOpacity(0.1)),
-                                                  child: Center(
-                                                    child: BaseUrl.storage.read(
-                                                                "status") ==
-                                                            true
-                                                        ? Image.network(
-                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
-                                                            height: height / 12,
-                                                          )
-                                                        : Image.network(
+                                                      child: Center(
+                                                        child: Image.network(
+                                                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                                          height: height / 12,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                ],
+                                              ),
+                                        Spacer(),
+                                        BaseUrl.clockout == false
+                                            ? Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Spacer(),
+                                                  DelayedDisplay(
+                                                    fadeIn: true,
+                                                    fadingDuration: Duration(
+                                                        milliseconds: 1200),
+                                                    child: Container(
+                                                      width: width / 2.5,
+                                                      height: height / 25,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          color: BaseUrl.storage
+                                                                      .read(
+                                                                          "status") ==
+                                                                  true
+                                                              ? Color(
+                                                                  0xFFEE6969)
+                                                              : Colors.grey
+                                                                  .withOpacity(
+                                                                      0.50),
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          5.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          5.0))),
+                                                      child: Text(
+                                                        'Clock Out',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize:
+                                                                    width / 25,
+                                                                color:
+                                                                    DynamicColor()
+                                                                        .white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () async {
+                                                      if (BaseUrl.storage
+                                                              .read("status") ==
+                                                          true) {
+                                                        homeController
+                                                                .clockindate2 =
+                                                            DateTime.now().day;
+                                                        var check = BaseUrl
+                                                            .storage
+                                                            .read(
+                                                                "lastAttendanceRecordDate")
+                                                            .toString()
+                                                            .split('/')[0];
+
+                                                        if (homeController
+                                                                .clockindate2 !=
+                                                            int.parse(check)) {
+                                                          homeController.scan();
+                                                          homeController.Loading
+                                                              .value = true;
+                                                        } else {
+                                                          if (homeController
+                                                              .sitelist
+                                                              .isEmpty) {
+                                                            print('hello');
+                                                            await homeController
+                                                                .getSites();
+                                                          }
+
+                                                          Get.bottomSheet(
+                                                              ReasonBottom(
+                                                                width: width,
+                                                                height: height,
+                                                              ),
+                                                              elevation: 20.0,
+                                                              enableDrag: false,
+                                                              backgroundColor:
+                                                                  Colors.white,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                              )));
+                                                        }
+                                                      }
+                                                    },
+                                                    child: DelayedDisplay(
+                                                      fadeIn: true,
+                                                      fadingDuration: Duration(
+                                                          milliseconds: 1200),
+                                                      child: Container(
+                                                        width: width / 2.5,
+                                                        height: height / 6,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.only(
+                                                                bottomLeft:
+                                                                    Radius.circular(
+                                                                        5.0),
+                                                                bottomRight:
+                                                                    Radius.circular(
+                                                                        5.0)),
+                                                            border: Border.all(
+                                                                color: BaseUrl.storage.read("status") == true
+                                                                    ? Color(0xFFEE6969)
+                                                                        .withOpacity(
+                                                                            0.46)
+                                                                    : Colors.grey
+                                                                        .withOpacity(
+                                                                            0.1)),
+                                                            color: BaseUrl.storage.read("status") == true
+                                                                ? Color(0xFFFAC5C5)
+                                                                    .withOpacity(0.10)
+                                                                : Color(0xFFEAEAEAFF).withOpacity(0.1)),
+                                                        child: Center(
+                                                          child: BaseUrl.storage
+                                                                      .read(
+                                                                          "status") ==
+                                                                  true
+                                                              ? Image.network(
+                                                                  'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
+                                                                  height:
+                                                                      height /
+                                                                          12,
+                                                                )
+                                                              : Image.network(
+                                                                  'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                                                  height:
+                                                                      height /
+                                                                          12,
+                                                                ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                ],
+                                              )
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Spacer(),
+                                                  DelayedDisplay(
+                                                    fadeIn: true,
+                                                    fadingDuration: Duration(
+                                                        milliseconds: 1200),
+                                                    child: Container(
+                                                      width: width / 2.5,
+                                                      height: height / 25,
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.50),
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          5.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          5.0))),
+                                                      child: Text(
+                                                        'Clock Out',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize:
+                                                                    width / 25,
+                                                                color:
+                                                                    DynamicColor()
+                                                                        .white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () async {},
+                                                    child: DelayedDisplay(
+                                                      fadeIn: true,
+                                                      fadingDuration: Duration(
+                                                          milliseconds: 1200),
+                                                      child: Container(
+                                                        width: width / 2.5,
+                                                        height: height / 6,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.only(
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        5.0),
+                                                                bottomRight:
+                                                                    Radius.circular(
+                                                                        5.0)),
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                        0.1)),
+                                                            color: Color(
+                                                                    0xFFEAEAEAFF)
+                                                                .withOpacity(
+                                                                    0.1)),
+                                                        child: Center(
+                                                          child: Image.network(
                                                             'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
                                                             height: height / 12,
                                                           ),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
+                                                  Spacer(),
+                                                ],
                                               ),
-                                            ),
-                                            Spacer(),
-                                          ],
-                                        ),
                                         SizedBox(
                                           width: width / 12,
                                         ),

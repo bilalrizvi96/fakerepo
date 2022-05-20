@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class SignInEmployeeController extends GetxController {
 
   var token = "".obs;
   var Loading = false.obs;
-  var deviceId = "".obs;
+
   var value;
   var encoded = ''.obs;
   var userdatalist;
@@ -33,6 +35,7 @@ class SignInEmployeeController extends GetxController {
   void onInit() {
     super.onInit();
     Loading.value = false;
+
     if (BaseUrl.storage.read("empCode") != null) {
       empcodeController.text = BaseUrl.storage.read("empCode").toString();
       read.value = true;
@@ -118,14 +121,29 @@ class SignInEmployeeController extends GetxController {
 
   sigin(var isface) async {
     randomss();
+    var info, devicename;
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      info = await deviceInfo.androidInfo;
+      devicename = 'android';
+    } else if (Platform.isIOS) {
+      info = await deviceInfo.iosInfo;
+      devicename = 'ios';
+    }
 
     String credentials = value;
     Codec<String, String> stringToBase64 = utf8.fuse(base64);
     encoded.value = stringToBase64.encode(credentials);
-
+    var responses = await API().GetIp();
+    if (responses.statusCode == 200) {
+      print(responses.data);
+    }
     var response = await API().SigIn(
         employee_Id: empcodeController.text.toString(),
         isFace: isface,
+        model: info.model.toString(),
+        devicename: devicename,
+        ip: responses.data,
         hash: encoded.value);
 
     if (response.statusCode == 200) {
@@ -135,8 +153,19 @@ class SignInEmployeeController extends GetxController {
       userdatalist = response.user;
 
       token.value = "BEARER" + " " + response.token;
+
       BaseUrl.storage.write("token", token.value);
       print(BaseUrl.storage.read("token"));
+      if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+        BaseUrl.clockin = false;
+      } else {
+        BaseUrl.clockin = true;
+      }
+      if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+        BaseUrl.clockout = false;
+      } else {
+        BaseUrl.clockout = true;
+      }
       BaseUrl.storage.write("name", response.user[0].name);
       BaseUrl.storage.write("role", response.user[0].name);
       BaseUrl.storage.write("region", response.user[0].region);

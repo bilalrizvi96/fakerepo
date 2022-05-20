@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:attendencesystem/Model/SitesModel.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:get/get.dart';
@@ -25,6 +27,7 @@ class HomeController extends GetxController {
   var name;
   var updates = false.obs;
   var center = new LatLng(33.652100, 75.123398).obs;
+  var currentlocation = new LatLng(33.652100, 75.123398).obs;
   ScanResult? scanResult;
   var sites = "".obs;
   var url = ''.obs;
@@ -200,8 +203,10 @@ class HomeController extends GetxController {
         if (response.statusCode == 200) {
           Loading.value = false;
           BaseUrl.storage.write("ismessage", false);
-          BaseUrl.clockin = outputDate1.toString();
-          BaseUrl.storage.write("clockin", BaseUrl.clockin);
+          BaseUrl.clockin = true;
+          BaseUrl.storage.write('clockincheck', date.day);
+          print(BaseUrl.storage.read('clockincheck'));
+          BaseUrl.storage.write("clockin", outputDate1.toString());
           BaseUrl.storage.write("clockout", "00:00");
           BaseUrl.storage.write("status", true);
           var resp = await API().AbsentPresent();
@@ -318,6 +323,28 @@ class HomeController extends GetxController {
     update();
   }
 
+  sendLatLng() async {
+    final location = new Location();
+    Position position = await Geolocator.getCurrentPosition();
+    currentlocation.value = LatLng(position.latitude, position.longitude);
+    try {
+      location.onLocationChanged.listen((LocationData cLoc) {
+        currentlocation.value = LatLng(cLoc.latitude!, cLoc.longitude!);
+      });
+    } catch (e) {
+      Loading.value = false;
+    }
+
+    var response = await API().Sendlatlng(
+        latlng: currentlocation.value.latitude.toString() +
+            ',' +
+            currentlocation.value.longitude.toString());
+    if (response.statusCode == 200) {
+      print(response.data['status']);
+    } else {}
+    update();
+  }
+
   clockout({var check}) async {
     // Loading.value = true;
     // update();
@@ -351,6 +378,7 @@ class HomeController extends GetxController {
             check: check);
         if (response.statusCode == 200) {
           print('bilal');
+          Loading.value = false;
           popups(
               image: response.data['data'][0]['messages'][0]['imageUrl'],
               title: response.data['data'][0]['messages'][0]['title'],
@@ -364,9 +392,11 @@ class HomeController extends GetxController {
               DateTime.now().year.toString();
           BaseUrl.storage.write("lastAttendanceRecordDate", dates);
           BaseUrl.storage.write("status", false);
-          Loading.value = false;
-          BaseUrl.clockout = outputDate1.toString();
-          BaseUrl.storage.write("clockout", BaseUrl.clockout);
+
+          BaseUrl.clockout = true;
+          BaseUrl.storage.write('clockoutcheck', date.day);
+          print(BaseUrl.storage.read('clockoutcheck'));
+          BaseUrl.storage.write("clockout", outputDate1.toString());
 
           Get.snackbar(
             "Attendance ",
@@ -421,95 +451,66 @@ class HomeController extends GetxController {
     update();
   }
 
-  // checkUpdate() async {
-  //   var response = await API().CheckUpdate();
-  //   if (response.statusCode == 200) {
-  //     updates.value = response.data['response']['updateAvailability'];
-  //     if (updates.value == true) {
-  //       Get.offAllNamed('/updatescreen');
-  //       url.value = response.data['response']['link'];
-  //
-  //       BaseUrl.url = url.value;
-  //       BaseUrl.message = response.data['response']['message'];
-  //       BaseUrl.currentRelease = response.data['response']['currentRelease'];
-  //       BaseUrl.availableRelease =
-  //           response.data['response']['availableRelease'];
-  //     } else {
-  //       clockin(check: false);
-  //     }
-  //     // checks();
-  //   } else {
-  //     Get.snackbar("Error ", response.data['error'].toString(),
-  //         colorText: Colors.white, backgroundColor: Colors.red);
-  //   }
-  // }
-
   reasonCheckOut() async {
+    Loading.value = true;
     var date = DateTime.now();
     var outputFormat = DateFormat(
         "${BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[2] + "-" + BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[1] + "-" + BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[0]}'T'${BaseUrl.storage.read("endTiming").toString().split(' ')[0]}:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
-    var status = await Permission.location.status;
-    sitedatalist.value.forEach((element) async {
-      if (dropdownValue.value == element.sitesName) {
-        if (status.isDenied) {
-          Loading.value = false;
-          Get.snackbar(
-              "Error ", 'Kindly grant the location permission!'.toString(),
-              colorText: Colors.white, backgroundColor: Colors.red);
-        } else {
-          await CurrentLocation();
-
-          if (dropdownValue.value != "") {
-            var response = await API().Reasoncheckout(
-                latlng: element.location.split(',')[0].toString() +
-                    "," +
-                    element.location.split(',')[1].toString(),
-                siteId: dropdownValue.value.toString(),
-                reason: reasoncontroller.text.toString().trim(),
-                date: outputDate);
-            if (response.statusCode == 200) {
-              BaseUrl.storage.write('checkOutMissing', true);
-              BaseUrl.storage.write("status", false);
-              Get.back();
-              Loading.value = false;
-              reasoncontroller.clear();
-              BaseUrl.clockout = outputDate1.toString();
-              BaseUrl.storage.write("clockout", BaseUrl.clockout);
-              var dates = date.year.toString() +
-                  '/' +
-                  date.month.toString() +
-                  '/' +
-                  date.day.toString();
-              BaseUrl.storage.write("lastAttendanceRecordDate", dates);
-              print(BaseUrl.storage.read("lastAttendanceRecordDate"));
-              Get.back();
-              Get.snackbar(
-                "Attendance ",
-                "Clock Out Successfully",
-              );
-            } else {
-              Loading.value = false;
-              Get.snackbar("Error ", response.data['error'].toString(),
-                  colorText: Colors.white, backgroundColor: Colors.red);
-            }
-          } else {
-            Loading.value = false;
-            Get.snackbar("Error", "Dropdown value is empty kindly select",
-                colorText: Colors.white, backgroundColor: Colors.red);
-          }
+    var latlng;
+    if (dropdownValue.value != "") {
+      sitedatalist.value.forEach((element) async {
+        if (dropdownValue.value == element.sitesName) {
+          latlng = element.location.toString();
         }
-      }
-    });
+      });
 
-    // }
+      var response = await API().Reasoncheckout(
+          latlng: latlng.split(',')[0].toString() +
+              "," +
+              latlng.split(',')[1].toString(),
+          siteId: dropdownValue.value.toString(),
+          reason: reasoncontroller.text.toString().trim(),
+          date: outputDate);
+      if (response.statusCode == 200) {
+        BaseUrl.storage.write('checkOutMissing', true);
+        BaseUrl.storage.write("status", false);
+        Get.back();
+        Loading.value = false;
+        reasoncontroller.clear();
+        // BaseUrl.clockout = outputDate1.toString();
+        BaseUrl.storage.write("clockout", outputDate1.toString());
+        var dates = date.year.toString() +
+            '/' +
+            date.month.toString() +
+            '/' +
+            date.day.toString();
+        BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+        print(BaseUrl.storage.read("lastAttendanceRecordDate"));
+        Get.back();
+        Get.snackbar(
+          "Attendance ",
+          "Clock Out Successfully",
+        );
+      } else {
+        Loading.value = false;
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error", "Dropdown value is empty kindly select",
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+
     update();
   }
 
   init() async {
     // print(BaseUrl.userdata[0].sites);
+    // Timer.periodic(Duration(minutes: 30), (Timer t) => sendLatLng());
     Loading.value = false;
     current.value =
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();

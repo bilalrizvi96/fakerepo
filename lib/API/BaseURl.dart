@@ -5,8 +5,8 @@ class BaseUrl {
   static final storage1 = GetStorage();
   static var token;
   static var empcode;
-  static var clockin = '';
-  static var clockout = '';
+  static var clockin;
+  static var clockout;
   static var baseurl =
       "https://15qh59akj4.execute-api.us-east-2.amazonaws.com/dev/";
 

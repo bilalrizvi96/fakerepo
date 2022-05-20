@@ -26,14 +26,27 @@ class API {
     }
   }
 
-  Future SigIn({var employee_Id, var isFace, var hash}) async {
+  Future SigIn(
+      {var employee_Id,
+      var isFace,
+      var hash,
+      var ip,
+      var devicename,
+      var model}) async {
     try {
       Map data = {
         'code': employee_Id,
         "isFace": isFace,
         "verification": hash,
         "version": BaseUrl.version.toString(),
+        "device": {
+          "token": BaseUrl.fcm_token.toString(),
+          "ip": ip,
+          "model": model,
+          "name": devicename
+        }
       };
+
       print(data);
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
@@ -517,12 +530,52 @@ class API {
     }
   }
 
+  Future Sendlatlng({var latlng}) async {
+    try {
+      Map data = {"location": latlng};
+      print(data);
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.put(
+        BaseUrl.baseurl + 'currentLocation',
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      print(e);
+      return onError(e);
+    }
+  }
+
   Future Getsites() async {
     try {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
         BaseUrl.baseurl + 'manage_site',
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future GetIp() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        'https://api.ipify.org/',
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),
@@ -591,9 +644,9 @@ class API {
     }
   }
 
-  Future HistoryCheckPoints({var require, var date}) async {
+  Future HistoryCheckPoints({var require, var date, var empcode}) async {
     try {
-      Map data = {"require": require, "date": date};
+      Map data = {"require": require, "date": date, "employeeCode": empcode};
       print(data);
       var dio = Dio();
       print(BaseUrl.storage.read('token'));
@@ -606,7 +659,7 @@ class API {
           Headers.acceptHeader: "application/json",
         }),
       );
-      print(response);
+
       if (response.statusCode == 200) {
         return response;
       }

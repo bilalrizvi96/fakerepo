@@ -15,6 +15,7 @@ import '../View/CheckPointScreen/CheckPointScreen.dart';
 import '../View/FAQ\'s/FAQsDetailScreen.dart';
 import '../View/FAQ\'s/FAQsScreen.dart';
 
+import '../View/MaintainceScreen/MaintainceScreen.dart';
 import '../View/MyPointScreen/MyPointScreen.dart';
 import '../View/NotificationScreen/NotificationScreen.dart';
 import '../View/TrackUserScreen/TrackUserScreen.dart';
@@ -49,6 +50,11 @@ class Routes {
     GetPage(
         name: "/facerule",
         page: () => FaceIDRuleScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/maintaince",
+        page: () => MaintainceScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
