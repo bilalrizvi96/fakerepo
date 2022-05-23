@@ -18,6 +18,7 @@ import '../View/FAQ\'s/FAQsScreen.dart';
 import '../View/MaintainceScreen/MaintainceScreen.dart';
 import '../View/MyPointScreen/MyPointScreen.dart';
 import '../View/NotificationScreen/NotificationScreen.dart';
+import '../View/SupportRequestScreen/SupportRequestScreen.dart';
 import '../View/TrackUserScreen/TrackUserScreen.dart';
 
 class Routes {
@@ -90,6 +91,11 @@ class Routes {
     GetPage(
         name: "/notification",
         page: () => NotificationScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/supportrequest",
+        page: () => SupportRequestScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
   ];

@@ -31,13 +31,17 @@ class FeedbackController extends GetxController {
     }
   }
 
-  submit() async {
-    if (feedbackFormKey.currentState!.validate() &&
-        feedbackFormKey.currentState!.validate()) {
-      Loading.value = true;
-      update();
-      if (dropdownValue.value != 'Choose Category') {
-        // var date = DateTime.now();
+  submit(var form) async {
+    // if (feedbackFormKey.currentState!.validate() &&
+    //     feedbackFormKey.currentState!.validate()) {
+    Loading.value = true;
+    update();
+    print(form);
+    form == false
+        ? dropdownValue.value = dropdownValue.value
+        : dropdownValue.value = 'HR';
+    if (dropdownValue.value != 'Choose Category') {
+      if (feedbackcontroller.text.toString() != '') {
         var response = await API().Feedback(
             empId: check != false ? BaseUrl.storage.read("empCode") : "00000",
             // time: date.hour.toString() +
@@ -53,9 +57,9 @@ class FeedbackController extends GetxController {
             message: namecontroller.text.toString() +
                 '~|~' +
                 feedbackcontroller.text.toString(),
-            type: dropdownValue.value.toString(),
+            type: form == false ? dropdownValue.value.toString() : 'HR',
             image: faceImage);
-        if (response.statusCode == 201) {
+        if (response.statusCode == 200) {
           Loading.value = false;
           if (check == false) {
             // namecontroller.clear();
@@ -76,10 +80,15 @@ class FeedbackController extends GetxController {
         }
       } else {
         Loading.value = false;
-        Get.snackbar("Error ", "Please select from dropdown".toString(),
+        Get.snackbar("Error ", "Please this field must be filled".toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", "Please select from dropdown".toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
+
     update();
   }
 
@@ -110,6 +119,5 @@ class FeedbackController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-
   }
 }

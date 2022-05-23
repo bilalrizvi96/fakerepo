@@ -45,6 +45,17 @@ class BottomNavigationController extends GetxController {
   void onInit() {
     super.onInit();
     popups();
+    print(BaseUrl.storage.read('clockincheck'));
+    if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+      BaseUrl.clockin = false;
+    } else {
+      BaseUrl.clockin = true;
+    }
+    if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+      BaseUrl.clockout = false;
+    } else {
+      BaseUrl.clockout = true;
+    }
   }
 
   popups() {

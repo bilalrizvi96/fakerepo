@@ -111,6 +111,9 @@ class SplashController extends GetxController {
     BaseUrl.storage1.read('seen') ?? false;
     print(tokenval);
     Future.delayed(new Duration(milliseconds: 700), () {
+      // if (BaseUrl.storage.read('maintenance') == true) {
+      //   Get.offAllNamed('/maintaince');
+      // } else {
       if (tokenval != "out") {
         if (tokenval != null) {
           Get.offAllNamed('/home');
@@ -126,6 +129,7 @@ class SplashController extends GetxController {
         BaseUrl.storage1.write('seen', true);
         Get.offAllNamed('/intro');
       }
+      // }
     });
   }
 

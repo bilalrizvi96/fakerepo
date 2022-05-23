@@ -82,7 +82,9 @@ class FAQsScreen extends StatelessWidget {
                                                 check: check,
                                               ));
                                         }
-                                      : () {},
+                                      : () {
+                                          Get.toNamed('/supportrequest');
+                                        },
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(

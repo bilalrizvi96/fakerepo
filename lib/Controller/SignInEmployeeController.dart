@@ -104,12 +104,10 @@ class SignInEmployeeController extends GetxController {
   }
 
   randomss() {
-    //print("deviceId");
     Random random = new Random();
     int randomNumber = random.nextInt(1000);
     int randomNumber2 = random.nextInt(10000);
-    //print(randomNumber.bitLength);
-    //print(randomNumber2.bitLength);
+
     if ("$randomNumber".length == 3 && "$randomNumber2".length == 4) {
       value = "${randomNumber.toString()}" +
           "np@U'vgy99`K`;^NcxRb" +
@@ -147,7 +145,7 @@ class SignInEmployeeController extends GetxController {
         hash: encoded.value);
 
     if (response.statusCode == 200) {
-      Loading.value = false; // print(response.data.user[0].sites);
+      Loading.value = false;
       response = await LoginModel.fromJson(response.data);
 
       userdatalist = response.user;
@@ -156,18 +154,9 @@ class SignInEmployeeController extends GetxController {
 
       BaseUrl.storage.write("token", token.value);
       print(BaseUrl.storage.read("token"));
-      if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
-        BaseUrl.clockin = false;
-      } else {
-        BaseUrl.clockin = true;
-      }
-      if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
-        BaseUrl.clockout = false;
-      } else {
-        BaseUrl.clockout = true;
-      }
+
       BaseUrl.storage.write("name", response.user[0].name);
-      BaseUrl.storage.write("role", response.user[0].name);
+      BaseUrl.storage.write("role", response.user[0].role);
       BaseUrl.storage.write("region", response.user[0].region);
       BaseUrl.storage.write("empCode", response.user[0].empCode);
       BaseUrl.storage
@@ -195,6 +184,8 @@ class SignInEmployeeController extends GetxController {
           response.user[0].firstAttendanceRecordDate);
       BaseUrl.storage.write("ismessage", response.user[0].isMessageAvailable);
       BaseUrl.storage.write("popupimage", response.user[0].message.imageUrl);
+      BaseUrl.storage.write(
+          "maintenance", userdatalist[0].maintenanceObject.underMaintenance);
 
       BaseUrl.storage.write("firstAttendanceRecordDate",
           response.user[0].firstAttendanceRecordDate);
@@ -205,11 +196,33 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage.write(
           "dateForMissingCheckout", response.user[0].dateForMissingCheckout);
       if (userdatalist.isNotEmpty) {
-        if (userdatalist[0].version.updateAvailability == false) {
-          Get.offAllNamed('/home');
-        } else {
+        if (userdatalist[0].version.updateAvailability == true) {
           BaseUrl.storage.write("token", 'out');
-          Get.offAllNamed('/updatescreen');
+          Get.offAllNamed('/updatescreen', arguments: [
+            userdatalist[0].version.message,
+            userdatalist[0].version.currentRelease,
+            userdatalist[0].version.availableRelease,
+            userdatalist[0].version.link,
+          ]);
+        } else if (userdatalist[0].maintenanceObject.underMaintenance == true) {
+          BaseUrl.storage.write("token", 'out');
+          Get.offAllNamed('/maintaince');
+        } else {
+          print(BaseUrl.storage.read('clockincheck'));
+          // if(BaseUrl.storage.read('key')!=empcodeController.text.toString()){
+          //
+          // }
+          if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+            BaseUrl.clockin = false;
+          } else {
+            BaseUrl.clockin = true;
+          }
+          if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+            BaseUrl.clockout = false;
+          } else {
+            BaseUrl.clockout = true;
+          }
+          Get.offAllNamed('/home');
         }
       }
     } else {
@@ -226,7 +239,6 @@ class SignInEmployeeController extends GetxController {
         verification: faceImage,
       );
       if (response.statusCode == 200) {
-        // Get.snackbar("Log In ", "Verified Successfully");
         await sigin(true);
       } else {
         Get.snackbar("Login ", response.data['error'].toString(),

@@ -38,15 +38,16 @@ class SideMenu extends StatelessWidget {
                 Get.toNamed('/mypoints');
               },
             ),
-            DrawerListTile(
-              title: "Track",
-              icon: Icon(Icons.location_searching,
-                  color: DynamicColor().primarycolor),
-              press: () async {
-                Get.back();
-                Get.toNamed('/trackuser');
-              },
-            ),
+            if (BaseUrl.storage.read("role") != '')
+              DrawerListTile(
+                title: "Track",
+                icon: Icon(Icons.location_searching,
+                    color: DynamicColor().primarycolor),
+                press: () async {
+                  Get.back();
+                  Get.toNamed('/trackuser');
+                },
+              ),
             if (BaseUrl.storage.read("checkpointaccess") != false)
               DrawerListTile(
                 title: "Check Point",

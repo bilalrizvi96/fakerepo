@@ -31,8 +31,7 @@ class HomeController extends GetxController {
   ScanResult? scanResult;
   var sites = "".obs;
   var url = ''.obs;
-  SignInEmployeeController _signInEmployeeController =
-      Get.put(SignInEmployeeController());
+
   var clockindate;
   var clockindate2;
   var Loading = false.obs;
@@ -511,6 +510,7 @@ class HomeController extends GetxController {
   init() async {
     // print(BaseUrl.userdata[0].sites);
     // Timer.periodic(Duration(minutes: 30), (Timer t) => sendLatLng());
+    print(BaseUrl.clockin);
     Loading.value = false;
     current.value =
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();

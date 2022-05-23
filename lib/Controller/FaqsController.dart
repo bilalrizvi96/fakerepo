@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Model/HelpCenterModel.dart';
+import 'package:attendencesystem/Model/SupportRequestModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,7 @@ import '../Model/FaqsModel.dart';
 
 class FaqsController extends GetxController {
   var faqlist = [].obs;
+  var supportrequestlist = [].obs;
   var Loading = false.obs;
 
   getHelpCenter() async {
@@ -14,9 +16,24 @@ class FaqsController extends GetxController {
     if (response.statusCode == 200) {
       Loading.value = false;
       response = await HelpCenterModel.fromJson(response.data);
-      faqlist.value = response.response;
-      faqlist.value.removeWhere((element) => element.show=='false');
+      faqlist.value = response.data;
+      faqlist.value.removeWhere((element) => element.show == 'false');
+      getSupportRequest();
       print(faqlist.value);
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", response.data['message'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
+  }
+
+  getSupportRequest() async {
+    var response = await API().SupportRequest();
+    if (response.statusCode == 200) {
+      Loading.value = false;
+      response = await SupportRequestModel.fromJson(response.data);
+      supportrequestlist.value = response.data;
     } else {
       Loading.value = false;
       Get.snackbar("Error ", response.data['message'].toString(),

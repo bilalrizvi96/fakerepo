@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final loginModel = loginModelFromJson(jsonString);
-
 import 'dart:convert';
 
 LoginModel loginModelFromJson(String str) =>
@@ -56,8 +52,11 @@ class User {
     this.consumeSickLeaves,
     this.consumeCasualLeaves,
     this.checkpointAccess,
-    this.deviceToken,
     this.department,
+    this.pin,
+    this.role,
+    this.device,
+    this.maintenanceObject,
     this.lastAttendanceRecordDate,
     this.isMessageAvailable,
     this.message,
@@ -69,7 +68,6 @@ class User {
     this.presentDays,
     this.absentDays,
     this.version,
-    this.role,
   });
 
   var id;
@@ -97,9 +95,11 @@ class User {
   var consumeSickLeaves;
   var consumeCasualLeaves;
   var checkpointAccess;
-  var deviceToken;
   var department;
+  var pin;
   var role;
+  var device;
+  var maintenanceObject;
   var lastAttendanceRecordDate;
   var isMessageAvailable;
   var message;
@@ -138,9 +138,12 @@ class User {
         consumeSickLeaves: json["consumeSickLeaves"],
         consumeCasualLeaves: json["consumeCasualLeaves"],
         checkpointAccess: json["checkpointAccess"],
-        deviceToken: json["deviceToken"],
         department: json["department"],
+        pin: json["pin"],
         role: json["role"],
+        device: Device.fromJson(json["device"]),
+        maintenanceObject:
+            MaintenanceObject.fromJson(json["maintenanceObject"]),
         lastAttendanceRecordDate: json["lastAttendanceRecordDate"],
         isMessageAvailable: json["isMessageAvailable"],
         message: Message.fromJson(json["message"]),
@@ -180,9 +183,11 @@ class User {
         "consumeSickLeaves": consumeSickLeaves,
         "consumeCasualLeaves": consumeCasualLeaves,
         "checkpointAccess": checkpointAccess,
-        "deviceToken": deviceToken,
         "department": department,
+        "pin": pin,
         "role": role,
+        "device": device.toJson(),
+        "maintenanceObject": maintenanceObject.toJson(),
         "lastAttendanceRecordDate": lastAttendanceRecordDate,
         "isMessageAvailable": isMessageAvailable,
         "message": message.toJson(),
@@ -190,10 +195,67 @@ class User {
         "checkIn": checkIn,
         "checkOut": checkOut,
         "checkOutMissing": checkOutMissing,
-        "dateForMissingCheckout": dateForMissingCheckout,
+        "dateForMissingCheckout": dateForMissingCheckout.toIso8601String(),
         "present_days": presentDays,
         "absent_days": absentDays,
         "version": version.toJson(),
+      };
+}
+
+class Device {
+  Device({
+    this.token,
+    this.ip,
+    this.model,
+    this.name,
+  });
+
+  var token;
+  var ip;
+  var model;
+  var name;
+
+  factory Device.fromJson(Map<String, dynamic> json) => Device(
+        token: json["token"],
+        ip: json["ip"],
+        model: json["model"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "token": token,
+        "ip": ip,
+        "model": model,
+        "name": name,
+      };
+}
+
+class MaintenanceObject {
+  MaintenanceObject({
+    this.title,
+    this.remainingTime,
+    this.message,
+    this.underMaintenance,
+  });
+
+  var title;
+  var remainingTime;
+  var message;
+  var underMaintenance;
+
+  factory MaintenanceObject.fromJson(Map<String, dynamic> json) =>
+      MaintenanceObject(
+        title: json["title"],
+        remainingTime: json["remainingTime"],
+        message: json["message"],
+        underMaintenance: json["underMaintenance"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "remainingTime": remainingTime,
+        "message": message,
+        "underMaintenance": underMaintenance,
       };
 }
 
@@ -235,7 +297,6 @@ class Message {
 
 class Version {
   Version({
-    this.id,
     this.version,
     this.link,
     this.message,
@@ -244,7 +305,6 @@ class Version {
     this.updateAvailability,
   });
 
-  var id;
   var version;
   var link;
   var message;
@@ -253,7 +313,6 @@ class Version {
   var updateAvailability;
 
   factory Version.fromJson(Map<String, dynamic> json) => Version(
-        id: json["_id"],
         version: json["version"],
         link: json["link"],
         message: json["message"],
@@ -263,7 +322,6 @@ class Version {
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "version": version,
         "link": link,
         "message": message,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:attendencesystem/API/Error.dart';
 import 'package:attendencesystem/Model/HelpCenterModel.dart';
+
 import 'package:dio/dio.dart';
 import 'BaseURl.dart';
 
@@ -62,22 +63,22 @@ class API {
     }
   }
 
-  // Future CheckUpdate() async {
-  //   try {
-  //     Map data = {"version": BaseUrl.version.toString()};
-  //     var dio = Dio();
-  //     dio.options.headers['Accept'] = 'application/json';
-  //     final response = await dio.post(
-  //       BaseUrl.baseurl + 'checkUpdate',
-  //       data: data,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       return response;
-  //     }
-  //   } catch (e) {
-  //     return onError(e);
-  //   }
-  // }
+  Future CheckMaintenance() async {
+    var response;
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      response = await dio.get(
+        BaseUrl.baseurl + 'maintenance',
+      );
+      if (response.statusCode == 200) {
+        print(response.data);
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
 
   Future OTPVerification({var code, var empCode}) async {
     try {
@@ -220,7 +221,23 @@ class API {
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
-        BaseUrl.baseurl + 'announcements',
+        BaseUrl.baseurl + 'announcementsForMobile',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future SupportRequest() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'getMobileFeedbacks',
       );
       if (response.statusCode == 200) {
         return response;
@@ -285,7 +302,7 @@ class API {
         data: formData,
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return response;
       }
     } catch (e) {

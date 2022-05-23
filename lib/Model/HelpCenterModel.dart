@@ -12,19 +12,19 @@ String helpCenterModelToJson(HelpCenterModel data) =>
 
 class HelpCenterModel {
   HelpCenterModel({
-    this.response,
+    this.data,
   });
 
-  var response;
+  var data;
 
   factory HelpCenterModel.fromJson(Map<String, dynamic> json) =>
       HelpCenterModel(
-        response: List<Response>.from(
-            json["response"].map((x) => Response.fromJson(x))),
+        data:
+            List<Response>.from(json["data"].map((x) => Response.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "response": List<dynamic>.from(response.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
 }
 
@@ -47,7 +47,7 @@ class Response {
         key: json["key"],
         label: json["label"],
         value: json["value"],
-    show: json["show"],
+        show: json["show"],
         subQuestion: json["subQuestion"] == null
             ? null
             : List<SubQuestion>.from(

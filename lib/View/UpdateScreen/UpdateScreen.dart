@@ -13,8 +13,9 @@ import '../../Controller/SignInEmployeeController.dart';
 import '../FeedbackScreen/FeedbackScreen.dart';
 
 class UpdateScreen extends StatelessWidget {
-  SignInEmployeeController _signInEmployeeController =
-      Get.put(SignInEmployeeController());
+  // SignInEmployeeController _signInEmployeeController =
+  //     Get.put(SignInEmployeeController());
+  var argumentData = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +31,7 @@ class UpdateScreen extends StatelessWidget {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 1.3,
+                    height: MediaQuery.of(context).size.height / 1.26,
                     padding: EdgeInsets.only(
                       top: 150.0,
                     ),
@@ -45,8 +46,8 @@ class UpdateScreen extends StatelessWidget {
                           padding: EdgeInsets.only(
                               left: 25.0, right: 25.0, top: 12.0),
                           child: Text(
-                            'This update includes improvements to function as listed below.\n\nThe exact changes may differ depending on your device model,region and service provider.'
-                            '\n\n${_signInEmployeeController.userdatalist[0].version.message}',
+                            'This update includes improvements to function as listed below.\nThe exact changes may differ depending on your device model,region and service provider.'
+                            '\n${argumentData[0]}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w300,
                                 fontSize:
@@ -56,7 +57,7 @@ class UpdateScreen extends StatelessWidget {
                         Spacer(),
                         Padding(
                           padding: EdgeInsets.only(
-                              left: 30.0, right: 25.0, top: 12.0),
+                              left: 30.0, right: 25.0, top: 6.0),
                           child: Text(
                             'Current Release',
                             style: GoogleFonts.poppins(
@@ -74,7 +75,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            '${_signInEmployeeController.userdatalist[0].version.currentRelease}',
+                            '${argumentData[1]}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
@@ -87,7 +88,7 @@ class UpdateScreen extends StatelessWidget {
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                              left: 30.0, right: 25.0, top: 12.0),
+                              left: 30.0, right: 25.0, top: 6.0),
                           child: Text(
                             'Available Release',
                             style: GoogleFonts.poppins(
@@ -105,7 +106,7 @@ class UpdateScreen extends StatelessWidget {
                             right: 25.0,
                           ),
                           child: Text(
-                            '${_signInEmployeeController.userdatalist[0].version.availableRelease}',
+                            '${argumentData[2]}',
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: DynamicColor().primarycolor,
@@ -123,7 +124,7 @@ class UpdateScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height / 6,
                     // width: double.infinity,
-                    padding: EdgeInsets.only(left: 25.0, top: 25),
+                    padding: EdgeInsets.only(left: 25.0, top: 22),
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('assets/updatebg.png'),
@@ -162,13 +163,10 @@ class UpdateScreen extends StatelessWidget {
                     onPressed: () async {
                       BaseUrl.storage.erase();
                       // BaseUrl.url;
-                      print(_signInEmployeeController
-                          .userdatalist[0].version.link);
-                      if (await canLaunch(_signInEmployeeController
-                          .userdatalist[0].version.link)) {
+                      print(argumentData[3]);
+                      if (await canLaunch(argumentData[3])) {
                         await launch(
-                          _signInEmployeeController
-                              .userdatalist[0].version.link,
+                          argumentData[3],
                           forceSafariVC: false,
                           forceWebView: false,
                           headers: <String, String>{
@@ -176,7 +174,7 @@ class UpdateScreen extends StatelessWidget {
                           },
                         );
                       } else {
-                        throw 'Could not launch ${_signInEmployeeController.userdatalist[0].version.link}';
+                        throw 'Could not launch ${argumentData[3]}';
                       }
                     },
                     child: const Text('UPDATE')),
