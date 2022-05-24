@@ -144,7 +144,7 @@ class SupportRequestScreen extends StatelessWidget {
                                                         const EdgeInsets.only(
                                                             left: 8.0),
                                                     child: Text(
-                                                      '${faqsController.supportrequestlist.value[index].message}',
+                                                      '${faqsController.supportrequestlist.value[index].message.toString().split('~|~')[1]}',
                                                       style:
                                                           GoogleFonts.poppins(
                                                               color:

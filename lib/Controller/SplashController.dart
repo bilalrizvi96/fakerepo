@@ -11,11 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
+import 'MaintenanceController.dart';
+
 class SplashController extends GetxController {
   var updates = false.obs;
   var url = ''.obs;
   FirebaseMessaging? _firebaseMessaging;
   LocationPermission? permission;
+  MaintenanceController _maintenanceController =
+      Get.put(MaintenanceController());
   // var context;
   // var connection = true.obs;
 
@@ -45,6 +49,17 @@ class SplashController extends GetxController {
   }
 
   void getMessage() async {
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: true,
+      provisional: true,
+      sound: true,
+    );
+    print(settings);
     // var info, devicename;
     // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     // if (Platform.isAndroid) {
@@ -63,16 +78,30 @@ class SplashController extends GetxController {
     );
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       RemoteNotification? notification = message.notification;
+
       if (notification != null) {
+        if (notification.title == 'Maintenance') {
+          _maintenanceController.checkMaintenance();
+        }
         Get.snackbar(" ${notification.title.toString()}",
             "${notification.body.toString()}");
+        // BaseUrl.storage.write('token', 'out');
+        // Get.offAllNamed('/maintaince');
+        // } else if (notification.title == 'Login') {
+        //   Get.offAllNamed('/signinemp');
+        // }
+
       }
+
       print('Message clicked!');
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       print('Message clicked!');
       if (notification != null) {
+        if (notification.title == 'Maintenance') {
+          _maintenanceController.checkMaintenance();
+        }
         Get.snackbar(
           " ${notification.title.toString()}",
           "${notification.body.toString()}",

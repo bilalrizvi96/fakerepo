@@ -49,8 +49,9 @@ class TrackUserController extends GetxController {
       zoom: 18,
       tilt: 2,
       bearing: 30,
-      target: LatLng(double.parse(employeelist.value[0].location.split(',')[0]),
-          double.parse(employeelist.value[0].location.split(',')[1])),
+      target: LatLng(
+          double.parse(employeelist.value.last.location.split(',')[0]),
+          double.parse(employeelist.value.last.location.split(',')[1])),
     )));
     update();
   }
@@ -123,9 +124,8 @@ class TrackUserController extends GetxController {
               markerId: MarkerId(element.siteName),
               position: LatLng(double.parse(element.location.split(',')[0]),
                   double.parse(element.location.split(',')[1])),
-              infoWindow: InfoWindow(
-                title: element.siteName,
-              ),
+              infoWindow:
+                  InfoWindow(title: element.siteName, snippet: element.time),
               onTap: () {}),
         );
         Empmapupdate();

@@ -13,11 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'MaintenanceController.dart';
+
 class SignInEmployeeController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   TextEditingController empcodeController = new TextEditingController();
   XFile? faceImage;
-
+  MaintenanceController _maintenanceController =
+      Get.put(MaintenanceController());
   var token = "".obs;
   var Loading = false.obs;
 
@@ -205,8 +208,7 @@ class SignInEmployeeController extends GetxController {
             userdatalist[0].version.link,
           ]);
         } else if (userdatalist[0].maintenanceObject.underMaintenance == true) {
-          BaseUrl.storage.write("token", 'out');
-          Get.offAllNamed('/maintaince');
+          _maintenanceController.checkMaintenance();
         } else {
           print(BaseUrl.storage.read('clockincheck'));
           // if(BaseUrl.storage.read('key')!=empcodeController.text.toString()){

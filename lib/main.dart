@@ -28,14 +28,17 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   NotificationSettings settings =
       await FirebaseMessaging.instance.requestPermission(
-    announcement: true,
-    carPlay: true,
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
     criticalAlert: true,
+    provisional: true,
+    sound: true,
   );
-
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
