@@ -79,6 +79,8 @@ class AddCheckPointScreen extends StatelessWidget {
                                           elevation: 5.0,
                                           hoverElevation: 20,
                                           onPressed: () {
+                                            _checkPointController
+                                                .CurrentLocation();
                                             _checkPointController.mapupdate();
                                           },
                                           child: Icon(Icons.refresh_sharp)),

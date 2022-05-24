@@ -37,14 +37,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get: ^4.3.8
-  google_fonts: ^2.1.0
+  google_fonts: ^3.0.1
   dots_indicator: ^2.0.0
   delayed_display: ^2.0.0
   flutter_datetime_picker: ^1.5.1
   dio: ^4.0.1
   barcode_scan2:
   get_storage: ^2.0.3
-  geolocator: ^7.7.1
+  geolocator: ^8.2.1
   location: ^4.3.0
   google_maps_flutter: ^2.1.0
   image_picker: ^0.8.4+4
@@ -57,7 +57,7 @@ dependencies:
   pin_code_text_field: ^1.8.0
   url_launcher: ^6.0.20
   permission_handler:
-  syncfusion_flutter_gauges: ^19.4.56
+  syncfusion_flutter_gauges: ^20.1.57
   open_file: ^3.2.1
   path_provider: ^2.0.7
   syncfusion_flutter_pdf:
@@ -76,7 +76,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+#  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -93,6 +93,7 @@ class TrackUserController extends GetxController {
       update();
     } else {
       Loading.value = false;
+      Get.back();
       Get.snackbar("Error ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
@@ -115,12 +116,7 @@ class TrackUserController extends GetxController {
       employeelist.value.forEach((element) {
         markers.add(
           Marker(
-              icon:
-                  // element.siteName == 'Current Location'
-                  //     ?
-                  BitmapDescriptor.defaultMarker,
-              // : BitmapDescriptor.defaultMarkerWithHue(
-              //     BitmapDescriptor.hueCyan),
+              icon: BitmapDescriptor.defaultMarker,
               markerId: MarkerId(element.siteName),
               position: LatLng(double.parse(element.location.split(',')[0]),
                   double.parse(element.location.split(',')[1])),

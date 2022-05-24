@@ -110,8 +110,7 @@ class MyProfileScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
                                       hintText:
-                                          BaseUrl.storage.read("firstName") !=
-                                                  ' '
+                                          BaseUrl.storage.read("empCode") != ' '
                                               ? BaseUrl.storage.read("empCode")
                                               : "First Name",
                                       focusColor: DynamicColor().primarycolor,

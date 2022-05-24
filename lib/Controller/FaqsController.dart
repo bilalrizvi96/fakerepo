@@ -36,8 +36,8 @@ class FaqsController extends GetxController {
       supportrequestlist.value = response.data;
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['message'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
+      // Get.snackbar("Error ", response.data['message'].toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }

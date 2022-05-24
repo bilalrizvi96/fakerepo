@@ -31,7 +31,7 @@ class FeedbackScreen extends StatelessWidget {
               builder: (_) {
                 return Stack(
                   children: [
-                    Image.asset(
+                    Image.network(
                       'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/attendancebg.png',
                       fit: BoxFit.cover,
                       width: width,
@@ -137,7 +137,7 @@ class FeedbackScreen extends StatelessWidget {
                                                 : '',
                                             hintStyle: GoogleFonts.poppins(
                                                 color: DynamicColor().black,
-                                                fontWeight: FontWeight.w600,
+                                                fontWeight: FontWeight.w300,
                                                 fontSize: width / 25)),
                                       )
                                     : Text(

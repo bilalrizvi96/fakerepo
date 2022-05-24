@@ -251,7 +251,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  getSites() async {
+  Future getSites() async {
     var response = await API().Getsites();
     if (response.statusCode == 200) {
       Loading.value = false;
@@ -427,12 +427,12 @@ class HomeController extends GetxController {
           reason: reasoncontroller.text.toString().trim(),
           date: outputDate);
       if (response.statusCode == 200) {
-        BaseUrl.storage.write('checkOutMissing', true);
+        BaseUrl.storage.write('checkOutMissing', false);
         BaseUrl.storage.write("status", false);
         Get.back();
         Loading.value = false;
         reasoncontroller.clear();
-        // BaseUrl.clockout = outputDate1.toString();
+
         BaseUrl.storage.write("clockout", outputDate1.toString());
         var dates = date.year.toString() +
             '/' +

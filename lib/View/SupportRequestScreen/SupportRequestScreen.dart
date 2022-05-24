@@ -58,114 +58,207 @@ class SupportRequestScreen extends StatelessWidget {
                     ),
                     faqsController.Loading.value == false
                         ? faqsController.supportrequestlist.value.isNotEmpty
-                            ? ListView.builder(
-                                itemCount: faqsController
-                                    .supportrequestlist.value.length,
-                                shrinkWrap: true,
-                                itemBuilder: (_, index) {
-                                  return Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.only(
-                                        right: 8.0,
-                                        top: 8,
-                                        left: 25,
-                                        bottom: 8),
-                                    child: Stack(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Container(
-                                            width: width / 5,
-                                            height: height / 8.5,
-                                            decoration: BoxDecoration(
-                                                color:
-                                                    DynamicColor().primarycolor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        15.0)),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Container(
-                                            height: height / 8.5,
-                                            width: width / 1.2,
-                                            padding: const EdgeInsets.all(8.0),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.fromBorderSide(
-                                                    BorderSide(
-                                                        color:
-                                                            Color(0xFFDFDFDF))),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0)),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Row(
+                            ? Expanded(
+                                child: ListView.builder(
+                                    itemCount: faqsController
+                                        .supportrequestlist.value.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (_, index) {
+                                      return Container(
+                                        height: height / 7,
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.only(
+                                            right: 8.0,
+                                            top: 8,
+                                            left: 25,
+                                            bottom: 8),
+                                        child: Stack(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Container(
+                                                width: width / 5,
+                                                height: height / 7.0,
+                                                decoration: BoxDecoration(
+                                                    color: DynamicColor()
+                                                        .primarycolor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.0)),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: Container(
+                                                height: height / 7.0,
+                                                width: width / 1.2,
+                                                padding: const EdgeInsets.only(
+                                                    left: 15.0,
+                                                    top: 5.0,
+                                                    right: 8.0),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    border: Border.fromBorderSide(
+                                                        BorderSide(
+                                                            color: Color(
+                                                                0xFFDFDFDF))),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
                                                   children: [
-                                                    SizedBox(
-                                                      width: width / 60,
+                                                    Row(
+                                                      children: [
+                                                        // SizedBox(
+                                                        //   width: width / 60,
+                                                        // ),
+                                                        Text(
+                                                          '${faqsController.supportrequestlist.value[index].name}',
+                                                          style: GoogleFonts.poppins(
+                                                              color: DynamicColor()
+                                                                  .primarycolor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize:
+                                                                  width / 25),
+                                                        ),
+                                                        Spacer(),
+                                                        Text(
+                                                          '${faqsController.supportrequestlist.value[index].time}',
+                                                          style: GoogleFonts.poppins(
+                                                              color: DynamicColor()
+                                                                  .primarycolor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              fontSize:
+                                                                  width / 28),
+                                                        ),
+                                                        SizedBox(
+                                                          width: width / 60,
+                                                        )
+                                                      ],
                                                     ),
                                                     Text(
-                                                      '${faqsController.supportrequestlist.value[index].name}',
+                                                      '#${faqsController.supportrequestlist.value[index].ticketNo}',
                                                       style: GoogleFonts.poppins(
                                                           color: DynamicColor()
                                                               .primarycolor,
                                                           fontWeight:
                                                               FontWeight.w600,
-                                                          fontSize: width / 25),
-                                                    ),
-                                                    Spacer(),
-                                                    Text(
-                                                      '${faqsController.supportrequestlist.value[index].time}',
-                                                      style: GoogleFonts.poppins(
-                                                          color: DynamicColor()
-                                                              .primarycolor,
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                          fontSize: width / 28),
+                                                          fontSize: width / 35),
                                                     ),
                                                     SizedBox(
-                                                      width: width / 60,
-                                                    )
+                                                      height: 2,
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                        '${faqsController.supportrequestlist.value[index].message.toString()}',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                color:
+                                                                    DynamicColor()
+                                                                        .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize:
+                                                                    width /
+                                                                        30.2),
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
-                                                SizedBox(
-                                                  height: height / 80,
-                                                ),
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8.0),
-                                                    child: Text(
-                                                      '${faqsController.supportrequestlist.value[index].message.toString().split('~|~')[1]}',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              color:
-                                                                  DynamicColor()
-                                                                      .black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontSize:
-                                                                  width / 30.2),
+                                              ),
+                                            ),
+                                            if (faqsController
+                                                    .supportrequestlist
+                                                    .value[index]
+                                                    .image !=
+                                                '')
+                                              Positioned(
+                                                top: height / 14,
+                                                right: width / 30,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        barrierDismissible:
+                                                            false,
+                                                        builder:
+                                                            (_) => AlertDialog(
+                                                                  actions: [
+                                                                    Center(
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.all(8.0),
+                                                                        child: GestureDetector(
+                                                                            onTap: () {
+                                                                              Get.back();
+                                                                            },
+                                                                            child: Icon(Icons.clear)),
+                                                                      ),
+                                                                    ),
+                                                                    Image.network(
+                                                                        faqsController
+                                                                            .supportrequestlist
+                                                                            .value[
+                                                                                index]
+                                                                            .image,
+                                                                        fit: BoxFit
+                                                                            .cover)
+                                                                  ],
+                                                                ));
+                                                  },
+                                                  child: Container(
+                                                    width: width / 3.3,
+                                                    height: height / 20,
+                                                    decoration: BoxDecoration(
+                                                        color: DynamicColor()
+                                                            .primarycolor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    18.0)),
+                                                    child: Row(
+                                                      children: [
+                                                        Spacer(),
+                                                        Icon(
+                                                          Icons
+                                                              .attach_file_outlined,
+                                                          color: Colors.white,
+                                                        ),
+                                                        Spacer(),
+                                                        Text(
+                                                          'Attachments',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      width /
+                                                                          35),
+                                                        ),
+                                                        Spacer(),
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
+                                              ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                })
+                                      );
+                                    }),
+                              )
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,

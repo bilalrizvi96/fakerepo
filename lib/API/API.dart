@@ -270,10 +270,12 @@ class API {
       var message,
       var type,
       var image,
+      var name,
       var phone}) async {
     var file;
     if (image != null) {
       // Uint8List imagebytes = await image.readAsBytes();
+
       // String base64string = base64.encode(imagebytes);
       // file = base64string.toString();
       // file.replaceAll('/', '');
@@ -283,12 +285,14 @@ class API {
       var formData = FormData.fromMap({
         "type": type,
         // "time": time.toString(),
-        "employeeId": empId.toString(),
+        "employeeId": BaseUrl.storage.read("empCode") != null ? empId : '',
         "message": message.toString().trim(),
-        'phone': phone != '' ? phone : '',
+        'phone': phone,
         'resolved': false,
-        'region': BaseUrl.storage.read('region'),
-        'name': BaseUrl.storage.read('name'),
+        'region': BaseUrl.storage.read('region') != null
+            ? BaseUrl.storage.read('region')
+            : '',
+        'name': name,
         "image": file,
       });
       // var data = {

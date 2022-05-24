@@ -74,13 +74,21 @@ class FAQsScreen extends StatelessWidget {
                                               .subQuestion !=
                                           null
                                       ? () {
-                                          Get.to(() => FAQsDetailScreen(
-                                                index: faqsController.faqlist
-                                                    .value[index].subQuestion,
-                                                title: faqsController
-                                                    .faqlist.value[index].label,
-                                                check: check,
-                                              ));
+                                          Get.to(
+                                              () => FAQsDetailScreen(
+                                                    index: faqsController
+                                                        .faqlist
+                                                        .value[index]
+                                                        .subQuestion,
+                                                    title: faqsController
+                                                        .faqlist
+                                                        .value[index]
+                                                        .label,
+                                                    check: check,
+                                                  ),
+                                              transition:
+                                                  Transition.rightToLeft,
+                                              curve: Curves.easeInQuart);
                                         }
                                       : () {
                                           Get.toNamed('/supportrequest');

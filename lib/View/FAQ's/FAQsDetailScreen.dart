@@ -5,15 +5,16 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Component/DynamicColor.dart';
-import '../../Component/ExpandedWideget.dart';
+
 import '../../Controller/FaqsController.dart';
 import 'FAQssubdetailScreen.dart';
 
 class FAQsDetailScreen extends StatelessWidget {
-  var index, title; var check;
+  var index, title;
+  var check;
 
   FaqsController faqsController = Get.put(FaqsController());
-  FAQsDetailScreen({this.index, this.title,this.check});
+  FAQsDetailScreen({this.index, this.title, this.check});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -72,30 +73,40 @@ class FAQsDetailScreen extends StatelessWidget {
                                   // Get.bottomSheet(
                                   //   Bottom(index: index[indexs].subsubcat),
                                   // );
-                                  Get.to(() => FAQssubdetailScreen(
-                                        index: index[indexs].furtherSubQuestion,
-                                        title: title.toString(),
-                                        subtittle: index[indexs].label,
-                                    check: check,
-                                      ));
+                                  Get.to(
+                                      () => FAQssubdetailScreen(
+                                            index: index[indexs]
+                                                .furtherSubQuestion,
+                                            title: title.toString(),
+                                            subtittle: index[indexs].label,
+                                            check: check,
+                                          ),
+                                      transition: Transition.rightToLeft,
+                                      curve: Curves.easeInQuart);
                                 }
                               : () {
                                   // print(index[indexs].form);
                                   // print(index[indexs].answer);
-                            index[indexs].form=='false'?
-                                  Get.to(() => FaqsAnsScreen(
-                                        index: index[indexs],
-                                        title: title.toString(),
-                                        subtittle: index[indexs].label,
-                                        form: index[indexs].form,
-                                        answer: index[indexs].answer,
-                                      )): Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) =>  FeedbackScreen(
-                                check:true ,
-                                form: true,
-                              )),
-                            );
+                                  index[indexs].form == 'false'
+                                      ? Get.to(
+                                          () => FaqsAnsScreen(
+                                                index: index[indexs],
+                                                title: title.toString(),
+                                                subtittle: index[indexs].label,
+                                                form: index[indexs].form,
+                                                answer: index[indexs].answer,
+                                              ),
+                                          transition: Transition.rightToLeft,
+                                          curve: Curves.easeInQuart)
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FeedbackScreen(
+                                                    check: true,
+                                                    form: true,
+                                                  )),
+                                        );
                                 },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

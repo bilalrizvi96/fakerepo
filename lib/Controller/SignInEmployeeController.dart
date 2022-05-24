@@ -152,7 +152,27 @@ class SignInEmployeeController extends GetxController {
       response = await LoginModel.fromJson(response.data);
 
       userdatalist = response.user;
-
+      print(BaseUrl.storage.read("empCode"));
+      if (BaseUrl.storage.read("empCode") !=
+          empcodeController.text.toString()) {
+        BaseUrl.clockin = false;
+        BaseUrl.clockout = false;
+        BaseUrl.empcheck = false;
+        update();
+      } else {
+        BaseUrl.empcheck = true;
+        if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+          BaseUrl.clockin = false;
+        } else {
+          BaseUrl.clockin = true;
+        }
+        if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+          BaseUrl.clockout = false;
+        } else {
+          BaseUrl.clockout = true;
+        }
+      }
+      print(BaseUrl.clockin);
       token.value = "BEARER" + " " + response.token;
 
       BaseUrl.storage.write("token", token.value);
@@ -210,20 +230,10 @@ class SignInEmployeeController extends GetxController {
         } else if (userdatalist[0].maintenanceObject.underMaintenance == true) {
           _maintenanceController.checkMaintenance();
         } else {
-          print(BaseUrl.storage.read('clockincheck'));
           // if(BaseUrl.storage.read('key')!=empcodeController.text.toString()){
           //
           // }
-          if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
-            BaseUrl.clockin = false;
-          } else {
-            BaseUrl.clockin = true;
-          }
-          if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
-            BaseUrl.clockout = false;
-          } else {
-            BaseUrl.clockout = true;
-          }
+
           Get.offAllNamed('/home');
         }
       }
