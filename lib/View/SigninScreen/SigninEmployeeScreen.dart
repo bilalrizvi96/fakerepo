@@ -134,6 +134,8 @@ class SiginEmployeeScreen extends StatelessWidget {
                                           Container(
                                             width: width / 1.22,
                                             child: TextFormField(
+                                              keyboardType:
+                                                  TextInputType.number,
                                               controller: signinController
                                                   .empcodeController,
                                               validator:
@@ -301,10 +303,13 @@ class SiginEmployeeScreen extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Get.to(FeedbackScreen(
-                                          check: false,
-                                          form: false,
-                                        ));
+                                        Get.to(
+                                            FeedbackScreen(
+                                              check: false,
+                                              form: false,
+                                            ),
+                                            transition: Transition.rightToLeft,
+                                            curve: Curves.easeInQuart);
                                       },
                                       child: Row(
                                         crossAxisAlignment:

@@ -88,59 +88,64 @@ class FAQsDetailScreen extends StatelessWidget {
                                   // print(index[indexs].form);
                                   // print(index[indexs].answer);
                                   index[indexs].form == 'false'
-                                      ? Get.to(
-                                          () => FaqsAnsScreen(
-                                                index: index[indexs],
-                                                title: title.toString(),
-                                                subtittle: index[indexs].label,
-                                                form: index[indexs].form,
-                                                answer: index[indexs].answer,
-                                              ),
+                                      ? index[indexs].answer != ''
+                                          ? Get.to(
+                                              () => FaqsAnsScreen(
+                                                    index: index[indexs],
+                                                    title: title.toString(),
+                                                    subtittle:
+                                                        index[indexs].label,
+                                                    form: index[indexs].form,
+                                                    answer:
+                                                        index[indexs].answer,
+                                                  ),
+                                              transition:
+                                                  Transition.rightToLeft,
+                                              curve: Curves.easeInQuart)
+                                          : Get.toNamed('/mypoints')
+                                      : Get.to(
+                                          FeedbackScreen(
+                                            check: true,
+                                            form: true,
+                                          ),
                                           transition: Transition.rightToLeft,
-                                          curve: Curves.easeInQuart)
-                                      : Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  FeedbackScreen(
-                                                    check: true,
-                                                    form: true,
-                                                  )),
-                                        );
+                                          curve: Curves.easeInQuart);
                                 },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               width: width / 1.23,
-                              height: height / 10,
+                              // height: height / 10,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(13.0),
                               ),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: width / 120,
+                                  Row(
+                                    children: [
+                                      // SizedBox(
+                                      //   width: width / 120,
+                                      // ),
+                                      Expanded(
+                                        child: Text(
+                                          index[indexs].label,
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: width / 27),
                                         ),
-                                        Expanded(
-                                          child: Text(
-                                            index[indexs].label,
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: width / 27),
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        Icon(Icons.arrow_forward_ios_sharp,
-                                            size: 20,
-                                            color: DynamicColor().primarycolor),
-                                        SizedBox(
-                                          width: width / 20,
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(
+                                        width: width / 20,
+                                      ),
+                                      Icon(Icons.arrow_forward_ios_sharp,
+                                          size: 20,
+                                          color: DynamicColor().primarycolor),
+                                      SizedBox(
+                                        width: width / 20,
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(
                                     height: height / 40,

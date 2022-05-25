@@ -184,10 +184,13 @@ class UpdateScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(FeedbackScreen(
-                    check: false,
-                    form: false,
-                  ));
+                  Get.to(
+                      FeedbackScreen(
+                        check: false,
+                        form: false,
+                      ),
+                      transition: Transition.rightToLeft,
+                      curve: Curves.easeInQuart);
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

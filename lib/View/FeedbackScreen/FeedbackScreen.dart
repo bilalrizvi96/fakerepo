@@ -59,8 +59,46 @@ class FeedbackScreen extends StatelessWidget {
                                     right: 22.0, left: 22.0, top: 22.0),
                                 child: Row(
                                   children: [
+                                    if (check == false)
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          size: width / 16,
+                                          color: Colors.grey,
+                                        ),
+                                      )
+                                    else if (form == true)
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          size: width / 16,
+                                          color: Colors.grey,
+                                        ),
+                                      )
+                                    else if (BaseUrl.storage.read("role") != '')
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          size: width / 16,
+                                          color: Colors.grey,
+                                        ),
+                                      )
+                                    else
+                                      Column(),
+                                    SizedBox(
+                                      width: width / 50,
+                                    ),
                                     Text(
-                                      'Feedback',
+                                      'Support',
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w500,
                                           fontSize: width / 16),
@@ -106,7 +144,7 @@ class FeedbackScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                height: height / 50,
+                                height: height / 30,
                               ),
                               Container(
                                 width: width / 1.2,

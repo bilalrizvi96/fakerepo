@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../API/API.dart';
-import '../Model/FaqsModel.dart';
 
 class FaqsController extends GetxController {
   var faqlist = [].obs;

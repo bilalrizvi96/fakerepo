@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:location/location.dart' as la;
+
 import '../API/API.dart';
 
 class TrackUserController extends GetxController {
@@ -47,7 +47,7 @@ class TrackUserController extends GetxController {
   Empmapupdate() async {
     controller!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       zoom: 18,
-      tilt: 2,
+      tilt: 0,
       bearing: 30,
       target: LatLng(
           double.parse(employeelist.value.last.location.split(',')[0]),
@@ -57,7 +57,7 @@ class TrackUserController extends GetxController {
   }
 
   getEmployee() async {
-    Loading.value = true;
+    // Loading.value = true;
     sitelist.clear();
     employeedata.value.clear();
     markers.clear();
@@ -79,9 +79,9 @@ class TrackUserController extends GetxController {
                   double.parse(element.location.split(',')[1])),
               infoWindow:
                   InfoWindow(title: element.name, snippet: element.empCode),
-              onTap: () {
+              onTap: () async {
                 dropdownValue.value = element.name;
-                getspecificEmployee(element.empCode);
+                await getspecificEmployee(element.empCode);
               }),
         );
         mapupdate();
@@ -93,16 +93,18 @@ class TrackUserController extends GetxController {
       update();
     } else {
       Loading.value = false;
-      Get.back();
-      Get.snackbar("Error ", response.data['error'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
+
+      // Get.snackbar("Error ", response.data['error'].toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
+    update();
   }
 
   getspecificEmployee(var empcode) async {
-    Loading.value = true;
+    // Loading.value = true;
     employeelist.value.clear();
     markers.clear();
+    sitelist.clear();
     var date = DateTime.now();
     var outputFormat = DateFormat("dd-MM-yyyy");
     var outputDate = outputFormat.format(date);
@@ -138,11 +140,13 @@ class TrackUserController extends GetxController {
     }
   }
 
+  init() {
+    getEmployee();
+  }
+
   @override
   void onInit() {
     super.onInit();
-    if (sitelist.isEmpty) {
-      getEmployee();
-    }
+    init();
   }
 }

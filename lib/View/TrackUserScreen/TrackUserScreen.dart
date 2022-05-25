@@ -17,7 +17,8 @@ class TrackUserScreen extends StatelessWidget {
         child: Container(
           width: width,
           height: height,
-          child: GetBuilder(
+          child: GetX<TrackUserController>(
+              initState: trackUserController.init(),
               init: trackUserController,
               builder: (_) {
                 return trackUserController.Loading.value == false
@@ -33,17 +34,17 @@ class TrackUserScreen extends StatelessWidget {
                               SizedBox(
                                 width: width / 20,
                               ),
-                              GestureDetector(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Icon(Icons.arrow_back_ios,
-                                      color: Colors.grey[600])),
+                              // GestureDetector(
+                              //     onTap: () {
+                              //       Get.back();
+                              //     },
+                              //     child: Icon(Icons.arrow_back_ios,
+                              //         color: Colors.grey[600])),
                               SizedBox(
                                 width: width / 20,
                               ),
                               Text(
-                                'Track User',
+                                'Track Staff',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
                                     fontSize: width / 16),

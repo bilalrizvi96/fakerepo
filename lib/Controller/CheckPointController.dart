@@ -32,7 +32,7 @@ class CheckPointController extends GetxController
   XFile? checkpointImage;
   var first = ''.obs;
   var finaldate = ''.obs;
-  var printKey = GlobalKey();
+
   TabController? tabController;
   var searchhistorylist = [].obs;
   var mainhistorylist = [].obs;
@@ -144,10 +144,9 @@ class CheckPointController extends GetxController
   }
 
   checkpoint() async {
-    if (checkpointFormKey.currentState!.validate() &&
-        checkpointFormKey.currentState!.validate()) {
-      Loading.value = true;
-      update();
+    Loading.value = true;
+    update();
+    if (siteController.text.toString() != '') {
       BaseUrl.storage
           .write("sitecheckpoint", siteController.text.toString().trim());
       BaseUrl.storage.write(
@@ -204,6 +203,10 @@ class CheckPointController extends GetxController
         Get.snackbar("Error ", "Please Capture Image",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", "Fill the required fields".toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
@@ -385,12 +388,12 @@ class CheckPointController extends GetxController
     update();
   }
 
-  String? validators(var values) {
-    if (values.isEmpty) {
-      return "Please this field must be filled";
-    }
-    return null;
-  }
+  // String? validators(var values) {
+  //   if (values.isEmpty) {
+  //     return "Please this field must be filled";
+  //   }
+  //   return null;
+  // }
 
   @override
   void onClose() {

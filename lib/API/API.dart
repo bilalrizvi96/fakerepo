@@ -177,7 +177,7 @@ class API {
     }
   }
 
-  Future GetEmployees() async {
+  GetEmployees() async {
     try {
       Map data = {"require": "list"};
       print(data);
@@ -192,6 +192,7 @@ class API {
         return response;
       }
     } catch (e) {
+      print(e);
       return onError(e);
     }
   }

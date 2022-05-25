@@ -36,12 +36,12 @@ class MyProfileScreen extends StatelessWidget {
                                     width: width / 50,
                                   ),
 
-                                  GestureDetector(
-                                      onTap: () {
-                                        Get.back();
-                                      },
-                                      child: Icon(Icons.arrow_back_ios,
-                                          color: Colors.grey[600])),
+                                  // GestureDetector(
+                                  //     onTap: () {
+                                  //       Get.back();
+                                  //     },
+                                  //     child: Icon(Icons.arrow_back_ios,
+                                  //         color: Colors.grey[600])),
                                   SizedBox(
                                     width: width / 50,
                                   ),

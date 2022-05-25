@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../View/FeedbackScreen/FeedbackScreen.dart';
+
 class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,17 +24,31 @@ class SideMenu extends StatelessWidget {
                 child: Image.asset('assets/logo.png'),
               ),
             ),
-            DrawerListTile(
-              title: "Help center",
-              icon: Icon(Icons.help, color: DynamicColor().primarycolor),
-              press: () {
-                Get.back();
-                Get.toNamed('/faqs');
-              },
-            ),
+            // if (BaseUrl.storage.read("role") != '')
+            //   DrawerListTile(
+            //     title: "Check Point",
+            //     icon: Icon(Icons.location_on_outlined,
+            //         color: DynamicColor().primarycolor),
+            //     press: () async {
+            //       Get.back();
+            //       Get.toNamed('/checkpoint');
+            //     },
+            //   ),
+
+            if (BaseUrl.storage.read("checkpointaccess") == true)
+              DrawerListTile(
+                title: "My Profile",
+                icon: Icon(Icons.person_outline_sharp,
+                    color: DynamicColor().primarycolor),
+                press: () async {
+                  Get.back();
+                  Get.toNamed('/profile');
+                },
+              ),
             DrawerListTile(
               title: "My Points",
-              icon: Icon(Icons.star, color: DynamicColor().primarycolor),
+              icon: Icon(Icons.star_border_outlined,
+                  color: DynamicColor().primarycolor),
               press: () async {
                 Get.back();
                 Get.toNamed('/mypoints');
@@ -40,39 +56,36 @@ class SideMenu extends StatelessWidget {
             ),
             if (BaseUrl.storage.read("role") != '')
               DrawerListTile(
-                title: "Track User",
-                icon: Icon(Icons.location_searching,
-                    color: DynamicColor().primarycolor),
-                press: () async {
-                  Get.back();
-                  Get.toNamed('/trackuser');
-                },
-              ),
-            if (BaseUrl.storage.read("checkpointaccess") != false)
-              DrawerListTile(
-                title: "Check Point",
+                title: "Support",
                 press: () {
                   Get.back();
-                  Get.toNamed('/checkpoint');
+                  Get.to(
+                      () => FeedbackScreen(
+                            check: true,
+                            form: false,
+                          ),
+                      transition: Transition.rightToLeft,
+                      curve: Curves.easeInQuart);
                 },
-                icon:
-                    Icon(Icons.location_on, color: DynamicColor().primarycolor),
+                icon: Icon(Icons.support_agent,
+                    color: DynamicColor().primarycolor),
               ),
             DrawerListTile(
-              title: "Profile",
-              icon: Icon(Icons.person, color: DynamicColor().primarycolor),
-              press: () async {
-                Get.back();
-                Get.toNamed('/profile');
-              },
-            ),
-            DrawerListTile(
               title: "Notification",
-              icon: Icon(Icons.notification_important,
+              icon: Icon(Icons.notification_important_outlined,
                   color: DynamicColor().primarycolor),
               press: () async {
                 Get.back();
                 Get.toNamed('/notification');
+              },
+            ),
+            DrawerListTile(
+              title: "Help center",
+              icon: Icon(Icons.help_outline_sharp,
+                  color: DynamicColor().primarycolor),
+              press: () {
+                Get.back();
+                Get.toNamed('/faqs');
               },
             ),
             Spacer(),
@@ -83,11 +96,11 @@ class SideMenu extends StatelessWidget {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,
-                        color: DynamicColor().black)),
+                        color: Colors.grey)),
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width / 5,
+              height: MediaQuery.of(context).size.width / 30,
             ),
           ],
         ),

@@ -64,95 +64,101 @@ class NotificationScreen extends StatelessWidget {
                     notificationController.Loading.value == false
                         ? notificationController
                                 .notificationlist.value.isNotEmpty
-                            ? ListView.builder(
-                                itemCount: notificationController
-                                    .notificationlist.value.length,
-                                shrinkWrap: true,
-                                itemBuilder: (_, index) {
-                                  return Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.only(
-                                        right: 8.0,
-                                        top: 8,
-                                        left: 25,
-                                        bottom: 8),
-                                    child: Stack(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Container(
-                                            width: width / 5,
-                                            height: height / 8.5,
-                                            decoration: BoxDecoration(
-                                                color:
-                                                    DynamicColor().primarycolor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        15.0)),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Container(
-                                            height: height / 8.5,
-                                            width: width / 1.2,
-                                            padding: const EdgeInsets.all(8.0),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.fromBorderSide(
-                                                    BorderSide(
-                                                        color:
-                                                            Color(0xFFDFDFDF))),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0)),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Row(
+                            ? Expanded(
+                                child: ListView.builder(
+                                    itemCount: notificationController
+                                        .notificationlist.value.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (_, index) {
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.only(
+                                            right: 8.0,
+                                            top: 8,
+                                            left: 25,
+                                            bottom: 8),
+                                        child: Stack(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Container(
+                                                width: width / 5,
+                                                height: height / 8.5,
+                                                decoration: BoxDecoration(
+                                                    color: DynamicColor()
+                                                        .primarycolor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.0)),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: Container(
+                                                height: height / 8.5,
+                                                width: width / 1.2,
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    border: Border.fromBorderSide(
+                                                        BorderSide(
+                                                            color: Color(
+                                                                0xFFDFDFDF))),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
                                                   children: [
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: width / 60,
+                                                        ),
+                                                        Text(
+                                                          '${notificationController.notificationlist.value[index].title}',
+                                                          style: GoogleFonts.poppins(
+                                                              color: DynamicColor()
+                                                                  .primarycolor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize:
+                                                                  width / 25),
+                                                        ),
+                                                        Spacer(),
+                                                        Text(
+                                                          '${notificationController.notificationlist.value[index].time}',
+                                                          style: GoogleFonts.poppins(
+                                                              color: DynamicColor()
+                                                                  .primarycolor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              fontSize:
+                                                                  width / 28),
+                                                        ),
+                                                        SizedBox(
+                                                          width: width / 60,
+                                                        )
+                                                      ],
+                                                    ),
                                                     SizedBox(
-                                                      width: width / 60,
+                                                      height: height / 80,
                                                     ),
-                                                    Text(
-                                                      '${notificationController.notificationlist.value[index].title}',
-                                                      style: GoogleFonts.poppins(
-                                                          color: DynamicColor()
-                                                              .primarycolor,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: width / 25),
-                                                    ),
-                                                    Spacer(),
-                                                    Text(
-                                                      '${notificationController.notificationlist.value[index].time}',
-                                                      style: GoogleFonts.poppins(
-                                                          color: DynamicColor()
-                                                              .primarycolor,
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                          fontSize: width / 28),
-                                                    ),
-                                                    SizedBox(
-                                                      width: width / 60,
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: height / 80,
-                                                ),
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8.0),
-                                                    child: Text(
-                                                      '${notificationController.notificationlist.value[index].message}',
-                                                      style:
-                                                          GoogleFonts.poppins(
+                                                    Expanded(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0),
+                                                        child: Text(
+                                                          '${notificationController.notificationlist.value[index].message}',
+                                                          style: GoogleFonts.poppins(
                                                               color:
                                                                   DynamicColor()
                                                                       .black,
@@ -161,17 +167,18 @@ class NotificationScreen extends StatelessWidget {
                                                                       .w400,
                                                               fontSize:
                                                                   width / 30.2),
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                })
+                                      );
+                                    }),
+                              )
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,

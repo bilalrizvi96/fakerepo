@@ -11,8 +11,8 @@ import '../../Controller/FeedbackController.dart';
 
 class FaqsAnsScreen extends StatelessWidget {
   var index, title, subtittle, form, answer;
-  FaqsAnsScreen({this.index, this.subtittle, this.title, this.form, this.answer});
-
+  FaqsAnsScreen(
+      {this.index, this.subtittle, this.title, this.form, this.answer});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class FaqsAnsScreen extends StatelessWidget {
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/faqsbg.png'), fit: BoxFit.cover)),
-          child:Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -43,16 +43,15 @@ class FaqsAnsScreen extends StatelessWidget {
                       onTap: () {
                         Get.back();
                       },
-                      child: Icon(Icons.arrow_back_ios,
-                          color: Colors.grey[600])),
+                      child:
+                          Icon(Icons.arrow_back_ios, color: Colors.grey[600])),
                   SizedBox(
                     width: width / 20,
                   ),
                   Text(
                     title.toString(),
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        fontSize: width / 16),
+                        fontWeight: FontWeight.w500, fontSize: width / 16),
                   ),
                 ],
               ),
@@ -72,8 +71,7 @@ class FaqsAnsScreen extends StatelessWidget {
                   child: Text(
                     "${subtittle}",
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        fontSize: width / 28),
+                        fontWeight: FontWeight.w500, fontSize: width / 28),
                   ),
                 ),
               ),
@@ -81,43 +79,44 @@ class FaqsAnsScreen extends StatelessWidget {
                 height: height / 40,
               ),
 
-             Column(
+              Column(
                 children: [
-                  DelayedDisplay(
-                    delay: Duration(milliseconds: 1500),
-                    slidingCurve: Curves.bounceInOut,
-                    child: Container(
-                      width: width / 1.2,
-                      height: height / 5.5,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: DynamicColor().primarycolor),
-                          borderRadius: BorderRadius.circular(9.0),
-                          color: Colors.white),
-                      child: Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Spacer(),
-                          Icon(
-                            Icons.info_outline_rounded,
-                            size: width / 16,
-                            color: DynamicColor().primarycolor,
-                          ),
-                          SizedBox(
-                            height: height / 50,
-                          ),
-                          Text(
-                            "${answer}",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: width / 28),
-                          ),
-                          Spacer(),
-                        ],
-                      ),
+                  Container(
+                    width: width / 1.2,
+                    // height: height / 5.5,
+                    padding: EdgeInsets.only(right: 12, left: 12),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: DynamicColor().primarycolor),
+                        borderRadius: BorderRadius.circular(9.0),
+                        color: Colors.white),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: height / 50,
+                        ),
+                        // Spacer(),
+                        Icon(
+                          Icons.info_outline_rounded,
+                          size: width / 16,
+                          color: DynamicColor().primarycolor,
+                        ),
+                        SizedBox(
+                          height: height / 50,
+                        ),
+                        Text(
+                          "${answer}",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: width / 28),
+                        ),
+                        SizedBox(
+                          height: height / 50,
+                        ),
+                        // Spacer(),
+                      ],
                     ),
                   ),
                 ],

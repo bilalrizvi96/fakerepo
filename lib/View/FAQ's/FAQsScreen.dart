@@ -117,9 +117,12 @@ class FAQsScreen extends StatelessWidget {
                                           SizedBox(
                                             width: width / 20,
                                           ),
-                                          Icon(Icons.perm_contact_cal_rounded,
-                                              color:
-                                                  DynamicColor().primarycolor),
+                                          Image.network(
+                                              faqsController
+                                                  .faqlist.value[index].icon,
+                                              // width: width / 2,
+                                              height: height / 40,
+                                              fit: BoxFit.scaleDown),
                                           SizedBox(
                                             width: width / 20,
                                           ),
@@ -132,7 +135,7 @@ class FAQsScreen extends StatelessWidget {
                                           ),
                                           Spacer(),
                                           Icon(Icons.arrow_forward_ios_sharp,
-                                              size: 30,
+                                              size: 20,
                                               color:
                                                   DynamicColor().primarycolor),
                                           SizedBox(
