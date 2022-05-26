@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart' as la;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -114,6 +115,7 @@ class CheckPointController extends GetxController
         update();
       });
     status.value = BaseUrl.storage.read("status");
+    CurrentLocation();
     super.onInit();
     connectionCheck();
     Future.delayed(Duration(milliseconds: 200), () {
@@ -228,6 +230,7 @@ class CheckPointController extends GetxController
       print(mainhistorylist.value[0].image);
     } else {
       Loading.value = false;
+      print(response.data['error'].toString());
     }
     update();
   }
@@ -317,6 +320,13 @@ class CheckPointController extends GetxController
 
   mapupdate() async {
     await CurrentLocation();
+    // if (await Permission.location.request().isGranted) {
+    //   await CurrentLocation();
+    // } else {
+    //   Loading.value = false;
+    //   Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
+    //       colorText: Colors.white, backgroundColor: Colors.red);
+    // }
 
     initialCameraPosition.value = CameraPosition(
       target: LatLng(

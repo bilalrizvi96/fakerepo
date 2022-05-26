@@ -10,6 +10,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'MaintenanceController.dart';
 
@@ -110,8 +111,33 @@ class SplashController extends GetxController {
     });
   }
 
+  permissions() async {
+    if (await Permission.location.request().isGranted) {
+      update();
+    } else {
+      permissions();
+      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    if (await Permission.camera.request().isGranted) {
+      update();
+    } else {
+      permissions();
+      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    if (await Permission.storage.request().isGranted) {
+      update();
+    } else {
+      permissions();
+      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
+    }
+  }
+
   @override
   void onInit() {
+    permissions();
     super.onInit();
     this._registerOnFirebase();
     this.getMessage();

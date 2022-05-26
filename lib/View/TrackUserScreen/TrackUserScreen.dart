@@ -18,7 +18,7 @@ class TrackUserScreen extends StatelessWidget {
           width: width,
           height: height,
           child: GetX<TrackUserController>(
-              initState: trackUserController.init(),
+              // initState: trackUserController.init(),
               init: trackUserController,
               builder: (_) {
                 return trackUserController.Loading.value == false
@@ -49,6 +49,12 @@ class TrackUserScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                     fontSize: width / 16),
                               ),
+                              Spacer(),
+                              GestureDetector(
+                                  onTap: () {
+                                    trackUserController.init();
+                                  },
+                                  child: Icon(Icons.refresh)),
                               SizedBox(
                                 width: width / 20,
                               ),
@@ -72,7 +78,7 @@ class TrackUserScreen extends StatelessWidget {
                                   trackUserController.valueupdate(newValue);
                                   // FocusScope.of(context).nextFocus();
                                 },
-                                items: trackUserController.sitelist),
+                                items: trackUserController.staafflist),
                           ),
                           SizedBox(
                             height: height / 50,

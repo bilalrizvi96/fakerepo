@@ -134,8 +134,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                           Container(
                                             width: width / 1.22,
                                             child: TextFormField(
-                                              keyboardType:
-                                                  TextInputType.number,
+                                              keyboardType: TextInputType.phone,
                                               controller: signinController
                                                   .empcodeController,
                                               validator:
@@ -301,39 +300,72 @@ class SiginEmployeeScreen extends StatelessWidget {
                                     SizedBox(
                                       height: height / 50,
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.to(
-                                            FeedbackScreen(
-                                              check: false,
-                                              form: false,
-                                            ),
-                                            transition: Transition.rightToLeft,
-                                            curve: Curves.easeInQuart);
-                                      },
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.support_agent_sharp,
-                                            size: width / 16,
-                                            color: DynamicColor().primarycolor,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.to(
+                                                FeedbackScreen(
+                                                  check: false,
+                                                  form: false,
+                                                ),
+                                                transition:
+                                                    Transition.rightToLeft,
+                                                curve: Curves.easeInQuart);
+                                          },
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // Icon(
+                                              //   Icons.support_agent_sharp,
+                                              //   size: width / 16,
+                                              //   color:
+                                              //       DynamicColor().primarycolor,
+                                              // ),
+                                              // SizedBox(
+                                              //   width: width / 30,
+                                              // ),
+                                              Text(
+                                                'Any Feedback? ',
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: width / 22,
+                                                    fontWeight: FontWeight.w600,
+                                                    color:
+                                                        DynamicColor().black),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: width / 30,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            BaseUrl.helptype = 'login';
+                                            Get.toNamed(
+                                              '/faqs',
+                                            );
+                                          },
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '| Help Center',
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: width / 22,
+                                                    fontWeight: FontWeight.w600,
+                                                    color:
+                                                        DynamicColor().black),
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            'Any Feedback?',
-                                            style: GoogleFonts.poppins(
-                                                fontSize: width / 22,
-                                                fontWeight: FontWeight.w600,
-                                                color: DynamicColor().black),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                     SizedBox(
                                       height: height / 50,

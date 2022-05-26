@@ -84,6 +84,7 @@ class SideMenu extends StatelessWidget {
               icon: Icon(Icons.help_outline_sharp,
                   color: DynamicColor().primarycolor),
               press: () {
+                BaseUrl.helptype = 'home';
                 Get.back();
                 Get.toNamed('/faqs');
               },

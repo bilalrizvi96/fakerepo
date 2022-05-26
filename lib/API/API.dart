@@ -612,10 +612,13 @@ class API {
 
   Future HelpCenters() async {
     try {
+      var data = {'type': BaseUrl.helptype.toString()};
       var dio = Dio();
-      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-      final response = await dio.get(
+      print(data);
+      // dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
         BaseUrl.baseurl + 'helpCenter',
+        data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),
@@ -686,7 +689,6 @@ class API {
         return response;
       }
     } catch (e) {
-      print(e);
       return onError(e);
     }
   }

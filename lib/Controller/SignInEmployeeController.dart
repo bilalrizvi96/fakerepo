@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'MaintenanceController.dart';
 
@@ -91,8 +92,13 @@ class SignInEmployeeController extends GetxController {
       Loading.value = true;
       update();
       BaseUrl.empcode = empcodeController.text;
-
-      await imgFromCameras();
+      if (await Permission.camera.request().isGranted) {
+        await imgFromCameras();
+      } else {
+        Loading.value = false;
+        Get.snackbar("Error ", 'Kindly grant the camera permission!'.toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
+      }
 
       update();
     }

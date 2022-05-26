@@ -124,22 +124,22 @@ class FeedbackScreen extends StatelessWidget {
                                     SizedBox(
                                       width: width / 50,
                                     ),
-                                    if (check == false)
-                                      Column()
-                                    else if (form == true)
-                                      Column()
-                                    else
-                                      GestureDetector(
-                                        onTap: () {
-                                          BaseUrl.storage.write("token", "out");
-                                          Get.offAllNamed('/signinemp');
-                                        },
-                                        child: Icon(
-                                          Icons.logout,
-                                          size: width / 16,
-                                          color: Colors.red,
-                                        ),
-                                      ),
+                                    // if (check == false)
+                                    //   Column()
+                                    // else if (form == true)
+                                    //   Column()
+                                    // else
+                                    //   GestureDetector(
+                                    //     onTap: () {
+                                    //       BaseUrl.storage.write("token", "out");
+                                    //       Get.offAllNamed('/signinemp');
+                                    //     },
+                                    //     child: Icon(
+                                    //       Icons.logout,
+                                    //       size: width / 16,
+                                    //       color: Colors.red,
+                                    //     ),
+                                    //   ),
                                   ],
                                 ),
                               ),

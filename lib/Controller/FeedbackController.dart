@@ -73,6 +73,7 @@ class FeedbackController extends GetxController {
             dropdownValue.value = 'Choose Category';
             faceImage = null;
             feedbackcontroller.clear();
+            Get.back();
             // phonecontroller.clear();
           }
 

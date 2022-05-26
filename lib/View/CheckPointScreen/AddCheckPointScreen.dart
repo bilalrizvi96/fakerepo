@@ -54,6 +54,8 @@ class AddCheckPointScreen extends StatelessWidget {
                                       child: GoogleMap(
                                           zoomControlsEnabled: false,
                                           compassEnabled: true,
+                                          mapToolbarEnabled: false,
+                                          rotateGesturesEnabled: false,
                                           markers: _checkPointController
                                               .markers.value,
                                           mapType: MapType.normal,
@@ -71,6 +73,7 @@ class AddCheckPointScreen extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.bottomCenter,
                                     child: FloatingActionButton(
+                                        heroTag: 'btn1',
                                         backgroundColor:
                                             DynamicColor().primarycolor,
                                         elevation: 5.0,
@@ -141,6 +144,7 @@ class AddCheckPointScreen extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.bottomCenter,
                                     child: FloatingActionButton(
+                                        heroTag: 'btn2',
                                         backgroundColor:
                                             DynamicColor().primarycolor,
                                         elevation: 5.0,
