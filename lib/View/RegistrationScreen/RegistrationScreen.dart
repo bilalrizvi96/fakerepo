@@ -102,8 +102,7 @@ class RegistrationScreen extends StatelessWidget {
                                         Container(
                                           width: width / 1.22,
                                           child: TextFormField(
-                                            keyboardType:
-                                                TextInputType.streetAddress,
+                                            keyboardType: TextInputType.phone,
                                             controller: registrationController
                                                 .employee_IdController,
                                             validator: registrationController

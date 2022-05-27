@@ -16,12 +16,16 @@ class TrackUserController extends GetxController {
   List<String> staafflist = [];
   var dropdownValue = 'Please Select User'.obs;
   List<Marker> markers = [];
+  var zoom = 18.0.obs;
   var Loading = false.obs;
   var employeelist = [].obs;
   var employeedata = [].obs;
   GoogleMapController? controller;
   var initialCameraPosition = CameraPosition(
-          zoom: 9, tilt: 0, bearing: 30, target: LatLng(24.9161647, 67.0653569))
+          zoom: 11.0,
+          tilt: 5,
+          bearing: 30,
+          target: LatLng(24.9161647, 67.0653569))
       .obs;
   valueupdate(val) {
     dropdownValue.value = val;
@@ -47,27 +51,24 @@ class TrackUserController extends GetxController {
         .asUint8List();
   }
 
-  mapupdate() async {
+  mapupdate(zoom, lat, lng) async {
     controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      zoom: 11,
+      zoom: zoom,
       tilt: 0,
       bearing: 30,
-      target: employeelist.value.isNotEmpty
-          ? LatLng(double.parse(employeelist.value.last.location.split(',')[0]),
-              double.parse(employeelist.value.last.location.split(',')[1]))
+      target: employeedata.value.isNotEmpty
+          ? LatLng(lat, lng)
           : LatLng(33.652100, 75.123398),
     )));
     update();
   }
 
-  Empmapupdate() async {
+  Empmapupdate(lat, lng) async {
     controller!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       zoom: 20,
       tilt: 0,
       bearing: 30,
-      target: LatLng(
-          double.parse(employeelist.value.last.location.split(',')[0]),
-          double.parse(employeelist.value.last.location.split(',')[1])),
+      target: LatLng(lat, lng),
     )));
     update();
   }
@@ -86,10 +87,9 @@ class TrackUserController extends GetxController {
       employeedata.value = response.data;
 
       employeedata.value.forEach((element) async {
-        var iconurl =
-            "https://attandence-bucket.s3.us-east-2.amazonaws.com/register/" +
-                element.empCode.toString() +
-                '.jpg';
+        var iconurl = "https://ik.imagekit.io/64vfjnxvf/" +
+            element.empCode.toString() +
+            '.jpg?tr=r-500,c-500,g-500';
 
         var dataBytes;
         var request = await http.get(Uri.parse(iconurl));
@@ -100,14 +100,16 @@ class TrackUserController extends GetxController {
             dataBytes.buffer.asUint8List(),
             targetWidth: 50);
         ui.FrameInfo fi = await codec.getNextFrame();
+
         final Uint8List markerIcon =
             (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
                 .buffer
                 .asUint8List();
-        print(markerIcon);
+        var mark = markerIcon;
+        Loading.value = true;
         markers.add(
           Marker(
-              icon: BitmapDescriptor.fromBytes(markerIcon),
+              icon: BitmapDescriptor.fromBytes(mark),
               markerId: MarkerId(element.name),
               position: LatLng(double.parse(element.location.split(',')[0]),
                   double.parse(element.location.split(',')[1])),
@@ -118,10 +120,16 @@ class TrackUserController extends GetxController {
                     dropdownValue.value = element.name;
                     await getspecificEmployee(element.empCode);
                   }),
-              onTap: () {}),
+              onTap: () {
+                zoom.value = 22.0;
+                mapupdate(
+                    zoom.value,
+                    double.parse(element.location.split(',')[0]),
+                    double.parse(element.location.split(',')[1]));
+              }),
         );
         Loading.value = false;
-        mapupdate();
+
         print(markers);
         print('asd');
       });
@@ -167,10 +175,11 @@ class TrackUserController extends GetxController {
                 snippet: element.time,
               ),
               onTap: () {
-                Empmapupdate();
+                Empmapupdate(double.parse(element.location.split(',')[0]),
+                    double.parse(element.location.split(',')[1]));
               }),
         );
-        Empmapupdate();
+        // Empmapupdate();
         print(markers);
         print('asd');
       });

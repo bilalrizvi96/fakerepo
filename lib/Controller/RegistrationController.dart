@@ -56,6 +56,8 @@ class RegistrationController extends GetxController {
       );
       if (response.statusCode == 200) {
         Loading.value = false;
+        BaseUrl.storage.write('phone', response.data['data']['phone']);
+        print(BaseUrl.storage.read('phone'));
         Get.toNamed(
           '/facerule',
         );

@@ -49,12 +49,12 @@ class TrackUserScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                     fontSize: width / 16),
                               ),
-                              Spacer(),
-                              GestureDetector(
-                                  onTap: () {
-                                    trackUserController.init();
-                                  },
-                                  child: Icon(Icons.refresh)),
+                              // Spacer(),
+                              // GestureDetector(
+                              //     onTap: () {
+                              //       trackUserController.init();
+                              //     },
+                              //     child: Icon(Icons.refresh)),
                               SizedBox(
                                 width: width / 20,
                               ),

@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Controller/TrackUserController.dart';
 import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
 import 'package:attendencesystem/View/HomeScreen/HomeScreen.dart';
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
@@ -20,6 +21,7 @@ class BottomNavigationController extends GetxController {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   SummaryController _summaryController = Get.put(SummaryController());
   HomeController _homeController = Get.put(HomeController());
+  TrackUserController _trackUserController = Get.put(TrackUserController());
   check() async {
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
@@ -114,10 +116,14 @@ class BottomNavigationController extends GetxController {
 
   void ItemIndex(index) {
     selectedIndex.value = index;
-    if (selectedIndex.value == 2) {
-      if (_homeController.Loading.value == true) {
-        _summaryController.init();
-        update();
+    if (selectedIndex.value == 1) {
+      // if (_homeController.Loading.value == true) {
+      _summaryController.init();
+      // update();
+      // }
+    } else if (selectedIndex.value == 2) {
+      if (BaseUrl.storage.read("role") != '') {
+        _trackUserController.init();
       }
     }
     update();

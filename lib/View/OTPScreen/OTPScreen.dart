@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/OTPController.dart';
 import 'package:delayed_display/delayed_display.dart';
@@ -62,6 +63,19 @@ class OTPScreen extends StatelessWidget {
                         right: width / 8,
                         left: width / 8,
                         top: height / 2.3,
+                        child: Text(
+                          'Please wait while we validate the passcode sent to your registered number ${BaseUrl.storage.read('phone')}. If the code is not validated automatically, you can enter it below',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: width / 30),
+                        ),
+                      ),
+                      Positioned(
+                        right: width / 8,
+                        left: width / 8,
+                        top: height / 1.8,
                         child: PinCodeTextField(
                           controller: otpController.otptextcontroller,
                           hasTextBorderColor: Colors.white,
@@ -87,7 +101,7 @@ class OTPScreen extends StatelessWidget {
                       ),
                       Positioned(
                         right: width / 10,
-                        top: height / 1.9,
+                        top: height / 1.6,
                         child: Row(
                           children: [
                             Container(

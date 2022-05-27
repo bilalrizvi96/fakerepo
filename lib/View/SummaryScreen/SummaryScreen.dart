@@ -64,23 +64,23 @@ class SummaryScreen extends StatelessWidget {
                                     fontSize: width / 16),
                               ),
                               Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  summaryController.init();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 6.0, left: 10.0),
-                                  child: Icon(
-                                    Icons.refresh_sharp,
-                                    size: width / 16,
-                                    color: DynamicColor().primarycolor,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: width / 50,
-                              ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     summaryController.init();
+                              //   },
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.only(
+                              //         right: 6.0, left: 10.0),
+                              //     child: Icon(
+                              //       Icons.refresh_sharp,
+                              //       size: width / 16,
+                              //       color: DynamicColor().primarycolor,
+                              //     ),
+                              //   ),
+                              // ),
+                              // SizedBox(
+                              //   width: width / 50,
+                              // ),
                               GestureDetector(
                                 onTap: () {
                                   BaseUrl.storage.write("token", "out");
