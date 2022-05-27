@@ -107,6 +107,7 @@ class FAQsDetailScreen extends StatelessWidget {
                                           FeedbackScreen(
                                             check: true,
                                             form: true,
+                                            label: index[indexs].label,
                                           ),
                                           transition: Transition.rightToLeft,
                                           curve: Curves.easeInQuart);

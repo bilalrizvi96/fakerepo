@@ -121,6 +121,7 @@ class CheckPointController extends GetxController
     Future.delayed(Duration(milliseconds: 200), () {
       mapupdate();
     });
+
     day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
     month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
     year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
@@ -133,6 +134,14 @@ class CheckPointController extends GetxController
 
     update();
   }
+
+  // init() {
+  //   status.value = BaseUrl.storage.read("status");
+  //   Future.delayed(Duration(milliseconds: 200), () {
+  //     mapupdate();
+  //   });
+  //   historycheckpoint();
+  // }
 
   CurrentLocation() async {
     final location = new la.Location();
@@ -170,20 +179,29 @@ class CheckPointController extends GetxController
           if (response.statusCode == 201) {
             siteController.clear();
             noteController.clear();
-            historycheckpoint();
+
             checkpointImage = null;
             if (checkboxvalue.value == true) {
-              status.value = true;
-              Loading.value = false;
-              Get.back();
-              homeController.clockout(check: true);
+              if (BaseUrl.clockout == false) {
+                status.value = true;
+                Loading.value = false;
+                // Get.back();
+                homeController.clockout(check: true);
+                // init();
+              }
+
               homeController.clockindate2 = DateTime.now().day;
             } else if (BaseUrl.storage.read("status") == false) {
-              status.value = false;
-              Loading.value = false;
-              Get.back();
-              homeController.clockin(check: true);
+              if (BaseUrl.clockin == false) {
+                status.value = false;
+                Loading.value = false;
+                // Get.back();
+                homeController.clockin(check: true);
+                // init();
+              }
             }
+            historycheckpoint();
+            checkboxvalue.value = false;
             Get.snackbar(
               "Checkpoints ",
               'Successfully Added',
@@ -214,7 +232,7 @@ class CheckPointController extends GetxController
   }
 
   historycheckpoint() async {
-    // Loading.value = true;
+    Loading.value = true;
     historyList.value.clear();
     var date = todate.value.toString().split(' ');
     finaldate.value = date[0].toString();

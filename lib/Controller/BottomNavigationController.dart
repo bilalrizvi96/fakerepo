@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Controller/CheckPointController.dart';
 import 'package:attendencesystem/Controller/TrackUserController.dart';
 import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
 import 'package:attendencesystem/View/HomeScreen/HomeScreen.dart';
@@ -20,7 +21,7 @@ class BottomNavigationController extends GetxController {
   var connection = true.obs;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   SummaryController _summaryController = Get.put(SummaryController());
-  HomeController _homeController = Get.put(HomeController());
+  CheckPointController _checkPointController = Get.put(CheckPointController());
   TrackUserController _trackUserController = Get.put(TrackUserController());
   check() async {
     await DataConnectionChecker().onStatusChange.listen((status) async {
@@ -126,6 +127,11 @@ class BottomNavigationController extends GetxController {
         _trackUserController.init();
       }
     }
+    // else if (selectedIndex.value == 3) {
+    //   if (BaseUrl.storage.read("checkpointaccess") == true) {
+    //     _checkPointController.init();
+    //   }
+    // }
     update();
   }
 }

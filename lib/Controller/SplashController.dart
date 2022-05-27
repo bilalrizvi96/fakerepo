@@ -171,6 +171,16 @@ class SplashController extends GetxController {
       // } else {
       if (tokenval != "out") {
         if (tokenval != null) {
+          if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+            BaseUrl.clockin = false;
+          } else {
+            BaseUrl.clockin = true;
+          }
+          if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+            BaseUrl.clockout = false;
+          } else {
+            BaseUrl.clockout = true;
+          }
           Get.offAllNamed('/home');
         } else if (BaseUrl.storage1.read('seen') == true) {
           Get.offAllNamed('/signinemp');

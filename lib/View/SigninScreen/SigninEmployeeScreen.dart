@@ -250,7 +250,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: height / 8,
+                                      height: height / 15,
                                     ),
                                     GestureDetector(
                                       onTap: () {
@@ -298,12 +298,88 @@ class SiginEmployeeScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(
+                                      height: height / 10,
+                                    ),
+                                    // Row(
+                                    //   // mainAxisAlignment:
+                                    //   //     MainAxisAlignment.center,
+                                    //   children: [
+                                    //     GestureDetector(
+                                    //       onTap: () {
+                                    //         Get.to(
+                                    //             FeedbackScreen(
+                                    //               check: false,
+                                    //               form: false,
+                                    //             ),
+                                    //             transition:
+                                    //                 Transition.rightToLeft,
+                                    //             curve: Curves.easeInQuart);
+                                    //       },
+                                    //       child: Row(
+                                    //         crossAxisAlignment:
+                                    //             CrossAxisAlignment.center,
+                                    //         mainAxisAlignment:
+                                    //             MainAxisAlignment.center,
+                                    //         children: [
+                                    //           // Icon(
+                                    //           //   Icons.support_agent_sharp,
+                                    //           //   size: width / 16,
+                                    //           //   color:
+                                    //           //       DynamicColor().primarycolor,
+                                    //           // ),
+                                    //           SizedBox(
+                                    //             width: width / 15,
+                                    //           ),
+                                    //           Text(
+                                    //             'Any Feedback? ',
+                                    //             style: GoogleFonts.poppins(
+                                    //                 fontSize: width / 26,
+                                    //                 fontWeight: FontWeight.w600,
+                                    //                 color:
+                                    //                     DynamicColor().black),
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //     Spacer(),
+                                    //     GestureDetector(
+                                    //       onTap: () {
+                                    //         BaseUrl.helptype = 'login';
+                                    //         Get.toNamed(
+                                    //           '/faqs',
+                                    //         );
+                                    //       },
+                                    //       child: Row(
+                                    //         crossAxisAlignment:
+                                    //             CrossAxisAlignment.center,
+                                    //         mainAxisAlignment:
+                                    //             MainAxisAlignment.center,
+                                    //         children: [
+                                    //           Text(
+                                    //             'Help Center',
+                                    //             style: GoogleFonts.poppins(
+                                    //                 fontSize: width / 26,
+                                    //                 fontWeight: FontWeight.w600,
+                                    //                 color:
+                                    //                     DynamicColor().black),
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //     SizedBox(
+                                    //       width: width / 15,
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                    SizedBox(
                                       height: height / 50,
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
                                       children: [
+                                        SizedBox(
+                                          width: width / 15,
+                                        ),
+                                        // Spacer(),
                                         GestureDetector(
                                           onTap: () {
                                             Get.to(
@@ -315,32 +391,19 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                     Transition.rightToLeft,
                                                 curve: Curves.easeInQuart);
                                           },
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              // Icon(
-                                              //   Icons.support_agent_sharp,
-                                              //   size: width / 16,
-                                              //   color:
-                                              //       DynamicColor().primarycolor,
-                                              // ),
-                                              // SizedBox(
-                                              //   width: width / 30,
-                                              // ),
-                                              Text(
-                                                'Any Feedback? ',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: width / 22,
-                                                    fontWeight: FontWeight.w600,
-                                                    color:
-                                                        DynamicColor().black),
-                                              ),
-                                            ],
+                                          child: Image.asset(
+                                            'assets/feedbackicon.png',
+                                            height: height / 35,
                                           ),
                                         ),
+                                        Spacer(),
+                                        Text("V " + BaseUrl.version.toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 15,
+                                                color: DynamicColor()
+                                                    .primarycolor)),
+                                        Spacer(),
                                         GestureDetector(
                                           onTap: () {
                                             BaseUrl.helptype = 'login';
@@ -348,33 +411,17 @@ class SiginEmployeeScreen extends StatelessWidget {
                                               '/faqs',
                                             );
                                           },
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '| Help Center',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: width / 22,
-                                                    fontWeight: FontWeight.w600,
-                                                    color:
-                                                        DynamicColor().black),
-                                              ),
-                                            ],
+                                          child: Image.asset(
+                                            'assets/faqsicon.png',
+                                            height: height / 35,
                                           ),
                                         ),
+                                        SizedBox(
+                                          width: width / 15,
+                                        ),
+                                        // Spacer(),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: height / 50,
-                                    ),
-                                    Text("V " + BaseUrl.version.toString(),
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 15,
-                                            color: DynamicColor().black)),
                                     SizedBox(
                                       height: height / 80,
                                     ),

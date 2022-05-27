@@ -296,6 +296,8 @@ class API {
         'name': name,
         "image": file,
       });
+      print(message.toString());
+      print('emad');
       // var data = {
       //
       // };

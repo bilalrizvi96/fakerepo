@@ -1,11 +1,13 @@
 import 'dart:typed_data';
 
+import 'package:attendencesystem/API/Capitalize.dart';
 import 'package:attendencesystem/Model/EmployeeModel.dart';
 import 'package:attendencesystem/Model/HistoryCheckpointModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +16,7 @@ import 'dart:ui' as ui;
 
 class TrackUserController extends GetxController {
   List<String> staafflist = [];
-  var dropdownValue = 'Please Select User'.obs;
+  var dropdownValue = 'Show All Staff'.obs;
   List<Marker> markers = [];
   var zoom = 18.0.obs;
   var Loading = false.obs;
@@ -29,14 +31,15 @@ class TrackUserController extends GetxController {
       .obs;
   valueupdate(val) {
     dropdownValue.value = val;
-    if (dropdownValue.value == "Please Select User") {
+    if (dropdownValue.value == "Show All Staff") {
       getEmployee();
     } else {
       employeedata.value.forEach((element) {
-        if (dropdownValue.value == element.name) {
+        if (dropdownValue.value == element.name.toString().toTitleCase()) {
           getspecificEmployee(element.empCode);
         }
       });
+      update();
     }
     update();
   }
@@ -89,7 +92,7 @@ class TrackUserController extends GetxController {
       employeedata.value.forEach((element) async {
         var iconurl = "https://ik.imagekit.io/64vfjnxvf/" +
             element.empCode.toString() +
-            '.jpg?tr=r-500,c-500,g-500';
+            '.jpg?tr=r-800,c-500,g-500';
 
         var dataBytes;
         var request = await http.get(Uri.parse(iconurl));
@@ -98,7 +101,7 @@ class TrackUserController extends GetxController {
 
         ui.Codec codec = await ui.instantiateImageCodec(
             dataBytes.buffer.asUint8List(),
-            targetWidth: 50);
+            targetWidth: 80);
         ui.FrameInfo fi = await codec.getNextFrame();
 
         final Uint8List markerIcon =
@@ -114,10 +117,10 @@ class TrackUserController extends GetxController {
               position: LatLng(double.parse(element.location.split(',')[0]),
                   double.parse(element.location.split(',')[1])),
               infoWindow: InfoWindow(
-                  title: element.name,
+                  title: element.name.toString().toTitleCase(),
                   snippet: element.empCode,
                   onTap: () async {
-                    dropdownValue.value = element.name;
+                    dropdownValue.value = element.name.toString().toTitleCase();
                     await getspecificEmployee(element.empCode);
                   }),
               onTap: () {
@@ -133,9 +136,9 @@ class TrackUserController extends GetxController {
         print(markers);
         print('asd');
       });
-      staafflist.add('Please Select User');
+      staafflist.add('Show All Staff');
       for (var val in response.data) {
-        staafflist.add(val.name.toString());
+        staafflist.add(val.name.toString().toTitleCase());
       }
       update();
     } else {
@@ -171,9 +174,68 @@ class TrackUserController extends GetxController {
               position: LatLng(double.parse(element.location.split(',')[0]),
                   double.parse(element.location.split(',')[1])),
               infoWindow: InfoWindow(
-                title: element.siteName,
-                snippet: element.time,
-              ),
+                  title: element.siteName.toString().toTitleCase(),
+                  snippet: element.time,
+                  onTap: () {
+                    Get.defaultDialog(
+                        title: '',
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Icon(Icons.clear)),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  element.siteName.toString().toTitleCase(),
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12),
+                                ),
+                                Spacer(),
+                                Text(
+                                  element.time,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Image.network(element.image, fit: BoxFit.cover)
+                          ],
+                        ),
+                        radius: 10.0);
+                    // showDialog(
+                    //     context: context,
+                    //     barrierDismissible: false,
+                    //     builder: (_) => AlertDialog(
+                    //           actions: [
+                    //             Center(
+                    //               child: Padding(
+                    //                 padding: const EdgeInsets.all(8.0),
+                    //                 child: GestureDetector(
+                    //                     onTap: () {
+                    //                       Get.back();
+                    //                     },
+                    //                     child: Icon(Icons.clear)),
+                    //               ),
+                    //             ),
+                    //             Image.network(
+                    //                 faqsController
+                    //                     .supportrequestlist.value[index].image,
+                    //                 fit: BoxFit.cover)
+                    //           ],
+                    //         ));
+                  }),
               onTap: () {
                 Empmapupdate(double.parse(element.location.split(',')[0]),
                     double.parse(element.location.split(',')[1]));
@@ -196,7 +258,7 @@ class TrackUserController extends GetxController {
 
   init() {
     staafflist = [];
-    dropdownValue.value = "Please Select User";
+    dropdownValue.value = "Show All Staff";
     getEmployee();
   }
 

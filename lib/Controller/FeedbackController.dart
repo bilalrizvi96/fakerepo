@@ -12,6 +12,7 @@ class FeedbackController extends GetxController {
   final feedbackFormKey = GlobalKey<FormState>();
   var dropdownValue = 'Choose Category'.obs;
   XFile? faceImage;
+  var label = ''.obs;
   var Loading = false.obs;
   final ImagePicker _picker = ImagePicker();
   var check = true;
@@ -57,7 +58,11 @@ class FeedbackController extends GetxController {
             //     date.year.toString(),
             name: namecontroller.text.toString(),
             phone: phonecontroller.text.toString().trim(),
-            message: feedbackcontroller.text.toString(),
+            message: form == false
+                ? feedbackcontroller.text.toString()
+                : label.value.toString() +
+                    '\n' +
+                    feedbackcontroller.text.toString(),
             type: form == false ? dropdownValue.value.toString() : 'HR',
             image: faceImage);
         if (response.statusCode == 200) {

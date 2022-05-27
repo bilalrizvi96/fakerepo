@@ -74,10 +74,10 @@ class SupportRequestScreen extends StatelessWidget {
                                         child: Container(
                                           width: width / 1.2,
                                           padding: const EdgeInsets.only(
-                                              left: 10.0,
-                                              top: 5.0,
-                                              bottom: 10,
-                                              right: 10.0),
+                                              left: 12.0,
+                                              top: 10.0,
+                                              bottom: 12,
+                                              right: 12.0),
                                           decoration: BoxDecoration(
                                               color: Colors.white,
                                               border: Border.fromBorderSide(
@@ -98,7 +98,7 @@ class SupportRequestScreen extends StatelessWidget {
                                                   //   width: width / 60,
                                                   // ),
                                                   Text(
-                                                    '${faqsController.supportrequestlist.value[index].name}',
+                                                    '#${faqsController.supportrequestlist.value[index].ticketNo}',
                                                     style: GoogleFonts.poppins(
                                                         color: DynamicColor()
                                                             .primarycolor,
@@ -106,50 +106,30 @@ class SupportRequestScreen extends StatelessWidget {
                                                             FontWeight.w600,
                                                         fontSize: width / 25),
                                                   ),
-                                                  SizedBox(
-                                                    width: width / 20,
+                                                  Spacer(),
+                                                  Container(
+                                                    width: 10,
+                                                    height: 10,
+                                                    decoration: BoxDecoration(
+                                                        color: faqsController
+                                                                    .supportrequestlist
+                                                                    .value[
+                                                                        index]
+                                                                    .resolved ==
+                                                                false
+                                                            ? Colors.red
+                                                            : Colors.green,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    50.0)),
                                                   ),
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        '${faqsController.supportrequestlist.value[index].time}',
-                                                        style: GoogleFonts.poppins(
-                                                            color: DynamicColor()
-                                                                .primarycolor,
-                                                            fontWeight:
-                                                                FontWeight.w300,
-                                                            fontSize:
-                                                                width / 28),
-                                                      ),
-                                                      Text(
-                                                        '${faqsController.supportrequestlist.value[index].date}',
-                                                        style: GoogleFonts.poppins(
-                                                            color: DynamicColor()
-                                                                .primarycolor,
-                                                            fontWeight:
-                                                                FontWeight.w300,
-                                                            fontSize:
-                                                                width / 28),
-                                                      ),
-                                                    ],
-                                                  ),
+
+                                                  //
                                                   SizedBox(
                                                     width: width / 60,
                                                   )
                                                 ],
-                                              ),
-                                              Text(
-                                                '#${faqsController.supportrequestlist.value[index].ticketNo}',
-                                                style: GoogleFonts.poppins(
-                                                    color: DynamicColor()
-                                                        .primarycolor,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: width / 35),
                                               ),
                                               SizedBox(
                                                 height: 3,
@@ -161,22 +141,48 @@ class SupportRequestScreen extends StatelessWidget {
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: width / 30.2),
                                               ),
-                                              if (faqsController
-                                                      .supportrequestlist
-                                                      .value[index]
-                                                      .image !=
-                                                  '')
-                                                Align(
-                                                  alignment:
-                                                      Alignment.bottomRight,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      showDialog(
-                                                          context: context,
-                                                          barrierDismissible:
-                                                              false,
-                                                          builder:
-                                                              (_) =>
+                                              SizedBox(
+                                                height: height / 80,
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      '${faqsController.supportrequestlist.value[index].time}',
+                                                      style: GoogleFonts.poppins(
+                                                          color: DynamicColor()
+                                                              .primarycolor,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                          fontSize: width / 33),
+                                                    ),
+                                                    SizedBox(
+                                                      width: width / 60,
+                                                    ),
+                                                    Text(
+                                                      '${faqsController.supportrequestlist.value[index].date}',
+                                                      style: GoogleFonts.poppins(
+                                                          color: DynamicColor()
+                                                              .primarycolor,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                          fontSize: width / 33),
+                                                    ),
+                                                    Spacer(),
+                                                    if (faqsController
+                                                            .supportrequestlist
+                                                            .value[index]
+                                                            .image !=
+                                                        '')
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          showDialog(
+                                                              context: context,
+                                                              barrierDismissible:
+                                                                  false,
+                                                              builder: (_) =>
                                                                   AlertDialog(
                                                                     actions: [
                                                                       Center(
@@ -199,25 +205,28 @@ class SupportRequestScreen extends StatelessWidget {
                                                                           fit: BoxFit.cover)
                                                                     ],
                                                                   ));
-                                                    },
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(5.0),
-                                                      decoration: BoxDecoration(
-                                                          color: DynamicColor()
-                                                              .primarycolor,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      18.0)),
-                                                      child: Icon(
-                                                        Icons
-                                                            .attach_file_outlined,
-                                                        color: Colors.white,
+                                                        },
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  5.0),
+                                                          decoration: BoxDecoration(
+                                                              color: DynamicColor()
+                                                                  .primarycolor,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          18.0)),
+                                                          child: Icon(
+                                                            Icons
+                                                                .attach_file_outlined,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
+                                                  ],
                                                 ),
+                                              ),
                                             ],
                                           ),
                                         ),

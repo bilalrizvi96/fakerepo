@@ -76,6 +76,26 @@ class MyProfileScreen extends StatelessWidget {
                               height: height / 80,
                             ),
                             Padding(
+                              padding: const EdgeInsets.only(left: 38.0),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Image.network(
+                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/register/' +
+                                        BaseUrl.storage.read('empCode') +
+                                        ".jpg",
+                                    fit: BoxFit.fill,
+                                    width: width / 4.5,
+                                    height: height / 7,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: height / 80,
+                            ),
+                            Padding(
                               padding: const EdgeInsets.only(
                                 left: 35.0,
                               ),
@@ -103,9 +123,9 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
 
-                                    //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -159,6 +179,7 @@ class MyProfileScreen extends StatelessWidget {
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -212,6 +233,7 @@ class MyProfileScreen extends StatelessWidget {
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -268,6 +290,7 @@ class MyProfileScreen extends StatelessWidget {
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -322,6 +345,7 @@ class MyProfileScreen extends StatelessWidget {
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -381,6 +405,7 @@ class MyProfileScreen extends StatelessWidget {
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -432,6 +457,7 @@ class MyProfileScreen extends StatelessWidget {
                                     keyboardType: TextInputType.datetime,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -484,6 +510,7 @@ class MyProfileScreen extends StatelessWidget {
 
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -537,6 +564,7 @@ class MyProfileScreen extends StatelessWidget {
 
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -586,6 +614,7 @@ class MyProfileScreen extends StatelessWidget {
                                     keyboardType: TextInputType.emailAddress,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -633,6 +662,7 @@ class MyProfileScreen extends StatelessWidget {
                                     keyboardType: TextInputType.text,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(

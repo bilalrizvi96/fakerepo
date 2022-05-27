@@ -8,8 +8,8 @@ import '../../API/BaseURl.dart';
 import '../../Component/DynamicColor.dart';
 
 class FeedbackScreen extends StatelessWidget {
-  var check, form;
-  FeedbackScreen({this.check, this.form});
+  var check, form, label;
+  FeedbackScreen({this.check, this.form, this.label});
 
   FeedbackController _feedbackController = Get.put(FeedbackController());
 
@@ -355,6 +355,9 @@ class FeedbackScreen extends StatelessWidget {
                               Spacer(),
                               GestureDetector(
                                 onTap: () {
+                                  form == true
+                                      ? _feedbackController.label.value = label
+                                      : '';
                                   _feedbackController.submit(form);
                                 },
                                 child: Container(

@@ -163,6 +163,7 @@ class SignInEmployeeController extends GetxController {
           empcodeController.text.toString()) {
         BaseUrl.clockin = false;
         BaseUrl.clockout = false;
+
         BaseUrl.empcheck = false;
         update();
       } else {

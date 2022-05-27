@@ -73,108 +73,136 @@ class NotificationScreen extends StatelessWidget {
                                       return Container(
                                         alignment: Alignment.center,
                                         padding: const EdgeInsets.only(
-                                            right: 8.0,
+                                            right: 20,
                                             top: 8,
                                             left: 25,
-                                            bottom: 8),
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Container(
-                                                width: width / 5,
-                                                height: height / 8.5,
-                                                decoration: BoxDecoration(
+                                            bottom: 15),
+                                        child: Container(
+                                          width: width / 1.15,
+                                          padding: const EdgeInsets.only(
+                                              left: 12.0,
+                                              top: 10.0,
+                                              bottom: 12,
+                                              right: 12.0),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              border: Border.fromBorderSide(
+                                                  BorderSide(
+                                                      color:
+                                                          Color(0xFFDFDFDF))),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0)),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${notificationController.notificationlist.value[index].title}',
+                                                style: GoogleFonts.poppins(
                                                     color: DynamicColor()
                                                         .primarycolor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15.0)),
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: width / 25),
                                               ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: Container(
-                                                height: height / 8.5,
-                                                width: width / 1.2,
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    border: Border.fromBorderSide(
-                                                        BorderSide(
-                                                            color: Color(
-                                                                0xFFDFDFDF))),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0)),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
+                                              SizedBox(
+                                                height: 3,
+                                              ),
+                                              Text(
+                                                '${notificationController.notificationlist.value[index].message.toString()}',
+                                                style: GoogleFonts.poppins(
+                                                    color: DynamicColor().black,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: width / 30.2),
+                                              ),
+                                              SizedBox(
+                                                height: height / 80,
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: Row(
                                                   children: [
-                                                    Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          width: width / 60,
-                                                        ),
-                                                        Text(
-                                                          '${notificationController.notificationlist.value[index].title}',
-                                                          style: GoogleFonts.poppins(
-                                                              color: DynamicColor()
-                                                                  .primarycolor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize:
-                                                                  width / 25),
-                                                        ),
-                                                        Spacer(),
-                                                        Text(
-                                                          '${notificationController.notificationlist.value[index].time}',
-                                                          style: GoogleFonts.poppins(
-                                                              color: DynamicColor()
-                                                                  .primarycolor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300,
-                                                              fontSize:
-                                                                  width / 28),
-                                                        ),
-                                                        SizedBox(
-                                                          width: width / 60,
-                                                        )
-                                                      ],
+                                                    Text(
+                                                      '${notificationController.notificationlist.value[index].time}',
+                                                      style: GoogleFonts.poppins(
+                                                          color: DynamicColor()
+                                                              .primarycolor,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                          fontSize: width / 33),
                                                     ),
                                                     SizedBox(
-                                                      height: height / 80,
+                                                      width: width / 60,
                                                     ),
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 8.0),
-                                                        child: Text(
-                                                          '${notificationController.notificationlist.value[index].message}',
-                                                          style: GoogleFonts.poppins(
-                                                              color:
-                                                                  DynamicColor()
-                                                                      .black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontSize:
-                                                                  width / 30.2),
-                                                        ),
-                                                      ),
+                                                    Text(
+                                                      '${notificationController.notificationlist.value[index].date}',
+                                                      style: GoogleFonts.poppins(
+                                                          color: DynamicColor()
+                                                              .primarycolor,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                          fontSize: width / 33),
                                                     ),
+                                                    Spacer(),
+                                                    // if (notificationController.notificationlist
+                                                    //         .value[index]
+                                                    //         .image !=
+                                                    //     '')
+                                                    //   GestureDetector(
+                                                    //     onTap: () {
+                                                    //       showDialog(
+                                                    //           context: context,
+                                                    //           barrierDismissible:
+                                                    //               false,
+                                                    //           builder: (_) =>
+                                                    //               AlertDialog(
+                                                    //                 actions: [
+                                                    //                   Center(
+                                                    //                     child:
+                                                    //                         Padding(
+                                                    //                       padding:
+                                                    //                           const EdgeInsets.all(8.0),
+                                                    //                       child: GestureDetector(
+                                                    //                           onTap: () {
+                                                    //                             Get.back();
+                                                    //                           },
+                                                    //                           child: Icon(Icons.clear)),
+                                                    //                     ),
+                                                    //                   ),
+                                                    //                   Image.network(
+                                                    //                       faqsController
+                                                    //                           .supportrequestlist
+                                                    //                           .value[index]
+                                                    //                           .image,
+                                                    //                       fit: BoxFit.cover)
+                                                    //                 ],
+                                                    //               ));
+                                                    //     },
+                                                    //     child: Container(
+                                                    //       padding:
+                                                    //           EdgeInsets.all(
+                                                    //               5.0),
+                                                    //       decoration: BoxDecoration(
+                                                    //           color: DynamicColor()
+                                                    //               .primarycolor,
+                                                    //           borderRadius:
+                                                    //               BorderRadius
+                                                    //                   .circular(
+                                                    //                       18.0)),
+                                                    //       child: Icon(
+                                                    //         Icons
+                                                    //             .attach_file_outlined,
+                                                    //         color: Colors.white,
+                                                    //       ),
+                                                    //     ),
+                                                    //   ),
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }),

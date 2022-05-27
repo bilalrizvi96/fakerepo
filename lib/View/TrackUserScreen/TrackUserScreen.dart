@@ -85,7 +85,7 @@ class TrackUserScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: GoogleMap(
-                                zoomControlsEnabled: false,
+                                zoomControlsEnabled: true,
                                 compassEnabled: true,
                                 markers: trackUserController.markers.toSet(),
                                 mapType: MapType.normal,
