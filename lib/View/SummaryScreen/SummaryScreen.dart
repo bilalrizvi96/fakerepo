@@ -9,7 +9,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:slider_button/slider_button.dart';
+
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../Controller/SignInEmployeeController.dart';
