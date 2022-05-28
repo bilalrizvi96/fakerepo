@@ -78,7 +78,7 @@ class RegistrationScreen extends StatelessWidget {
                                       child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            'Employee Id',
+                                            'Employee Code',
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: width / 30,
@@ -102,8 +102,7 @@ class RegistrationScreen extends StatelessWidget {
                                         Container(
                                           width: width / 1.22,
                                           child: TextFormField(
-                                            keyboardType:
-                                                TextInputType.streetAddress,
+                                            keyboardType: TextInputType.phone,
                                             controller: registrationController
                                                 .employee_IdController,
                                             validator: registrationController
@@ -116,7 +115,7 @@ class RegistrationScreen extends StatelessWidget {
                                                 fontWeight: FontWeight.w600),
                                             decoration: new InputDecoration(
                                                 hintText:
-                                                    'Enter Your Employee ID',
+                                                    'Enter Your Employee Code',
                                                 focusColor:
                                                     DynamicColor().primarycolor,
                                                 hoverColor:

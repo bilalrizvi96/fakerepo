@@ -49,36 +49,31 @@ class CheckPointScreen extends StatelessWidget {
                       height: height / 40,
                     ),
                     Center(
-                      child: DelayedDisplay(
-                        delay: Duration(milliseconds: 1500),
-                        slidingCurve: Curves.bounceInOut,
-                        child: Container(
-                          height: height / 18,
-                          width: width,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: TabBar(
-                            controller: _checkPointController.tabController,
-                            indicatorColor:
-                                _checkPointController.indicatorColor,
-                            labelColor: Colors.black,
-                            labelStyle: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(
-                                    fontSize: width / 25,
-                                    fontWeight: FontWeight.bold),
-                            unselectedLabelColor: DynamicColor().titletextcolor,
-                            tabs: [
-                              Tab(
-                                text: 'Add',
-                              ),
-                              Tab(
-                                text: 'History',
-                              ),
-                            ],
-                          ),
+                      child: Container(
+                        height: height / 18,
+                        width: width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: TabBar(
+                          controller: _checkPointController.tabController,
+                          indicatorColor: _checkPointController.indicatorColor,
+                          labelColor: Colors.black,
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .caption!
+                              .copyWith(
+                                  fontSize: width / 25,
+                                  fontWeight: FontWeight.bold),
+                          unselectedLabelColor: DynamicColor().titletextcolor,
+                          tabs: [
+                            Tab(
+                              text: 'Add',
+                            ),
+                            Tab(
+                              text: 'History',
+                            ),
+                          ],
                         ),
                       ),
                     ),

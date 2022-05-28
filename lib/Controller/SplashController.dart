@@ -4,12 +4,13 @@ import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 
-import 'package:device_info_plus/device_info_plus.dart';
+// import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'MaintenanceController.dart';
 
@@ -110,8 +111,33 @@ class SplashController extends GetxController {
     });
   }
 
+  permissions() async {
+    if (await Permission.location.request().isGranted) {
+      update();
+    } else {
+      permissions();
+      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    if (await Permission.camera.request().isGranted) {
+      update();
+    } else {
+      permissions();
+      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    if (await Permission.storage.request().isGranted) {
+      update();
+    } else {
+      permissions();
+      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
+      //     colorText: Colors.white, backgroundColor: Colors.red);
+    }
+  }
+
   @override
   void onInit() {
+    permissions();
     super.onInit();
     this._registerOnFirebase();
     this.getMessage();
@@ -145,6 +171,16 @@ class SplashController extends GetxController {
       // } else {
       if (tokenval != "out") {
         if (tokenval != null) {
+          if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+            BaseUrl.clockin = false;
+          } else {
+            BaseUrl.clockin = true;
+          }
+          if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+            BaseUrl.clockout = false;
+          } else {
+            BaseUrl.clockout = true;
+          }
           Get.offAllNamed('/home');
         } else if (BaseUrl.storage1.read('seen') == true) {
           Get.offAllNamed('/signinemp');

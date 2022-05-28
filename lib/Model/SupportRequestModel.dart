@@ -51,6 +51,7 @@ class Datum {
     this.name,
     this.region,
     this.resolved,
+    this.ticketNo,
   });
 
   var type;
@@ -63,6 +64,7 @@ class Datum {
   var name;
   var region;
   var resolved;
+  var ticketNo;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         type: json["type"],
@@ -75,6 +77,7 @@ class Datum {
         name: json["name"],
         region: json["region"],
         resolved: json["resolved"],
+        ticketNo: json["ticketNo"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -88,5 +91,6 @@ class Datum {
         "name": name,
         "region": region,
         "resolved": resolved,
+        "ticketNo": ticketNo,
       };
 }

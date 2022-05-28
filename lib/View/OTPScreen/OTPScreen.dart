@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/OTPController.dart';
 import 'package:delayed_display/delayed_display.dart';
@@ -62,7 +63,21 @@ class OTPScreen extends StatelessWidget {
                         right: width / 8,
                         left: width / 8,
                         top: height / 2.3,
+                        child: Text(
+                          'Please wait while we validate the passcode sent to your registered number ${BaseUrl.storage.read('phone')}. If the code is not validated automatically, you can enter it below.',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: width / 30),
+                        ),
+                      ),
+                      Positioned(
+                        right: width / 8,
+                        left: width / 8,
+                        top: height / 1.7,
                         child: PinCodeTextField(
+                          keyboardType: TextInputType.phone,
                           controller: otpController.otptextcontroller,
                           hasTextBorderColor: Colors.white,
                           highlightPinBoxColor: DynamicColor().white,
@@ -86,8 +101,9 @@ class OTPScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        right: width / 10,
-                        top: height / 1.9,
+                        right: width / 3,
+                        left: width / 2.8,
+                        top: height / 1.5,
                         child: Row(
                           children: [
                             Container(
@@ -119,7 +135,7 @@ class OTPScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top: height / 1.5,
+                        top: height / 1.3,
                         right: width / 12,
                         left: width / 12,
                         child: otpController.start.value == 0

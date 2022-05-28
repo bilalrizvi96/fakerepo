@@ -8,8 +8,8 @@ import '../../API/BaseURl.dart';
 import '../../Component/DynamicColor.dart';
 
 class FeedbackScreen extends StatelessWidget {
-  var check, form;
-  FeedbackScreen({this.check, this.form});
+  var check, form, label;
+  FeedbackScreen({this.check, this.form, this.label});
 
   FeedbackController _feedbackController = Get.put(FeedbackController());
 
@@ -31,7 +31,7 @@ class FeedbackScreen extends StatelessWidget {
               builder: (_) {
                 return Stack(
                   children: [
-                    Image.asset(
+                    Image.network(
                       'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/attendancebg.png',
                       fit: BoxFit.cover,
                       width: width,
@@ -59,8 +59,46 @@ class FeedbackScreen extends StatelessWidget {
                                     right: 22.0, left: 22.0, top: 22.0),
                                 child: Row(
                                   children: [
+                                    if (check == false)
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          size: width / 16,
+                                          color: Colors.grey,
+                                        ),
+                                      )
+                                    else if (form == true)
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          size: width / 16,
+                                          color: Colors.grey,
+                                        ),
+                                      )
+                                    else if (BaseUrl.storage.read("role") != '')
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          size: width / 16,
+                                          color: Colors.grey,
+                                        ),
+                                      )
+                                    else
+                                      Column(),
+                                    SizedBox(
+                                      width: width / 50,
+                                    ),
                                     Text(
-                                      'Feedback',
+                                      'Support',
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w500,
                                           fontSize: width / 16),
@@ -86,27 +124,27 @@ class FeedbackScreen extends StatelessWidget {
                                     SizedBox(
                                       width: width / 50,
                                     ),
-                                    if (check == false)
-                                      Column()
-                                    else if (form == true)
-                                      Column()
-                                    else
-                                      GestureDetector(
-                                        onTap: () {
-                                          BaseUrl.storage.write("token", "out");
-                                          Get.offAllNamed('/signinemp');
-                                        },
-                                        child: Icon(
-                                          Icons.logout,
-                                          size: width / 16,
-                                          color: Colors.red,
-                                        ),
-                                      ),
+                                    // if (check == false)
+                                    //   Column()
+                                    // else if (form == true)
+                                    //   Column()
+                                    // else
+                                    //   GestureDetector(
+                                    //     onTap: () {
+                                    //       BaseUrl.storage.write("token", "out");
+                                    //       Get.offAllNamed('/signinemp');
+                                    //     },
+                                    //     child: Icon(
+                                    //       Icons.logout,
+                                    //       size: width / 16,
+                                    //       color: Colors.red,
+                                    //     ),
+                                    //   ),
                                   ],
                                 ),
                               ),
                               SizedBox(
-                                height: height / 50,
+                                height: height / 30,
                               ),
                               Container(
                                 width: width / 1.2,
@@ -137,7 +175,7 @@ class FeedbackScreen extends StatelessWidget {
                                                 : '',
                                             hintStyle: GoogleFonts.poppins(
                                                 color: DynamicColor().black,
-                                                fontWeight: FontWeight.w600,
+                                                fontWeight: FontWeight.w300,
                                                 fontSize: width / 25)),
                                       )
                                     : Text(
@@ -317,6 +355,9 @@ class FeedbackScreen extends StatelessWidget {
                               Spacer(),
                               GestureDetector(
                                 onTap: () {
+                                  form == true
+                                      ? _feedbackController.label.value = label
+                                      : '';
                                   _feedbackController.submit(form);
                                 },
                                 child: Container(

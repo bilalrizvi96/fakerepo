@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_countdown/slide_countdown.dart';
+// import 'package:slide_countdown/slide_countdown.dart';
 
 class MaintainceScreen extends StatelessWidget {
   MaintainceScreen({Key? key}) : super(key: key);

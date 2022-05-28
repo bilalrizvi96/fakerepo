@@ -12,6 +12,7 @@ class FeedbackController extends GetxController {
   final feedbackFormKey = GlobalKey<FormState>();
   var dropdownValue = 'Choose Category'.obs;
   XFile? faceImage;
+  var label = ''.obs;
   var Loading = false.obs;
   final ImagePicker _picker = ImagePicker();
   var check = true;
@@ -41,9 +42,11 @@ class FeedbackController extends GetxController {
         ? dropdownValue.value = dropdownValue.value
         : dropdownValue.value = 'HR';
     if (dropdownValue.value != 'Choose Category') {
-      if (feedbackcontroller.text.toString() != '') {
+      if (feedbackcontroller.text.toString() != '' &&
+          phonecontroller.text.toString() != '' &&
+          namecontroller.text.toString() != '') {
         var response = await API().Feedback(
-            empId: check != false ? BaseUrl.storage.read("empCode") : "00000",
+            empId: check != false ? BaseUrl.storage.read("empCode") : "",
             // time: date.hour.toString() +
             //     ":" +
             //     date.minute.toString() +
@@ -53,22 +56,32 @@ class FeedbackController extends GetxController {
             //     date.month.toString() +
             //     "-" +
             //     date.year.toString(),
+            name: namecontroller.text.toString(),
             phone: phonecontroller.text.toString().trim(),
-            message: namecontroller.text.toString() +
-                '~|~' +
-                feedbackcontroller.text.toString(),
+            message: form == false
+                ? feedbackcontroller.text.toString()
+                : label.value.toString() +
+                    '\n' +
+                    feedbackcontroller.text.toString(),
             type: form == false ? dropdownValue.value.toString() : 'HR',
             image: faceImage);
         if (response.statusCode == 200) {
           Loading.value = false;
           if (check == false) {
+            dropdownValue.value = 'Choose Category';
+            phonecontroller.text =
+                BaseUrl.storage.read('phoneNo').toString().toUpperCase();
             // namecontroller.clear();
             faceImage = null;
             Get.back();
+          } else {
+            dropdownValue.value = 'Choose Category';
+            faceImage = null;
+            feedbackcontroller.clear();
+            Get.back();
+            // phonecontroller.clear();
           }
-          faceImage = null;
-          feedbackcontroller.clear();
-          phonecontroller.clear();
+
           Get.snackbar(
             "Feedback",
             "Thank You for your feedback",
@@ -80,7 +93,7 @@ class FeedbackController extends GetxController {
         }
       } else {
         Loading.value = false;
-        Get.snackbar("Error ", "Please this field must be filled".toString(),
+        Get.snackbar("Error ", "Fill the required fields".toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
     } else {

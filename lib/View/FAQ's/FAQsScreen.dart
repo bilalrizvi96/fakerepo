@@ -1,6 +1,6 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/FaqsController.dart';
-import 'package:expansion_card/expansion_card.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,13 +74,21 @@ class FAQsScreen extends StatelessWidget {
                                               .subQuestion !=
                                           null
                                       ? () {
-                                          Get.to(() => FAQsDetailScreen(
-                                                index: faqsController.faqlist
-                                                    .value[index].subQuestion,
-                                                title: faqsController
-                                                    .faqlist.value[index].label,
-                                                check: check,
-                                              ));
+                                          Get.to(
+                                              () => FAQsDetailScreen(
+                                                    index: faqsController
+                                                        .faqlist
+                                                        .value[index]
+                                                        .subQuestion,
+                                                    title: faqsController
+                                                        .faqlist
+                                                        .value[index]
+                                                        .label,
+                                                    check: check,
+                                                  ),
+                                              transition:
+                                                  Transition.rightToLeft,
+                                              curve: Curves.easeInQuart);
                                         }
                                       : () {
                                           Get.toNamed('/supportrequest');
@@ -109,9 +117,12 @@ class FAQsScreen extends StatelessWidget {
                                           SizedBox(
                                             width: width / 20,
                                           ),
-                                          Icon(Icons.perm_contact_cal_rounded,
-                                              color:
-                                                  DynamicColor().primarycolor),
+                                          Image.network(
+                                              faqsController
+                                                  .faqlist.value[index].icon,
+                                              // width: width / 2,
+                                              height: height / 40,
+                                              fit: BoxFit.scaleDown),
                                           SizedBox(
                                             width: width / 20,
                                           ),
@@ -124,7 +135,7 @@ class FAQsScreen extends StatelessWidget {
                                           ),
                                           Spacer(),
                                           Icon(Icons.arrow_forward_ios_sharp,
-                                              size: 30,
+                                              size: 20,
                                               color:
                                                   DynamicColor().primarycolor),
                                           SizedBox(

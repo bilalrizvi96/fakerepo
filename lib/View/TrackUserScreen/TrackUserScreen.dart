@@ -17,7 +17,8 @@ class TrackUserScreen extends StatelessWidget {
         child: Container(
           width: width,
           height: height,
-          child: GetBuilder(
+          child: GetX<TrackUserController>(
+              // initState: trackUserController.init(),
               init: trackUserController,
               builder: (_) {
                 return trackUserController.Loading.value == false
@@ -33,21 +34,27 @@ class TrackUserScreen extends StatelessWidget {
                               SizedBox(
                                 width: width / 20,
                               ),
-                              GestureDetector(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Icon(Icons.arrow_back_ios,
-                                      color: Colors.grey[600])),
+                              // GestureDetector(
+                              //     onTap: () {
+                              //       Get.back();
+                              //     },
+                              //     child: Icon(Icons.arrow_back_ios,
+                              //         color: Colors.grey[600])),
                               SizedBox(
                                 width: width / 20,
                               ),
                               Text(
-                                'Track User',
+                                'Track Staff',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
                                     fontSize: width / 16),
                               ),
+                              // Spacer(),
+                              // GestureDetector(
+                              //     onTap: () {
+                              //       trackUserController.init();
+                              //     },
+                              //     child: Icon(Icons.refresh)),
                               SizedBox(
                                 width: width / 20,
                               ),
@@ -71,14 +78,14 @@ class TrackUserScreen extends StatelessWidget {
                                   trackUserController.valueupdate(newValue);
                                   // FocusScope.of(context).nextFocus();
                                 },
-                                items: trackUserController.sitelist),
+                                items: trackUserController.staafflist),
                           ),
                           SizedBox(
                             height: height / 50,
                           ),
                           Expanded(
                             child: GoogleMap(
-                                zoomControlsEnabled: false,
+                                zoomControlsEnabled: true,
                                 compassEnabled: true,
                                 markers: trackUserController.markers.toSet(),
                                 mapType: MapType.normal,

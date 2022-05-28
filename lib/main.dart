@@ -17,7 +17,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message,
 Future<void> main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  GestureBinding.instance?.resamplingEnabled = true;
+  GestureBinding.instance!.resamplingEnabled = true;
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           appId: '1:833414981797:android:4f17b315106ee54a1b054c',

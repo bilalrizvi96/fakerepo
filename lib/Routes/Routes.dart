@@ -33,6 +33,11 @@ class Routes {
         page: () => IntroScreen(),
         transition: Transition.leftToRight,
         curve: Curves.easeInQuart),
+    // GetPage(
+    //     name: '/askpermission',
+    //     page: () => AskForPermission(),
+    //     transition: Transition.leftToRight,
+    //     curve: Curves.easeInQuart),
     GetPage(
         name: "/signinemp",
         page: () => SiginEmployeeScreen(),

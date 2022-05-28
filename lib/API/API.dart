@@ -177,7 +177,7 @@ class API {
     }
   }
 
-  Future GetEmployees() async {
+  GetEmployees() async {
     try {
       Map data = {"require": "list"};
       print(data);
@@ -192,6 +192,7 @@ class API {
         return response;
       }
     } catch (e) {
+      print(e);
       return onError(e);
     }
   }
@@ -270,10 +271,12 @@ class API {
       var message,
       var type,
       var image,
+      var name,
       var phone}) async {
     var file;
     if (image != null) {
       // Uint8List imagebytes = await image.readAsBytes();
+
       // String base64string = base64.encode(imagebytes);
       // file = base64string.toString();
       // file.replaceAll('/', '');
@@ -283,14 +286,18 @@ class API {
       var formData = FormData.fromMap({
         "type": type,
         // "time": time.toString(),
-        "employeeId": empId.toString(),
+        "employeeId": BaseUrl.storage.read("empCode") != null ? empId : '',
         "message": message.toString().trim(),
-        'phone': phone != '' ? phone : '',
+        'phone': phone,
         'resolved': false,
-        'region': BaseUrl.storage.read('region'),
-        'name': BaseUrl.storage.read('name'),
+        'region': BaseUrl.storage.read('region') != null
+            ? BaseUrl.storage.read('region')
+            : '',
+        'name': name,
         "image": file,
       });
+      print(message.toString());
+      print('emad');
       // var data = {
       //
       // };
@@ -607,10 +614,13 @@ class API {
 
   Future HelpCenters() async {
     try {
+      var data = {'type': BaseUrl.helptype.toString()};
       var dio = Dio();
-      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-      final response = await dio.get(
+      print(data);
+      // dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
         BaseUrl.baseurl + 'helpCenter',
+        data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),
@@ -681,7 +691,6 @@ class API {
         return response;
       }
     } catch (e) {
-      print(e);
       return onError(e);
     }
   }
