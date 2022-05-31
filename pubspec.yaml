@@ -49,8 +49,8 @@ dependencies:
   google_maps_flutter: ^2.1.0
   image_picker: ^0.8.4+4
   firebase_core:
-  firebase_messaging:
-  firebase_crashlytics: ^2.4.5
+  firebase_messaging: ^11.4.1
+  firebase_crashlytics:
   intl: ^0.17.0
   slider_button:
   data_connection_checker:

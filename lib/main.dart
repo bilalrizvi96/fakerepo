@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:attendencesystem/Routes/Routes.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -15,18 +17,27 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message,
 }
 
 Future<void> main() async {
-  await GetStorage.init();
-  WidgetsFlutterBinding.ensureInitialized();
-  GestureBinding.instance!.resamplingEnabled = true;
-  await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          appId: '1:833414981797:android:4f17b315106ee54a1b054c',
-          apiKey: 'AIzaSyDtqrjtfUH4AX3LNZ7fO7PfZVmBDRQ3z0Y',
-          messagingSenderId: '833414981797',
-          projectId: 'attendancesystem-332409'));
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  if (Platform.isAndroid) {
+    await GetStorage.init();
+    WidgetsFlutterBinding.ensureInitialized();
+    GestureBinding.instance!.resamplingEnabled = true;
+    await Firebase.initializeApp(
+        options: const FirebaseOptions(
+            appId: '1:833414981797:android:4f17b315106ee54a1b054c',
+            apiKey: 'AIzaSyDtqrjtfUH4AX3LNZ7fO7PfZVmBDRQ3z0Y',
+            messagingSenderId: '833414981797',
+            projectId: 'attendancesystem-332409'));
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  await Firebase.initializeApp();
+    await Firebase.initializeApp();
+  } else {
+    WidgetsFlutterBinding.ensureInitialized();
+    GestureBinding.instance?.resamplingEnabled = true;
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    await GetStorage.init();
+  }
 
   NotificationSettings settings =
       await FirebaseMessaging.instance.requestPermission(
