@@ -176,6 +176,7 @@ class HomeController extends GetxController {
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
+
     await CurrentLocation();
 
     if (BaseUrl.clockin == false) {
