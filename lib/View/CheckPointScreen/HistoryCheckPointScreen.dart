@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -21,7 +22,10 @@ class HistoryCheckPointScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.print),
         heroTag: 'btn3',
-        onPressed: _checkPointController.checkpointPdf,
+        onPressed: () {
+          _checkPointController.checkpointPdf(
+              BaseUrl.storage.read('empCode'), BaseUrl.storage.read("name"));
+        },
       ),
       body: Container(
         height: height,

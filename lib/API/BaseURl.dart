@@ -14,11 +14,7 @@ class BaseUrl {
 
   static var baseurl_Face =
       "http://flask-env.eba-iaxsivgi.us-east-2.elasticbeanstalk.com/";
-<<<<<<< HEAD
-  static var version = '1.4.0';
-=======
-  static var version = '1.3.0';
->>>>>>> f97775f8651a43a9b64e5e408be2a856d3dbf529
+  static var version = '1.4.1';
   static var fcm_token = '';
 }
 //live

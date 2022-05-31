@@ -6,10 +6,7 @@ import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
-<<<<<<< HEAD
 import 'package:device_info_plus/device_info_plus.dart';
-=======
->>>>>>> f97775f8651a43a9b64e5e408be2a856d3dbf529
 // import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -133,12 +130,12 @@ class SignInEmployeeController extends GetxController {
   sigin(var isface) async {
     randomss();
     var info, devicename;
-    // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
-      // info = await deviceInfo.androidInfo;
+      info = await deviceInfo.androidInfo;
       devicename = 'android';
     } else if (Platform.isIOS) {
-      // info = await deviceInfo.iosInfo;
+      info = await deviceInfo.iosInfo;
       devicename = 'ios';
     }
 
@@ -152,11 +149,7 @@ class SignInEmployeeController extends GetxController {
     var response = await API().SigIn(
         employee_Id: empcodeController.text.toString(),
         isFace: isface,
-<<<<<<< HEAD
         model: info.model,
-=======
-        model: '',
->>>>>>> f97775f8651a43a9b64e5e408be2a856d3dbf529
         devicename: devicename,
         ip: responses.data,
         hash: encoded.value);

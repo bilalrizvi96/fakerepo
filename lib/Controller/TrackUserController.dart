@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/API/Capitalize.dart';
 import 'package:attendencesystem/Model/EmployeeModel.dart';
 import 'package:attendencesystem/Model/HistoryCheckpointModel.dart';
@@ -36,7 +37,8 @@ class TrackUserController extends GetxController {
     } else {
       employeedata.value.forEach((element) {
         if (dropdownValue.value == element.name.toString().toTitleCase()) {
-          getspecificEmployee(element.empCode);
+          getspecificEmployee(
+              element.empCode, element.name.toString().toTitleCase());
         }
       });
       update();
@@ -66,9 +68,9 @@ class TrackUserController extends GetxController {
     update();
   }
 
-  Empmapupdate(lat, lng) async {
+  Empmapupdate(lat, lng, zoom) async {
     controller!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      zoom: 20,
+      zoom: zoom,
       tilt: 0,
       bearing: 30,
       target: LatLng(lat, lng),
@@ -121,7 +123,8 @@ class TrackUserController extends GetxController {
                   snippet: element.empCode,
                   onTap: () async {
                     dropdownValue.value = element.name.toString().toTitleCase();
-                    await getspecificEmployee(element.empCode);
+                    await getspecificEmployee(
+                        element.empCode, element.name.toString().toTitleCase());
                   }),
               onTap: () {
                 zoom.value = 22.0;
@@ -132,7 +135,7 @@ class TrackUserController extends GetxController {
               }),
         );
         Loading.value = false;
-
+        update();
         print(markers);
         print('asd');
       });
@@ -140,6 +143,7 @@ class TrackUserController extends GetxController {
       for (var val in response.data) {
         staafflist.add(val.name.toString().toTitleCase());
       }
+      Loading.value = false;
       update();
     } else {
       Loading.value = false;
@@ -150,10 +154,12 @@ class TrackUserController extends GetxController {
     update();
   }
 
-  getspecificEmployee(var empcode) async {
+  getspecificEmployee(var empcode, var name) async {
     Loading.value = true;
     employeelist.value.clear();
     markers.clear();
+    BaseUrl.storage.write('specificemp', empcode);
+    BaseUrl.storage.write('specificempname', name);
     // markers = [];
     // staafflist.clear();
     var date = DateTime.now();
@@ -166,6 +172,7 @@ class TrackUserController extends GetxController {
       Loading.value = false;
       response = await HistoryCheckpointModel.fromJson(response.data);
       employeelist.value = response.data[0].checkPoints;
+
       employeelist.value.forEach((element) {
         markers.add(
           Marker(
@@ -214,31 +221,13 @@ class TrackUserController extends GetxController {
                           ],
                         ),
                         radius: 10.0);
-                    // showDialog(
-                    //     context: context,
-                    //     barrierDismissible: false,
-                    //     builder: (_) => AlertDialog(
-                    //           actions: [
-                    //             Center(
-                    //               child: Padding(
-                    //                 padding: const EdgeInsets.all(8.0),
-                    //                 child: GestureDetector(
-                    //                     onTap: () {
-                    //                       Get.back();
-                    //                     },
-                    //                     child: Icon(Icons.clear)),
-                    //               ),
-                    //             ),
-                    //             Image.network(
-                    //                 faqsController
-                    //                     .supportrequestlist.value[index].image,
-                    //                 fit: BoxFit.cover)
-                    //           ],
-                    //         ));
                   }),
               onTap: () {
-                Empmapupdate(double.parse(element.location.split(',')[0]),
-                    double.parse(element.location.split(',')[1]));
+                zoom.value = 22.0;
+                Empmapupdate(
+                    double.parse(element.location.split(',')[0]),
+                    double.parse(element.location.split(',')[1]),
+                    zoom.value = 22.0);
               }),
         );
         // Empmapupdate();

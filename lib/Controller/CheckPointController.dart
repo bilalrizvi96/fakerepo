@@ -14,11 +14,7 @@ import 'package:location/location.dart' as la;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-<<<<<<< HEAD
 // import 'package:syncfusion_flutter_pdf/pdf.dart';
-=======
-import 'package:syncfusion_flutter_pdf/pdf.dart';
->>>>>>> f97775f8651a43a9b64e5e408be2a856d3dbf529
 import 'package:url_launcher/url_launcher.dart';
 
 // import 'package:pdf/pdf.dart';
@@ -257,10 +253,11 @@ class CheckPointController extends GetxController
     update();
   }
 
-  checkpointPdf() async {
+  checkpointPdf(empCode, name) async {
     var date = todate.value.toString().split(' ');
     finaldate.value = date[0].toString();
-    var response = await API().CheckPointPDf(date: finaldate.toString());
+    var response = await API().CheckPointPDf(
+        date: finaldate.toString(), empCode: empCode, name: name);
     if (response.statusCode == 200) {
       var urls = response.data['data'][0]['url'];
 

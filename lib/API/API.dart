@@ -510,10 +510,11 @@ class API {
     }
   }
 
-  Future CheckPointPDf({var date}) async {
+  Future CheckPointPDf({var date, var empCode, var name}) async {
     try {
-      Map data = {"date": date, "name": BaseUrl.storage.read("name")};
+      Map data = {"date": date, "name": name, 'empCode': empCode};
       print(data);
+      print("data");
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
@@ -523,6 +524,7 @@ class API {
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),
       );
+
       if (response.statusCode == 200) {
         return response;
       }

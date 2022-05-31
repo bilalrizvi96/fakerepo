@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Controller/TrackUserController.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../Controller/CheckPointController.dart';
+
 class TrackUserScreen extends StatelessWidget {
   TrackUserScreen({Key? key}) : super(key: key);
   TrackUserController trackUserController = Get.put(TrackUserController());
+  CheckPointController _checkPointController = Get.put(CheckPointController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -17,13 +21,13 @@ class TrackUserScreen extends StatelessWidget {
         child: Container(
           width: width,
           height: height,
-          child: GetX<TrackUserController>(
+          child: GetBuilder(
               // initState: trackUserController.init(),
               init: trackUserController,
               builder: (_) {
                 return trackUserController.Loading.value == false
                     ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
@@ -32,7 +36,7 @@ class TrackUserScreen extends StatelessWidget {
                           Row(
                             children: [
                               SizedBox(
-                                width: width / 20,
+                                width: width / 30,
                               ),
                               // GestureDetector(
                               //     onTap: () {
@@ -40,9 +44,7 @@ class TrackUserScreen extends StatelessWidget {
                               //     },
                               //     child: Icon(Icons.arrow_back_ios,
                               //         color: Colors.grey[600])),
-                              SizedBox(
-                                width: width / 20,
-                              ),
+
                               Text(
                                 'Track Staff',
                                 style: GoogleFonts.poppins(
@@ -63,22 +65,43 @@ class TrackUserScreen extends StatelessWidget {
                           SizedBox(
                             height: height / 50,
                           ),
-                          Container(
-                            width: width / 1.2,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(1.0),
-                            ),
-                            padding: EdgeInsets.only(right: 10.0, left: 10),
-                            child: DropdownSearch<String>(
-                                showSelectedItems: false,
-                                showSearchBox: true,
-                                selectedItem:
-                                    trackUserController.dropdownValue.value,
-                                onChanged: (newValue) {
-                                  trackUserController.valueupdate(newValue);
-                                  // FocusScope.of(context).nextFocus();
-                                },
-                                items: trackUserController.staafflist),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: width / 50,
+                              ),
+                              Container(
+                                width: width / 1.3,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(1.0),
+                                ),
+                                padding: EdgeInsets.only(right: 10.0, left: 10),
+                                child: DropdownSearch<String>(
+                                    showSelectedItems: false,
+                                    showSearchBox: true,
+                                    selectedItem:
+                                        trackUserController.dropdownValue.value,
+                                    onChanged: (newValue) {
+                                      trackUserController.valueupdate(newValue);
+                                      // FocusScope.of(context).nextFocus();
+                                    },
+                                    items: trackUserController.staafflist),
+                              ),
+                              Spacer(),
+                              if (trackUserController.dropdownValue.value !=
+                                  'Show All Staff')
+                                FloatingActionButton(
+                                    child: const Icon(Icons.print),
+                                    heroTag: 'btn3',
+                                    onPressed: () {
+                                      _checkPointController.checkpointPdf(
+                                        BaseUrl.storage.read('specificemp'),
+                                        BaseUrl.storage.read('specificempname'),
+                                      );
+                                    }),
+                              Spacer(),
+                            ],
                           ),
                           SizedBox(
                             height: height / 50,
@@ -88,7 +111,7 @@ class TrackUserScreen extends StatelessWidget {
                                 zoomControlsEnabled: true,
                                 compassEnabled: true,
                                 markers: trackUserController.markers.toSet(),
-                                mapType: MapType.normal,
+                                mapType: MapType.hybrid,
                                 initialCameraPosition: trackUserController
                                     .initialCameraPosition.value,
                                 onTap: (LatLng loc) {},

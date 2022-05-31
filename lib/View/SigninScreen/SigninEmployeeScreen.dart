@@ -107,323 +107,299 @@ class SiginEmployeeScreen extends StatelessWidget {
                         child: Form(
                           key: signinController.loginFormKey,
                           child: signinController.Loading.value == false
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                              ? Stack(
                                   children: [
-                                    SizedBox(
-                                      height: height / 5,
-                                    ),
-                                    SizedBox(
-                                      height: height / 80,
-                                    ),
-                                    DelayedDisplay(
-                                      delay: Duration(milliseconds: 1500),
-                                      slidingCurve: Curves.bounceInOut,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: width / 80,
-                                            height: height / 15,
-                                            color: DynamicColor().primarycolor,
-                                          ),
-                                          Container(
-                                            width: width / 1.22,
-                                            child: TextFormField(
-                                              keyboardType: TextInputType.phone,
-                                              controller: signinController
-                                                  .empcodeController,
-                                              validator:
-                                                  signinController.validators,
-
-                                              readOnly:
-                                                  signinController.read.value,
-                                              cursorColor:
-                                                  DynamicColor().primarycolor,
-                                              style: GoogleFonts.poppins(
-                                                  color: DynamicColor()
-                                                      .primarycolor,
-                                                  fontWeight: FontWeight.w600),
-                                              decoration: new InputDecoration(
-                                                  hintText: signinController
-                                                              .read.value !=
-                                                          false
-                                                      ? BaseUrl.storage
-                                                          .read("empCode")
-                                                          .toString()
-                                                      : 'Employee Code',
-                                                  focusColor: DynamicColor()
-                                                      .primarycolor,
-                                                  hoverColor: DynamicColor()
-                                                      .primarycolor,
-                                                  suffixIcon: GestureDetector(
-                                                      onTap: () {
-                                                        signinController
-                                                            .empcodeUpdate();
-                                                      },
-                                                      child: Icon(Icons.clear)),
-                                                  fillColor: Colors.white,
-                                                  filled: true,
-                                                  border: InputBorder.none),
-                                              // keyboardType: TextInputType.none,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: height / 20,
-                                    ),
-                                    Row(
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Spacer(),
+                                        SizedBox(
+                                          height: height / 5,
+                                        ),
+                                        // SizedBox(
+                                        //   height: height / 80,
+                                        // ),
+                                        DelayedDisplay(
+                                          delay: Duration(milliseconds: 1500),
+                                          slidingCurve: Curves.bounceInOut,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: width / 80,
+                                                height: height / 15,
+                                                color:
+                                                    DynamicColor().primarycolor,
+                                              ),
+                                              Container(
+                                                width: width / 1.22,
+                                                child: TextFormField(
+                                                  keyboardType:
+                                                      TextInputType.phone,
+                                                  controller: signinController
+                                                      .empcodeController,
+                                                  validator: signinController
+                                                      .validators,
+
+                                                  readOnly: signinController
+                                                      .read.value,
+                                                  cursorColor: DynamicColor()
+                                                      .primarycolor,
+                                                  style: GoogleFonts.poppins(
+                                                      color: DynamicColor()
+                                                          .primarycolor,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                  decoration:
+                                                      new InputDecoration(
+                                                          hintText: signinController
+                                                                      .read
+                                                                      .value !=
+                                                                  false
+                                                              ? BaseUrl.storage
+                                                                  .read(
+                                                                      "empCode")
+                                                                  .toString()
+                                                              : 'Employee Code',
+                                                          focusColor:
+                                                              DynamicColor()
+                                                                  .primarycolor,
+                                                          hoverColor:
+                                                              DynamicColor()
+                                                                  .primarycolor,
+                                                          suffixIcon:
+                                                              GestureDetector(
+                                                                  onTap: () {
+                                                                    signinController
+                                                                        .empcodeUpdate();
+                                                                  },
+                                                                  child: Icon(Icons
+                                                                      .clear)),
+                                                          fillColor:
+                                                              Colors.white,
+                                                          filled: true,
+                                                          border:
+                                                              InputBorder.none),
+                                                  // keyboardType: TextInputType.none,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: height / 20,
+                                        ),
                                         GestureDetector(
                                           onTap: () {
                                             signinController.checkOption();
                                           },
-                                          child: DelayedDisplay(
-                                            delay: Duration(milliseconds: 1500),
-                                            slidingCurve: Curves.bounceInOut,
-                                            child: Stack(
-                                              children: [
-                                                Container(
-                                                  width: width / 3.1,
-                                                  height: height / 5.2,
-                                                  decoration: BoxDecoration(
-                                                    color: DynamicColor().white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  padding: EdgeInsets.only(
-                                                      right: 30.0,
-                                                      left: 30.0,
-                                                      bottom: 30.0),
-                                                  child: Image.network(
-                                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
-                                                    fit: BoxFit.scaleDown,
-                                                    width: width / 15,
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 130.0,
-                                                          right: 40,
-                                                          left: 40),
-                                                  child: Container(
-                                                    width: 50,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50.0),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: DynamicColor()
-                                                                .titletextcolor
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            spreadRadius: 3,
-                                                            blurRadius: 10,
-                                                            offset: Offset(0,
-                                                                3), // changes position of shadow
-                                                          ),
-                                                        ],
-                                                        color: DynamicColor()
-                                                            .primarycolor),
-                                                    child: Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
+                                          child: Container(
+                                            width: width / 3.1,
+                                            height: height / 5.3,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            padding: EdgeInsets.all(25.0),
+                                            child: Image.network(
+                                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
+                                              fit: BoxFit.scaleDown,
+                                              height: height / 2,
                                             ),
                                           ),
                                         ),
-                                        Spacer(),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: height / 15,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        signinController.siginbtn();
-                                      },
-                                      child: Container(
-                                        width: width / 1.2,
-                                        height: height / 15,
-                                        decoration: BoxDecoration(
-                                            color: DynamicColor().primarycolor,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Center(
-                                            child: Text(
-                                          'Submit'.toUpperCase(),
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              color: DynamicColor().white),
-                                        )),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: height / 50,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed('/registration');
-                                      },
-                                      child: Container(
-                                        width: width / 1.2,
-                                        height: height / 15,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: DynamicColor().black),
-                                            // color: DynamicColor().primarycolor,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Center(
-                                            child: Text(
-                                          'Register'.toUpperCase(),
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              color: DynamicColor().black),
-                                        )),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: height / 10,
-                                    ),
-                                    // Row(
-                                    //   // mainAxisAlignment:
-                                    //   //     MainAxisAlignment.center,
-                                    //   children: [
-                                    //     GestureDetector(
-                                    //       onTap: () {
-                                    //         Get.to(
-                                    //             FeedbackScreen(
-                                    //               check: false,
-                                    //               form: false,
-                                    //             ),
-                                    //             transition:
-                                    //                 Transition.rightToLeft,
-                                    //             curve: Curves.easeInQuart);
-                                    //       },
-                                    //       child: Row(
-                                    //         crossAxisAlignment:
-                                    //             CrossAxisAlignment.center,
-                                    //         mainAxisAlignment:
-                                    //             MainAxisAlignment.center,
-                                    //         children: [
-                                    //           // Icon(
-                                    //           //   Icons.support_agent_sharp,
-                                    //           //   size: width / 16,
-                                    //           //   color:
-                                    //           //       DynamicColor().primarycolor,
-                                    //           // ),
-                                    //           SizedBox(
-                                    //             width: width / 15,
-                                    //           ),
-                                    //           Text(
-                                    //             'Any Feedback? ',
-                                    //             style: GoogleFonts.poppins(
-                                    //                 fontSize: width / 26,
-                                    //                 fontWeight: FontWeight.w600,
-                                    //                 color:
-                                    //                     DynamicColor().black),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //     Spacer(),
-                                    //     GestureDetector(
-                                    //       onTap: () {
-                                    //         BaseUrl.helptype = 'login';
-                                    //         Get.toNamed(
-                                    //           '/faqs',
-                                    //         );
-                                    //       },
-                                    //       child: Row(
-                                    //         crossAxisAlignment:
-                                    //             CrossAxisAlignment.center,
-                                    //         mainAxisAlignment:
-                                    //             MainAxisAlignment.center,
-                                    //         children: [
-                                    //           Text(
-                                    //             'Help Center',
-                                    //             style: GoogleFonts.poppins(
-                                    //                 fontSize: width / 26,
-                                    //                 fontWeight: FontWeight.w600,
-                                    //                 color:
-                                    //                     DynamicColor().black),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //     SizedBox(
-                                    //       width: width / 15,
-                                    //     ),
-                                    //   ],
-                                    // ),
-                                    SizedBox(
-                                      height: height / 50,
-                                    ),
-                                    Row(
-                                      children: [
+
+                                        // GestureDetector(
+                                        //   onTap: () {
+                                        //     signinController.checkOption();
+                                        //   },
+                                        //   child: DelayedDisplay(
+                                        //     delay: Duration(milliseconds: 1500),
+                                        //     slidingCurve: Curves.bounceInOut,
+                                        //     child: Stack(
+                                        //       children: [
+                                        //         Container(
+                                        //           width: width / 3.1,
+                                        //           height: height / 5.2,
+                                        //           decoration: BoxDecoration(
+                                        //             color: DynamicColor().white,
+                                        //             borderRadius:
+                                        //                 BorderRadius.circular(5.0),
+                                        //           ),
+                                        //           padding: EdgeInsets.only(
+                                        //               right: 30.0,
+                                        //               left: 30.0,
+                                        //               bottom: 30.0),
+                                        //           child: Image.network(
+                                        //             'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
+                                        //             fit: BoxFit.scaleDown,
+                                        //             width: width / 15,
+                                        //           ),
+                                        //         ),
+                                        //         Positioned(
+                                        //           top: height / 7,
+                                        //           child: Container(
+                                        //             width: 50,
+                                        //             height: 50,
+                                        //             decoration: BoxDecoration(
+                                        //                 borderRadius:
+                                        //                     BorderRadius.circular(
+                                        //                         50.0),
+                                        //                 boxShadow: [
+                                        //                   BoxShadow(
+                                        //                     color: DynamicColor()
+                                        //                         .titletextcolor
+                                        //                         .withOpacity(0.5),
+                                        //                     spreadRadius: 3,
+                                        //                     blurRadius: 10,
+                                        //                     offset: Offset(0,
+                                        //                         3), // changes position of shadow
+                                        //                   ),
+                                        //                 ],
+                                        //                 color: DynamicColor()
+                                        //                     .primarycolor),
+                                        //             child: Icon(
+                                        //               Icons.arrow_forward_ios,
+                                        //               color: Colors.white,
+                                        //             ),
+                                        //           ),
+                                        //         )
+                                        //       ],
+                                        //     ),
+                                        //   ),
+                                        // ),
                                         SizedBox(
-                                          width: width / 15,
+                                          height: height / 15,
                                         ),
-                                        // Spacer(),
                                         GestureDetector(
                                           onTap: () {
-                                            Get.to(
-                                                FeedbackScreen(
-                                                  check: false,
-                                                  form: false,
-                                                ),
-                                                transition:
-                                                    Transition.rightToLeft,
-                                                curve: Curves.easeInQuart);
+                                            signinController.siginbtn();
                                           },
-                                          child: Image.asset(
-                                            'assets/feedbackicon.png',
-                                            height: height / 35,
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        Text("V " + BaseUrl.version.toString(),
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15,
-                                                color: DynamicColor()
-                                                    .primarycolor)),
-                                        Spacer(),
-                                        GestureDetector(
-                                          onTap: () {
-                                            BaseUrl.helptype = 'login';
-                                            Get.toNamed(
-                                              '/faqs',
-                                            );
-                                          },
-                                          child: Image.asset(
-                                            'assets/faqsicon.png',
-                                            height: height / 35,
+                                          child: Container(
+                                            width: width / 1.2,
+                                            height: height / 15,
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    DynamicColor().primarycolor,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Center(
+                                                child: Text(
+                                              'Submit'.toUpperCase(),
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: DynamicColor().white),
+                                            )),
                                           ),
                                         ),
                                         SizedBox(
-                                          width: width / 15,
+                                          height: height / 50,
                                         ),
-                                        // Spacer(),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed('/registration');
+                                          },
+                                          child: Container(
+                                            width: width / 1.2,
+                                            height: height / 15,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color:
+                                                        DynamicColor().black),
+                                                // color: DynamicColor().primarycolor,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Center(
+                                                child: Text(
+                                              'Register'.toUpperCase(),
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: DynamicColor().black),
+                                            )),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: height / 8,
+                                        ),
+
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: width / 15,
+                                            ),
+                                            // Spacer(),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.to(
+                                                    FeedbackScreen(
+                                                      check: false,
+                                                      form: false,
+                                                    ),
+                                                    transition:
+                                                        Transition.rightToLeft,
+                                                    curve: Curves.easeInQuart);
+                                              },
+                                              child: Image.asset(
+                                                'assets/feedbackicon.png',
+                                                height: height / 35,
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            Text(
+                                                "V " +
+                                                    BaseUrl.version.toString(),
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 15,
+                                                    color: DynamicColor()
+                                                        .primarycolor)),
+                                            Spacer(),
+                                            GestureDetector(
+                                              onTap: () {
+                                                BaseUrl.helptype = 'login';
+                                                Get.toNamed(
+                                                  '/faqs',
+                                                );
+                                              },
+                                              child: Image.asset(
+                                                'assets/faqsicon.png',
+                                                height: height / 35,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width / 15,
+                                            ),
+                                            // Spacer(),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: height / 80,
+                                        ),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: height / 80,
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 90.0),
+                                        child: FloatingActionButton(
+                                            heroTag: 'btn1',
+                                            backgroundColor:
+                                                DynamicColor().primarycolor,
+                                            elevation: 5.0,
+                                            hoverElevation: 20,
+                                            onPressed: () {
+                                              signinController.checkOption();
+                                            },
+                                            child:
+                                                Icon(Icons.arrow_forward_ios)),
+                                      ),
                                     ),
                                   ],
                                 )
