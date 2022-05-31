@@ -14,7 +14,11 @@ import 'package:location/location.dart' as la;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+<<<<<<< HEAD
 // import 'package:syncfusion_flutter_pdf/pdf.dart';
+=======
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+>>>>>>> f97775f8651a43a9b64e5e408be2a856d3dbf529
 import 'package:url_launcher/url_launcher.dart';
 
 // import 'package:pdf/pdf.dart';
