@@ -33,6 +33,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Need to upload image</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Need to load data</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open and in the background.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -43,6 +45,11 @@
 	<string>Need to upload image</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need Photo Library For profile pictures</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

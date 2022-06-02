@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
+// import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
