@@ -27,6 +27,22 @@ Future<void> main() async {
             apiKey: 'AIzaSyDtqrjtfUH4AX3LNZ7fO7PfZVmBDRQ3z0Y',
             messagingSenderId: '833414981797',
             projectId: 'attendancesystem-332409'));
+    NotificationSettings settings =
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: true,
+      provisional: true,
+      sound: true,
+    );
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
     await Firebase.initializeApp();
@@ -35,26 +51,27 @@ Future<void> main() async {
     GestureBinding.instance?.resamplingEnabled = true;
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     await GetStorage.init();
+    NotificationSettings settings =
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: true,
+      provisional: true,
+      sound: true,
+    );
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
   }
 
-  NotificationSettings settings =
-      await FirebaseMessaging.instance.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: true,
-    provisional: true,
-    sound: true,
-  );
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+
   runApp(MyApp());
 }
 
