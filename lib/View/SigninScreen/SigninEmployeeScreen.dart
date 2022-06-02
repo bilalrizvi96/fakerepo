@@ -17,6 +17,7 @@ class SiginEmployeeScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: GetBuilder(
           init: signinController,
           builder: (_) {

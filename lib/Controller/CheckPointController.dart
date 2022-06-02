@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
+// import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart' as la;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 // import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -67,17 +67,17 @@ class CheckPointController extends GetxController
     update();
   }
 
-  connectionCheck() async {
-    await DataConnectionChecker().onStatusChange.listen((status) async {
-      if (status == DataConnectionStatus.connected) {
-        connection.value = true;
-        update();
-      } else {
-        connection.value = false;
-        update();
-      }
-    });
-  }
+  // connectionCheck() async {
+  //   await DataConnectionChecker().onStatusChange.listen((status) async {
+  //     if (status == DataConnectionStatus.connected) {
+  //       connection.value = true;
+  //       update();
+  //     } else {
+  //       connection.value = false;
+  //       update();
+  //     }
+  //   });
+  // }
 
   toDate(date) {
     todate.value = date;
@@ -117,7 +117,7 @@ class CheckPointController extends GetxController
     status.value = BaseUrl.storage.read("status");
     CurrentLocation();
     super.onInit();
-    connectionCheck();
+    // connectionCheck();
     Future.delayed(Duration(milliseconds: 200), () {
       mapupdate();
     });

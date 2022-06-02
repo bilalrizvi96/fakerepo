@@ -111,7 +111,7 @@ class TrackUserScreen extends StatelessWidget {
                                 zoomControlsEnabled: true,
                                 compassEnabled: true,
                                 markers: trackUserController.markers.toSet(),
-                                mapType: MapType.hybrid,
+                                mapType: MapType.normal,
                                 initialCameraPosition: trackUserController
                                     .initialCameraPosition.value,
                                 onTap: (LatLng loc) {},

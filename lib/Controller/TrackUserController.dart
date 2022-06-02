@@ -176,7 +176,10 @@ class TrackUserController extends GetxController {
       employeelist.value.forEach((element) {
         markers.add(
           Marker(
-              icon: BitmapDescriptor.defaultMarker,
+              icon: element == employeelist.value.last
+                  ? BitmapDescriptor.defaultMarker
+                  : BitmapDescriptor.defaultMarkerWithHue(
+                      BitmapDescriptor.hueCyan),
               markerId: MarkerId(element.siteName),
               position: LatLng(double.parse(element.location.split(',')[0]),
                   double.parse(element.location.split(',')[1])),

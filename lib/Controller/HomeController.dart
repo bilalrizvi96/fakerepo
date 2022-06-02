@@ -15,7 +15,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 import 'SignInEmployeeController.dart';
 import 'SummaryController.dart';
@@ -298,7 +298,7 @@ class HomeController extends GetxController {
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
-    var status = await Permission.location.status;
+    // var status = await Permission.location.status;
     if (BaseUrl.clockout == false) {
       await CurrentLocation();
       // if (await Permission.location.request().isGranted) {

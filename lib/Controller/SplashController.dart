@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
+// import 'package:data_connection_checker/data_connection_checker.dart';
 
 // import 'package:device_info_plus/device_info_plus.dart';
 
@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 import 'MaintenanceController.dart';
 
@@ -21,24 +22,6 @@ class SplashController extends GetxController {
   LocationPermission? permission;
   MaintenanceController _maintenanceController =
       Get.put(MaintenanceController());
-  // var context;
-  // var connection = true.obs;
-
-/*
-  check() async {
-    await DataConnectionChecker().onStatusChange.listen((status) async {
-      if (status == DataConnectionStatus.connected) {
-        connection.value = true;
-        checks();
-        update();
-      } else {
-        connection.value = false;
-        update();
-      }
-    });
-    update();
-  }
-*/
 
   _registerOnFirebase() async {
     _firebaseMessaging = FirebaseMessaging.instance;
@@ -61,16 +44,7 @@ class SplashController extends GetxController {
       sound: true,
     );
     print(settings);
-    // var info, devicename;
-    // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    // if (Platform.isAndroid) {
-    //   info = await deviceInfo.androidInfo;
-    //   print(info.model);
-    //   devicename = 'android';
-    // } else if (Platform.isIOS) {
-    //   info = await deviceInfo.iosInfo;
-    //   devicename = 'ios';
-    // }
+
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
       alert: true,
@@ -86,12 +60,6 @@ class SplashController extends GetxController {
         }
         Get.snackbar(" ${notification.title.toString()}",
             "${notification.body.toString()}");
-        // BaseUrl.storage.write('token', 'out');
-        // Get.offAllNamed('/maintaince');
-        // } else if (notification.title == 'Login') {
-        //   Get.offAllNamed('/signinemp');
-        // }
-
       }
 
       print('Message clicked!');
@@ -137,11 +105,13 @@ class SplashController extends GetxController {
 
   @override
   void onInit() {
-    permissions();
+    //
     super.onInit();
     this._registerOnFirebase();
     this.getMessage();
-
+    if (Platform.isAndroid) {
+      permissions();
+    }
     checks();
   }
 
