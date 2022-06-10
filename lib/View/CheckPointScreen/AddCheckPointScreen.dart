@@ -56,6 +56,7 @@ class AddCheckPointScreen extends StatelessWidget {
                                           zoomControlsEnabled: false,
                                           compassEnabled: true,
                                           mapToolbarEnabled: false,
+                                          myLocationButtonEnabled: false,
                                           rotateGesturesEnabled: false,
                                           markers: _checkPointController
                                               .markers.value,

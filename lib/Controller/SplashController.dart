@@ -55,8 +55,10 @@ class SplashController extends GetxController {
       RemoteNotification? notification = message.notification;
 
       if (notification != null) {
-        if (notification.title == 'Maintenance') {
+        if (notification.title.toString().trim() == 'Maintenance') {
           _maintenanceController.checkMaintenance();
+        } else if (notification.title.toString().trim() == 'Update') {
+          checkUpdate();
         }
         Get.snackbar(" ${notification.title.toString()}",
             "${notification.body.toString()}");
@@ -68,12 +70,14 @@ class SplashController extends GetxController {
       RemoteNotification? notification = message.notification;
       print('Message clicked!');
       if (notification != null) {
-        if (notification.title == 'Maintenance') {
+        if (notification.title.toString().trim() == 'Maintenance') {
           _maintenanceController.checkMaintenance();
+        } else if (notification.title.toString().trim() == 'Update') {
+          checkUpdate();
         }
         Get.snackbar(
-          " ${notification.title.toString()}",
-          "${notification.body.toString()}",
+          "${notification.title.toString().trim()}",
+          "${notification.body.toString().trim()}",
         );
       }
     });
@@ -115,21 +119,25 @@ class SplashController extends GetxController {
     checks();
   }
 
-  // checkUpdate() async {
-  //   var response = await API().CheckUpdate();
-  //   if (response.statusCode == 200) {
-  //     updates.value = response.data['response']['updateAvailability'];
-  //     if (updates.value == true) {
-  //       url.value = response.data['response']['link'];
-  //       BaseUrl.url = url.value;
-  //       // print(updateController.url);
-  //     }
-  //     checks();
-  //   } else {
-  //     Get.snackbar("Error ", response.data['error'].toString(),
-  //         colorText: Colors.white, backgroundColor: Colors.red);
-  //   }
-  // }
+  checkUpdate() async {
+    var response = await API().CheckUpdate();
+    if (response.statusCode == 200) {
+      // if (updates.value == true) {
+      Get.offAllNamed('/updatescreen', arguments: [
+        response.data['response']['message'],
+        response.data['response']['currentRelease'],
+        response.data['response']['availableRelease'],
+        response.data['response']['link'],
+      ]);
+
+      // print(updateController.url);
+      // }
+
+    } else {
+      Get.snackbar("Error ", response.data['error'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+  }
 
   checks() {
     var tokenval = BaseUrl.storage.read("token");
@@ -141,16 +149,16 @@ class SplashController extends GetxController {
       // } else {
       if (tokenval != "out") {
         if (tokenval != null) {
-          if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
-            BaseUrl.clockin = false;
-          } else {
-            BaseUrl.clockin = true;
-          }
-          if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
-            BaseUrl.clockout = false;
-          } else {
-            BaseUrl.clockout = true;
-          }
+          // if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+          //   BaseUrl.clockin = false;
+          // } else {
+          //   BaseUrl.clockin = true;
+          // }
+          // if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+          //   BaseUrl.clockout = false;
+          // } else {
+          //   BaseUrl.clockout = true;
+          // }
           Get.offAllNamed('/home');
         } else if (BaseUrl.storage1.read('seen') == true) {
           Get.offAllNamed('/signinemp');

@@ -49,18 +49,18 @@ class BottomNavigationController extends GetxController {
     super.onInit();
     popups();
     print(BaseUrl.storage.read('clockincheck'));
-    if (BaseUrl.empcheck == true) {
-      if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
-        BaseUrl.clockin = false;
-      } else {
-        BaseUrl.clockin = true;
-      }
-      if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
-        BaseUrl.clockout = false;
-      } else {
-        BaseUrl.clockout = true;
-      }
-    }
+    // if (BaseUrl.empcheck == true) {
+    //   if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+    //     BaseUrl.clockin = false;
+    //   } else {
+    //     BaseUrl.clockin = true;
+    //   }
+    //   if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+    //     BaseUrl.clockout = false;
+    //   } else {
+    //     BaseUrl.clockout = true;
+    //   }
+    // }
   }
 
   popups() {
@@ -123,7 +123,7 @@ class BottomNavigationController extends GetxController {
       // update();
       // }
     } else if (selectedIndex.value == 2) {
-      if (BaseUrl.storage.read("role") != '') {
+      if (BaseUrl.storage.read("trackuseraccess") != false) {
         _trackUserController.init();
       }
     }

@@ -80,6 +80,40 @@ class API {
     }
   }
 
+  Future Holidays() async {
+    var response;
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      response = await dio.get(
+        BaseUrl.baseurl + 'calender',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
+  Future CheckUpdate() async {
+    var response;
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      response = await dio.get(
+        BaseUrl.baseurl + 'checkUpdate',
+      );
+      if (response.statusCode == 200) {
+        print(response.data);
+        return response;
+      }
+    } catch (e) {
+      return onError(e);
+    }
+  }
+
   Future OTPVerification({var code, var empCode}) async {
     try {
       Map data = {"otpCode": code, 'empCode': BaseUrl.storage.read("empCode")};

@@ -182,7 +182,7 @@ class CheckPointController extends GetxController
 
             checkpointImage = null;
             if (checkboxvalue.value == true) {
-              if (BaseUrl.clockout == false) {
+              if (BaseUrl.storage.read("isCheckOutOn") == true) {
                 status.value = true;
                 Loading.value = false;
                 // Get.back();
@@ -192,7 +192,7 @@ class CheckPointController extends GetxController
 
               homeController.clockindate2 = DateTime.now().day;
             } else if (BaseUrl.storage.read("status") == false) {
-              if (BaseUrl.clockin == false) {
+              if (BaseUrl.storage.read("isCheckInOn") == true) {
                 status.value = false;
                 Loading.value = false;
                 // Get.back();

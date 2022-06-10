@@ -4,6 +4,7 @@ import 'package:attendencesystem/View/IntroScreen/IntroScreen.dart';
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:attendencesystem/View/OTPScreen/OTPScreen.dart';
 import 'package:attendencesystem/View/RegistrationScreen/RegistrationScreen.dart';
+import 'package:attendencesystem/View/ScheduleScreen/ScheduleScreen.dart';
 import 'package:attendencesystem/View/SigninScreen/SigninEmployeeScreen.dart';
 import 'package:attendencesystem/View/SplashScreen/SplashScreen.dart';
 import 'package:attendencesystem/View/UpdateScreen/UpdateScreen.dart';
@@ -101,6 +102,11 @@ class Routes {
     GetPage(
         name: "/supportrequest",
         page: () => SupportRequestScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/schedule",
+        page: () => ScheduleScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
   ];

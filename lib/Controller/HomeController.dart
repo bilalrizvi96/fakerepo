@@ -179,7 +179,7 @@ class HomeController extends GetxController {
 
     await CurrentLocation();
 
-    if (BaseUrl.clockin == false) {
+    if (BaseUrl.storage.read("isCheckInOn") == true) {
       if (check == false
           ? sites.value != ""
           : BaseUrl.storage.read("sitecheckpoint") != null) {
@@ -197,7 +197,8 @@ class HomeController extends GetxController {
         if (response.statusCode == 200) {
           Loading.value = false;
           BaseUrl.storage.write("ismessage", false);
-          BaseUrl.clockin = true;
+          // BaseUrl.clockin = true;
+          BaseUrl.storage.write("isCheckInOn", false);
           BaseUrl.storage.write('clockincheck', date.day);
           print(BaseUrl.storage.read('clockincheck'));
           BaseUrl.storage.write("clockin", outputDate1.toString());
@@ -247,6 +248,7 @@ class HomeController extends GetxController {
   }
 
   Future getSites() async {
+    sitedatalist.value.clear();
     var response = await API().Getsites();
     if (response.statusCode == 200) {
       Loading.value = false;
@@ -299,7 +301,7 @@ class HomeController extends GetxController {
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
     // var status = await Permission.location.status;
-    if (BaseUrl.clockout == false) {
+    if (BaseUrl.storage.read("isCheckOutOn") == true) {
       await CurrentLocation();
       // if (await Permission.location.request().isGranted) {
       //   await CurrentLocation();
@@ -340,7 +342,8 @@ class HomeController extends GetxController {
           BaseUrl.storage.write("lastAttendanceRecordDate", dates);
           BaseUrl.storage.write("status", false);
 
-          BaseUrl.clockout = true;
+          // BaseUrl.clockout = true;
+          BaseUrl.storage.write("isCheckOutOn", false);
           BaseUrl.storage.write('clockoutcheck', date.day);
           print(BaseUrl.storage.read('clockoutcheck'));
           BaseUrl.storage.write("clockout", outputDate1.toString());
@@ -459,7 +462,7 @@ class HomeController extends GetxController {
   init() async {
     // print(BaseUrl.userdata[0].sites);
     // Timer.periodic(Duration(minutes: 30), (Timer t) => sendLatLng());
-    print(BaseUrl.clockin);
+
     Loading.value = false;
     current.value =
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();

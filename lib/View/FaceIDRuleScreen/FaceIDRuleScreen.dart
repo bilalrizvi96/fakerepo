@@ -14,15 +14,16 @@ class FaceIDRuleScreen extends StatelessWidget {
 
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          height: height,
-          width: width,
-          child: GetBuilder(
-              init: registrationController,
-              builder: (context) {
-                return registrationController.Loading.value == false
-                    ? Stack(
+      body: Container(
+        height: height,
+        width: width,
+        child: GetBuilder(
+            init: registrationController,
+            builder: (context) {
+              return registrationController.Loading.value == false
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Stack(
                         children: [
                           Positioned(
                             width: width,
@@ -286,16 +287,16 @@ class FaceIDRuleScreen extends StatelessWidget {
                             ),
                           ),
                         ],
-                      )
-                    : Center(
-                        child: Image.asset(
-                          "assets/1.gif",
-                          height: 500,
-                          width: 500,
-                        ),
-                      );
-              }),
-        ),
+                      ),
+                    )
+                  : Center(
+                      child: Image.asset(
+                        "assets/1.gif",
+                        height: 500,
+                        width: 500,
+                      ),
+                    );
+            }),
       ),
     );
   }

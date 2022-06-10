@@ -11,6 +11,8 @@ class FaqsController extends GetxController {
   var Loading = false.obs;
 
   getHelpCenter() async {
+    Loading.value = true;
+    update();
     var response = await API().HelpCenters();
     if (response.statusCode == 200) {
       Loading.value = false;
@@ -28,6 +30,7 @@ class FaqsController extends GetxController {
   }
 
   getSupportRequest() async {
+    Loading.value = true;
     var response = await API().SupportRequest();
     if (response.statusCode == 200) {
       Loading.value = false;

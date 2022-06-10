@@ -56,6 +56,16 @@ class TrackUserController extends GetxController {
         .asUint8List();
   }
 
+  Future<Uint8List> getBytesFromAssets(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
   mapupdate(zoom, lat, lng) async {
     controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       zoom: zoom,
@@ -122,8 +132,10 @@ class TrackUserController extends GetxController {
                   title: element.name.toString().toTitleCase(),
                   snippet: element.empCode,
                   onTap: () async {
+                    Loading.value = true;
+                    update();
                     dropdownValue.value = element.name.toString().toTitleCase();
-                    await getspecificEmployee(
+                    getspecificEmployee(
                         element.empCode, element.name.toString().toTitleCase());
                   }),
               onTap: () {
@@ -160,8 +172,7 @@ class TrackUserController extends GetxController {
     markers.clear();
     BaseUrl.storage.write('specificemp', empcode);
     BaseUrl.storage.write('specificempname', name);
-    // markers = [];
-    // staafflist.clear();
+
     var date = DateTime.now();
     var outputFormat = DateFormat("dd-MM-yyyy");
     var outputDate = outputFormat.format(date);
@@ -169,17 +180,19 @@ class TrackUserController extends GetxController {
     var response = await API().HistoryCheckPoints(
         require: 'checkPoints', date: outputDate, empcode: empcode);
     if (response.statusCode == 200) {
-      Loading.value = false;
       response = await HistoryCheckpointModel.fromJson(response.data);
       employeelist.value = response.data[0].checkPoints;
+      final Uint8List c_markerIcon =
+          await getBytesFromAssets('assets/currentmarker.png', 100);
+      final Uint8List a_markerIcon =
+          await getBytesFromAssets('assets/allpointmarker.png', 100);
 
-      employeelist.value.forEach((element) {
+      employeelist.value.forEach((element) async {
         markers.add(
           Marker(
               icon: element == employeelist.value.last
-                  ? BitmapDescriptor.defaultMarker
-                  : BitmapDescriptor.defaultMarkerWithHue(
-                      BitmapDescriptor.hueCyan),
+                  ? BitmapDescriptor.fromBytes(c_markerIcon)
+                  : BitmapDescriptor.fromBytes(a_markerIcon),
               markerId: MarkerId(element.siteName),
               position: LatLng(double.parse(element.location.split(',')[0]),
                   double.parse(element.location.split(',')[1])),
@@ -233,6 +246,8 @@ class TrackUserController extends GetxController {
                     zoom.value = 22.0);
               }),
         );
+        Loading.value = false;
+
         // Empmapupdate();
         print(markers);
         print('asd');

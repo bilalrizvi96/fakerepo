@@ -19,15 +19,16 @@ class MaintainceScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-            width: width,
-            height: height,
-            child: GetBuilder(
-                init: maintenanceController,
-                builder: (_) {
-                  return maintenanceController.Loading.value == false
-                      ? Column(
+      body: Container(
+          width: width,
+          height: height,
+          child: GetBuilder(
+              init: maintenanceController,
+              builder: (_) {
+                return maintenanceController.Loading.value == false
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -79,16 +80,16 @@ class MaintainceScreen extends StatelessWidget {
                                       : 1),
                             )
                           ],
-                        )
-                      : Center(
-                          child: Image.asset(
-                            "assets/1.gif",
-                            height: 300,
-                            width: 300,
-                          ),
-                        );
-                })),
-      ),
+                        ),
+                      )
+                    : Center(
+                        child: Image.asset(
+                          "assets/1.gif",
+                          height: 300,
+                          width: 300,
+                        ),
+                      );
+              })),
     );
   }
 }

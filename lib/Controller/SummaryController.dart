@@ -173,6 +173,7 @@ class SummaryController extends GetxController
       Loading.value = false;
       response = await SummaryDetailsModel.fromJson(response.data);
       summarydetaildata.value = response.dailyDetails;
+
       if (todate.value.month == int.parse(month)) {
         summarydetaildata.value.removeWhere((item) =>
             int.parse(item.mobileDate.toString().split('-')[0]) <

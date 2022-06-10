@@ -16,13 +16,14 @@ class FAQssubdetailScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/faqsbg.png'), fit: BoxFit.cover)),
+      body: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/faqsbg.png'), fit: BoxFit.cover)),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,

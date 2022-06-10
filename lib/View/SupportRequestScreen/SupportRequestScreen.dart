@@ -13,15 +13,16 @@ class SupportRequestScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          width: width,
-          height: height,
-          color: Color(0xFFEBEFFF),
-          child: GetBuilder(
-              init: faqsController,
-              builder: (_) {
-                return Column(
+      body: Container(
+        width: width,
+        height: height,
+        color: Color(0xFFEBEFFF),
+        child: GetBuilder(
+            init: faqsController,
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -260,9 +261,9 @@ class SupportRequestScreen extends StatelessWidget {
                             ),
                           ),
                   ],
-                );
-              }),
-        ),
+                ),
+              );
+            }),
       ),
     );
   }

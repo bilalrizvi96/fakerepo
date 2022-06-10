@@ -160,27 +160,14 @@ class SignInEmployeeController extends GetxController {
 
       userdatalist = response.user;
       print(BaseUrl.storage.read("empCode"));
-      if (BaseUrl.storage.read("empCode") !=
-          empcodeController.text.toString()) {
-        BaseUrl.clockin = false;
-        BaseUrl.clockout = false;
+      // if (BaseUrl.storage.read("empCode") !=
+      //     empcodeController.text.toString()) {
+      //   BaseUrl.empcheck = false;
+      //   update();
+      // } else {
+      //   BaseUrl.empcheck = true;
+      // }
 
-        BaseUrl.empcheck = false;
-        update();
-      } else {
-        BaseUrl.empcheck = true;
-        if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
-          BaseUrl.clockin = false;
-        } else {
-          BaseUrl.clockin = true;
-        }
-        if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
-          BaseUrl.clockout = false;
-        } else {
-          BaseUrl.clockout = true;
-        }
-      }
-      print(BaseUrl.clockin);
       token.value = "BEARER" + " " + response.token;
 
       BaseUrl.storage.write("token", token.value);
@@ -195,10 +182,12 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage
           .write("totalPresent", response.user[0].presentDays.toString());
       BaseUrl.storage.write("status", response.user[0].status);
+      BaseUrl.storage.write("isCheckOutOn", response.user[0].isCheckOutOn);
+      BaseUrl.storage.write("isCheckInOn", response.user[0].isCheckInOn);
       BaseUrl.storage.write("starttime", response.user[0].startTiming);
       BaseUrl.storage.write("endTiming", response.user[0].endTiming);
       BaseUrl.storage.write("hoursPerWeek", response.user[0].hoursPerWeek);
-      BaseUrl.storage.write("offDay", response.user[0].offDay);
+      // BaseUrl.storage.write("offDay", response.user[0].offDay);
       BaseUrl.storage.write("phoneNo", response.user[0].phoneNo);
       BaseUrl.storage.write("eMail", response.user[0].eMail);
       BaseUrl.storage.write("address", response.user[0].address);
@@ -206,8 +195,10 @@ class SignInEmployeeController extends GetxController {
       BaseUrl.storage.write("shiftTiming", response.user[0].shiftType);
       BaseUrl.storage.write("clockin", response.user[0].checkIn);
       BaseUrl.storage.write("points", response.user[0].points);
-      BaseUrl.storage
-          .write("checkpointaccess", response.user[0].checkpointAccess);
+      BaseUrl.storage.write("checkpointaccess",
+          response.user[0].accessPermissions[0].permissions[0].view);
+      BaseUrl.storage.write("trackuseraccess",
+          response.user[0].accessPermissions[0].permissions[1].view);
       BaseUrl.storage.write("welcomemessage", response.user[0].message.message);
       BaseUrl.storage.write("welcometitle", response.user[0].message.title);
       BaseUrl.storage.write("clockout", response.user[0].checkOut);
@@ -226,6 +217,8 @@ class SignInEmployeeController extends GetxController {
           response.user[0].lastAttendanceRecordDate);
       BaseUrl.storage.write(
           "dateForMissingCheckout", response.user[0].dateForMissingCheckout);
+      print(BaseUrl.storage.read('trackuseraccess'));
+
       if (userdatalist.isNotEmpty) {
         if (userdatalist[0].version.updateAvailability == true) {
           BaseUrl.storage.write("token", 'out');

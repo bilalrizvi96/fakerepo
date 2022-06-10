@@ -51,6 +51,7 @@ dependencies:
   firebase_core: ^1.13.1
   firebase_messaging: ^11.4.1
   firebase_crashlytics:
+  syncfusion_flutter_calendar:
   intl: ^0.17.0
 #  slider_button:
 #  data_connection_checker:

@@ -41,21 +41,23 @@ class User {
     this.active,
     this.status,
     this.registered,
-    this.shiftType,
     this.offPerYear,
     this.hoursPerDay,
     this.hoursPerWeek,
-    this.offDay,
     this.address,
     this.points,
     this.consumeAnnualLeaves,
-    this.consumeSickLeaves,
     this.consumeCasualLeaves,
+    this.consumeSickLeaves,
     this.checkpointAccess,
-    this.department,
-    this.pin,
     this.role,
+    this.pin,
+    this.isCheckInOn,
+    this.isCheckOutOn,
+    this.department,
     this.device,
+    this.shiftType,
+    this.accessPermissions,
     this.maintenanceObject,
     this.lastAttendanceRecordDate,
     this.isMessageAvailable,
@@ -84,21 +86,23 @@ class User {
   var active;
   var status;
   var registered;
-  var shiftType;
   var offPerYear;
   var hoursPerDay;
   var hoursPerWeek;
-  var offDay;
   var address;
   var points;
   var consumeAnnualLeaves;
-  var consumeSickLeaves;
   var consumeCasualLeaves;
+  var consumeSickLeaves;
   var checkpointAccess;
-  var department;
-  var pin;
   var role;
+  var pin;
+  var isCheckInOn;
+  var isCheckOutOn;
+  var department;
   var device;
+  var shiftType;
+  var accessPermissions;
   var maintenanceObject;
   var lastAttendanceRecordDate;
   var isMessageAvailable;
@@ -127,21 +131,24 @@ class User {
         active: json["active"],
         status: json["status"],
         registered: json["Registered"],
-        shiftType: json["shift_type"],
         offPerYear: json["off_per_year"],
         hoursPerDay: json["hours_per_day"],
         hoursPerWeek: json["hours_per_week"],
-        offDay: List<String>.from(json["off_day"].map((x) => x)),
         address: json["address"],
         points: json["points"],
         consumeAnnualLeaves: json["consumeAnnualLeaves"],
-        consumeSickLeaves: json["consumeSickLeaves"],
         consumeCasualLeaves: json["consumeCasualLeaves"],
+        consumeSickLeaves: json["consumeSickLeaves"],
         checkpointAccess: json["checkpointAccess"],
-        department: json["department"],
-        pin: json["pin"],
         role: json["role"],
+        pin: json["pin"],
+        isCheckInOn: json["isCheckInOn"],
+        isCheckOutOn: json["isCheckOutOn"],
+        department: json["department"],
         device: Device.fromJson(json["device"]),
+        shiftType: json["shift_type"],
+        accessPermissions: List<AccessPermission>.from(
+            json["accessPermissions"].map((x) => AccessPermission.fromJson(x))),
         maintenanceObject:
             MaintenanceObject.fromJson(json["maintenanceObject"]),
         lastAttendanceRecordDate: json["lastAttendanceRecordDate"],
@@ -172,21 +179,24 @@ class User {
         "active": active,
         "status": status,
         "Registered": registered,
-        "shift_type": shiftType,
         "off_per_year": offPerYear,
         "hours_per_day": hoursPerDay,
         "hours_per_week": hoursPerWeek,
-        "off_day": List<dynamic>.from(offDay.map((x) => x)),
         "address": address,
         "points": points,
         "consumeAnnualLeaves": consumeAnnualLeaves,
-        "consumeSickLeaves": consumeSickLeaves,
         "consumeCasualLeaves": consumeCasualLeaves,
+        "consumeSickLeaves": consumeSickLeaves,
         "checkpointAccess": checkpointAccess,
-        "department": department,
-        "pin": pin,
         "role": role,
+        "pin": pin,
+        "isCheckInOn": isCheckInOn,
+        "isCheckOutOn": isCheckOutOn,
+        "department": department,
         "device": device.toJson(),
+        "shift_type": shiftType,
+        "accessPermissions":
+            List<dynamic>.from(accessPermissions.map((x) => x.toJson())),
         "maintenanceObject": maintenanceObject.toJson(),
         "lastAttendanceRecordDate": lastAttendanceRecordDate,
         "isMessageAvailable": isMessageAvailable,
@@ -195,10 +205,52 @@ class User {
         "checkIn": checkIn,
         "checkOut": checkOut,
         "checkOutMissing": checkOutMissing,
-        "dateForMissingCheckout": dateForMissingCheckout.toIso8601String(),
+        "dateForMissingCheckout": dateForMissingCheckout,
         "present_days": presentDays,
         "absent_days": absentDays,
         "version": version.toJson(),
+      };
+}
+
+class AccessPermission {
+  AccessPermission({
+    this.category,
+    this.permissions,
+  });
+
+  var category;
+  var permissions;
+
+  factory AccessPermission.fromJson(Map<String, dynamic> json) =>
+      AccessPermission(
+        category: json["Category"],
+        permissions: List<Permission>.from(
+            json["permissions"].map((x) => Permission.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "Category": category,
+        "permissions": List<dynamic>.from(permissions.map((x) => x.toJson())),
+      };
+}
+
+class Permission {
+  Permission({
+    this.permissionSubType,
+    this.view,
+  });
+
+  var permissionSubType;
+  var view;
+
+  factory Permission.fromJson(Map<String, dynamic> json) => Permission(
+        permissionSubType: json["permissionSubType"],
+        view: json["view"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "permissionSubType": permissionSubType,
+        "view": view,
       };
 }
 
@@ -302,6 +354,7 @@ class Version {
     this.message,
     this.availableRelease,
     this.currentRelease,
+    this.id,
     this.updateAvailability,
   });
 
@@ -310,6 +363,7 @@ class Version {
   var message;
   var availableRelease;
   var currentRelease;
+  var id;
   var updateAvailability;
 
   factory Version.fromJson(Map<String, dynamic> json) => Version(
@@ -318,6 +372,7 @@ class Version {
         message: json["message"],
         availableRelease: json["availableRelease"],
         currentRelease: json["currentRelease"],
+        id: json["_id"],
         updateAvailability: json["updateAvailability"],
       );
 
@@ -327,6 +382,7 @@ class Version {
         "message": message,
         "availableRelease": availableRelease,
         "currentRelease": currentRelease,
+        "_id": id,
         "updateAvailability": updateAvailability,
       };
 }

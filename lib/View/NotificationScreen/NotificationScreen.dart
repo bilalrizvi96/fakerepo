@@ -18,15 +18,16 @@ class NotificationScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          width: width,
-          height: height,
-          color: Color(0xFFEBEFFF),
-          child: GetBuilder(
-              init: notificationController,
-              builder: (_) {
-                return Column(
+      body: Container(
+        width: width,
+        height: height,
+        color: Color(0xFFEBEFFF),
+        child: GetBuilder(
+            init: notificationController,
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -234,9 +235,9 @@ class NotificationScreen extends StatelessWidget {
                             ),
                           ),
                   ],
-                );
-              }),
-        ),
+                ),
+              );
+            }),
       ),
     );
   }

@@ -21,14 +21,15 @@ class SiginEmployeeScreen extends StatelessWidget {
       body: GetBuilder(
           init: signinController,
           builder: (_) {
-            return SafeArea(
-              child: DelayedDisplay(
-                delay: Duration(milliseconds: 400),
-                fadeIn: true,
-                slidingCurve: Curves.decelerate,
-                child: Container(
-                  width: width,
-                  height: height,
+            return DelayedDisplay(
+              delay: Duration(milliseconds: 400),
+              fadeIn: true,
+              slidingCurve: Curves.decelerate,
+              child: Container(
+                width: width,
+                height: height,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
                   child: Stack(
                     children: [
                       Padding(

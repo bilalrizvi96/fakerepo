@@ -1,114 +1,159 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Controller/HomeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+// import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../Controller/ScheduleController.dart';
+import '../Model/CalendarModel.dart';
 import '../View/FeedbackScreen/FeedbackScreen.dart';
 
 class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: DrawerHeader(
-                padding: const EdgeInsets.all(18.0),
-                decoration: BoxDecoration(
-                  color: DynamicColor().primarycolor,
+      child: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          color: Colors.white,
+          child: Column(
+            children: [
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height / 20,
+              // ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: DrawerHeader(
+                  padding: const EdgeInsets.all(18.0),
+                  decoration: BoxDecoration(
+                    color: DynamicColor().primarycolor,
+                  ),
+                  child: Image.asset('assets/logo.png'),
                 ),
-                child: Image.asset('assets/logo.png'),
               ),
-            ),
-            // if (BaseUrl.storage.read("role") != '')
-            //   DrawerListTile(
-            //     title: "Check Point",
-            //     icon: Icon(Icons.location_on_outlined,
-            //         color: DynamicColor().primarycolor),
-            //     press: () async {
-            //       Get.back();
-            //       Get.toNamed('/checkpoint');
-            //     },
-            //   ),
+              // if (BaseUrl.storage.read("role") != '')
+              //   DrawerListTile(
+              //     title: "Check Point",
+              //     icon: Icon(Icons.location_on_outlined,
+              //         color: DynamicColor().primarycolor),
+              //     press: () async {
+              //       Get.back();
+              //       Get.toNamed('/checkpoint');
+              //     },
+              //   ),
 
-            if (BaseUrl.storage.read("checkpointaccess") == true)
+              if (BaseUrl.storage.read("checkpointaccess") == true)
+                DrawerListTile(
+                  title: "My Profile",
+                  icon: Icon(Icons.person_outline_sharp,
+                      color: DynamicColor().primarycolor),
+                  press: () async {
+                    Get.back();
+                    Get.toNamed('/profile');
+                  },
+                ),
               DrawerListTile(
-                title: "My Profile",
-                icon: Icon(Icons.person_outline_sharp,
+                title: "My Points",
+                icon: Icon(Icons.star_border_outlined,
                     color: DynamicColor().primarycolor),
                 press: () async {
                   Get.back();
-                  Get.toNamed('/profile');
+                  Get.toNamed('/mypoints');
                 },
               ),
-            DrawerListTile(
-              title: "My Points",
-              icon: Icon(Icons.star_border_outlined,
-                  color: DynamicColor().primarycolor),
-              press: () async {
-                Get.back();
-                Get.toNamed('/mypoints');
-              },
-            ),
-            if (BaseUrl.storage.read("role") != '')
               DrawerListTile(
-                title: "Support",
+                title: "Job Schedule",
+                icon: Icon(Icons.schedule_rounded,
+                    color: DynamicColor().primarycolor),
                 press: () {
                   Get.back();
-                  Get.to(
-                      () => FeedbackScreen(
-                            check: true,
-                            form: false,
-                          ),
-                      transition: Transition.rightToLeft,
-                      curve: Curves.easeInQuart);
+                  Get.toNamed('/schedule');
                 },
-                icon: Icon(Icons.support_agent,
+              ),
+              if (BaseUrl.storage.read("trackuseraccess") != false)
+                DrawerListTile(
+                  title: "Support",
+                  press: () {
+                    Get.back();
+                    Get.to(
+                        () => FeedbackScreen(
+                              check: true,
+                              form: false,
+                            ),
+                        transition: Transition.rightToLeft,
+                        curve: Curves.easeInQuart);
+                  },
+                  icon: Icon(Icons.support_agent,
+                      color: DynamicColor().primarycolor),
+                ),
+              DrawerListTile(
+                title: "Notification",
+                icon: Icon(Icons.notification_important_outlined,
                     color: DynamicColor().primarycolor),
+                press: () async {
+                  Get.back();
+                  Get.toNamed('/notification');
+                },
               ),
-            DrawerListTile(
-              title: "Notification",
-              icon: Icon(Icons.notification_important_outlined,
-                  color: DynamicColor().primarycolor),
-              press: () async {
-                Get.back();
-                Get.toNamed('/notification');
-              },
-            ),
-            DrawerListTile(
-              title: "Help center",
-              icon: Icon(Icons.help_outline_sharp,
-                  color: DynamicColor().primarycolor),
-              press: () {
-                BaseUrl.helptype = 'home';
-                Get.back();
-                Get.toNamed('/faqs');
-              },
-            ),
-            Spacer(),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text("V " + BaseUrl.version.toString(),
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                        color: Colors.grey)),
+              DrawerListTile(
+                title: "Help center",
+                icon: Icon(Icons.help_outline_sharp,
+                    color: DynamicColor().primarycolor),
+                press: () {
+                  BaseUrl.helptype = 'home';
+                  Get.back();
+                  Get.toNamed('/faqs');
+                },
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.width / 30,
-            ),
-          ],
+
+              Spacer(),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text("V " + BaseUrl.version.toString(),
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: Colors.grey)),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 20,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  // _AppointmentDataSource _getCalendarDataSource() {
+  //   List<Appointment> appointments = <Appointment>[];
+  //   appointments.add(Appointment(
+  //     startTime: DateTime.now(),
+  //     endTime: DateTime.now().add(Duration(hours: 1)),
+  //     subject: 'Meeting',
+  //     color: Colors.blue,
+  //   ));
+  //   appointments.add(Appointment(
+  //     startTime: DateTime.now().add(Duration(hours: 2)),
+  //     endTime: DateTime.now().add(Duration(hours: 3)),
+  //     subject: 'Planning',
+  //     color: Colors.green,
+  //   ));
+  //
+  //   return _AppointmentDataSource(appointments);
+  // }
 }
+
+// class _AppointmentDataSource extends CalendarDataSource {
+//   _AppointmentDataSource(List<Appointment> source) {
+//     appointments = source;
+//   }
+// }
 
 class DrawerListTile extends StatelessWidget {
   DrawerListTile({

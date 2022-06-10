@@ -16,13 +16,14 @@ class OTPScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: GetBuilder(
-            init: otpController,
-            builder: (_) {
-              return Container(
-                  height: height,
-                  width: width,
+      body: GetBuilder(
+          init: otpController,
+          builder: (_) {
+            return Container(
+                height: height,
+                width: width,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
                   child: Stack(
                     children: [
                       Positioned(
@@ -164,9 +165,9 @@ class OTPScreen extends StatelessWidget {
                             : Container(),
                       ),
                     ],
-                  ));
-            }),
-      ),
+                  ),
+                ));
+          }),
     );
   }
 }

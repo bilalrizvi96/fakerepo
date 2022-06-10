@@ -22,14 +22,15 @@ class FeedbackScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Container(
-          height: height,
-          width: width,
-          child: GetBuilder(
-              init: _feedbackController,
-              builder: (_) {
-                return Stack(
+      body: Container(
+        height: height,
+        width: width,
+        child: GetBuilder(
+            init: _feedbackController,
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Stack(
                   children: [
                     Image.network(
                       'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/attendancebg.png',
@@ -81,7 +82,9 @@ class FeedbackScreen extends StatelessWidget {
                                           color: Colors.grey,
                                         ),
                                       )
-                                    else if (BaseUrl.storage.read("role") != '')
+                                    else if (BaseUrl.storage
+                                            .read("trackuseraccess") !=
+                                        true)
                                       GestureDetector(
                                         onTap: () {
                                           Get.back();
@@ -388,9 +391,9 @@ class FeedbackScreen extends StatelessWidget {
                             ),
                           ),
                   ],
-                );
-              }),
-        ),
+                ),
+              );
+            }),
       ),
     );
   }

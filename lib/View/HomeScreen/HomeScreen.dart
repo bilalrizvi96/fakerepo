@@ -22,36 +22,36 @@ class HomeScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: SideMenu(),
-      body: SafeArea(
-        child: Container(
-            width: width,
-            height: height,
-            color: Colors.white30,
-            child: GetBuilder(
-                init: homeController,
-                builder: (_) {
-                  return Stack(
-                    children: [
-                      Container(
-                        width: width,
-                        height: height / 5.8,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(90),
-                              bottomRight: Radius.circular(90)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 4,
-                              blurRadius: 6,
-                              offset:
-                                  Offset(0, 2), // changes position of shadow
-                            ),
-                          ],
-                        ),
+      body: Container(
+          width: width,
+          height: height,
+          color: Colors.white30,
+          child: GetBuilder(
+              init: homeController,
+              builder: (_) {
+                return Stack(
+                  children: [
+                    Container(
+                      width: width,
+                      height: height / 5.8,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(90),
+                            bottomRight: Radius.circular(90)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 4,
+                            blurRadius: 6,
+                            offset: Offset(0, 2), // changes position of shadow
+                          ),
+                        ],
                       ),
-                      Column(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Column(
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
@@ -170,95 +170,6 @@ class HomeScreen extends StatelessWidget {
                               // child:
                             ),
                           ),
-                          SizedBox(
-                            height: height / 50,
-                          ),
-                          // DelayedDisplay(
-                          //   fadeIn: true,
-                          //   fadingDuration: Duration(milliseconds: 400),
-                          //   child: Container(
-                          //     height: height / 25,
-                          //     width: width / 1.15,
-                          //     decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(20.0),
-                          //     ),
-                          //     child: Row(
-                          //       crossAxisAlignment: CrossAxisAlignment.center,
-                          //       mainAxisAlignment: MainAxisAlignment.start,
-                          //       children: [
-                          //         SizedBox(
-                          //           width: width / 50,
-                          //         ),
-                          //         Container(
-                          //           width: width / 6,
-                          //           height: height / 35,
-                          //           decoration: BoxDecoration(
-                          //             color: DynamicColor().primarycolor,
-                          //             borderRadius: BorderRadius.circular(5.0),
-                          //             boxShadow: [
-                          //               BoxShadow(
-                          //                 color: DynamicColor()
-                          //                     .primarycolor
-                          //                     .withOpacity(0.1),
-                          //                 spreadRadius: 4,
-                          //                 blurRadius: 6,
-                          //                 offset: Offset(0,
-                          //                     1), // changes position of shadow
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           child: Row(
-                          //             crossAxisAlignment:
-                          //                 CrossAxisAlignment.center,
-                          //             mainAxisAlignment:
-                          //                 MainAxisAlignment.center,
-                          //             children: [
-                          //               Container(
-                          //                   width: 15,
-                          //                   height: 15,
-                          //                   alignment: Alignment.center,
-                          //                   decoration: BoxDecoration(
-                          //                     color: DynamicColor().white,
-                          //                     borderRadius:
-                          //                         BorderRadius.circular(30.0),
-                          //                   ),
-                          //                   child: Text(
-                          //                     "!",
-                          //                     style: TextStyle(
-                          //                         color: DynamicColor()
-                          //                             .primarycolor,
-                          //                         fontWeight: FontWeight.bold,
-                          //                         fontSize: width / 35),
-                          //                   )),
-                          //               SizedBox(
-                          //                 width: width / 50,
-                          //               ),
-                          //               Text(
-                          //                 "Note",
-                          //                 style: TextStyle(
-                          //                     color: DynamicColor().white,
-                          //                     fontWeight: FontWeight.w400,
-                          //                     fontSize: width / 32),
-                          //               )
-                          //             ],
-                          //           ),
-                          //         ),
-                          //         SizedBox(
-                          //           width: width / 50,
-                          //         ),
-                          //         Text(
-                          //           "Avoid Multiple Check-ins",
-                          //           style: TextStyle(
-                          //               color: DynamicColor()
-                          //                   .black
-                          //                   .withOpacity(0.41),
-                          //               fontWeight: FontWeight.w600,
-                          //               fontSize: width / 30),
-                          //         )
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
                           SizedBox(
                             height: height / 50,
                           ),
@@ -540,7 +451,8 @@ class HomeScreen extends StatelessWidget {
                                         SizedBox(
                                           width: width / 15,
                                         ),
-                                        BaseUrl.clockin == false
+                                        BaseUrl.storage.read("isCheckInOn") ==
+                                                true
                                             ? Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
@@ -732,7 +644,8 @@ class HomeScreen extends StatelessWidget {
                                                 ],
                                               ),
                                         Spacer(),
-                                        BaseUrl.clockout == false
+                                        BaseUrl.storage.read("isCheckOutOn") ==
+                                                true
                                             ? Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
@@ -984,10 +897,10 @@ class HomeScreen extends StatelessWidget {
                                 ),
                         ],
                       ),
-                    ],
-                  );
-                })),
-      ),
+                    ),
+                  ],
+                );
+              })),
     );
   }
 }

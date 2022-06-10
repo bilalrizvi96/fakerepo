@@ -7,7 +7,7 @@ onError(dynamic error) {
     print('catch');
     BaseUrl.storage.write("token", "out");
     Get.offNamed("/signinemp");
-    return Get.snackbar("Error ", "Your session has been expired");
+    // return Get.snackbar("Error ", "Your session has been expired");
   } else if (error.response.statusCode == 404) {
     return error.response;
   } else if (error.response.statusCode == 500) {

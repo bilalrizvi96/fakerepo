@@ -17,16 +17,17 @@ class TrackUserScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          width: width,
-          height: height,
-          child: GetBuilder(
-              // initState: trackUserController.init(),
-              init: trackUserController,
-              builder: (_) {
-                return trackUserController.Loading.value == false
-                    ? Column(
+      body: Container(
+        width: width,
+        height: height,
+        child: GetBuilder(
+            // initState: trackUserController.init(),
+            init: trackUserController,
+            builder: (_) {
+              return trackUserController.Loading.value == false
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -108,8 +109,9 @@ class TrackUserScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: GoogleMap(
-                                zoomControlsEnabled: true,
+                                zoomControlsEnabled: false,
                                 compassEnabled: true,
+                                myLocationButtonEnabled: false,
                                 markers: trackUserController.markers.toSet(),
                                 mapType: MapType.normal,
                                 initialCameraPosition: trackUserController
@@ -120,16 +122,16 @@ class TrackUserScreen extends StatelessWidget {
                                 }),
                           ),
                         ],
-                      )
-                    : Center(
-                        child: Image.asset(
-                          "assets/1.gif",
-                          height: 200,
-                          width: 200,
-                        ),
-                      );
-              }),
-        ),
+                      ),
+                    )
+                  : Center(
+                      child: Image.asset(
+                        "assets/1.gif",
+                        height: 200,
+                        width: 200,
+                      ),
+                    );
+            }),
       ),
     );
   }

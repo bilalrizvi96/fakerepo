@@ -74,22 +74,24 @@ class BottomNavigationScreen extends StatelessWidget {
                       icon: Icon(Icons.summarize_outlined),
                       label: 'Summary',
                     ),
-                    BaseUrl.storage.read("checkpointaccess") == false
+                    BaseUrl.storage.read("trackuseraccess") == true
                         ? BottomNavigationBarItem(
-                            icon: Icon(Icons.support_agent),
-                            label: 'Support',
+                            icon: Icon(Icons.remove_red_eye_rounded),
+                            label: 'Track Staff',
+                            // icon: Icon(Icons.support_agent),
+                            // label: 'Support',
                           )
-                        : BaseUrl.storage.read("role") == ''
+                        : BaseUrl.storage.read("checkpointaccess") == true
                             ? BottomNavigationBarItem(
                                 icon: Icon(Icons.location_on_outlined),
                                 label: 'CheckPoint',
                               )
                             : BottomNavigationBarItem(
-                                icon: Icon(Icons.remove_red_eye_rounded),
-                                label: 'Track Staff',
+                                icon: Icon(Icons.support_agent),
+                                label: 'Support',
                               ),
                     BaseUrl.storage.read("checkpointaccess") == true &&
-                            BaseUrl.storage.read("role") == ''
+                            BaseUrl.storage.read("trackuseraccess") == false
                         ? BottomNavigationBarItem(
                             icon: Icon(Icons.support_agent),
                             label: 'Support',
@@ -110,16 +112,26 @@ class BottomNavigationScreen extends StatelessWidget {
                   children: [
                     HomeScreen(),
                     SummaryScreen(),
-                    BaseUrl.storage.read("checkpointaccess") == false
-                        ? FeedbackScreen(
-                            check: true,
-                            form: false,
-                          )
-                        : BaseUrl.storage.read("role") == ''
+
+                    BaseUrl.storage.read("trackuseraccess") == true
+                        ? TrackUserScreen()
+                        : BaseUrl.storage.read("checkpointaccess") == true
                             ? CheckPointScreen()
-                            : TrackUserScreen(),
+                            : FeedbackScreen(
+                                check: true,
+                                form: false,
+                              ),
+                    // BaseUrl.storage.read("checkpointaccess") == false
+                    //     ? FeedbackScreen(
+                    //         check: true,
+                    //         form: false,
+                    //       )
+                    //     : BaseUrl.storage.read("trackuseraccess") == false
+                    //         ? CheckPointScreen()
+                    //         : TrackUserScreen(),
+
                     BaseUrl.storage.read("checkpointaccess") == true &&
-                            BaseUrl.storage.read("role") == ''
+                            BaseUrl.storage.read("trackuseraccess") == false
                         ? FeedbackScreen(
                             check: true,
                             form: false,

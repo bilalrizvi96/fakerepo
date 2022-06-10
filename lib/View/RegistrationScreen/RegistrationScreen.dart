@@ -13,17 +13,18 @@ class RegistrationScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-            width: width,
-            height: height,
-            // padding: EdgeInsets.only(right: 5, left: 10),
-            // color: DynamicColor().white,
-            child: GetBuilder(
-                init: registrationController,
-                builder: (_) {
-                  return registrationController.Loading.value == false
-                      ? Stack(
+      body: Container(
+          width: width,
+          height: height,
+          // padding: EdgeInsets.only(right: 5, left: 10),
+          // color: DynamicColor().white,
+          child: GetBuilder(
+              init: registrationController,
+              builder: (_) {
+                return registrationController.Loading.value == false
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Stack(
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 40.0),
@@ -239,16 +240,16 @@ class RegistrationScreen extends StatelessWidget {
                               ),
                             ),
                           ],
-                        )
-                      : Center(
-                          child: Image.asset(
-                            "assets/1.gif",
-                            height: 500,
-                            width: 500,
-                          ),
-                        );
-                })),
-      ),
+                        ),
+                      )
+                    : Center(
+                        child: Image.asset(
+                          "assets/1.gif",
+                          height: 500,
+                          width: 500,
+                        ),
+                      );
+              })),
     );
   }
 }
