@@ -147,8 +147,10 @@ class SummaryController extends GetxController
       BaseUrl.storage.write('points', summarydata.value[0].points);
     } else {
       Loading.value = false;
-      // Get.snackbar("Error ", response.data['message'].toString(),
-      //     colorText: Colors.white, backgroundColor: Colors.red);
+
+      print(response.statusCode.toString());
+      print("response.statusCode.toString()");
+      update();
     }
     update();
   }
@@ -203,6 +205,7 @@ class SummaryController extends GetxController
   }
 
   init() {
+    print('FUCK OFF');
     summaryguidelinelist.value.clear();
     tabController =
         TabController(length: 2, vsync: this, initialIndex: tabindex.value)
@@ -231,7 +234,7 @@ class SummaryController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    // summaryGuideline();
+
     init();
   }
 }

@@ -248,7 +248,6 @@ class CheckPointController extends GetxController
       print(mainhistorylist.value[0].image);
     } else {
       Loading.value = false;
-      print(response.data['error'].toString());
     }
     update();
   }

@@ -8,7 +8,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../API/BaseURl.dart';
 import '../../Controller/CheckPointController.dart';
-import '../../Controller/MapController.dart';
 
 class AddCheckPointScreen extends StatelessWidget {
   AddCheckPointScreen({Key? key}) : super(key: key);
