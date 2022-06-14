@@ -35,17 +35,6 @@ class ScheduleController extends GetxController {
             isAllDay: true,
             // subject: val.title.toString().toTitleCase(),
             color: Color(int.parse("0xFF" + val.color))));
-        if (val.title == 'morning') {
-          morning.value = val.color;
-        } else if (val.title == 'evening') {
-          evening.value = val.color;
-        } else if (val.title == 'night') {
-          nigth.value = val.color;
-        } else if (val.title == 'off') {
-          off.value = val.color;
-        } else if (val.title == 'Holidays') {
-          holiday.value = val.color;
-        }
       }
 
       // meetings.add(Meeting(
@@ -73,7 +62,13 @@ class ScheduleController extends GetxController {
     if (response.statusCode == 200) {
       Loading.value = false;
       response = HolidayModel.fromJson(response.data);
-      holidayslist.value = response.data;
+      morning.value = response.data.colors.morning;
+      evening.value = response.data.colors.evening;
+      off.value = response.data.colors.off;
+      nigth.value = response.data.colors.night;
+      holiday.value = response.data.colors.holidays;
+
+      holidayslist.value = response.data.dates;
       getDataSource();
     } else {
       Loading.value = false;

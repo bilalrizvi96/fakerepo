@@ -24,39 +24,91 @@ class HolidayModel {
 
   factory HolidayModel.fromJson(Map<String, dynamic> json) => HolidayModel(
         status: json["status"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        data: Data.fromJson(json["data"]),
         message: json["message"],
         code: json["code"],
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data.toJson(),
         "message": message,
         "code": code,
       };
 }
 
-class Datum {
-  Datum({
-    this.color,
-    this.date,
-    this.title,
+class Data {
+  Data({
+    this.dates,
+    this.colors,
   });
 
-  var color;
-  var date;
-  var title;
+  var dates;
+  var colors;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        color: json["color"],
-        date: json["date"],
-        title: json["title"],
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        dates: List<Date>.from(json["dates"].map((x) => Date.fromJson(x))),
+        colors: Colors.fromJson(json["colors"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "dates": List<dynamic>.from(dates.map((x) => x.toJson())),
+        "colors": colors.toJson(),
+      };
+}
+
+class Colors {
+  Colors({
+    this.morning,
+    this.evening,
+    this.night,
+    this.holidays,
+    this.off,
+  });
+
+  var morning;
+  var evening;
+  var night;
+  var holidays;
+  var off;
+
+  factory Colors.fromJson(Map<String, dynamic> json) => Colors(
+        morning: json["morning"],
+        evening: json["evening"],
+        night: json["night"],
+        holidays: json["holidays"],
+        off: json["off"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "morning": morning,
+        "evening": evening,
+        "night": night,
+        "holidays": holidays,
+        "off": off,
+      };
+}
+
+class Date {
+  Date({
+    this.title,
+    this.color,
+    this.date,
+  });
+
+  var title;
+  var color;
+  var date;
+
+  factory Date.fromJson(Map<String, dynamic> json) => Date(
+        title: json["title"],
+        color: json["color"],
+        date: json["date"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
         "color": color,
         "date": date,
-        "title": title,
       };
 }

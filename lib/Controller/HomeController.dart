@@ -364,41 +364,6 @@ class HomeController extends GetxController {
       }
     }
 
-    // }
-    // else {
-    //   var response = await API().CheckOut(
-    //       siteId: BaseUrl.storage.read("sitecheckpoint"),
-    //       latlng: BaseUrl.storage.read("latlngcheckpoint"),
-    //       date: outputDate,
-    //       check: check);
-    //   if (response.statusCode == 200) {
-    //     // _summaryController.init();
-    //     BaseUrl.storage.write("status", false);
-    //     Loading.value = false;
-    //     BaseUrl.clockout = outputDate1.toString();
-    //     BaseUrl.storage.write("clockout", BaseUrl.clockout);
-    //     popups(
-    //         image: response.data['data'][0]['messages'][0]['imageUrl'],
-    //         title: response.data['data'][0]['messages'][0]['title'],
-    //         message: response.data['data'][0]['messages'][0]['message'],
-    //         isMessageAvailable: response.data['data'][0]['isMessageAvailable']);
-    //     var dates = DateTime.now().day.toString() +
-    //         "/" +
-    //         DateTime.now().month.toString() +
-    //         "/" +
-    //         DateTime.now().year.toString();
-    //     BaseUrl.storage.write("lastAttendanceRecordDate", dates);
-    //     Get.snackbar(
-    //       "Attendance ",
-    //       "Clock Out Successfully",
-    //     );
-    //   } else {
-    //     Loading.value = false;
-    //     Get.snackbar("Error ", response.data['error'].toString(),
-    //         colorText: Colors.white, backgroundColor: Colors.red);
-    //   }
-    // }
-
     update();
   }
 
@@ -428,6 +393,7 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         BaseUrl.storage.write('checkOutMissing', false);
         BaseUrl.storage.write("status", false);
+        BaseUrl.storage.write("isCheckInOn", true);
         Get.back();
         Loading.value = false;
         reasoncontroller.clear();
