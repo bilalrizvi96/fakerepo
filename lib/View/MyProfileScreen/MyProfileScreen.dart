@@ -640,7 +640,7 @@ class MyProfileScreen extends StatelessWidget {
                               child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Shift Timings',
+                                    'Shift Code',
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w500,
                                         fontSize: width / 30,

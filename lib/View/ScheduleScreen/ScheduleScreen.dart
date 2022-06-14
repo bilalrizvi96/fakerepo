@@ -47,7 +47,7 @@ class ScheduleScreen extends StatelessWidget {
                                 width: width / 20,
                               ),
                               Text(
-                                'Schedule',
+                                'My Job Schedule',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
                                     fontSize: width / 16),
@@ -138,7 +138,8 @@ class ScheduleScreen extends StatelessWidget {
                           SizedBox(
                             height: height / 40,
                           ),
-                          Expanded(
+                          Container(
+                            height: height / 1.5,
                             child: SfCalendar(
                               view: CalendarView.month,
                               dataSource: MeetingDataSource(
@@ -189,13 +190,11 @@ class ScheduleScreen extends StatelessWidget {
                                         .split('-')[0])
                                     : 0,
                               ),
-                              appointmentTextStyle:
-                                  TextStyle(fontSize: width / 25),
                               monthViewSettings: MonthViewSettings(
                                   agendaItemHeight:
                                       MediaQuery.of(context).size.height,
                                   // showTrailingAndLeadingDates: true,
-                                  // appointmentDisplayCount: 1,
+                                  // appointmentDisplayCount: 2,
                                   appointmentDisplayMode:
                                       MonthAppointmentDisplayMode.appointment),
                             ),
