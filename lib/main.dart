@@ -28,7 +28,7 @@ Future<void> main() async {
             messagingSenderId: '833414981797',
             projectId: 'attendancesystem-332409'));
     NotificationSettings settings =
-    await FirebaseMessaging.instance.requestPermission(
+        await FirebaseMessaging.instance.requestPermission(
       alert: true,
       announcement: false,
       badge: true,
@@ -38,7 +38,8 @@ Future<void> main() async {
       sound: true,
     );
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
@@ -54,7 +55,7 @@ Future<void> main() async {
     // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     await GetStorage.init();
     NotificationSettings settings =
-    await FirebaseMessaging.instance.requestPermission(
+        await FirebaseMessaging.instance.requestPermission(
       alert: true,
       announcement: false,
       badge: true,
@@ -64,13 +65,13 @@ Future<void> main() async {
       sound: true,
     );
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
     );
   }
-
 
   runApp(MyApp());
 }

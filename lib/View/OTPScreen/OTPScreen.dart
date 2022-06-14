@@ -16,6 +16,7 @@ class OTPScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: GetBuilder(
           init: otpController,
           builder: (_) {
@@ -38,7 +39,7 @@ class OTPScreen extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 100.0),
+                        padding: const EdgeInsets.only(top: 80.0),
                         child: DelayedDisplay(
                           delay: Duration(milliseconds: 400),
                           slidingCurve: Curves.decelerate,
@@ -63,7 +64,7 @@ class OTPScreen extends StatelessWidget {
                       Positioned(
                         right: width / 8,
                         left: width / 8,
-                        top: height / 2.3,
+                        top: height / 2.7,
                         child: Text(
                           'Please wait while we validate the passcode sent to your registered number ${BaseUrl.storage.read('phone')}. If the code is not validated automatically, you can enter it below.',
                           textAlign: TextAlign.center,
@@ -76,7 +77,7 @@ class OTPScreen extends StatelessWidget {
                       Positioned(
                         right: width / 8,
                         left: width / 8,
-                        top: height / 1.7,
+                        top: height / 2,
                         child: PinCodeTextField(
                           keyboardType: TextInputType.phone,
                           controller: otpController.otptextcontroller,
@@ -104,7 +105,7 @@ class OTPScreen extends StatelessWidget {
                       Positioned(
                         right: width / 3,
                         left: width / 2.8,
-                        top: height / 1.5,
+                        top: height / 1.6,
                         child: Row(
                           children: [
                             Container(

@@ -47,6 +47,7 @@ class ScheduleController extends GetxController {
           holiday.value = val.color;
         }
       }
+
       // meetings.add(Meeting(
       //   background: Color(int.parse("0xFF" + val.background.toString())),
       //   from: DateTime.parse(val.date.toString().split('-')[2] +
@@ -73,7 +74,7 @@ class ScheduleController extends GetxController {
       Loading.value = false;
       response = HolidayModel.fromJson(response.data);
       holidayslist.value = response.data;
-      // getDataSource();
+      getDataSource();
     } else {
       Loading.value = false;
       print(response.data['error'].toString());

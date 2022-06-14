@@ -68,10 +68,10 @@ class OTPController extends GetxController {
 
   @override
   void onInit() {
-    resendOtp();
+    // resendOtp();
     // AltSmsAutofill().unregisterListener();
     super.onInit();
-
+    startTimer();
     // initSmsListener();
     // startTimer();
   }

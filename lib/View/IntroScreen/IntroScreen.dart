@@ -6,13 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class IntroScreen extends StatefulWidget {
-  @override
-  State<IntroScreen> createState() => _IntroScreenState();
-}
-
-class _IntroScreenState extends State<IntroScreen>
-    with TickerProviderStateMixin {
+class IntroScreen extends StatelessWidget {
   IntroController introController = Get.put(IntroController());
   @override
   Widget build(BuildContext context) {

@@ -12,8 +12,8 @@ class BaseUrl {
   static var baseurl =
       "https://15qh59akj4.execute-api.us-east-2.amazonaws.com/dev/";
 
-  static var baseurl_Face =
-      "http://flask-env.eba-iaxsivgi.us-east-2.elasticbeanstalk.com/";
+  // static var baseurl_Face =
+  //     "http://flask-env.eba-iaxsivgi.us-east-2.elasticbeanstalk.com/";
   static var version = '1.4.1';
   static var fcm_token = '';
 }
