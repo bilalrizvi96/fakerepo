@@ -49,7 +49,7 @@ class User {
     this.consumeAnnualLeaves,
     this.consumeCasualLeaves,
     this.consumeSickLeaves,
-    this.checkpointAccess,
+    // this.checkpointAccess,
     this.role,
     this.pin,
     this.isCheckInOn,
@@ -94,7 +94,7 @@ class User {
   var consumeAnnualLeaves;
   var consumeCasualLeaves;
   var consumeSickLeaves;
-  var checkpointAccess;
+  // var checkpointAccess;
   var role;
   var pin;
   var isCheckInOn;
@@ -139,7 +139,7 @@ class User {
         consumeAnnualLeaves: json["consumeAnnualLeaves"],
         consumeCasualLeaves: json["consumeCasualLeaves"],
         consumeSickLeaves: json["consumeSickLeaves"],
-        checkpointAccess: json["checkpointAccess"],
+        // checkpointAccess: json["checkpointAccess"],
         role: json["role"],
         pin: json["pin"],
         isCheckInOn: json["isCheckInOn"],
@@ -187,7 +187,7 @@ class User {
         "consumeAnnualLeaves": consumeAnnualLeaves,
         "consumeCasualLeaves": consumeCasualLeaves,
         "consumeSickLeaves": consumeSickLeaves,
-        "checkpointAccess": checkpointAccess,
+        // "checkpointAccess": checkpointAccess,
         "role": role,
         "pin": pin,
         "isCheckInOn": isCheckInOn,
