@@ -21,7 +21,7 @@ class SummaryDetailsModel {
     this.holidaysPresentCount,
     this.presentDays,
     this.absentDays,
-    this.offDay,
+    // this.offDay,
     this.startTiming,
     this.endTiming,
     this.expectedTime,
@@ -39,7 +39,7 @@ class SummaryDetailsModel {
   var holidaysPresentCount;
   var presentDays;
   var absentDays;
-  var offDay;
+  // var offDay;
   var startTiming;
   var endTiming;
   var expectedTime;
@@ -59,7 +59,7 @@ class SummaryDetailsModel {
         holidaysPresentCount: json["holidaysPresentCount"],
         presentDays: json["presentDays"],
         absentDays: json["absentDays"],
-        offDay: json["offDay"],
+        // offDay: json["offDay"],
         startTiming: json["startTiming"],
         endTiming: json["endTiming"],
         expectedTime: json["expectedTime"],
@@ -79,7 +79,7 @@ class SummaryDetailsModel {
         "holidaysPresentCount": holidaysPresentCount,
         "presentDays": presentDays,
         "absentDays": absentDays,
-        "offDay": offDay,
+        // "offDay": offDay,
         "startTiming": startTiming,
         "endTiming": endTiming,
         "expectedTime": expectedTime,
