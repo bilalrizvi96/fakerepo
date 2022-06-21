@@ -33,63 +33,10 @@ class SiginEmployeeScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
-                        child: Row(
-                          children: [
-                            Spacer(),
-                            DelayedDisplay(
-                              delay: Duration(milliseconds: 1500),
-                              slidingCurve: Curves.bounceInOut,
-                              child: Text(
-                                'Sign in',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: width / 14,
-                                    color: DynamicColor().black),
-                              ),
-                            ),
-                            Spacer(),
-                            DelayedDisplay(
-                              delay: Duration(milliseconds: 1500),
-                              slidingCurve: Curves.bounceInOut,
-                              child: Image.network(
-                                'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/signinclock.png',
-                                fit: BoxFit.cover,
-                                height: height / 8,
-                              ),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 120.0),
-                        child: Container(
-                          height: height / 500,
-                          width: width / 1.65,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFD1D1D1),
-                              borderRadius: BorderRadius.circular(10.0)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 120.0, left: 330),
-                        child: Container(
-                          height: height / 500,
-                          width: width / 8,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFD1D1D1),
-                              borderRadius: BorderRadius.circular(10.0)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 120.0, left: 390),
-                        child: Container(
-                          height: height / 500,
-                          width: width / 16,
-                          decoration: BoxDecoration(
-                              color: DynamicColor().primarycolor,
-                              borderRadius: BorderRadius.circular(10.0)),
+                        padding: const EdgeInsets.only(top: 25),
+                        child: Image.asset(
+                          'assets/sigin.png',
+                          fit: BoxFit.fitWidth,
                         ),
                       ),
                       Padding(
@@ -118,7 +65,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
-                                          height: height / 5,
+                                          height: height / 4.5,
                                         ),
                                         // SizedBox(
                                         //   height: height / 80,
@@ -217,67 +164,8 @@ class SiginEmployeeScreen extends StatelessWidget {
                                           ),
                                         ),
 
-                                        // GestureDetector(
-                                        //   onTap: () {
-                                        //     signinController.checkOption();
-                                        //   },
-                                        //   child: DelayedDisplay(
-                                        //     delay: Duration(milliseconds: 1500),
-                                        //     slidingCurve: Curves.bounceInOut,
-                                        //     child: Stack(
-                                        //       children: [
-                                        //         Container(
-                                        //           width: width / 3.1,
-                                        //           height: height / 5.2,
-                                        //           decoration: BoxDecoration(
-                                        //             color: DynamicColor().white,
-                                        //             borderRadius:
-                                        //                 BorderRadius.circular(5.0),
-                                        //           ),
-                                        //           padding: EdgeInsets.only(
-                                        //               right: 30.0,
-                                        //               left: 30.0,
-                                        //               bottom: 30.0),
-                                        //           child: Image.network(
-                                        //             'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
-                                        //             fit: BoxFit.scaleDown,
-                                        //             width: width / 15,
-                                        //           ),
-                                        //         ),
-                                        //         Positioned(
-                                        //           top: height / 7,
-                                        //           child: Container(
-                                        //             width: 50,
-                                        //             height: 50,
-                                        //             decoration: BoxDecoration(
-                                        //                 borderRadius:
-                                        //                     BorderRadius.circular(
-                                        //                         50.0),
-                                        //                 boxShadow: [
-                                        //                   BoxShadow(
-                                        //                     color: DynamicColor()
-                                        //                         .titletextcolor
-                                        //                         .withOpacity(0.5),
-                                        //                     spreadRadius: 3,
-                                        //                     blurRadius: 10,
-                                        //                     offset: Offset(0,
-                                        //                         3), // changes position of shadow
-                                        //                   ),
-                                        //                 ],
-                                        //                 color: DynamicColor()
-                                        //                     .primarycolor),
-                                        //             child: Icon(
-                                        //               Icons.arrow_forward_ios,
-                                        //               color: Colors.white,
-                                        //             ),
-                                        //           ),
-                                        //         )
-                                        //       ],
-                                        //     ),
-                                        //   ),
-                                        // ),
                                         SizedBox(
-                                          height: height / 15,
+                                          height: height / 13,
                                         ),
                                         GestureDetector(
                                           onTap: () {

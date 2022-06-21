@@ -59,6 +59,10 @@ class SplashController extends GetxController {
           _maintenanceController.checkMaintenance();
         } else if (notification.title.toString().trim() == 'Update') {
           checkUpdate();
+        } else if (notification.title.toString().trim() == 'Expire') {
+          BaseUrl.storage.write('token', 'out');
+          Get.offAllNamed('/signinemp');
+          // BaseUrl.storage.erase();
         }
         Get.snackbar(" ${notification.title.toString()}",
             "${notification.body.toString()}");
@@ -74,6 +78,10 @@ class SplashController extends GetxController {
           _maintenanceController.checkMaintenance();
         } else if (notification.title.toString().trim() == 'Update') {
           checkUpdate();
+        } else if (notification.title.toString().trim() == 'Expire') {
+          BaseUrl.storage.write('token', 'out');
+          Get.offAllNamed('/signinemp');
+          // BaseUrl.storage.erase();
         }
         Get.snackbar(
           "${notification.title.toString().trim()}",

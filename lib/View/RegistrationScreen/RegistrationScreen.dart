@@ -211,7 +211,7 @@ class RegistrationScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: height / 30,
+                                      height: height / 50,
                                     ),
                                     GestureDetector(
                                       onTap: () {

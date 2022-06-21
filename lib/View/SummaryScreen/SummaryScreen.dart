@@ -205,15 +205,15 @@ class SummaryScreen extends StatelessWidget {
                                         begin: Alignment.topCenter,
                                         end: Alignment.topRight,
                                         colors: DynamicColor().gradient),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(-2,
-                                            0), // changes position of shadow
-                                      ),
-                                    ],
+                                    // boxShadow: [
+                                    //   // BoxShadow(
+                                    //   //   color: Colors.grey.withOpacity(0.5),
+                                    //   //   spreadRadius: 2,
+                                    //   //   blurRadius: 5,
+                                    //   //   offset: Offset(-2,
+                                    //   //       0), // changes position of shadow
+                                    //   // ),
+                                    // ],
                                   ),
                                   child: Row(
                                     children: [
@@ -843,32 +843,6 @@ class Details extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              //         SliderButton(
-                              //                 height: 70.0,
-                              //                 radius: 50.0,
-                              //                 dismissible: true,
-                              //                 disable: false,
-                              //                 width: width / 1.2,
-                              //                 buttonColor: DynamicColor().primarycolor,
-                              //                 vibrationFlag: true,
-                              //                 backgroundColor: Colors.white.withOpacity(0.25),
-                              //                 baseColor: Colors.red,
-                              //                 action: () {
-                              //                   _summaryController.summaryPdf();
-                              //                 },
-                              //                 label: Text(
-                              //                   "Swipe right to export pdf",
-                              //                   textAlign: TextAlign.center,
-                              //                   style: TextStyle(
-                              //                       color: Color(0xFFAFAFAF).withOpacity(0.25),
-                              //                       fontWeight: FontWeight.w400,
-                              //                       fontSize: 18),
-                              //                 ),
-                              //                 icon: Icon(
-                              //                   Icons.arrow_forward_ios_sharp,
-                              //                   color: Colors.white,
-                              //                 ),
-                              //               )
                               : Column(),
                           SizedBox(
                             height: height / 2,

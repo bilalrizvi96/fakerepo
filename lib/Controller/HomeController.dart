@@ -248,7 +248,7 @@ class HomeController extends GetxController {
   }
 
   Future getSites() async {
-    sitedatalist.value.clear();
+    sitedatalist.clear();
     var response = await API().Getsites();
     if (response.statusCode == 200) {
       Loading.value = false;
@@ -369,6 +369,7 @@ class HomeController extends GetxController {
 
   reasonCheckOut() async {
     Loading.value = true;
+    update();
     var date = DateTime.now();
     var outputFormat = DateFormat(
         "${BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[2] + "-" + BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[1] + "-" + BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[0]}'T'${BaseUrl.storage.read("endTiming").toString().split(' ')[0]}:ss.SSS'Z'");
@@ -391,6 +392,7 @@ class HomeController extends GetxController {
           reason: reasoncontroller.text.toString().trim(),
           date: outputDate);
       if (response.statusCode == 200) {
+        Get.back();
         BaseUrl.storage.write('checkOutMissing', false);
         BaseUrl.storage.write("status", false);
         BaseUrl.storage.write("isCheckInOn", true);
