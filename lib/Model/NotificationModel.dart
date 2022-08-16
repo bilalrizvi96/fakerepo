@@ -42,59 +42,35 @@ class NotificationModel {
 class Datum {
   Datum({
     this.id,
-    this.type,
-    this.time,
+    this.title,
     this.employeeId,
     this.message,
-    this.phone,
-    this.image,
-    this.resolved,
-    this.name,
-    this.region,
     this.date,
-    this.reason,
+    this.time,
   });
 
   var id;
-  var type;
-  var time;
+  var title;
   var employeeId;
   var message;
-  var phone;
-  var image;
-  var resolved;
-  var name;
-  var region;
   var date;
-  var reason;
+  var time;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["_id"],
-        type: json["type"],
-        time: json["time"],
+        title: json["title"],
         employeeId: json["employeeId"],
-        message: json["message"],
-        phone: json["phone"],
-        image: json["image"],
-        resolved: json["resolved"],
-        name: json["name"],
-        region: json["region"],
+        message: json["message"] == null ? null : json["message"],
         date: json["date"],
-        reason: json["reason"],
+        time: json["time"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "type": type,
-        "time": time,
+        "title": title,
         "employeeId": employeeId,
-        "message": message,
-        "phone": phone,
-        "image": image,
-        "resolved": resolved,
-        "name": name,
-        "region": region,
+        "message": message == null ? null : message,
         "date": date,
-        "reason": reason,
+        "time": time,
       };
 }

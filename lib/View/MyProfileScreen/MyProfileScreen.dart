@@ -1,30 +1,32 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:attendencesystem/Controller/MyProfileController.dart';
+
+import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyProfileScreen extends StatelessWidget {
-  MyProfileController myProfileController = Get.put(MyProfileController());
-
+  SignInEmployeeController _signInEmployeeController =
+      Get.put(SignInEmployeeController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return new Scaffold(
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-              width: width,
-              color: Color(0xFFEBEFFF),
-              padding: EdgeInsets.only(top: 15.0),
-              child: GetBuilder(
-                  init: myProfileController,
-                  builder: (_) {
-                    return Stack(
-                      children: [
-                        Column(
+        child: Container(
+            width: width,
+            color: Color(0xFFEBEFFF),
+            padding: EdgeInsets.only(top: 15.0),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Stack(
+                children: [
+                  GetBuilder(
+                      init: _signInEmployeeController,
+                      builder: (context) {
+                        return Column(
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
@@ -35,12 +37,12 @@ class MyProfileScreen extends StatelessWidget {
                                     width: width / 50,
                                   ),
 
-                                  GestureDetector(
-                                      onTap: () {
-                                        Get.back();
-                                      },
-                                      child: Icon(Icons.arrow_back_ios,
-                                          color: Colors.grey[600])),
+                                  // GestureDetector(
+                                  //     onTap: () {
+                                  //       Get.back();
+                                  //     },
+                                  //     child: Icon(Icons.arrow_back_ios,
+                                  //         color: Colors.grey[600])),
                                   SizedBox(
                                     width: width / 50,
                                   ),
@@ -75,6 +77,26 @@ class MyProfileScreen extends StatelessWidget {
                               height: height / 80,
                             ),
                             Padding(
+                              padding: const EdgeInsets.only(left: 38.0),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Image.network(
+                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/register/' +
+                                        BaseUrl.storage.read('empCode') +
+                                        ".jpg",
+                                    fit: BoxFit.fill,
+                                    width: width / 4.5,
+                                    height: height / 7,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: height / 80,
+                            ),
+                            Padding(
                               padding: const EdgeInsets.only(
                                 left: 35.0,
                               ),
@@ -101,17 +123,15 @@ class MyProfileScreen extends StatelessWidget {
                                   width: width / 1.22,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller:
-                                        myProfileController.firstnameController,
-                                    //   validator: myProfileController.validators,
+
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
                                       hintText:
-                                          BaseUrl.storage.read("firstName") !=
-                                                  ' '
+                                          BaseUrl.storage.read("empCode") != ' '
                                               ? BaseUrl.storage.read("empCode")
                                               : "First Name",
                                       focusColor: DynamicColor().primarycolor,
@@ -156,24 +176,23 @@ class MyProfileScreen extends StatelessWidget {
                                   width: width / 1.22,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller:
-                                        myProfileController.firstnameController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
                                       hintText:
                                           BaseUrl.storage.read("name") != ' '
                                               ? BaseUrl.storage.read("name")
-                                              : "Name",
+                                              : "First Name",
                                       focusColor: DynamicColor().primarycolor,
                                       hoverColor: DynamicColor().primarycolor,
                                       fillColor: Colors.white,
                                       filled: true,
                                       border: InputBorder.none,
-                                      //fillColor: Colors.green
                                     ),
                                     // keyboardType: TextInputType.none,
                                   ),
@@ -211,11 +230,11 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.number,
-                                    controller:
-                                        myProfileController.mobileController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -268,11 +287,11 @@ class MyProfileScreen extends StatelessWidget {
                                   width: width / 1.22,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller: myProfileController
-                                        .designationController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -323,11 +342,11 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.datetime,
-                                    controller: myProfileController
-                                        .date_of_joiningController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -383,11 +402,11 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.datetime,
-                                    controller: myProfileController
-                                        .date_of_joiningController,
+
                                     //   validator: myProfileController.validators,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -437,10 +456,9 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.datetime,
-                                    controller: myProfileController
-                                        .date_of_joiningController,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -462,64 +480,63 @@ class MyProfileScreen extends StatelessWidget {
                             SizedBox(
                               height: height / 80,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 35.0,
-                              ),
-                              child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Off Days',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: width / 30,
-                                        color: DynamicColor().black),
-                                  )),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: width / 80,
-                                  height: height / 18,
-                                  color: DynamicColor().primarycolor,
-                                ),
-                                Container(
-                                  width: width / 1.22,
-                                  child: TextFormField(
-                                    readOnly: true,
-                                    keyboardType: TextInputType.datetime,
-                                    controller: myProfileController
-                                        .date_of_joiningController,
-
-                                    cursorColor: DynamicColor().primarycolor,
-                                    style: GoogleFonts.poppins(
-                                        color: DynamicColor().primarycolor,
-                                        fontWeight: FontWeight.w600),
-                                    decoration: new InputDecoration(
-                                        hintText:
-                                            BaseUrl.storage.read("offDay") !=
-                                                    null
-                                                ? BaseUrl.storage
-                                                    .read("offDay")
-                                                    .toString()
-                                                    .replaceAll('[', '')
-                                                    .replaceAll(']', '')
-                                                : "First Name",
-                                        focusColor: DynamicColor().primarycolor,
-                                        hoverColor: DynamicColor().primarycolor,
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        border: InputBorder.none),
-                                    // keyboardType: TextInputType.none,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: height / 80,
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //     left: 35.0,
+                            //   ),
+                            //   child: Align(
+                            //       alignment: Alignment.topLeft,
+                            //       child: Text(
+                            //         'Off Days',
+                            //         style: GoogleFonts.poppins(
+                            //             fontWeight: FontWeight.w500,
+                            //             fontSize: width / 30,
+                            //             color: DynamicColor().black),
+                            //       )),
+                            // ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   crossAxisAlignment: CrossAxisAlignment.center,
+                            //   children: [
+                            //     Container(
+                            //       width: width / 80,
+                            //       height: height / 18,
+                            //       color: DynamicColor().primarycolor,
+                            //     ),
+                            //     Container(
+                            //       width: width / 1.22,
+                            //       child: TextFormField(
+                            //         readOnly: true,
+                            //         keyboardType: TextInputType.datetime,
+                            //
+                            //         cursorColor: DynamicColor().primarycolor,
+                            //         style: GoogleFonts.poppins(
+                            //             fontSize: width / 26,
+                            //             color: DynamicColor().primarycolor,
+                            //             fontWeight: FontWeight.w600),
+                            //         decoration: new InputDecoration(
+                            //             hintText:
+                            //                 BaseUrl.storage.read("offDay") !=
+                            //                         null
+                            //                     ? BaseUrl.storage
+                            //                         .read("offDay")
+                            //                         .toString()
+                            //                         .replaceAll('[', '')
+                            //                         .replaceAll(']', '')
+                            //                     : "First Name",
+                            //             focusColor: DynamicColor().primarycolor,
+                            //             hoverColor: DynamicColor().primarycolor,
+                            //             fillColor: Colors.white,
+                            //             filled: true,
+                            //             border: InputBorder.none),
+                            //         // keyboardType: TextInputType.none,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // SizedBox(
+                            //   height: height / 80,
+                            // ),
                             Padding(
                               padding: const EdgeInsets.only(left: 35.0),
                               child: Align(
@@ -545,11 +562,10 @@ class MyProfileScreen extends StatelessWidget {
                                   width: width / 1.22,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller:
-                                        myProfileController.addressController,
 
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -597,10 +613,9 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.emailAddress,
-                                    controller: myProfileController
-                                        .email_addressController,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -625,7 +640,7 @@ class MyProfileScreen extends StatelessWidget {
                               child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Shift Timings',
+                                    'Shift Code',
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w500,
                                         fontSize: width / 30,
@@ -646,10 +661,9 @@ class MyProfileScreen extends StatelessWidget {
                                   child: TextFormField(
                                     readOnly: true,
                                     keyboardType: TextInputType.text,
-                                    controller: myProfileController
-                                        .shift_timmingController,
                                     cursorColor: DynamicColor().primarycolor,
                                     style: GoogleFonts.poppins(
+                                        fontSize: width / 26,
                                         color: DynamicColor().primarycolor,
                                         fontWeight: FontWeight.w600),
                                     decoration: new InputDecoration(
@@ -672,11 +686,11 @@ class MyProfileScreen extends StatelessWidget {
                               height: height / 10,
                             ),
                           ],
-                        ),
-                      ],
-                    );
-                  })),
-        ),
+                        );
+                      }),
+                ],
+              ),
+            )),
       ),
     );
   }

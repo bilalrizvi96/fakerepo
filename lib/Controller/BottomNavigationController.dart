@@ -1,4 +1,6 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Controller/CheckPointController.dart';
+import 'package:attendencesystem/Controller/TrackUserController.dart';
 import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
 import 'package:attendencesystem/View/HomeScreen/HomeScreen.dart';
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
@@ -11,11 +13,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../API/BaseURl.dart';
 import '../View/CheckPointScreen/CheckPointScreen.dart';
+import 'HomeController.dart';
+import 'SummaryController.dart';
 
 class BottomNavigationController extends GetxController {
   var selectedIndex = 0.obs;
   var connection = true.obs;
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
   // check() async {
   //   await DataConnectionChecker().onStatusChange.listen((status) async {
   //     if (status == DataConnectionStatus.connected) {
@@ -28,18 +33,32 @@ class BottomNavigationController extends GetxController {
   //   });
   // }
 
-  List<Widget> children = [
-    HomeScreen(),
-    SummaryScreen(),
-    FeedbackScreen(
-      check: true,
-    ),
-  ];
+  // List<Widget> children = [
+  //   HomeScreen(),
+  //   SummaryScreen(),
+  //   FeedbackScreen(
+  //     check: true,
+  //     form: false,
+  //   ),
+  // ];
 
   @override
   void onInit() {
     super.onInit();
     popups();
+    print(BaseUrl.storage.read('clockincheck'));
+    // if (BaseUrl.empcheck == true) {
+    //   if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
+    //     BaseUrl.clockin = false;
+    //   } else {
+    //     BaseUrl.clockin = true;
+    //   }
+    //   if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
+    //     BaseUrl.clockout = false;
+    //   } else {
+    //     BaseUrl.clockout = true;
+    //   }
+    // }
   }
 
   popups() {
@@ -96,7 +115,21 @@ class BottomNavigationController extends GetxController {
 
   void ItemIndex(index) {
     selectedIndex.value = index;
-
+    if (selectedIndex.value == 1) {
+      // if (_homeController.Loading.value == true) {
+      _summaryController.init();
+      // update();
+      // }
+    } else if (selectedIndex.value == 2) {
+      if (BaseUrl.storage.read("trackuseraccess") != false) {
+        _trackUserController.init();
+      }
+    }
+    // else if (selectedIndex.value == 3) {
+    //   if (BaseUrl.storage.read("checkpointaccess") == true) {
+    //     _checkPointController.init();
+    //   }
+    // }
     update();
   }
 }

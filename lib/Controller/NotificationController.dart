@@ -14,7 +14,6 @@ class NotificationController extends GetxController {
       Loading.value = false;
       response = await NotificationModel.fromJson(response.data);
       notificationlist.value = response.data;
-      print(notificationlist.value[0].phone);
     } else {
       Loading.value = false;
     }

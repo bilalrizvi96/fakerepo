@@ -6,14 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-class IntroScreen extends StatefulWidget {
-  @override
-  State<IntroScreen> createState() => _IntroScreenState();
-}
-
-class _IntroScreenState extends State<IntroScreen>
-    with TickerProviderStateMixin {
+class IntroScreen extends StatelessWidget {
   IntroController introController = Get.put(IntroController());
   @override
   Widget build(BuildContext context) {
@@ -23,15 +16,13 @@ class _IntroScreenState extends State<IntroScreen>
       body: GetBuilder(
           init: introController,
           builder: (_) {
-            return SafeArea(
-              right: false,
-              left: false,
-              maintainBottomViewPadding: true,
-              bottom: false,
-              top: false,
-              child: Container(
-                  width: width,
-                  height: height,
+
+            return Container(
+                width: width,
+                height: height,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+
                   child: Stack(
                     children: [
                       PageView(
@@ -275,8 +266,8 @@ class _IntroScreenState extends State<IntroScreen>
                         ),
                       ),
                     ],
-                  )),
-            );
+                  ),
+                ));
           }),
     );
   }

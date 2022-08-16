@@ -1,3 +1,4 @@
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/OTPController.dart';
 import 'package:delayed_display/delayed_display.dart';
@@ -15,18 +16,17 @@ class OTPScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        right: false,
-        left: false,
-        maintainBottomViewPadding: true,
-        bottom: false,
-        top: false,
-        child: GetBuilder(
-            init: otpController,
-            builder: (_) {
-              return Container(
-                  height: height,
-                  width: width,
+
+      resizeToAvoidBottomInset: true,
+      body: GetBuilder(
+          init: otpController,
+          builder: (_) {
+            return Container(
+                height: height,
+                width: width,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+
                   child: Stack(
                     children: [
                       Positioned(
@@ -41,7 +41,7 @@ class OTPScreen extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 100.0),
+                        padding: const EdgeInsets.only(top: 80.0),
                         child: DelayedDisplay(
                           delay: Duration(milliseconds: 400),
                           slidingCurve: Curves.decelerate,
@@ -66,8 +66,22 @@ class OTPScreen extends StatelessWidget {
                       Positioned(
                         right: width / 8,
                         left: width / 8,
-                        top: height / 2.3,
+                        top: height / 2.7,
+                        child: Text(
+                          'Please wait while we validate the passcode sent to your registered number ${BaseUrl.storage.read('phone')}. If the code is not validated automatically, you can enter it below.',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: width / 30),
+                        ),
+                      ),
+                      Positioned(
+                        right: width / 8,
+                        left: width / 8,
+                        top: height / 2,
                         child: PinCodeTextField(
+                          keyboardType: TextInputType.phone,
                           controller: otpController.otptextcontroller,
                           hasTextBorderColor: Colors.white,
                           highlightPinBoxColor: DynamicColor().white,
@@ -91,8 +105,9 @@ class OTPScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        right: width / 10,
-                        top: height / 1.9,
+                        right: width / 3,
+                        left: width / 2.8,
+                        top: height / 1.6,
                         child: Row(
                           children: [
                             Container(
@@ -124,7 +139,7 @@ class OTPScreen extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top: height / 1.5,
+                        top: height / 1.3,
                         right: width / 12,
                         left: width / 12,
                         child: otpController.start.value == 0
@@ -153,9 +168,9 @@ class OTPScreen extends StatelessWidget {
                             : Container(),
                       ),
                     ],
-                  ));
-            }),
-      ),
+                  ),
+                ));
+          }),
     );
   }
 }

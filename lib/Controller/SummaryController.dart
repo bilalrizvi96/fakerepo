@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../API/API.dart';
 import '../Model/SummaryDetailsModel.dart';
+import 'SignInEmployeeController.dart';
 
 class SummaryController extends GetxController
     with GetTickerProviderStateMixin {
@@ -23,6 +24,7 @@ class SummaryController extends GetxController
   var summarydata = [].obs;
   var summaryguidelinelist = [].obs;
   var summarydetaildata = [].obs;
+
   var weekupdate = 0.obs;
   var tabindex = 0.obs;
   var day, month, year;
@@ -97,6 +99,7 @@ class SummaryController extends GetxController
   }
 
   summaryAnalytics() async {
+    print('arsalan');
     Loading.value = true;
     weekupdate.value = 0;
     weeklist.value.clear();
@@ -144,13 +147,16 @@ class SummaryController extends GetxController
       BaseUrl.storage.write('points', summarydata.value[0].points);
     } else {
       Loading.value = false;
-      // Get.snackbar("Error ", response.data['message'].toString(),
-      //     colorText: Colors.white, backgroundColor: Colors.red);
+
+      print(response.statusCode.toString());
+      print("response.statusCode.toString()");
+      update();
     }
     update();
   }
 
   summaryDetails() async {
+    print('arsalan');
     Loading.value = true;
     summarydetaildata.value.clear();
     var response = await API().Summarydetail(
@@ -169,6 +175,7 @@ class SummaryController extends GetxController
       Loading.value = false;
       response = await SummaryDetailsModel.fromJson(response.data);
       summarydetaildata.value = response.dailyDetails;
+
       if (todate.value.month == int.parse(month)) {
         summarydetaildata.value.removeWhere((item) =>
             int.parse(item.mobileDate.toString().split('-')[0]) <
@@ -189,6 +196,7 @@ class SummaryController extends GetxController
       Loading.value = false;
       response = await SummaryGuidelineModel.fromJson(response.data);
       summaryguidelinelist.value = response.data;
+
       print(summaryguidelinelist.value[0].decription);
     } else {
       Loading.value = false;
@@ -197,6 +205,8 @@ class SummaryController extends GetxController
   }
 
   init() {
+    print('FUCK OFF');
+    summaryguidelinelist.value.clear();
     tabController =
         TabController(length: 2, vsync: this, initialIndex: tabindex.value)
           ..addListener(() {
@@ -213,20 +223,18 @@ class SummaryController extends GetxController
     mindate = DateFormat('dd-MM-y').parse(day + '-' + month + '-' + year);
     summaryAnalytics();
     summaryDetails();
+    print(BaseUrl.storage.read("summaryguideline"));
+    if (summaryguidelinelist.isEmpty) {
+      summaryGuideline();
+    }
 
     update();
   }
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  //   tabController!.dispose();
-  // }
-
   @override
   void onInit() {
     super.onInit();
-    summaryGuideline();
+
     init();
   }
 }

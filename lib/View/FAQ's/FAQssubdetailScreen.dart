@@ -4,23 +4,26 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../Component/DynamicColor.dart';
 import '../../Controller/FaqsController.dart';
+import '../FeedbackScreen/FeedbackScreen.dart';
+import 'FaqsAnsScreen.dart';
 
 class FAQssubdetailScreen extends StatelessWidget {
-  var index, title;
-  FaqsController faqsController = Get.put(FaqsController());
-  FAQssubdetailScreen({this.index, this.title});
+  var index, title, subtittle, check;
+
+  FAQssubdetailScreen({this.index, this.title, this.subtittle, this.check});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/faqsbg.png'), fit: BoxFit.cover)),
+      body: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/faqsbg.png'), fit: BoxFit.cover)),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -52,6 +55,26 @@ class FAQssubdetailScreen extends StatelessWidget {
               SizedBox(
                 height: height / 12,
               ),
+              Container(
+                width: width / 1.2,
+                height: height / 9.0,
+                padding: const EdgeInsets.only(left: 20, right: 8.0),
+                decoration: BoxDecoration(
+                    border: Border.all(color: DynamicColor().primarycolor),
+                    borderRadius: BorderRadius.circular(9.0),
+                    color: Color(0xFFECF7FF)),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "${subtittle}",
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500, fontSize: width / 28),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: height / 40,
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -63,9 +86,27 @@ class FAQssubdetailScreen extends StatelessWidget {
                       itemBuilder: (context, indexs) {
                         return GestureDetector(
                           onTap: () {
-                            Get.bottomSheet(
-                              Bottom(index: index[indexs], height: height),
-                            );
+                            print(index[indexs].form);
+                            index[indexs].form == 'false'
+                                ? Get.to(
+                                    () => FaqsAnsScreen(
+                                          index: index[indexs],
+                                          title: title.toString(),
+                                          subtittle: index[indexs].label,
+                                          form: index[indexs].form,
+                                          answer: index[indexs].answer,
+                                        ),
+                                    transition: Transition.rightToLeft,
+                                    curve: Curves.easeInQuart)
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FeedbackScreen(
+                                              check: true,
+                                              label: index[indexs].label,
+                                              form: true,
+                                            )),
+                                  );
                             // Get.to(() => FAQsDetailScreen(
                             //       index: faqsController
                             //           .faqlist.value[index].subcat,
@@ -75,39 +116,42 @@ class FAQssubdetailScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               width: width / 1.23,
-                              height: height / 10,
+                              // height: height / 10,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(13.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 4,
-                                      blurRadius: 6,
-                                      offset: Offset(
-                                          0, 2), // changes position of shadow
-                                    ),
-                                  ],
-                                  color: Colors.white),
-                              child: Row(
+                                borderRadius: BorderRadius.circular(13.0),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  Row(
+                                    children: [
+                                      // SizedBox(
+                                      //   width: width / 120,
+                                      // ),
+                                      Expanded(
+                                        child: Text(
+                                          index[indexs].label,
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: width / 27),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: width / 20,
+                                      ),
+                                      Icon(Icons.arrow_forward_ios_sharp,
+                                          size: 20,
+                                          color: DynamicColor().primarycolor),
+                                      // SizedBox(
+                                      //   width: width / 20,
+                                      // ),
+                                    ],
+                                  ),
                                   SizedBox(
-                                    width: width / 20,
+                                    height: height / 40,
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      index[indexs].title,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: width / 27),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Icon(Icons.arrow_forward_ios_sharp,
-                                      size: 30,
-                                      color: DynamicColor().primarycolor),
-                                  SizedBox(
-                                    width: width / 20,
-                                  ),
+                                  Divider(),
                                 ],
                               ),
                             ),
@@ -119,50 +163,6 @@ class FAQssubdetailScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Container Bottom({var index, var height}) {
-    return Container(
-      height: 700,
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
-      ),
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: height / 12,
-          ),
-          Text(
-            "${index.title}",
-            style: GoogleFonts.poppins(
-                color: Color(0xFFEE696A),
-                fontWeight: FontWeight.bold,
-                fontSize: 25),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '${index.subString}',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500, fontSize: 16),
-            ),
-          ),
-          SizedBox(
-            height: 50,
-          ),
-        ],
       ),
     );
   }
