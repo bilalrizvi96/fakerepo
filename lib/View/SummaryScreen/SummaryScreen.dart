@@ -24,6 +24,7 @@ class SummaryScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         child: Container(
@@ -41,6 +42,7 @@ class SummaryScreen extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 20.0),
+
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,

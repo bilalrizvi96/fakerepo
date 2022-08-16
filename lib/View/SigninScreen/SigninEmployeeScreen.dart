@@ -4,7 +4,9 @@ import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
 import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
 
 import 'package:delayed_display/delayed_display.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,6 +32,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                 height: height,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20.0),
+
                   child: Stack(
                     children: [
                       Padding(
@@ -305,9 +308,9 @@ class SiginEmployeeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 }

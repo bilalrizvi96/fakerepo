@@ -17,6 +17,7 @@ class CheckPointScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+
       body: Container(
         height: height,
         color: Colors.white,
@@ -26,6 +27,7 @@ class CheckPointScreen extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
+
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

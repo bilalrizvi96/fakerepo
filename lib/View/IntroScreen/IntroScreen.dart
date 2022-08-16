@@ -16,11 +16,13 @@ class IntroScreen extends StatelessWidget {
       body: GetBuilder(
           init: introController,
           builder: (_) {
+
             return Container(
                 width: width,
                 height: height,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20.0),
+
                   child: Stack(
                     children: [
                       PageView(
@@ -169,7 +171,7 @@ class IntroScreen extends StatelessWidget {
                                             alignment: Alignment.bottomCenter,
                                             child: Image.network(
                                               'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
-                                              fit: BoxFit.contain,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                           Padding(

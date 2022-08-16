@@ -19,6 +19,7 @@ class UpdateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       bottomNavigationBar: Container(
         height: MediaQuery.of(context).size.height / 5.5,
         decoration: BoxDecoration(
@@ -27,6 +28,7 @@ class UpdateScreen extends StatelessWidget {
                 topLeft: Radius.circular(20.0))),
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
+
           child: Column(
             children: [
               SizedBox(
