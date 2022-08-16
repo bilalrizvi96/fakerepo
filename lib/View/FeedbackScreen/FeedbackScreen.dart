@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:attendencesystem/Controller/FeedbackController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,12 +33,22 @@ class FeedbackScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Stack(
                   children: [
-                    Image.network(
-                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/attendancebg.png',
+                    CachedNetworkImage(
+                      imageUrl:
+                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/attendancebg.png',
                       fit: BoxFit.cover,
                       width: width,
                       height: height,
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
+                    // Image.network(
+                    //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/attendancebg.png',
+                    //   fit: BoxFit.cover,
+                    //   width: width,
+                    //   height: height,
+                    // ),
                     // CachedNetworkImage(
                     //   placeholder: (context, url) => Image.asset(
                     //     "assets/1.gif",

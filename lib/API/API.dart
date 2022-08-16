@@ -23,7 +23,7 @@ class API {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, "checkings/RegistrationConfirmation");
     }
   }
 
@@ -36,11 +36,6 @@ class API {
       var image}) async {
     var file;
     if (image != null) {
-      // Uint8List imagebytes = await image.readAsBytes();
-
-      // String base64string = base64.encode(imagebytes);
-      // file = base64string.toString();
-      // file.replaceAll('/', '');
       file = await MultipartFile.fromFile(image.path);
     }
     try {
@@ -52,21 +47,25 @@ class API {
         "ip": ip,
         "model": model,
         "name": devicename,
-        "image": file,
+        // "image": file,
+        "cache": false
       });
 
       print(data);
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
+
       final response = await dio.post(
-        BaseUrl.baseurl + 'login',
+        BaseUrl.baseurl + 'auth/LoginWithoutBucket',
         data: data,
       );
       if (response.statusCode == 200) {
+        print(response);
         return response;
       }
     } catch (e) {
-      return onError(e);
+      print(e);
+      return onError(e, 'SigIn');
     }
   }
 
@@ -77,14 +76,14 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       response = await dio.get(
-        BaseUrl.baseurl + 'maintenance',
+        BaseUrl.baseurl + 'maintenance/forMob',
       );
       if (response.statusCode == 200) {
         print(response.data);
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'CheckMaintenance');
     }
   }
 
@@ -101,7 +100,7 @@ class API {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'Holidays ');
     }
   }
 
@@ -111,14 +110,14 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       response = await dio.get(
-        BaseUrl.baseurl + 'checkUpdate',
+        BaseUrl.baseurl + 'appUpdates',
       );
       if (response.statusCode == 200) {
         print(response.data);
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'CheckUpdate');
     }
   }
 
@@ -129,14 +128,14 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'OTPVerification',
+        BaseUrl.baseurl + 'OTPAndSMS/OTPVerification',
         data: data,
       );
       if (response.statusCode == 200) {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'OTPVerification');
     }
   }
 
@@ -146,56 +145,16 @@ class API {
       var dio = Dio();
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'OTPSend',
+        BaseUrl.baseurl + 'OTPAndSMS/OTPSend',
         data: data,
       );
       if (response.statusCode == 200) {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'ResendOTp');
     }
   }
-
-  // Future NotificationSend(
-  //     {
-  //     // var time,
-  //     var empId,
-  //     var message}) async {
-  //   try {
-  //     // Map data = {
-  //     //   "type": "faceDuplication",
-  //     //   // "time": time.toString(),
-  //     //   "employeeId": empId.toString(),
-  //     //   "message": message.toString().trim(),
-  //     //   'resolve': false,
-  //     //   'region':"",
-  //     //   'name':'',
-  //     // };
-  //     var formData = FormData.fromMap({
-  //       "type": "faceDuplication",
-  //       // "time": time.toString(),
-  //       "employeeId": empId.toString(),
-  //       "message": message.toString().trim(),
-  //       'resolved': false,
-  //       'phone': '',
-  //       'region': "",
-  //       'name': '',
-  //       "image": "",
-  //     });
-  //     var dio = Dio();
-  //     dio.options.headers['Accept'] = 'application/json';
-  //     final response = await dio.post(
-  //       BaseUrl.baseurl + 'support',
-  //       data: formData,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       return response;
-  //     }
-  //   } catch (e) {
-  //     return onError(e);
-  //   }
-  // }
 
   Future Summaryanalytic({
     var month,
@@ -208,34 +167,14 @@ class API {
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
-        BaseUrl.baseurl + 'analytics',
+        BaseUrl.baseurl + 'reports/analytics',
         data: data,
       );
       if (response.statusCode == 200) {
         return response;
       }
     } catch (e) {
-      return onError(e);
-    }
-  }
-
-  GetEmployees() async {
-    try {
-      Map data = {"require": "list"};
-      print(data);
-      var dio = Dio();
-      dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-      final response = await dio.post(
-        BaseUrl.baseurl + 'getCheckPoints',
-        data: data,
-      );
-      if (response.statusCode == 200) {
-        return response;
-      }
-    } catch (e) {
-      print(e);
-      return onError(e);
+      return onError(e, 'Summaryanalytic');
     }
   }
 
@@ -248,114 +187,13 @@ class API {
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
-        BaseUrl.baseurl + 'summaryGuideline',
+        BaseUrl.baseurl + 'reports/summaryGuideline',
       );
       if (response.statusCode == 200) {
         return response;
       }
     } catch (e) {
-      return onError(e);
-    }
-  }
-
-  Future Notification() async {
-    try {
-      var dio = Dio();
-      dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-      final response = await dio.get(
-        BaseUrl.baseurl + 'announcementsForMobile',
-      );
-      if (response.statusCode == 200) {
-        return response;
-      }
-    } catch (e) {
-      return onError(e);
-    }
-  }
-
-  Future SupportRequest() async {
-    try {
-      var dio = Dio();
-      dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-      final response = await dio.get(
-        BaseUrl.baseurl + 'getMobileFeedbacks',
-      );
-      if (response.statusCode == 200) {
-        return response;
-      }
-    } catch (e) {
-      return onError(e);
-    }
-  }
-
-  Future MyPoint() async {
-    try {
-      var dio = Dio();
-      dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-      final response = await dio.get(
-        BaseUrl.baseurl + 'walletForMobile',
-      );
-      if (response.statusCode == 200) {
-        return response;
-      }
-    } catch (e) {
-      return onError(e);
-    }
-  }
-
-  Future Feedback(
-      {
-      // var time,
-      var empId,
-      var message,
-      var type,
-      var image,
-      var name,
-      var phone}) async {
-    var file;
-    if (image != null) {
-      // Uint8List imagebytes = await image.readAsBytes();
-
-      // String base64string = base64.encode(imagebytes);
-      // file = base64string.toString();
-      // file.replaceAll('/', '');
-      file = await MultipartFile.fromFile(image.path);
-    }
-    try {
-      var formData = FormData.fromMap({
-        "type": type,
-        // "time": time.toString(),
-        "employeeId": BaseUrl.storage.read("empCode") != null ? empId : '',
-        "message": message.toString().trim(),
-        'phone': phone,
-        'resolved': false,
-        'region': BaseUrl.storage.read('region') != null
-            ? BaseUrl.storage.read('region')
-            : '',
-        'name': name,
-        "image": file,
-      });
-      print(message.toString());
-      print('emad');
-      // var data = {
-      //
-      // };
-
-      var dio = Dio();
-
-      final response = await dio.post(
-        BaseUrl.baseurl + 'support',
-        data: formData,
-      );
-
-      if (response.statusCode == 200) {
-        return response;
-      }
-    } catch (e) {
-      return onError(e);
+      return onError(e, 'SummaryGuideline');
     }
   }
 
@@ -372,14 +210,124 @@ class API {
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'getReport',
+        BaseUrl.baseurl + 'reports/getReport',
         data: data,
       );
       if (response.statusCode == 200) {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'Summarydetail');
+    }
+  }
+
+  GetEmployees() async {
+    try {
+      Map data = {"require": "list"};
+      print(data);
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
+        BaseUrl.baseurl + 'checkPoints/getCheckPoints',
+        data: data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'GetEmployees');
+    }
+  }
+
+  Future Notification() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'announcements/announcementsForMobile',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'Notification');
+    }
+  }
+
+  Future SupportRequest() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'feedback/getMobileFeedbacks',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'SupportRequest');
+    }
+  }
+
+  Future MyPoint() async {
+    try {
+      var dio = Dio();
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.get(
+        BaseUrl.baseurl + 'reports/walletForMobile',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'MyPoint');
+    }
+  }
+
+  Future Feedback(
+      {
+      // var time,
+      var empId,
+      var message,
+      var type,
+      var image,
+      var name,
+      var phone}) async {
+    var file;
+    if (image != null) {
+      file = await MultipartFile.fromFile(image.path);
+    }
+    try {
+      var formData = FormData.fromMap({
+        "type": type,
+        // "time": time.toString(),
+        "employeeId": BaseUrl.storage.read("empCode") != null ? empId : '',
+        "message": message.toString().trim(),
+        'phone': phone,
+        'resolved': false,
+        'region': BaseUrl.storage.read('region') != null
+            ? BaseUrl.storage.read('region')
+            : '',
+        'name': name,
+        "image": file,
+      });
+
+      var dio = Dio();
+
+      final response = await dio.post(
+        BaseUrl.baseurl + 'feedback/support',
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'Feedback');
     }
   }
 
@@ -403,7 +351,7 @@ class API {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'Face_Registration');
     }
   }
 
@@ -443,7 +391,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
-        BaseUrl.baseurl + 'start',
+        BaseUrl.baseurl + 'checkings/start',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -454,7 +402,7 @@ class API {
         return status;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'CheckIn');
     }
   }
 
@@ -472,7 +420,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
-        BaseUrl.baseurl + 'end',
+        BaseUrl.baseurl + 'checkings/end',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -483,8 +431,7 @@ class API {
         return status;
       }
     } catch (e) {
-      print(e);
-      return onError(e);
+      return onError(e, 'CheckOut');
     }
   }
 
@@ -519,7 +466,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
-        BaseUrl.baseurl + 'end',
+        BaseUrl.baseurl + 'checkings/end',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -530,7 +477,7 @@ class API {
         return status;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'Reasoncheckout');
     }
   }
 
@@ -539,7 +486,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
-        BaseUrl.baseurl + 'absentPresent',
+        BaseUrl.baseurl + 'auth/absentPresent',
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),
@@ -548,7 +495,7 @@ class API {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'AbsentPresent');
     }
   }
 
@@ -560,7 +507,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
-        BaseUrl.baseurl + 'checkPointsPDFGenerate',
+        BaseUrl.baseurl + 'checkPoints/checkPointsPDFGenerate',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -572,7 +519,7 @@ class API {
       }
     } catch (e) {
       print(e);
-      return onError(e);
+      return onError(e, 'CheckPointPDf');
     }
   }
 
@@ -583,7 +530,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.post(
-        BaseUrl.baseurl + 'reportPDFGenerate',
+        BaseUrl.baseurl + 'reports/reportPDFGenerate',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -594,7 +541,7 @@ class API {
       }
     } catch (e) {
       print(e);
-      return onError(e);
+      return onError(e, 'SummaryPDf');
     }
   }
 
@@ -605,7 +552,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.put(
-        BaseUrl.baseurl + 'currentLocation',
+        BaseUrl.baseurl + 'checkPoints/currentLocation',
         data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
@@ -616,7 +563,7 @@ class API {
       }
     } catch (e) {
       print(e);
-      return onError(e);
+      return onError(e, 'Sendlatlng');
     }
   }
 
@@ -625,7 +572,7 @@ class API {
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       final response = await dio.get(
-        BaseUrl.baseurl + 'manage_site',
+        BaseUrl.baseurl + 'manageSite/manage_site',
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),
@@ -634,7 +581,7 @@ class API {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'Getsites');
     }
   }
 
@@ -652,7 +599,7 @@ class API {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'GetIp');
     }
   }
 
@@ -673,7 +620,7 @@ class API {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'HelpCenters');
     }
   }
 
@@ -698,7 +645,7 @@ class API {
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'checkPoints',
+        BaseUrl.baseurl + 'checkPoints/write',
         data: data,
         options: Options(headers: {
           Headers.acceptHeader: "application/json",
@@ -711,7 +658,7 @@ class API {
       }
     } catch (e) {
       print(e);
-      return onError(e);
+      return onError(e, 'CheckPoints');
     }
   }
 
@@ -724,7 +671,7 @@ class API {
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
       dio.options.headers['Accept'] = 'application/json';
       final response = await dio.post(
-        BaseUrl.baseurl + 'getCheckPoints',
+        BaseUrl.baseurl + 'checkPoints/getCheckPoints',
         data: data,
         options: Options(headers: {
           Headers.acceptHeader: "application/json",
@@ -735,7 +682,7 @@ class API {
         return response;
       }
     } catch (e) {
-      return onError(e);
+      return onError(e, 'HistoryCheckPoints');
     }
   }
 }

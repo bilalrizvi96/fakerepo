@@ -1,6 +1,7 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SummaryController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -218,10 +219,19 @@ class SummaryScreen extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Spacer(),
-                                      Image.network(
-                                        'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
+                                      CachedNetworkImage(
+                                        imageUrl:
+                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
                                         height: height / 25,
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       ),
+                                      // Image.network(
+                                      //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
+                                      //   height: height / 25,
+                                      // ),
                                       Spacer(),
                                       Text(
                                         summaryController.selectedmonths
@@ -945,11 +955,20 @@ class Analytics extends StatelessWidget {
                       fadeIn: true,
                       fadingDuration: Duration(milliseconds: 1200),
                       child: _summaryController.summarydata.value.isNotEmpty
-                          ? Image.network(
-                              _summaryController
+                          ? CachedNetworkImage(
+                              imageUrl: _summaryController
                                   .summarydata.value[0].messages.imageUrl,
                               fit: BoxFit.contain,
+                              placeholder: (context, url) =>
+                                  Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
                             )
+                          // Image.network(
+                          //         _summaryController
+                          //             .summarydata.value[0].messages.imageUrl,
+                          //         fit: BoxFit.contain,
+                          //       )
                           : Column(),
                     ),
                     DelayedDisplay(

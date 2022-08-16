@@ -6,6 +6,7 @@ import 'package:attendencesystem/Model/WeekModel.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -205,7 +206,6 @@ class SummaryController extends GetxController
   }
 
   init() {
-    print('FUCK OFF');
     summaryguidelinelist.value.clear();
     tabController =
         TabController(length: 2, vsync: this, initialIndex: tabindex.value)

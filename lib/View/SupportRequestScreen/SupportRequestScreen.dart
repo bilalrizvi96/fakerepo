@@ -1,4 +1,5 @@
 import 'package:attendencesystem/Controller/FaqsController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -198,12 +199,28 @@ class SupportRequestScreen extends StatelessWidget {
                                                                               child: Icon(Icons.clear)),
                                                                         ),
                                                                       ),
-                                                                      Image.network(
-                                                                          faqsController
-                                                                              .supportrequestlist
-                                                                              .value[index]
-                                                                              .image,
-                                                                          fit: BoxFit.cover)
+
+                                                                      CachedNetworkImage(
+                                                                        imageUrl: faqsController
+                                                                            .supportrequestlist
+                                                                            .value[index]
+                                                                            .image,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        placeholder:
+                                                                            (context, url) =>
+                                                                                Center(child: CircularProgressIndicator()),
+                                                                        errorWidget: (context,
+                                                                                url,
+                                                                                error) =>
+                                                                            Icon(Icons.error),
+                                                                      )
+                                                                      // Image.network(
+                                                                      //     faqsController
+                                                                      //         .supportrequestlist
+                                                                      //         .value[index]
+                                                                      //         .image,
+                                                                      //     fit: BoxFit.cover)
                                                                     ],
                                                                   ));
                                                         },

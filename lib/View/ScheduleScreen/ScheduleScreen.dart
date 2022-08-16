@@ -22,7 +22,7 @@ class ScheduleScreen extends StatelessWidget {
         child: GetBuilder(
             init: _scheduleControllerontroller,
             builder: (_) {
-              return _scheduleControllerontroller.Loading.value == false
+              return _scheduleControllerontroller.holidayslist.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Column(

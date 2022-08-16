@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
+import 'package:attendencesystem/Controller/HomeController.dart';
 // import 'package:data_connection_checker/data_connection_checker.dart';
 
 // import 'package:device_info_plus/device_info_plus.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
@@ -18,11 +20,14 @@ import 'MaintenanceController.dart';
 class SplashController extends GetxController {
   var updates = false.obs;
   var url = ''.obs;
+
   FirebaseMessaging? _firebaseMessaging;
   LocationPermission? permission;
   MaintenanceController _maintenanceController =
       Get.put(MaintenanceController());
-
+  HomeController homeController = Get.put(HomeController());
+  var clockin = '00:00';
+  var clockout = '00:00';
   _registerOnFirebase() async {
     _firebaseMessaging = FirebaseMessaging.instance;
     _firebaseMessaging!.subscribeToTopic('all');
@@ -117,14 +122,41 @@ class SplashController extends GetxController {
 
   @override
   void onInit() {
-    //
+    HomeWidget.widgetClicked.listen((Uri? uri) => homeController.scan());
     super.onInit();
+
+    clockin = BaseUrl.storage.read('clockin');
+    clockout = BaseUrl.storage.read('clockout');
+
+    updateAppWidget();
+    updateAppWidget2();
     this._registerOnFirebase();
     this.getMessage();
     if (Platform.isAndroid) {
       permissions();
     }
     checks();
+    update();
+  }
+
+  void updateAppWidget() async {
+    await HomeWidget.saveWidgetData<String>(
+        'clockin', BaseUrl.storage.read('clockin'));
+    await HomeWidget.saveWidgetData<String>(
+        'clockout', BaseUrl.storage.read('clockout'));
+    await HomeWidget.saveWidgetData<String>('clockin', clockin);
+    await HomeWidget.saveWidgetData<String>('clockout', clockout);
+    await HomeWidget.updateWidget(
+        name: 'AppWidgetProvider',
+        iOSName: 'AppWidgetProvider',
+        androidName: 'AppWidgetProvider');
+  }
+
+  void updateAppWidget2() async {
+    await HomeWidget.updateWidget(
+        name: 'AppWidgetProvider2',
+        iOSName: 'AppWidgetProvider2',
+        androidName: 'AppWidgetProvider2');
   }
 
   checkUpdate() async {
@@ -148,6 +180,8 @@ class SplashController extends GetxController {
   }
 
   checks() {
+    HomeWidget.widgetClicked.listen((Uri? uri) => homeController.scan());
+    Get.snackbar('Hello', "1");
     var tokenval = BaseUrl.storage.read("token");
     BaseUrl.storage1.read('seen') ?? false;
     print(tokenval);

@@ -1,5 +1,6 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/RegistrationController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -157,19 +158,41 @@ class FaceIDRuleScreen extends StatelessWidget {
                                       SizedBox(
                                         width: height / 32,
                                       ),
-                                      Image.network(
-                                        'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/facemask.png',
+                                      CachedNetworkImage(
+                                        imageUrl:
+                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/facemask.png',
                                         fit: BoxFit.contain,
                                         width: width / 4,
                                         height: height / 8,
+                                        placeholder: (context, url) =>
+                                            Center(child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       ),
+                                      // Image.network(
+                                      //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/facemask.png',
+                                      //   fit: BoxFit.contain,
+                                      //   width: width / 4,
+                                      //   height: height / 8,
+                                      // ),
                                       Spacer(),
-                                      Image.network(
-                                        'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/sunglasses.png',
+                                      CachedNetworkImage(
+                                        imageUrl:
+                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/sunglasses.png',
                                         fit: BoxFit.contain,
                                         width: width / 4,
                                         height: height / 8,
+                                        placeholder: (context, url) =>
+                                            Center(child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       ),
+                                      // Image.network(
+                                      //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/sunglasses.png',
+                                      //   fit: BoxFit.contain,
+                                      //   width: width / 4,
+                                      //   height: height / 8,
+                                      // ),
                                       SizedBox(
                                         width: height / 32,
                                       ),
@@ -225,22 +248,42 @@ class FaceIDRuleScreen extends StatelessWidget {
                                       fadeIn: true,
                                       fadingDuration:
                                           Duration(milliseconds: 800),
-                                      child: Image.network(
-                                        'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/brigthness.png',
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/brigthness.png',
                                         width: width / 4,
                                         height: height / 8,
+                                        placeholder: (context, url) =>
+                                            Center(child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       ),
+                                      // Image.network(
+                                      //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/brigthness.png',
+                                      //   width: width / 4,
+                                      //   height: height / 8,
+                                      // ),
                                     ),
                                     Spacer(),
                                     DelayedDisplay(
                                       fadeIn: true,
                                       fadingDuration:
                                           Duration(milliseconds: 800),
-                                      child: Image.network(
-                                        'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/nohat.png',
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/nohat.png',
                                         width: width / 4,
                                         height: height / 8,
+                                        placeholder: (context, url) =>
+                                            Center(child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       ),
+                                      // Image.network(
+                                      //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/nohat.png',
+                                      //   width: width / 4,
+                                      //   height: height / 8,
+                                      // ),
                                     ),
                                     SizedBox(
                                       width: height / 35,

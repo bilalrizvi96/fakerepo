@@ -2,6 +2,7 @@ import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 
 import 'package:attendencesystem/Controller/HomeController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delayed_display/delayed_display.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
@@ -130,11 +131,7 @@ class HomeScreen extends StatelessWidget {
                               height: height / 8.349,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
-                                image: DecorationImage(
-                                    alignment: Alignment.center,
-                                    image: NetworkImage(
-                                        "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarybg.png"),
-                                    fit: BoxFit.cover),
+                                color: DynamicColor().primarycolor,
                               ),
                               padding: EdgeInsets.only(left: 30, right: 30),
                               child: Row(
@@ -154,10 +151,19 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Spacer(),
-                                  Image.network(
-                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
+                                  CachedNetworkImage(
+                                    imageUrl:
+                                        'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
                                     height: height / 22,
+                                    placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
                                   ),
+                                  // Image.network(
+                                  //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
+                                  //   height: height / 22,
+                                  // ),
                                   Text(
                                     " ${homeController.current.value}",
                                     style: GoogleFonts.poppins(
@@ -306,7 +312,7 @@ class HomeScreen extends StatelessWidget {
                                   ],
                                   image: DecorationImage(
                                       alignment: Alignment.center,
-                                      image: NetworkImage(
+                                      image: new CachedNetworkImageProvider(
                                           "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presentbg.png"),
                                       fit: BoxFit.cover),
                                 ),
@@ -318,11 +324,21 @@ class HomeScreen extends StatelessWidget {
                                     SizedBox(
                                       width: width / 15,
                                     ),
-                                    Image.network(
-                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
                                       fit: BoxFit.contain,
                                       width: width / 9,
+                                      placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                     ),
+                                    // Image.network(
+                                    //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
+                                    //   fit: BoxFit.contain,
+                                    //   width: width / 9,
+                                    // ),
                                     SizedBox(
                                       width: width / 40,
                                     ),
@@ -370,22 +386,22 @@ class HomeScreen extends StatelessWidget {
                                 height: height / 11,
 
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.15),
-                                      spreadRadius: 1,
-                                      blurRadius: 20,
-                                      offset: Offset(
-                                          0, 20), // changes position of shadow
-                                    ),
-                                  ],
-                                  image: DecorationImage(
-                                      alignment: Alignment.center,
-                                      image: NetworkImage(
-                                          "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absentbg.png"),
-                                      fit: BoxFit.cover),
-                                ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.15),
+                                        spreadRadius: 1,
+                                        blurRadius: 20,
+                                        offset: Offset(0,
+                                            20), // changes position of shadow
+                                      ),
+                                    ],
+                                    image: DecorationImage(
+                                        alignment: Alignment.center,
+                                        image: new CachedNetworkImageProvider(
+                                          "https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absentbg.png",
+                                        ),
+                                        fit: BoxFit.cover)),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -394,11 +410,21 @@ class HomeScreen extends StatelessWidget {
                                     SizedBox(
                                       width: width / 15,
                                     ),
-                                    Image.network(
-                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
                                       fit: BoxFit.contain,
                                       width: width / 9,
+                                      placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                     ),
+                                    // Image.network(
+                                    //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
+                                    //   fit: BoxFit.contain,
+                                    //   width: width / 9,
+                                    // ),
                                     SizedBox(
                                       width: width / 40,
                                     ),
@@ -547,18 +573,53 @@ class HomeScreen extends StatelessWidget {
                                                                       .read(
                                                                           "status") ==
                                                                   false
-                                                              ? Image.network(
-                                                                  'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
+                                                              ? CachedNetworkImage(
+                                                                  imageUrl:
+                                                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
                                                                   height:
                                                                       height /
                                                                           12,
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Center(
+                                                                          child:
+                                                                              CircularProgressIndicator()),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Icon(Icons
+                                                                          .error),
                                                                 )
-                                                              : Image.network(
-                                                                  'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                                              // Image.network(
+                                                              //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
+                                                              //         height:
+                                                              //             height /
+                                                              //                 12,
+                                                              //       )
+                                                              : CachedNetworkImage(
+                                                                  imageUrl:
+                                                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
                                                                   height:
                                                                       height /
                                                                           12,
-                                                                ),
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Center(
+                                                                          child:
+                                                                              CircularProgressIndicator()),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Icon(Icons
+                                                                          .error),
+                                                                )
+                                                          // Image.network(
+                                                          //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                                          //         height:
+                                                          //             height /
+                                                          //                 12,
+                                                          //       )
+                                                          ,
                                                         ),
                                                       ),
                                                     ),
@@ -633,11 +694,25 @@ class HomeScreen extends StatelessWidget {
                                                                   0xFFEAEAEAFF)
                                                               .withOpacity(0.1)),
                                                       child: Center(
-                                                        child: Image.network(
-                                                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
-                                                          height: height / 12,
-                                                        ),
-                                                      ),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                        imageUrl:
+                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                                        height: height / 12,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            Center(
+                                                                child:
+                                                                    CircularProgressIndicator()),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      )
+                                                          // Image.network(
+                                                          //                                           ,
+                                                          //                                           height: height / 12,
+                                                          //                                         ),
+                                                          ),
                                                     ),
                                                   ),
                                                   Spacer(),
@@ -781,18 +856,53 @@ class HomeScreen extends StatelessWidget {
                                                                       .read(
                                                                           "status") ==
                                                                   true
-                                                              ? Image.network(
-                                                                  'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
+                                                              ? CachedNetworkImage(
+                                                                  imageUrl:
+                                                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
                                                                   height:
                                                                       height /
                                                                           12,
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Center(
+                                                                          child:
+                                                                              CircularProgressIndicator()),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Icon(Icons
+                                                                          .error),
                                                                 )
-                                                              : Image.network(
-                                                                  'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+
+                                                              // Image.network(
+                                                              //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
+                                                              //         height:
+                                                              //             height /
+                                                              //                 12,
+                                                              //       )
+                                                              : CachedNetworkImage(
+                                                                  imageUrl:
+                                                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
                                                                   height:
                                                                       height /
                                                                           12,
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      Center(
+                                                                          child:
+                                                                              CircularProgressIndicator()),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Icon(Icons
+                                                                          .error),
                                                                 ),
+                                                          // Image.network(
+                                                          //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                                          //         height:
+                                                          //             height /
+                                                          //                 12,
+                                                          //       ),
                                                         ),
                                                       ),
                                                     ),
@@ -870,11 +980,25 @@ class HomeScreen extends StatelessWidget {
                                                                 .withOpacity(
                                                                     0.1)),
                                                         child: Center(
-                                                          child: Image.network(
-                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
-                                                            height: height / 12,
-                                                          ),
-                                                        ),
+                                                            child:
+                                                                CachedNetworkImage(
+                                                          imageUrl:
+                                                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                                          height: height / 12,
+                                                          placeholder: (context,
+                                                                  url) =>
+                                                              Center(
+                                                                  child:
+                                                                      CircularProgressIndicator()),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(Icons.error),
+                                                        )
+                                                            // Image.network(
+                                                            //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                                            //   height: height / 12,
+                                                            // ),
+                                                            ),
                                                       ),
                                                     ),
                                                   ),

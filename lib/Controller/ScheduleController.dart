@@ -35,22 +35,11 @@ class ScheduleController extends GetxController {
             isAllDay: true,
             // subject: val.title.toString().toTitleCase(),
             color: Color(int.parse("0xFF" + val.color))));
+        update();
       }
-
-      // meetings.add(Meeting(
-      //   background: Color(int.parse("0xFF" + val.background.toString())),
-      //   from: DateTime.parse(val.date.toString().split('-')[2] +
-      //       "-" +
-      //       val.date.toString().split('-')[1] +
-      //       "-" +
-      //       val.date.toString().split('-')[0] +
-      //       'T00:00:00'),
-      // ));
     } else {
       getHolidays();
     }
-
-    print(meetings);
     return meetings;
   }
 
@@ -80,5 +69,6 @@ class ScheduleController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getDataSource();
   }
 }

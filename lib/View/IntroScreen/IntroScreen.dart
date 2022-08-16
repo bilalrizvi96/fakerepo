@@ -1,5 +1,6 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/IntroController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -52,12 +53,25 @@ class IntroScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    child: Image.network(
-                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro1.png',
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro1.png',
                                       fit: BoxFit.cover,
                                       width: width / 1.3,
                                       height: height / 2.5,
+                                      placeholder: (context, url) => Center(
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator())),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                     ),
+                                    // Image.network(
+                                    //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro1.png',
+                                    //   fit: BoxFit.cover,
+                                    //   width: width / 1.3,
+                                    //   height: height / 2.5,
+                                    // ),
                                   ),
                                 ),
                                 SizedBox(
@@ -79,12 +93,24 @@ class IntroScreen extends StatelessWidget {
                                       child: Stack(
                                         children: [
                                           Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: Image.network(
-                                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
+                                              alignment: Alignment.bottomCenter,
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
+                                                fit: BoxFit.cover,
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                        child:
+                                                            CircularProgressIndicator()),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              )
+                                              // Image.network(
+                                              //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
+                                              //   fit: BoxFit.cover,
+                                              // ),
+                                              ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 100.0, left: 50),
@@ -139,12 +165,24 @@ class IntroScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    child: Image.network(
-                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro2.png',
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro2.png',
                                       fit: BoxFit.cover,
                                       width: width / 1.3,
                                       height: height / 2.5,
+                                      placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                     ),
+
+                                    // Image.network(
+                                    //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro2.png',
+                                    //   fit: BoxFit.cover,
+                                    //   width: width / 1.3,
+                                    //   height: height / 2.5,
+                                    // ),
                                   ),
                                 ),
                                 SizedBox(
@@ -166,12 +204,24 @@ class IntroScreen extends StatelessWidget {
                                       child: Stack(
                                         children: [
                                           Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: Image.network(
-                                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
-                                              fit: BoxFit.contain,
-                                            ),
-                                          ),
+                                              alignment: Alignment.bottomCenter,
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
+                                                fit: BoxFit.contain,
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                        child:
+                                                            CircularProgressIndicator()),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              )
+                                              // Image.network(
+                                              //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
+                                              //   fit: BoxFit.contain,
+                                              // ),
+                                              ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 100.0, left: 50),

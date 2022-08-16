@@ -4,6 +4,7 @@ import 'package:attendencesystem/Model/SitesModel.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_widget/home_widget.dart';
 
 import '../API/BaseURl.dart';
 import 'package:attendencesystem/API/API.dart';
@@ -136,6 +137,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> scan() async {
+    Get.snackbar('Hello', "3");
     try {
       final result = await BarcodeScanner.scan();
       scanResult = result;
@@ -436,10 +438,16 @@ class HomeController extends GetxController {
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
+
+    if (BaseUrl.storage.read('token') != null ||
+        BaseUrl.storage.read('token') != 'out') {
+      HomeWidget.widgetClicked.listen((Uri? uri) => scan());
+    }
   }
 
   @override
   void onInit() {
+    HomeWidget.widgetClicked.listen((Uri? uri) => scan());
     super.onInit();
     init();
     // getSites();

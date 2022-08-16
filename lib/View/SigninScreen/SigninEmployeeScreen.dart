@@ -2,6 +2,7 @@ import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
 import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
@@ -148,20 +149,33 @@ class SiginEmployeeScreen extends StatelessWidget {
                                             signinController.checkOption();
                                           },
                                           child: Container(
-                                            width: width / 3.1,
-                                            height: height / 5.3,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0)),
-                                            padding: EdgeInsets.all(25.0),
-                                            child: Image.network(
-                                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
-                                              fit: BoxFit.scaleDown,
-                                              height: height / 2,
-                                            ),
-                                          ),
+                                              width: width / 3.1,
+                                              height: height / 5.3,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                              padding: EdgeInsets.all(25.0),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
+                                                fit: BoxFit.scaleDown,
+                                                height: height / 2,
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                        child:
+                                                            CircularProgressIndicator()),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              )
+                                              // Image.network(
+                                              //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
+                                              //   fit: BoxFit.scaleDown,
+                                              //   height: height / 2,
+                                              // ),
+                                              ),
                                         ),
 
                                         SizedBox(

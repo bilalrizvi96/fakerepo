@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Routes/Routes.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:home_widget/home_widget.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message,
     {BuildContext? context}) async {
@@ -16,11 +18,30 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message,
   print('Handling a background message ${message.messageId}');
 }
 
+void backgroundCallback(Uri? data) async {
+  if (data!.host == 'updatecounter') {
+    await HomeWidget.saveWidgetData<String>(
+        'clockin', BaseUrl.storage.read('clockin'));
+    await HomeWidget.saveWidgetData<String>(
+        'clockout', BaseUrl.storage.read('clockout'));
+
+    await HomeWidget.updateWidget(
+        name: 'AppWidgetProvider',
+        iOSName: 'AppWidgetProvider',
+        androidName: 'AppWidgetProvider');
+    await HomeWidget.updateWidget(
+        name: 'AppWidgetProvider2',
+        iOSName: 'AppWidgetProvider2',
+        androidName: 'AppWidgetProvider2');
+  }
+}
+
 Future<void> main() async {
   if (Platform.isAndroid) {
     await GetStorage.init();
     WidgetsFlutterBinding.ensureInitialized();
     GestureBinding.instance!.resamplingEnabled = true;
+    HomeWidget.registerBackgroundCallback(backgroundCallback);
     await Firebase.initializeApp(
         options: const FirebaseOptions(
             appId: '1:833414981797:android:4f17b315106ee54a1b054c',

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
@@ -432,12 +433,27 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                                               child: Icon(Icons.clear)),
                                                                         ),
                                                                       ),
-                                                                      Image.network(
-                                                                          _checkPointController
-                                                                              .historyList
-                                                                              .value[index]
-                                                                              .image,
-                                                                          fit: BoxFit.cover)
+                                                                      CachedNetworkImage(
+                                                                        imageUrl: _checkPointController
+                                                                            .historyList
+                                                                            .value[index]
+                                                                            .image,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        placeholder:
+                                                                            (context, url) =>
+                                                                                Center(child: CircularProgressIndicator()),
+                                                                        errorWidget: (context,
+                                                                                url,
+                                                                                error) =>
+                                                                            Icon(Icons.error),
+                                                                      ),
+                                                                      // Image.network(
+                                                                      //     _checkPointController
+                                                                      //         .historyList
+                                                                      //         .value[index]
+                                                                      //         .image,
+                                                                      //     fit: BoxFit.cover)
                                                                     ],
                                                                   ));
                                                         },
@@ -458,14 +474,35 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                                                       BorderRadius
                                                                           .circular(
                                                                               13.0)),
-                                                              child: Image.network(
-                                                                  _checkPointController
-                                                                      .historyList
-                                                                      .value[
-                                                                          index]
-                                                                      .image,
-                                                                  fit: BoxFit
-                                                                      .cover)),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                imageUrl: _checkPointController
+                                                                    .historyList
+                                                                    .value[
+                                                                        index]
+                                                                    .image,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    Center(
+                                                                        child:
+                                                                            CircularProgressIndicator()),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error),
+                                                              )
+                                                              // Image.network(
+                                                              //     _checkPointController
+                                                              //         .historyList
+                                                              //         .value[
+                                                              //             index]
+                                                              //         .image,
+                                                              //     fit: BoxFit
+                                                              //         .cover)
+                                                              ),
                                                         ),
                                                       ),
                                                     ),

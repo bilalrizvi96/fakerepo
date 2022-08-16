@@ -4,6 +4,7 @@ import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/API/Capitalize.dart';
 import 'package:attendencesystem/Model/EmployeeModel.dart';
 import 'package:attendencesystem/Model/HistoryCheckpointModel.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -233,7 +234,15 @@ class TrackUserController extends GetxController {
                             SizedBox(
                               height: 20,
                             ),
-                            Image.network(element.image, fit: BoxFit.cover)
+                            CachedNetworkImage(
+                              imageUrl: element.image,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) =>
+                                  Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            )
+                            // Image.network(element.image, fit: BoxFit.cover)
                           ],
                         ),
                         radius: 10.0);

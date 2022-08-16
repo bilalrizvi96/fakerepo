@@ -1,6 +1,7 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/OTPController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 
@@ -43,23 +44,45 @@ class OTPScreen extends StatelessWidget {
                         child: DelayedDisplay(
                           delay: Duration(milliseconds: 400),
                           slidingCurve: Curves.decelerate,
-                          child: Image.network(
-                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/otpbg.png',
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/otpbg.png',
                             fit: BoxFit.cover,
                             width: width,
                             height: height,
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                           ),
+                          // Image.network(
+                          //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/otpbg.png',
+                          //   fit: BoxFit.cover,
+                          //   width: width,
+                          //   height: height,
+                          // ),
                         ),
                       ),
                       Positioned(
                         left: width / 20,
                         top: height / 6,
-                        child: Image.network(
-                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/OTPphone.png',
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/OTPphone.png',
                           fit: BoxFit.cover,
                           // width: width,
                           height: height / 6,
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
                         ),
+                        // Image.network(
+                        //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/OTPphone.png',
+                        //   fit: BoxFit.cover,
+                        //   // width: width,
+                        //   height: height / 6,
+                        // ),
                       ),
                       Positioned(
                         right: width / 8,

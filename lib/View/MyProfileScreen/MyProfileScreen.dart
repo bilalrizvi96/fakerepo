@@ -2,6 +2,7 @@ import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 
 import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -81,16 +82,30 @@ class MyProfileScreen extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.topLeft,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.network(
-                                    'https://attandence-bucket.s3.us-east-2.amazonaws.com/register/' +
-                                        BaseUrl.storage.read('empCode') +
-                                        ".jpg",
-                                    fit: BoxFit.fill,
-                                    width: width / 4.5,
-                                    height: height / 7,
-                                  ),
-                                ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          'https://attandence-bucket.s3.us-east-2.amazonaws.com/register/' +
+                                              BaseUrl.storage.read('empCode') +
+                                              ".jpg",
+                                      fit: BoxFit.fill,
+                                      width: width / 4.5,
+                                      height: height / 7,
+                                      placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    )
+
+                                    // Image.network(
+                                    //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/register/' +
+                                    //       BaseUrl.storage.read('empCode') +
+                                    //       ".jpg",
+                                    //   fit: BoxFit.fill,
+                                    //   width: width / 4.5,
+                                    //   height: height / 7,
+                                    // ),
+                                    ),
                               ),
                             ),
                             SizedBox(

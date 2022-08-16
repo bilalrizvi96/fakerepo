@@ -1,5 +1,6 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/FaqsController.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -120,12 +121,28 @@ class FAQsScreen extends StatelessWidget {
                                                 SizedBox(
                                                   width: width / 20,
                                                 ),
-                                                Image.network(
-                                                    faqsController.faqlist
-                                                        .value[index].icon,
-                                                    // width: width / 2,
-                                                    height: height / 40,
-                                                    fit: BoxFit.scaleDown),
+                                                CachedNetworkImage(
+                                                  imageUrl: faqsController
+                                                      .faqlist
+                                                      .value[index]
+                                                      .icon,
+                                                  height: height / 40,
+                                                  fit: BoxFit.scaleDown,
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                          child: Center(
+                                                              child:
+                                                                  CircularProgressIndicator())),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Icon(Icons.error),
+                                                ),
+                                                // Image.network(
+                                                //     faqsController.faqlist
+                                                //         .value[index].icon,
+                                                //     // width: width / 2,
+                                                //     height: height / 40,
+                                                //     fit: BoxFit.scaleDown),
                                                 SizedBox(
                                                   width: width / 20,
                                                 ),
