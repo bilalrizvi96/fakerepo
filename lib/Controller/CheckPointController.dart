@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:attendencesystem/Component/DynamicColor.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
+// import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -13,6 +13,9 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart' as la;
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+
+// import 'package:permission_handler/permission_handler.dart';
+// import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,7 +35,7 @@ class CheckPointController extends GetxController
   XFile? checkpointImage;
   var first = ''.obs;
   var finaldate = ''.obs;
-  var printKey = GlobalKey();
+
   TabController? tabController;
   var searchhistorylist = [].obs;
   var mainhistorylist = [].obs;
@@ -66,17 +69,17 @@ class CheckPointController extends GetxController
     update();
   }
 
-  connectionCheck() async {
-    await DataConnectionChecker().onStatusChange.listen((status) async {
-      if (status == DataConnectionStatus.connected) {
-        connection.value = true;
-        update();
-      } else {
-        connection.value = false;
-        update();
-      }
-    });
-  }
+  // connectionCheck() async {
+  //   await DataConnectionChecker().onStatusChange.listen((status) async {
+  //     if (status == DataConnectionStatus.connected) {
+  //       connection.value = true;
+  //       update();
+  //     } else {
+  //       connection.value = false;
+  //       update();
+  //     }
+  //   });
+  // }
 
   toDate(date) {
     todate.value = date;
@@ -114,11 +117,13 @@ class CheckPointController extends GetxController
         update();
       });
     status.value = BaseUrl.storage.read("status");
+    CurrentLocation();
     super.onInit();
-    connectionCheck();
+    // connectionCheck();
     Future.delayed(Duration(milliseconds: 200), () {
       mapupdate();
     });
+
     day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
     month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
     year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
@@ -132,6 +137,14 @@ class CheckPointController extends GetxController
     update();
   }
 
+  // init() {
+  //   status.value = BaseUrl.storage.read("status");
+  //   Future.delayed(Duration(milliseconds: 200), () {
+  //     mapupdate();
+  //   });
+  //   historycheckpoint();
+  // }
+
   CurrentLocation() async {
     final location = new la.Location();
     Position position = await Geolocator.getCurrentPosition();
@@ -144,10 +157,9 @@ class CheckPointController extends GetxController
   }
 
   checkpoint() async {
-    if (checkpointFormKey.currentState!.validate() &&
-        checkpointFormKey.currentState!.validate()) {
-      Loading.value = true;
-      update();
+    Loading.value = true;
+    update();
+    if (siteController.text.toString() != '') {
       BaseUrl.storage
           .write("sitecheckpoint", siteController.text.toString().trim());
       BaseUrl.storage.write(
@@ -169,20 +181,29 @@ class CheckPointController extends GetxController
           if (response.statusCode == 201) {
             siteController.clear();
             noteController.clear();
-            historycheckpoint();
+
             checkpointImage = null;
             if (checkboxvalue.value == true) {
-              status.value = true;
-              Loading.value = false;
-              Get.back();
-              homeController.clockout(check: true);
+              if (BaseUrl.storage.read("isCheckOutOn") == true) {
+                status.value = true;
+                Loading.value = false;
+                // Get.back();
+                homeController.clockout(check: true);
+                // init();
+              }
+
               homeController.clockindate2 = DateTime.now().day;
             } else if (BaseUrl.storage.read("status") == false) {
-              status.value = false;
-              Loading.value = false;
-              Get.back();
-              homeController.clockin(check: true);
+              if (BaseUrl.storage.read("isCheckInOn") == true) {
+                status.value = false;
+                Loading.value = false;
+                // Get.back();
+                homeController.clockin(check: true);
+                // init();
+              }
             }
+            historycheckpoint();
+            checkboxvalue.value = false;
             Get.snackbar(
               "Checkpoints ",
               'Successfully Added',
@@ -204,12 +225,16 @@ class CheckPointController extends GetxController
         Get.snackbar("Error ", "Please Capture Image",
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", "Fill the required fields".toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
 
   historycheckpoint() async {
-    // Loading.value = true;
+    Loading.value = true;
     historyList.value.clear();
     var date = todate.value.toString().split(' ');
     finaldate.value = date[0].toString();
@@ -225,16 +250,15 @@ class CheckPointController extends GetxController
       print(mainhistorylist.value[0].image);
     } else {
       Loading.value = false;
-      // Get.snackbar("Error ", response.data['error'].t oString(),
-      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
 
-  checkpointPdf() async {
+  checkpointPdf(empCode, name) async {
     var date = todate.value.toString().split(' ');
     finaldate.value = date[0].toString();
-    var response = await API().CheckPointPDf(date: finaldate.toString());
+    var response = await API().CheckPointPDf(
+        date: finaldate.toString(), empCode: empCode, name: name);
     if (response.statusCode == 200) {
       var urls = response.data['data'][0]['url'];
 
@@ -316,6 +340,13 @@ class CheckPointController extends GetxController
 
   mapupdate() async {
     await CurrentLocation();
+    // if (await Permission.location.request().isGranted) {
+    //   await CurrentLocation();
+    // } else {
+    //   Loading.value = false;
+    //   Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
+    //       colorText: Colors.white, backgroundColor: Colors.red);
+    // }
 
     initialCameraPosition.value = CameraPosition(
       target: LatLng(
@@ -387,12 +418,12 @@ class CheckPointController extends GetxController
     update();
   }
 
-  String? validators(var values) {
-    if (values.isEmpty) {
-      return "Please this field must be filled";
-    }
-    return null;
-  }
+  // String? validators(var values) {
+  //   if (values.isEmpty) {
+  //     return "Please this field must be filled";
+  //   }
+  //   return null;
+  // }
 
   @override
   void onClose() {

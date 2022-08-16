@@ -56,6 +56,8 @@ class RegistrationController extends GetxController {
       );
       if (response.statusCode == 200) {
         Loading.value = false;
+        BaseUrl.storage.write('phone', response.data['data']['phone']);
+        print(BaseUrl.storage.read('phone'));
         Get.toNamed(
           '/facerule',
         );
@@ -76,30 +78,6 @@ class RegistrationController extends GetxController {
       );
       if (response.statusCode == 200) {
         Get.offNamed('/OTP');
-        Loading.value = false;
-      } else if (response.statusCode == 422) {
-        var errorid = response.data['error'].toString().split(":");
-        print(response.data['error']);
-        print(response.statusCode);
-        var cheaterID = errorid[1];
-        var date = DateTime.now();
-        await API().NotificationSend(
-          empId: BaseUrl.storage.read("empCode"),
-          time: date.hour.toString() +
-              ":" +
-              date.minute.toString() +
-              " " +
-              date.day.toString() +
-              "-" +
-              date.month.toString() +
-              "-" +
-              date.year.toString(),
-          message: cheaterID.toString() +
-              " is trying to register on " +
-              employee_IdController.text.toString(),
-        );
-        Get.snackbar("Error ", response.data['error'].toString(),
-            colorText: Colors.white, backgroundColor: Colors.red);
         Loading.value = false;
       } else {
         Get.snackbar("Error ", response.data['error'].toString(),

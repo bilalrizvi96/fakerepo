@@ -1,5 +1,7 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/BottomNavigationController.dart';
+import 'package:attendencesystem/View/CheckPointScreen/CheckPointScreen.dart';
+import 'package:attendencesystem/View/TrackUserScreen/TrackUserScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,7 +65,7 @@ class BottomNavigationScreen extends StatelessWidget {
                   onTap: bottomNavigationController.ItemIndex,
                   unselectedItemColor: Colors.grey[500],
                   currentIndex: bottomNavigationController.selectedIndex.value,
-                  items: const <BottomNavigationBarItem>[
+                  items: <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
                       icon: Icon(Icons.dashboard),
                       label: 'Dashboard',
@@ -72,10 +74,37 @@ class BottomNavigationScreen extends StatelessWidget {
                       icon: Icon(Icons.summarize_outlined),
                       label: 'Summary',
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.support_agent),
-                      label: 'Support',
-                    ),
+                    BaseUrl.storage.read("trackuseraccess") == true
+                        ? BottomNavigationBarItem(
+                            icon: Icon(Icons.remove_red_eye_rounded),
+                            label: 'Track Staff',
+                            // icon: Icon(Icons.support_agent),
+                            // label: 'Support',
+                          )
+                        : BaseUrl.storage.read("checkpointaccess") == true
+                            ? BottomNavigationBarItem(
+                                icon: Icon(Icons.location_on_outlined),
+                                label: 'CheckPoint',
+                              )
+                            : BottomNavigationBarItem(
+                                icon: Icon(Icons.support_agent),
+                                label: 'Support',
+                              ),
+                    BaseUrl.storage.read("checkpointaccess") == true &&
+                            BaseUrl.storage.read("trackuseraccess") == false
+                        ? BottomNavigationBarItem(
+                            icon: Icon(Icons.support_agent),
+                            label: 'Support',
+                          )
+                        : BaseUrl.storage.read("checkpointaccess") == true
+                            ? BottomNavigationBarItem(
+                                icon: Icon(Icons.location_on_outlined),
+                                label: 'CheckPoint',
+                              )
+                            : BottomNavigationBarItem(
+                                icon: Icon(Icons.person_outline_sharp),
+                                label: 'My Profile',
+                              )
                   ],
                 ),
                 body: IndexedStack(
@@ -83,9 +112,33 @@ class BottomNavigationScreen extends StatelessWidget {
                   children: [
                     HomeScreen(),
                     SummaryScreen(),
-                    FeedbackScreen(
-                      check: true,
-                    ),
+
+                    BaseUrl.storage.read("trackuseraccess") == true
+                        ? TrackUserScreen()
+                        : BaseUrl.storage.read("checkpointaccess") == true
+                            ? CheckPointScreen()
+                            : FeedbackScreen(
+                                check: true,
+                                form: false,
+                              ),
+                    // BaseUrl.storage.read("checkpointaccess") == false
+                    //     ? FeedbackScreen(
+                    //         check: true,
+                    //         form: false,
+                    //       )
+                    //     : BaseUrl.storage.read("trackuseraccess") == false
+                    //         ? CheckPointScreen()
+                    //         : TrackUserScreen(),
+
+                    BaseUrl.storage.read("checkpointaccess") == true &&
+                            BaseUrl.storage.read("trackuseraccess") == false
+                        ? FeedbackScreen(
+                            check: true,
+                            form: false,
+                          )
+                        : BaseUrl.storage.read("checkpointaccess") == true
+                            ? CheckPointScreen()
+                            : MyProfileScreen()
                     // HomeScreen(),
                   ],
                 ),

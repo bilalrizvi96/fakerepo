@@ -16,23 +16,20 @@ class MyPointScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        right: false,
-        left: false,
-        maintainBottomViewPadding: true,
-        bottom: false,
-        top: false,
-        minimum: EdgeInsets.only(top: 15.0,bottom: 5.0),
-        child: Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/faqsbg.png'), fit: BoxFit.cover)),
-          child: GetBuilder(
-              init: myPointController,
-              builder: (context) {
-                return Stack(
+
+      body: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/faqsbg.png'), fit: BoxFit.cover)),
+        child: GetBuilder(
+            init: myPointController,
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Stack(
+
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -408,9 +405,9 @@ class MyPointScreen extends StatelessWidget {
                       ),
                     )
                   ],
-                );
-              }),
-        ),
+                ),
+              );
+            }),
       ),
     );
   }

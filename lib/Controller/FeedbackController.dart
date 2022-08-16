@@ -9,9 +9,10 @@ class FeedbackController extends GetxController {
   var feedbackcontroller = TextEditingController();
   var namecontroller = TextEditingController();
   var phonecontroller = TextEditingController();
-  var feedbackFormKey = GlobalKey<FormState>();
+  final feedbackFormKey = GlobalKey<FormState>();
   var dropdownValue = 'Choose Category'.obs;
   XFile? faceImage;
+  var label = ''.obs;
   var Loading = false.obs;
   final ImagePicker _picker = ImagePicker();
   var check = true;
@@ -31,40 +32,56 @@ class FeedbackController extends GetxController {
     }
   }
 
-  submit() async {
-    if (feedbackFormKey.currentState!.validate() &&
-        feedbackFormKey.currentState!.validate()) {
-      Loading.value = true;
-      update();
-      if (dropdownValue.value != 'Choose Category') {
-        var date = DateTime.now();
+  submit(var form) async {
+    // if (feedbackFormKey.currentState!.validate() &&
+    //     feedbackFormKey.currentState!.validate()) {
+    Loading.value = true;
+    update();
+    print(form);
+    form == false
+        ? dropdownValue.value = dropdownValue.value
+        : dropdownValue.value = 'HR';
+    if (dropdownValue.value != 'Choose Category') {
+      if (feedbackcontroller.text.toString() != '' &&
+          phonecontroller.text.toString() != '' &&
+          namecontroller.text.toString() != '') {
         var response = await API().Feedback(
-            empId: check != false ? BaseUrl.storage.read("empCode") : "00000",
-            time: date.hour.toString() +
-                ":" +
-                date.minute.toString() +
-                " " +
-                date.day.toString() +
-                "-" +
-                date.month.toString() +
-                "-" +
-                date.year.toString(),
+            empId: check != false ? BaseUrl.storage.read("empCode") : "",
+            // time: date.hour.toString() +
+            //     ":" +
+            //     date.minute.toString() +
+            //     " " +
+            //     date.day.toString() +
+            //     "-" +
+            //     date.month.toString() +
+            //     "-" +
+            //     date.year.toString(),
+            name: namecontroller.text.toString(),
             phone: phonecontroller.text.toString().trim(),
-            message: namecontroller.text.toString() +
-                '~|~' +
-                feedbackcontroller.text.toString(),
-            type: dropdownValue.value.toString(),
+            message: form == false
+                ? feedbackcontroller.text.toString()
+                : label.value.toString() +
+                    '\n' +
+                    feedbackcontroller.text.toString(),
+            type: form == false ? dropdownValue.value.toString() : 'HR',
             image: faceImage);
-        if (response.statusCode == 201) {
+        if (response.statusCode == 200) {
           Loading.value = false;
           if (check == false) {
+            dropdownValue.value = 'Choose Category';
+            phonecontroller.text =
+                BaseUrl.storage.read('phoneNo').toString().toUpperCase();
             // namecontroller.clear();
             faceImage = null;
             Get.back();
+          } else {
+            dropdownValue.value = 'Choose Category';
+            faceImage = null;
+            feedbackcontroller.clear();
+            Get.back();
+            // phonecontroller.clear();
           }
-          faceImage = null;
-          feedbackcontroller.clear();
-          phonecontroller.clear();
+
           Get.snackbar(
             "Feedback",
             "Thank You for your feedback",
@@ -76,10 +93,15 @@ class FeedbackController extends GetxController {
         }
       } else {
         Loading.value = false;
-        Get.snackbar("Error ", "Please select from dropdown".toString(),
+        Get.snackbar("Error ", "Fill the required fields".toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }
+    } else {
+      Loading.value = false;
+      Get.snackbar("Error ", "Please select from dropdown".toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
+
     update();
   }
 
@@ -105,5 +127,10 @@ class FeedbackController extends GetxController {
       faceImage = image;
     }
     update();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 }

@@ -13,22 +13,20 @@ class RegistrationScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        right: false,
-        left: false,
-        maintainBottomViewPadding: true,
-        bottom: false,
-        top: false,
-        child: Container(
-            width: width,
-            height: height,
-            // padding: EdgeInsets.only(right: 5, left: 10),
-            // color: DynamicColor().white,
-            child: GetBuilder(
-                init: registrationController,
-                builder: (_) {
-                  return registrationController.Loading.value == false
-                      ? Stack(
+
+      body: Container(
+          width: width,
+          height: height,
+          // padding: EdgeInsets.only(right: 5, left: 10),
+          // color: DynamicColor().white,
+          child: GetBuilder(
+              init: registrationController,
+              builder: (_) {
+                return registrationController.Loading.value == false
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Stack(
+
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 40.0),
@@ -83,7 +81,7 @@ class RegistrationScreen extends StatelessWidget {
                                       child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            'Employee Id',
+                                            'Employee Code',
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: width / 30,
@@ -107,8 +105,7 @@ class RegistrationScreen extends StatelessWidget {
                                         Container(
                                           width: width / 1.22,
                                           child: TextFormField(
-                                            keyboardType:
-                                                TextInputType.streetAddress,
+                                            keyboardType: TextInputType.phone,
                                             controller: registrationController
                                                 .employee_IdController,
                                             validator: registrationController
@@ -121,7 +118,7 @@ class RegistrationScreen extends StatelessWidget {
                                                 fontWeight: FontWeight.w600),
                                             decoration: new InputDecoration(
                                                 hintText:
-                                                    'Enter Your Employee ID',
+                                                    'Enter Your Employee Code',
                                                 focusColor:
                                                     DynamicColor().primarycolor,
                                                 hoverColor:
@@ -216,7 +213,7 @@ class RegistrationScreen extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: height / 30,
+                                      height: height / 50,
                                     ),
                                     GestureDetector(
                                       onTap: () {
@@ -245,16 +242,16 @@ class RegistrationScreen extends StatelessWidget {
                               ),
                             ),
                           ],
-                        )
-                      : Center(
-                          child: Image.asset(
-                            "assets/1.gif",
-                            height: 500,
-                            width: 500,
-                          ),
-                        );
-                })),
-      ),
+                        ),
+                      )
+                    : Center(
+                        child: Image.asset(
+                          "assets/1.gif",
+                          height: 500,
+                          width: 500,
+                        ),
+                      );
+              })),
     );
   }
 }

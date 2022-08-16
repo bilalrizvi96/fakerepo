@@ -4,6 +4,7 @@ import 'package:attendencesystem/View/IntroScreen/IntroScreen.dart';
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:attendencesystem/View/OTPScreen/OTPScreen.dart';
 import 'package:attendencesystem/View/RegistrationScreen/RegistrationScreen.dart';
+import 'package:attendencesystem/View/ScheduleScreen/ScheduleScreen.dart';
 import 'package:attendencesystem/View/SigninScreen/SigninEmployeeScreen.dart';
 import 'package:attendencesystem/View/SplashScreen/SplashScreen.dart';
 import 'package:attendencesystem/View/UpdateScreen/UpdateScreen.dart';
@@ -15,8 +16,11 @@ import '../View/CheckPointScreen/CheckPointScreen.dart';
 import '../View/FAQ\'s/FAQsDetailScreen.dart';
 import '../View/FAQ\'s/FAQsScreen.dart';
 
+import '../View/MaintainceScreen/MaintainceScreen.dart';
 import '../View/MyPointScreen/MyPointScreen.dart';
 import '../View/NotificationScreen/NotificationScreen.dart';
+import '../View/SupportRequestScreen/SupportRequestScreen.dart';
+import '../View/TrackUserScreen/TrackUserScreen.dart';
 
 class Routes {
   final routes = [
@@ -30,6 +34,11 @@ class Routes {
         page: () => IntroScreen(),
         transition: Transition.leftToRight,
         curve: Curves.easeInQuart),
+    // GetPage(
+    //     name: '/askpermission',
+    //     page: () => AskForPermission(),
+    //     transition: Transition.leftToRight,
+    //     curve: Curves.easeInQuart),
     GetPage(
         name: "/signinemp",
         page: () => SiginEmployeeScreen(),
@@ -51,8 +60,18 @@ class Routes {
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
+        name: "/maintaince",
+        page: () => MaintainceScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
         name: "/checkpoint",
         page: () => CheckPointScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/trackuser",
+        page: () => TrackUserScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
@@ -67,7 +86,7 @@ class Routes {
         curve: Curves.easeInQuart),
     GetPage(
         name: "/faqs",
-        page: () => FAQsScreen(),
+        page: () => FAQsScreen(check: true),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
@@ -78,6 +97,16 @@ class Routes {
     GetPage(
         name: "/notification",
         page: () => NotificationScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/supportrequest",
+        page: () => SupportRequestScreen(),
+        transition: Transition.rightToLeft,
+        curve: Curves.easeInQuart),
+    GetPage(
+        name: "/schedule",
+        page: () => ScheduleScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
   ];
