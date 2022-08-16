@@ -22,9 +22,8 @@ class FeedbackScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-       backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-
       body: Container(
         height: height,
         width: width,
@@ -157,7 +156,6 @@ class FeedbackScreen extends StatelessWidget {
                                     //     ),
                                     //   ),
                                   ],
-
                                 ),
                               ),
                               SizedBox(
