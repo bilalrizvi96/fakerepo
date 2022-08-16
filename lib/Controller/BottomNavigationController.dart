@@ -20,7 +20,9 @@ class BottomNavigationController extends GetxController {
   var selectedIndex = 0.obs;
   var connection = true.obs;
   var scaffoldKey = GlobalKey<ScaffoldState>();
-
+  SummaryController _summaryController = Get.put(SummaryController());
+  CheckPointController _checkPointController = Get.put(CheckPointController());
+  TrackUserController _trackUserController = Get.put(TrackUserController());
   // check() async {
   //   await DataConnectionChecker().onStatusChange.listen((status) async {
   //     if (status == DataConnectionStatus.connected) {
