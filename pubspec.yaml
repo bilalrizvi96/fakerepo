@@ -58,6 +58,8 @@ dependencies:
   open_file: ^3.2.1
   path_provider: ^2.0.7
   dropdown_search:
+
+
   expansion_card:
   device_info_plus:
   slide_countdown:

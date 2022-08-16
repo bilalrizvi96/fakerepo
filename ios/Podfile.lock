@@ -3,14 +3,11 @@ PODS:
     - Flutter
     - MTBBarcodeScanner
     - SwiftProtobuf
-  - device_info_plus (0.0.1):
+  - camera (0.0.1):
     - Flutter
-  - Firebase/CoreOnly (8.15.0):
-    - FirebaseCore (= 8.15.0)
-  - Firebase/Crashlytics (8.15.0):
-    - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 8.15.0)
-  - Firebase/Messaging (8.15.0):
+  - Firebase/CoreOnly (8.14.0):
+    - FirebaseCore (= 8.14.0)
+  - Firebase/Crashlytics (8.14.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.15.0)
   - firebase_core (1.17.1):
@@ -109,7 +106,9 @@ PODS:
 
 DEPENDENCIES:
   - barcode_scan2 (from `.symlinks/plugins/barcode_scan2/ios`)
-  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
+
+  - camera (from `.symlinks/plugins/camera/ios`)
+
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -143,8 +142,9 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   barcode_scan2:
     :path: ".symlinks/plugins/barcode_scan2/ios"
-  device_info_plus:
-    :path: ".symlinks/plugins/device_info_plus/ios"
+
+  camera:
+    :path: ".symlinks/plugins/camera/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_crashlytics:
@@ -175,17 +175,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   barcode_scan2: 0af2bb63c81b4565aab6cd78278e4c0fa136dbb0
 
-  device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
-  Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
-  firebase_core: 318de541b0e61d3f24262982a3f0b54afe72439b
-  firebase_crashlytics: 3ccd7b4f26a7fc546774b1074d2d10b0c6f92ab6
-  firebase_messaging: 943cfe65e0b3f457240489ce67655e40da1d270c
-  FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
-  FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
-  FirebaseCrashlytics: feb07e4e9187be3c23c6a846cce4824e5ce2dd0b
-  FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
-  FirebaseMessaging: 5e5118a2383b3531e730d974680954c679ca0a13
-
+  camera: 9993f92f2c793e87b65e35f3a23c70582afb05b1
   Firebase: 7e8fe528c161b9271d365217a74c16aaf834578e
   firebase_core: cdef02fcf55872191eb0568d4c31a7a700e38582
   firebase_crashlytics: 6c0450e99d20c62d0cd868f287a12aeffbe9b010
