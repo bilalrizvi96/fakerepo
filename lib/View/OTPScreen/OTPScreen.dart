@@ -17,6 +17,7 @@ class OTPScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+
       resizeToAvoidBottomInset: true,
       body: GetBuilder(
           init: otpController,
@@ -26,6 +27,7 @@ class OTPScreen extends StatelessWidget {
                 width: width,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20.0),
+
                   child: Stack(
                     children: [
                       Positioned(

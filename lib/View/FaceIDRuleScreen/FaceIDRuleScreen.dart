@@ -15,6 +15,7 @@ class FaceIDRuleScreen extends StatelessWidget {
 
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+
       body: Container(
         height: height,
         width: width,
@@ -25,6 +26,7 @@ class FaceIDRuleScreen extends StatelessWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Stack(
+
                         children: [
                           Positioned(
                             width: width,

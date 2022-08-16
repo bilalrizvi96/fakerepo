@@ -13,6 +13,7 @@ class RegistrationScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+
       body: Container(
           width: width,
           height: height,
@@ -25,6 +26,7 @@ class RegistrationScreen extends StatelessWidget {
                     ? Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Stack(
+
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 40.0),

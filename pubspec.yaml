@@ -54,14 +54,16 @@ dependencies:
   syncfusion_flutter_calendar:
   intl: ^0.17.0
 #  slider_button:
+
 #  data_connection_checker:
+
   pin_code_text_field: ^1.8.0
   url_launcher: ^6.0.20
   permission_handler:
   syncfusion_flutter_gauges: ^19.4.56
   open_file: ^3.2.1
   path_provider: ^2.0.7
-  syncfusion_flutter_pdf:
+#  syncfusion_flutter_pdf:
   dropdown_search:
 #  camera:
   expansion_card:

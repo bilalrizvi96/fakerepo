@@ -37,6 +37,7 @@ void backgroundCallback(Uri? data) async {
 }
 
 Future<void> main() async {
+
   if (Platform.isAndroid) {
     await GetStorage.init();
     WidgetsFlutterBinding.ensureInitialized();
@@ -94,6 +95,7 @@ Future<void> main() async {
     );
   }
 
+
   runApp(MyApp());
 }
 
@@ -112,7 +114,6 @@ class MyApp extends StatelessWidget {
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
       initialRoute: '/splash',
-      // home: Summarynew(),
       getPages: Routes().routes,
     );
   }
