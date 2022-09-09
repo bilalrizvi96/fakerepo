@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../Component/ErrorLoading.dart';
 import '../../Controller/CheckPointController.dart';
 
 class HistoryCheckPointScreen extends StatelessWidget {
@@ -131,7 +132,9 @@ class HistoryCheckPointScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(right: 28.0),
                         child: Text(
-                          _checkPointController.finaldate.value.toString(),
+                          _checkPointController.finaldate.value
+                              .toString()
+                              .split('T')[0],
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               fontSize: width / 32,
@@ -523,13 +526,7 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                       color: DynamicColor().titletextcolor),
                                 ),
                         )
-                      : Center(
-                          child: Image.asset(
-                            "assets/1.gif",
-                            height: 200,
-                            width: 200,
-                          ),
-                        )
+                      : ErrorLoading(height: 200.0, width: 200.0)
                   // Expanded(child: )
                 ],
               );

@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Component/ErrorLoading.dart';
+import '../../Routes/Routes.dart';
+
 class SiginEmployeeScreen extends StatelessWidget {
   SignInEmployeeController signinController =
       Get.put(SignInEmployeeController());
@@ -212,7 +215,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.toNamed('/registration');
+                                              Get.toNamed(Routes.registration);
                                             },
                                             child: Container(
                                               width: width / 1.2,
@@ -278,7 +281,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                 onTap: () {
                                                   BaseUrl.helptype = 'login';
                                                   Get.toNamed(
-                                                    '/faqs',
+                                                    Routes.faqs,
                                                   );
                                                 },
                                                 child: Image.asset(
@@ -317,13 +320,7 @@ class SiginEmployeeScreen extends StatelessWidget {
                                       ),
                                     ],
                                   )
-                                : Center(
-                                    child: Image.asset(
-                                      "assets/1.gif",
-                                      height: 300,
-                                      width: 300,
-                                    ),
-                                  ),
+                                : ErrorLoading(height: 300.0, width: 300.0),
                           ),
                         ),
                       ],

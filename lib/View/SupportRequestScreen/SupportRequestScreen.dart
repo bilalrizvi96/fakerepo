@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Component/DynamicColor.dart';
+import '../../Component/ErrorLoading.dart';
 
 class SupportRequestScreen extends StatelessWidget {
   SupportRequestScreen({Key? key}) : super(key: key);
@@ -270,13 +271,7 @@ class SupportRequestScreen extends StatelessWidget {
                                   // Spacer(),
                                 ],
                               )
-                        : Center(
-                            child: Image.asset(
-                              "assets/1.gif",
-                              height: 200,
-                              width: 200,
-                            ),
-                          ),
+                        : ErrorLoading(height: 200.0, width: 200.0),
                   ],
                 ),
               );

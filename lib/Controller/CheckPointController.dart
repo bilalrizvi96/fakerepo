@@ -29,7 +29,7 @@ import '../View/HomeScreen/HomeScreen.dart';
 import 'HomeController.dart';
 
 class CheckPointController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+    with GetTickerProviderStateMixin {
   HomeController homeController = Get.put(HomeController());
   final ImagePicker _picker = ImagePicker();
   XFile? checkpointImage;
@@ -64,6 +64,35 @@ class CheckPointController extends GetxController
   var clockindate2, check;
   var connection = true.obs;
   var status = false.obs;
+
+  @override
+  void onInit() {
+    tabController = TabController(length: 2, vsync: this, initialIndex: 0)
+      ..addListener(() {
+        indicatorColor = colors[tabController!.index];
+        update();
+      });
+    status.value = BaseUrl.storage.read("status");
+    CurrentLocation();
+    super.onInit();
+    // connectionCheck();
+    Future.delayed(Duration(milliseconds: 200), () {
+      mapupdate();
+    });
+
+    day = BaseUrl.storage.read("firstAttendanceRecordDate").split('-')[2];
+    month = BaseUrl.storage.read("firstAttendanceRecordDate").split('-')[1];
+    year = BaseUrl.storage.read("firstAttendanceRecordDate").split('-')[0];
+    clockindate2 = DateTime.now().day;
+
+    // check = BaseUrl.storage
+    //     .read("lastAttendanceRecordDate")
+    //     .toString()
+    //     .split('/')[0];
+
+    update();
+  }
+
   checkboxUpdate(value) {
     checkboxvalue.value = value!;
     update();
@@ -109,34 +138,6 @@ class CheckPointController extends GetxController
     update();
   }
 
-  @override
-  void onInit() {
-    tabController = TabController(length: 2, vsync: this, initialIndex: 0)
-      ..addListener(() {
-        indicatorColor = colors[tabController!.index];
-        update();
-      });
-    status.value = BaseUrl.storage.read("status");
-    CurrentLocation();
-    super.onInit();
-    // connectionCheck();
-    Future.delayed(Duration(milliseconds: 200), () {
-      mapupdate();
-    });
-
-    day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
-    month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
-    year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
-    clockindate2 = DateTime.now().day;
-
-    check = BaseUrl.storage
-        .read("lastAttendanceRecordDate")
-        .toString()
-        .split('/')[0];
-
-    update();
-  }
-
   // init() {
   //   status.value = BaseUrl.storage.read("status");
   //   Future.delayed(Duration(milliseconds: 200), () {
@@ -157,6 +158,7 @@ class CheckPointController extends GetxController
   }
 
   checkpoint() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     Loading.value = true;
     update();
     if (siteController.text.toString() != '') {
@@ -217,7 +219,7 @@ class CheckPointController extends GetxController
           }
         } else {
           Loading.value = false;
-          Get.snackbar("Error ", "Please Do Previous Checkout",
+          Get.snackbar("Check Point ", "Please Do Previous Checkout",
               colorText: Colors.white, backgroundColor: Colors.red);
         }
       } else {
@@ -236,12 +238,15 @@ class CheckPointController extends GetxController
   historycheckpoint() async {
     Loading.value = true;
     historyList.value.clear();
-    var date = todate.value.toString().split(' ');
-    finaldate.value = date[0].toString();
+    // var date = todate.value;
 
+    var outputFormat = DateFormat("yyyy-MM-dd'T'00:mm:ss'");
+    finaldate.value = outputFormat.format(todate.value);
     update();
     var response = await API().HistoryCheckPoints(
-        date: finaldate.toString(), require: "myCheckPoints");
+        empcode: BaseUrl.storage.read('empCode'),
+        date: finaldate.value.toString(),
+        require: "myCheckPoints");
     if (response.statusCode == 200) {
       Loading.value = false;
       response = HistoryCheckpointModel.fromJson(response.data);
@@ -272,7 +277,7 @@ class CheckPointController extends GetxController
         throw 'Could not launch $urls';
       }
     } else {
-      Get.snackbar("Error ", response.data['error'].toString(),
+      Get.snackbar("Check Point Pdf ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
@@ -357,7 +362,7 @@ class CheckPointController extends GetxController
       tilt: 1.0,
       bearing: 30,
     );
-    controller!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+    controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       zoom: 14,
       tilt: 0,
       bearing: 30,
@@ -427,8 +432,8 @@ class CheckPointController extends GetxController
 
   @override
   void onClose() {
-    // tabController!.dispose();
-    // controller!.dispose();
+    // TODO: implement onClose
     super.onClose();
+    this.dispose();
   }
 }

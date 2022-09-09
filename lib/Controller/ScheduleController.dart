@@ -16,6 +16,13 @@ class ScheduleController extends GetxController {
   var nigth = ''.obs;
   var off = ''.obs;
   var holiday = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    getDataSource();
+  }
+
   List<Meeting> getDataSource() {
     final List<Meeting> meetings = <Meeting>[];
     if (holidayslist.isNotEmpty) {
@@ -23,14 +30,14 @@ class ScheduleController extends GetxController {
         print(val.title);
         meetings.add(Meeting(
             startTime: DateTime(
-                int.parse(val.date.toString().split('-')[2]),
-                int.parse(val.date.toString().split('-')[1]),
-                int.parse(val.date.toString().split('-')[0]),
+                int.parse(val.date.toString().split('-')[0].split('T')[0]),
+                int.parse(val.date.toString().split('-')[1].split('T')[0]),
+                int.parse(val.date.toString().split('-')[2].split('T')[0]),
                 9),
             endTime: DateTime(
-                int.parse(val.date.toString().split('-')[2]),
-                int.parse(val.date.toString().split('-')[1]),
-                int.parse(val.date.toString().split('-')[0]),
+                int.parse(val.date.toString().split('-')[0].split('T')[0]),
+                int.parse(val.date.toString().split('-')[1].split('T')[0]),
+                int.parse(val.date.toString().split('-')[2].split('T')[0]),
                 10),
             isAllDay: true,
             // subject: val.title.toString().toTitleCase(),
@@ -67,8 +74,9 @@ class ScheduleController extends GetxController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    getDataSource();
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    this.dispose();
   }
 }

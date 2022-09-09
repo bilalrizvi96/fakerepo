@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../Component/DynamicColor.dart';
 
 import '../../Controller/FaqsController.dart';
+import '../../Routes/Routes.dart';
 import 'FAQssubdetailScreen.dart';
 
 class FAQsDetailScreen extends StatelessWidget {
@@ -103,7 +104,7 @@ class FAQsDetailScreen extends StatelessWidget {
                                               transition:
                                                   Transition.rightToLeft,
                                               curve: Curves.easeInQuart)
-                                          : Get.toNamed('/mypoints')
+                                          : Get.toNamed(Routes.mypoints)
                                       : Get.to(
                                           FeedbackScreen(
                                             check: true,

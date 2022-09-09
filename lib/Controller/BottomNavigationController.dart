@@ -11,18 +11,47 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../API/API.dart';
 import '../API/BaseURl.dart';
+import '../Routes/Routes.dart';
 import '../View/CheckPointScreen/CheckPointScreen.dart';
+import '../View/TrackUserScreen/TrackUserScreen.dart';
 import 'HomeController.dart';
+import 'MaintenanceController.dart';
 import 'SummaryController.dart';
 
 class BottomNavigationController extends GetxController {
   var selectedIndex = 0.obs;
   var connection = true.obs;
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  SummaryController _summaryController = Get.put(SummaryController());
+  MaintenanceController _maintenanceController =
+      Get.put(MaintenanceController());
   CheckPointController _checkPointController = Get.put(CheckPointController());
+  SummaryController _summaryController = Get.put(SummaryController());
   TrackUserController _trackUserController = Get.put(TrackUserController());
+  var userdatalist;
+  var widgetChildren = <Widget>[
+    HomeScreen(),
+    SummaryScreen(),
+    BaseUrl.storage.read("trackuseraccess") == true
+        ? TrackUserScreen()
+        : BaseUrl.storage.read("checkpointaccess") == true
+            ? CheckPointScreen()
+            : FeedbackScreen(
+                check: true,
+                form: false,
+              ),
+    BaseUrl.storage.read("checkpointaccess") == true &&
+            BaseUrl.storage.read("trackuseraccess") == false
+        ? FeedbackScreen(
+            check: true,
+            form: false,
+          )
+        : BaseUrl.storage.read("checkpointaccess") == true
+            ? CheckPointScreen()
+            : MyProfileScreen()
+  ];
+
   // check() async {
   //   await DataConnectionChecker().onStatusChange.listen((status) async {
   //     if (status == DataConnectionStatus.connected) {
@@ -43,24 +72,61 @@ class BottomNavigationController extends GetxController {
   //     form: false,
   //   ),
   // ];
-
   @override
   void onInit() {
     super.onInit();
+    if (BaseUrl.storage.read('token') != "out" ||
+        BaseUrl.storage.read('token') != null) {
+      dashboardData();
+      print('dashboard');
+    }
+    print('bilal');
+    print(BaseUrl.storage.read("firstAttendanceRecordDate"));
     popups();
-    print(BaseUrl.storage.read('clockincheck'));
-    // if (BaseUrl.empcheck == true) {
-    //   if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
-    //     BaseUrl.clockin = false;
-    //   } else {
-    //     BaseUrl.clockin = true;
-    //   }
-    //   if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
-    //     BaseUrl.clockout = false;
-    //   } else {
-    //     BaseUrl.clockout = true;
-    //   }
-    // }
+  }
+
+  dashboardData() async {
+    var response = await API().DashboardData();
+    if (response.statusCode == 200) {
+      userdatalist = response.data['data'][0];
+      BaseUrl.storage
+          .write("totalAbsent", userdatalist['absent_days'].toString());
+      BaseUrl.storage
+          .write("totalPresent", userdatalist['present_days'].toString());
+      BaseUrl.storage.write("status", userdatalist['status']);
+      BaseUrl.storage.write("isCheckOutOn", userdatalist['isClockOutOn']);
+      BaseUrl.storage.write("isCheckInOn", userdatalist['isClockInOn']);
+      print(userdatalist['isClockInOn']);
+      print('test1');
+      BaseUrl.storage.write("clockin", userdatalist['clockIn']);
+      BaseUrl.storage
+          .write("welcomemessage", userdatalist['message']['message']);
+      BaseUrl.storage.write("welcometitle", userdatalist['message']['title']);
+      BaseUrl.storage.write("clockout", userdatalist['clockOut']);
+      BaseUrl.storage.write("ismessage", userdatalist['isMessageAvailable']);
+      BaseUrl.storage.write("popupimage", userdatalist['message']['imageUrl']);
+      BaseUrl.storage.write(
+          "maintenance", userdatalist['maintenanceObject']['underMaintenance']);
+      BaseUrl.storage.write("checkOutMissing", userdatalist['clockOutMissing']);
+      if (userdatalist['version']['updateAvailability'] == true) {
+        BaseUrl.storage.write("token", 'out');
+        Get.offAllNamed(Routes.updatescreen, arguments: [
+          userdatalist['version']['message'],
+          userdatalist['version']['currentRelease'],
+          userdatalist['version']['availableRelease'],
+          userdatalist['version']['link'],
+        ]);
+        print(BaseUrl.storage.read("dateForMissingCheckout"));
+      } else if (userdatalist['maintenanceObject']['underMaintenance'] ==
+          true) {
+        _maintenanceController.checkMaintenance();
+      }
+    } else {
+      Get.snackbar("Dashboard ", response.data['error'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+
+    update();
   }
 
   popups() {
@@ -118,20 +184,23 @@ class BottomNavigationController extends GetxController {
   void ItemIndex(index) {
     selectedIndex.value = index;
     if (selectedIndex.value == 1) {
-      // if (_homeController.Loading.value == true) {
+      this.dashboardData();
+    } else if (selectedIndex.value == 1) {
+      this._summaryController.onInit();
       _summaryController.init();
-      // update();
-      // }
+      update();
     } else if (selectedIndex.value == 2) {
       if (BaseUrl.storage.read("trackuseraccess") != false) {
+        this._trackUserController.onInit();
         _trackUserController.init();
+        update();
+      }
+    } else if (selectedIndex.value == 3) {
+      if (BaseUrl.storage.read("checkpointaccess") != false) {
+        this._checkPointController.onInit();
+        update();
       }
     }
-    // else if (selectedIndex.value == 3) {
-    //   if (BaseUrl.storage.read("checkpointaccess") == true) {
-    //     _checkPointController.init();
-    //   }
-    // }
     update();
   }
 }

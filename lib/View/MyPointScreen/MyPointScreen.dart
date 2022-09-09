@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Component/ErrorLoading.dart';
+import '../SummaryScreen/Guideline.dart';
 import '../SummaryScreen/SummaryScreen.dart';
 
 class MyPointScreen extends StatelessWidget {
@@ -16,7 +18,6 @@ class MyPointScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-
       body: Container(
         width: width,
         height: height,
@@ -29,7 +30,6 @@ class MyPointScreen extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Stack(
-
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -198,13 +198,7 @@ class MyPointScreen extends StatelessWidget {
                                               ),
                                       ),
                                     )
-                                  : Center(
-                                      child: Image.asset(
-                                        "assets/1.gif",
-                                        height: 200,
-                                        width: 200,
-                                      ),
-                                    ),
+                                  : ErrorLoading(height: 200.0, width: 200.0),
                             ],
                           ),
                         )

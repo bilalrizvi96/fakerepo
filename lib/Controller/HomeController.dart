@@ -18,6 +18,8 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
+import '../Component/LifeCycleEvent Handler.dart';
+import 'MaintenanceController.dart';
 import 'SignInEmployeeController.dart';
 import 'SummaryController.dart';
 
@@ -56,6 +58,14 @@ class HomeController extends GetxController {
     'NOV',
     'DEC'
   ];
+  @override
+  void onInit() {
+    HomeWidget.widgetClicked.listen((Uri? uri) => scan());
+    super.onInit();
+    init();
+    // getSites();
+  }
+
   String? validators(var values) {
     if (values.isEmpty) {
       return "Please this field must be filled";
@@ -137,7 +147,6 @@ class HomeController extends GetxController {
   }
 
   Future<void> scan() async {
-    Get.snackbar('Hello', "3");
     try {
       final result = await BarcodeScanner.scan();
       scanResult = result;
@@ -178,9 +187,7 @@ class HomeController extends GetxController {
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
-
     await CurrentLocation();
-
     if (BaseUrl.storage.read("isCheckInOn") == true) {
       if (check == false
           ? sites.value != ""
@@ -206,15 +213,15 @@ class HomeController extends GetxController {
           BaseUrl.storage.write("clockin", outputDate1.toString());
           BaseUrl.storage.write("clockout", "00:00");
           BaseUrl.storage.write("status", true);
-          var resp = await API().AbsentPresent();
-          if (resp.statusCode == 200) {
-            print('bilal');
-
-            BaseUrl.storage
-                .write("totalPresent", resp.data['present_days'].toString());
-            BaseUrl.storage
-                .write("totalAbsent", resp.data['absent_days'].toString());
-          }
+          // var resp = await API().AbsentPresent();
+          // if (resp.statusCode == 200) {
+          //   print('bilal');
+          //
+          //   BaseUrl.storage
+          //       .write("totalPresent", resp.data['present_days'].toString());
+          //   BaseUrl.storage
+          //       .write("totalAbsent", resp.data['absent_days'].toString());
+          // }
 
           var dates = DateTime.now().day.toString() +
               "/" +
@@ -250,24 +257,28 @@ class HomeController extends GetxController {
   }
 
   Future getSites() async {
+    Loading.value = true;
+    update();
     sitedatalist.clear();
     var response = await API().Getsites();
     if (response.statusCode == 200) {
       Loading.value = false;
       response = await SitesModel.fromJson(response.data);
       sitedatalist.value = response.data;
+      // BaseUrl.storage.write("sites", sitedatalist.value);
       for (var val in response.data) {
         sitelist.add(val.sitesName.toString());
+        BaseUrl.storage.write("sites", sitelist);
         sitelist.sort((a, b) {
           return a.toLowerCase().compareTo(b.toLowerCase());
         });
       }
 
       dropdownValue.value = sitelist.first;
-      print(sitelist);
+      print(BaseUrl.storage.read("sites"));
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['message'].toString(),
+      Get.snackbar("Sites ", response.data['message'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
@@ -430,26 +441,21 @@ class HomeController extends GetxController {
   }
 
   init() async {
-    // print(BaseUrl.userdata[0].sites);
-    // Timer.periodic(Duration(minutes: 30), (Timer t) => sendLatLng());
-
     Loading.value = false;
     current.value =
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
-
-    if (BaseUrl.storage.read('token') != null ||
-        BaseUrl.storage.read('token') != 'out') {
-      HomeWidget.widgetClicked.listen((Uri? uri) => scan());
-    }
+    // if (BaseUrl.storage.read('token') != null ||
+    //     BaseUrl.storage.read('token') != 'out') {
+    //   HomeWidget.widgetClicked.listen((Uri? uri) => scan());
+    // }
   }
 
   @override
-  void onInit() {
-    HomeWidget.widgetClicked.listen((Uri? uri) => scan());
-    super.onInit();
-    init();
-    // getSites();
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    this.dispose();
   }
 }

@@ -56,7 +56,7 @@ class API {
       dio.options.headers['Accept'] = 'application/json';
 
       final response = await dio.post(
-        BaseUrl.baseurl + 'auth/LoginWithoutBucket',
+        BaseUrl.baseurl + 'auth/loginWithoutBucket',
         data: data,
       );
       if (response.statusCode == 200) {
@@ -77,6 +77,25 @@ class API {
       dio.options.headers['Accept'] = 'application/json';
       response = await dio.get(
         BaseUrl.baseurl + 'maintenance/forMob',
+      );
+      if (response.statusCode == 200) {
+        print(response.data);
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'CheckMaintenance');
+    }
+  }
+
+  Future ProfileData() async {
+    var response;
+
+    try {
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      dio.options.headers['Accept'] = 'application/json';
+      response = await dio.get(
+        BaseUrl.baseurl + 'employee/profile',
       );
       if (response.statusCode == 200) {
         print(response.data);
@@ -221,7 +240,7 @@ class API {
     }
   }
 
-  GetEmployees() async {
+  Future GetEmployees() async {
     try {
       Map data = {"require": "list"};
       print(data);
@@ -481,12 +500,16 @@ class API {
     }
   }
 
-  Future AbsentPresent() async {
+  Future DashboardData() async {
     try {
+      Map data = {
+        "version": BaseUrl.version.toString(),
+      };
       var dio = Dio();
       dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-      final response = await dio.get(
-        BaseUrl.baseurl + 'auth/absentPresent',
+      final response = await dio.post(
+        BaseUrl.baseurl + 'auth/dashboard',
+        data: data,
         options: Options(
             contentType: Headers.formUrlEncodedContentType,
             headers: {Headers.acceptHeader: "application/json"}),

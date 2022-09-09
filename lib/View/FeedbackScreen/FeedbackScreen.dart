@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../API/BaseURl.dart';
 import '../../Component/DynamicColor.dart';
+import '../../Component/ErrorLoading.dart';
 
 class FeedbackScreen extends StatelessWidget {
   var check, form, label;
@@ -395,13 +396,7 @@ class FeedbackScreen extends StatelessWidget {
                               ),
                             ],
                           )
-                        : Center(
-                            child: Image.asset(
-                              "assets/1.gif",
-                              height: 300,
-                              width: 300,
-                            ),
-                          ),
+                        : ErrorLoading(height: 300.0, width: 300.0),
                   ],
                 ),
               );

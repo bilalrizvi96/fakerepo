@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../API/BaseURl.dart';
+import '../../Component/ErrorLoading.dart';
 import '../../Controller/CheckPointController.dart';
 
 class AddCheckPointScreen extends StatelessWidget {
@@ -194,6 +195,7 @@ class AddCheckPointScreen extends StatelessWidget {
                             Container(
                               width: width / 1.22,
                               child: TextFormField(
+                                autofocus: false,
                                 keyboardType: TextInputType.streetAddress,
                                 controller:
                                     _checkPointController.siteController,
@@ -333,13 +335,7 @@ class AddCheckPointScreen extends StatelessWidget {
                         Spacer(),
                       ],
                     )
-                  : Center(
-                      child: Image.asset(
-                        "assets/1.gif",
-                        height: 200,
-                        width: 200,
-                      ),
-                    );
+                  : ErrorLoading(height: 200.0, width: 200.0);
             }),
       ),
     );

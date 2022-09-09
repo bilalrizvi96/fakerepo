@@ -23,14 +23,32 @@ import '../View/SupportRequestScreen/SupportRequestScreen.dart';
 import '../View/TrackUserScreen/TrackUserScreen.dart';
 
 class Routes {
+  static var splash = '/';
+  static var home = '/home';
+  static var intro = '/intro';
+  static var signinemp = '/signinemp';
+  static var registration = '/registration';
+  static var OTP = '/OTP';
+  static var facerule = '/facerule';
+  static var maintaince = '/maintaince';
+  static var checkpoint = '/checkpoint';
+  static var trackuser = '/trackuser';
+  static var profile = '/profile';
+  static var updatescreen = '/updatescreen';
+  static var faqs = '/faqs';
+  static var mypoints = '/mypoints';
+  static var notification = '/notification';
+  static var supportrequest = '/supportrequest';
+  static var schedule = '/schedule';
   final routes = [
-    GetPage(name: '/', page: () => SplashScreen(), transition: Transition.zoom),
     GetPage(
-        name: '/home',
+        name: splash, page: () => SplashScreen(), transition: Transition.zoom),
+    GetPage(
+        name: home,
         page: () => BottomNavigationScreen(),
         transition: Transition.fadeIn),
     GetPage(
-        name: '/intro',
+        name: intro,
         page: () => IntroScreen(),
         transition: Transition.leftToRight,
         curve: Curves.easeInQuart),
@@ -40,57 +58,57 @@ class Routes {
     //     transition: Transition.leftToRight,
     //     curve: Curves.easeInQuart),
     GetPage(
-        name: "/signinemp",
+        name: signinemp,
         page: () => SiginEmployeeScreen(),
         transition: Transition.leftToRight,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/registration",
+        name: registration,
         page: () => RegistrationScreen(),
         transition: Transition.leftToRight,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/OTP",
+        name: OTP,
         page: () => OTPScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/facerule",
+        name: facerule,
         page: () => FaceIDRuleScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/maintaince",
+        name: maintaince,
         page: () => MaintainceScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/checkpoint",
+        name: checkpoint,
         page: () => CheckPointScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/trackuser",
+        name: trackuser,
         page: () => TrackUserScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/profile",
+        name: profile,
         page: () => MyProfileScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/updatescreen",
+        name: updatescreen,
         page: () => UpdateScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/faqs",
+        name: faqs,
         page: () => FAQsScreen(check: true),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/mypoints",
+        name: mypoints,
         page: () => MyPointScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
@@ -100,12 +118,12 @@ class Routes {
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/supportrequest",
+        name: supportrequest,
         page: () => SupportRequestScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/schedule",
+        name: schedule,
         page: () => ScheduleScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),

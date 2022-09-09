@@ -9,6 +9,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../Controller/ScheduleController.dart';
 import '../Model/CalendarModel.dart';
+import '../Routes/Routes.dart';
 import '../View/FeedbackScreen/FeedbackScreen.dart';
 
 class SideMenu extends StatelessWidget {
@@ -51,7 +52,7 @@ class SideMenu extends StatelessWidget {
                     color: DynamicColor().primarycolor),
                 press: () async {
                   Get.back();
-                  Get.toNamed('/profile');
+                  Get.toNamed(Routes.profile);
                 },
               ),
             DrawerListTile(
@@ -60,7 +61,7 @@ class SideMenu extends StatelessWidget {
                   color: DynamicColor().primarycolor),
               press: () async {
                 Get.back();
-                Get.toNamed('/mypoints');
+                Get.toNamed(Routes.mypoints);
               },
             ),
             DrawerListTile(
@@ -69,7 +70,7 @@ class SideMenu extends StatelessWidget {
                   color: DynamicColor().primarycolor),
               press: () {
                 Get.back();
-                Get.toNamed('/schedule');
+                Get.toNamed(Routes.schedule);
               },
             ),
             if (BaseUrl.storage.read("trackuseraccess") != false)
@@ -94,7 +95,7 @@ class SideMenu extends StatelessWidget {
                   color: DynamicColor().primarycolor),
               press: () async {
                 Get.back();
-                Get.toNamed('/notification');
+                Get.toNamed(Routes.notification);
               },
             ),
             DrawerListTile(
@@ -104,7 +105,7 @@ class SideMenu extends StatelessWidget {
               press: () {
                 BaseUrl.helptype = 'home';
                 Get.back();
-                Get.toNamed('/faqs');
+                Get.toNamed(Routes.faqs);
               },
             ),
 

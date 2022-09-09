@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../Component/ErrorLoading.dart';
+import '../../Routes/Routes.dart';
 import 'FAQsDetailScreen.dart';
 
 class FAQsScreen extends StatelessWidget {
@@ -95,7 +97,8 @@ class FAQsScreen extends StatelessWidget {
                                                     curve: Curves.easeInQuart);
                                               }
                                             : () {
-                                                Get.toNamed('/supportrequest');
+                                                Get.toNamed(
+                                                    Routes.supportrequest);
                                               },
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -176,13 +179,7 @@ class FAQsScreen extends StatelessWidget {
                         ],
                       ),
                     )
-                  : Center(
-                      child: Image.asset(
-                        "assets/1.gif",
-                        height: 200,
-                        width: 200,
-                      ),
-                    );
+                  : ErrorLoading(height: 200.0, width: 200.0);
             }),
       ),
     );

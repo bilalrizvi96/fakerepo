@@ -22,7 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-
   cached_network_image:
     dependency: "direct main"
     description:
@@ -639,7 +638,6 @@ packages:
       name: protobuf
       url: "https://pub.dartlang.org"
     source: hosted
-
     version: "2.1.0"
   rxdart:
     dependency: transitive
@@ -648,7 +646,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.5"
-
   sky_engine:
     dependency: transitive
     description: flutter

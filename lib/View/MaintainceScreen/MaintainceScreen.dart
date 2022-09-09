@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_countdown/slide_countdown.dart';
+
+import '../../Component/ErrorLoading.dart';
+import '../../Routes/Routes.dart';
 // import 'package:slide_countdown/slide_countdown.dart';
 
 class MaintainceScreen extends StatelessWidget {
@@ -72,7 +75,7 @@ class MaintainceScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0)),
                               curve: Curves.ease,
                               onDone: () {
-                                Get.offAllNamed('/signinemp');
+                                Get.offAllNamed(Routes.signinemp);
                               },
                               duration: Duration(
                                   minutes: BaseUrl.storage.read('time') != null
@@ -82,13 +85,7 @@ class MaintainceScreen extends StatelessWidget {
                           ],
                         ),
                       )
-                    : Center(
-                        child: Image.asset(
-                          "assets/1.gif",
-                          height: 300,
-                          width: 300,
-                        ),
-                      );
+                    : ErrorLoading(height: 200.0, width: 200.0);
               })),
     );
   }

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../Component/ErrorLoading.dart';
 import '../../Controller/CheckPointController.dart';
 
 class TrackUserScreen extends StatelessWidget {
@@ -124,13 +125,7 @@ class TrackUserScreen extends StatelessWidget {
                         ],
                       ),
                     )
-                  : Center(
-                      child: Image.asset(
-                        "assets/1.gif",
-                        height: 200,
-                        width: 200,
-                      ),
-                    );
+                  : ErrorLoading(height: 200.0, width: 200.0);
             }),
       ),
     );

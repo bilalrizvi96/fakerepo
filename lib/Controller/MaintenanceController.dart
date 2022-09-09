@@ -4,11 +4,17 @@ import 'package:get/get.dart';
 
 import '../API/API.dart';
 import '../API/BaseURl.dart';
+import '../Routes/Routes.dart';
 
 class MaintenanceController extends GetxController {
   var message = ''.obs, time = 0.obs, is_maintenance = false.obs;
   var Loading = false.obs;
   List<MaintenanceModel> mainmodel = [];
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
   checkMaintenance() async {
     Loading.value = true;
     var response = await API().CheckMaintenance();
@@ -23,27 +29,23 @@ class MaintenanceController extends GetxController {
       Loading.value = false;
       update();
       if (is_maintenance.value == false) {
-        Get.offAllNamed('/signinemp');
+        Get.offAllNamed(Routes.signinemp);
       } else if (is_maintenance.value == true) {
         BaseUrl.storage.write('token', 'out');
-        Get.offAllNamed('/maintaince');
+        Get.offAllNamed(Routes.maintaince);
       }
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['message'].toString(),
+      Get.snackbar("Maintenance ", response.data['message'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    // checkMaintenance();
-  }
-
-  @override
   void onClose() {
+    // TODO: implement onClose
     super.onClose();
+    this.dispose();
   }
 }

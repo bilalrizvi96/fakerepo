@@ -18,31 +18,30 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message,
   print('Handling a background message ${message.messageId}');
 }
 
-void backgroundCallback(Uri? data) async {
-  if (data!.host == 'updatecounter') {
-    await HomeWidget.saveWidgetData<String>(
-        'clockin', BaseUrl.storage.read('clockin'));
-    await HomeWidget.saveWidgetData<String>(
-        'clockout', BaseUrl.storage.read('clockout'));
-
-    await HomeWidget.updateWidget(
-        name: 'AppWidgetProvider',
-        iOSName: 'AppWidgetProvider',
-        androidName: 'AppWidgetProvider');
-    await HomeWidget.updateWidget(
-        name: 'AppWidgetProvider2',
-        iOSName: 'AppWidgetProvider2',
-        androidName: 'AppWidgetProvider2');
-  }
-}
+// void backgroundCallback(Uri? data) async {
+//   if (data!.host == 'updatecounter') {
+//     await HomeWidget.saveWidgetData<String>(
+//         'clockin', BaseUrl.storage.read('clockin'));
+//     await HomeWidget.saveWidgetData<String>(
+//         'clockout', BaseUrl.storage.read('clockout'));
+//
+//     await HomeWidget.updateWidget(
+//         name: 'AppWidgetProvider',
+//         iOSName: 'AppWidgetProvider',
+//         androidName: 'AppWidgetProvider');
+//     await HomeWidget.updateWidget(
+//         name: 'AppWidgetProvider2',
+//         iOSName: 'AppWidgetProvider2',
+//         androidName: 'AppWidgetProvider2');
+//   }
+// }
 
 Future<void> main() async {
-
   if (Platform.isAndroid) {
     await GetStorage.init();
     WidgetsFlutterBinding.ensureInitialized();
     GestureBinding.instance!.resamplingEnabled = true;
-    HomeWidget.registerBackgroundCallback(backgroundCallback);
+    // HomeWidget.registerBackgroundCallback(backgroundCallback);
     await Firebase.initializeApp(
         options: const FirebaseOptions(
             appId: '1:833414981797:android:4f17b315106ee54a1b054c',
@@ -95,7 +94,6 @@ Future<void> main() async {
     );
   }
 
-
   runApp(MyApp());
 }
 
@@ -113,7 +111,7 @@ class MyApp extends StatelessWidget {
       title: 'Attendance',
       transitionDuration: Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash',
+      initialRoute: Routes.splash,
       getPages: Routes().routes,
     );
   }

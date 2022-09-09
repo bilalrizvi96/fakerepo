@@ -19,17 +19,15 @@ class SummaryController extends GetxController
   var todate = DateTime(DateTime.now().year, DateTime.now().month).obs;
   var Loading = false.obs;
   TabController? tabController;
-  var lastday = DateTime(DateTime.now().year, DateTime.now().month + 1, 0).day;
   var weeklist = [].obs;
   var selectedmonths = ''.obs;
   var summarydata = [].obs;
   var summaryguidelinelist = [].obs;
   var summarydetaildata = [].obs;
-
   var weekupdate = 0.obs;
   var tabindex = 0.obs;
   var day, month, year;
-  var mindate;
+  // var mindate;
 
   List months = [
     'JAN',
@@ -45,6 +43,47 @@ class SummaryController extends GetxController
     'NOV',
     'DEC'
   ];
+  init() {
+    summaryguidelinelist.value.clear();
+    tabController =
+        TabController(length: 2, vsync: this, initialIndex: tabindex.value)
+          ..addListener(() {
+            tabindex.value = tabController!.index;
+            update();
+          });
+    selectedmonths.value =
+        months[todate.value.month - 1] + "-" + todate.value.year.toString();
+    print(selectedmonths.value);
+    print(BaseUrl.storage.read("firstAttendanceRecordDate"));
+    day = BaseUrl.storage
+        .read("firstAttendanceRecordDate")
+        .toString()
+        .split('-')[2];
+    month = BaseUrl.storage
+        .read("firstAttendanceRecordDate")
+        .toString()
+        .split('-')[1];
+    year = BaseUrl.storage
+        .read("firstAttendanceRecordDate")
+        .toString()
+        .split('-')[0];
+    // mindate = DateFormat('dd-MM-y').parse(day + '-' + month + '-' + year);
+    summaryAnalytics();
+    summaryDetails();
+    print(BaseUrl.storage.read("summaryguideline"));
+    if (summaryguidelinelist.isEmpty) {
+      summaryGuideline();
+    }
+    update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    init();
+  }
+
   summaryPdf() async {
     Loading.value = true;
     var response = await API().SummaryPDf(
@@ -64,7 +103,7 @@ class SummaryController extends GetxController
       }
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['error'].toString(),
+      Get.snackbar("Summary ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
@@ -160,18 +199,18 @@ class SummaryController extends GetxController
     print('arsalan');
     Loading.value = true;
     summarydetaildata.value.clear();
-    var response = await API().Summarydetail(
-        start: '1' +
-            '/' +
-            todate.value.month.toString() +
-            '/' +
-            todate.value.year.toString(),
-        end:
-            '${todate.value.month == DateTime.now().month ? DateTime.now().day : DateTime(todate.value.year, todate.value.month + 1, 0).day}' +
-                '/' +
-                todate.value.month.toString() +
-                '/' +
-                todate.value.year.toString());
+    var outputFormat = DateFormat("yyyy-MM-dd'T'00:mm:ss'");
+    var start =
+        outputFormat.format(DateTime(todate.value.year, todate.value.month, 1));
+    var end = outputFormat.format(DateTime(
+        todate.value.year,
+        todate.value.month,
+        todate.value.month == DateTime.now().month
+            ? DateTime.now().day
+            : DateTime(todate.value.year, todate.value.month + 1, 0).day));
+    print(start);
+    print('bilal');
+    var response = await API().Summarydetail(start: start, end: end);
     if (response.statusCode == 200) {
       Loading.value = false;
       response = await SummaryDetailsModel.fromJson(response.data);
@@ -179,7 +218,7 @@ class SummaryController extends GetxController
 
       if (todate.value.month == int.parse(month)) {
         summarydetaildata.value.removeWhere((item) =>
-            int.parse(item.mobileDate.toString().split('-')[0]) <
+            int.parse(item.mobileDate.toString().split('-')[2]) <
             int.parse(day));
       }
     } else {
@@ -205,36 +244,10 @@ class SummaryController extends GetxController
     update();
   }
 
-  init() {
-    summaryguidelinelist.value.clear();
-    tabController =
-        TabController(length: 2, vsync: this, initialIndex: tabindex.value)
-          ..addListener(() {
-            tabindex.value = tabController!.index;
-            update();
-          });
-
-    selectedmonths.value =
-        months[todate.value.month - 1] + "-" + todate.value.year.toString();
-    print(selectedmonths.value);
-    day = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[0];
-    month = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[1];
-    year = BaseUrl.storage.read("firstAttendanceRecordDate").split('/')[2];
-    mindate = DateFormat('dd-MM-y').parse(day + '-' + month + '-' + year);
-    summaryAnalytics();
-    summaryDetails();
-    print(BaseUrl.storage.read("summaryguideline"));
-    if (summaryguidelinelist.isEmpty) {
-      summaryGuideline();
-    }
-
-    update();
-  }
-
   @override
-  void onInit() {
-    super.onInit();
-
-    init();
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    this.dispose();
   }
 }

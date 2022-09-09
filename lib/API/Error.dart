@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 
 onError(dynamic error, dynamic controllerName) {
   if (error.response.statusCode == 403) {
-    // BaseUrl.storage.write("token", "out");
-    // Get.offNamed("/signinemp");
+    BaseUrl.storage.write("token", "out");
+    Get.offNamed("/signinemp");
     print(error.response);
     return error.response;
   } else if (error.response.statusCode == 404) {

@@ -1,21 +1,14 @@
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/BottomNavigationController.dart';
-import 'package:attendencesystem/View/CheckPointScreen/CheckPointScreen.dart';
-import 'package:attendencesystem/View/TrackUserScreen/TrackUserScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../API/BaseURl.dart';
 import '../../Component/SideMenu.dart';
-import '../FeedbackScreen/FeedbackScreen.dart';
-import '../HomeScreen/HomeScreen.dart';
-import '../MyProfileScreen/MyProfileScreen.dart';
-import '../SummaryScreen/SummaryScreen.dart';
 
 class BottomNavigationScreen extends StatelessWidget {
   BottomNavigationController bottomNavigationController =
-      Get.put(BottomNavigationController(), permanent: false);
+      Get.put(BottomNavigationController());
 
   @override
   Widget build(BuildContext context) {
@@ -107,41 +100,8 @@ class BottomNavigationScreen extends StatelessWidget {
                               )
                   ],
                 ),
-                body: IndexedStack(
-                  index: bottomNavigationController.selectedIndex.value,
-                  children: [
-                    HomeScreen(),
-                    SummaryScreen(),
-
-                    BaseUrl.storage.read("trackuseraccess") == true
-                        ? TrackUserScreen()
-                        : BaseUrl.storage.read("checkpointaccess") == true
-                            ? CheckPointScreen()
-                            : FeedbackScreen(
-                                check: true,
-                                form: false,
-                              ),
-                    // BaseUrl.storage.read("checkpointaccess") == false
-                    //     ? FeedbackScreen(
-                    //         check: true,
-                    //         form: false,
-                    //       )
-                    //     : BaseUrl.storage.read("trackuseraccess") == false
-                    //         ? CheckPointScreen()
-                    //         : TrackUserScreen(),
-
-                    BaseUrl.storage.read("checkpointaccess") == true &&
-                            BaseUrl.storage.read("trackuseraccess") == false
-                        ? FeedbackScreen(
-                            check: true,
-                            form: false,
-                          )
-                        : BaseUrl.storage.read("checkpointaccess") == true
-                            ? CheckPointScreen()
-                            : MyProfileScreen()
-                    // HomeScreen(),
-                  ],
-                ),
+                body: bottomNavigationController.widgetChildren[
+                    bottomNavigationController.selectedIndex.value],
               ));
         });
   }

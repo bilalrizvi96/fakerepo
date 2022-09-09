@@ -13,6 +13,8 @@ import 'package:home_widget/home_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
+import '../Routes/Routes.dart';
+import 'BottomNavigationController.dart';
 import 'MaintenanceController.dart';
 
 class SplashController extends GetxController {
@@ -23,9 +25,31 @@ class SplashController extends GetxController {
   LocationPermission? permission;
   MaintenanceController _maintenanceController =
       Get.put(MaintenanceController());
-  HomeController homeController = Get.put(HomeController());
-  var clockin = '00:00';
-  var clockout = '00:00';
+
+  ///recent
+  // var clockin = '00:00';
+  // var clockout = '00:00';
+
+  @override
+  void onInit() {
+    // HomeWidget.widgetClicked.listen((Uri? uri) => homeController.scan());
+    super.onInit();
+
+    // clockin = BaseUrl.storage.read('clockin');
+    // clockout = BaseUrl.storage.read('clockout');
+
+    // updateAppWidget();
+    // updateAppWidget2();
+    // bottomNavigationController.dashboardData();
+    this._registerOnFirebase();
+    this.getMessage();
+    if (Platform.isAndroid) {
+      permissions();
+    }
+    checks();
+    update();
+  }
+
   _registerOnFirebase() async {
     _firebaseMessaging = FirebaseMessaging.instance;
     _firebaseMessaging!.subscribeToTopic('all');
@@ -64,7 +88,7 @@ class SplashController extends GetxController {
           checkUpdate();
         } else if (notification.title.toString().trim() == 'Expire') {
           BaseUrl.storage.write('token', 'out');
-          Get.offAllNamed('/signinemp');
+          Get.offAllNamed(Routes.signinemp);
           // BaseUrl.storage.erase();
         }
         Get.snackbar(" ${notification.title.toString()}",
@@ -83,7 +107,7 @@ class SplashController extends GetxController {
           checkUpdate();
         } else if (notification.title.toString().trim() == 'Expire') {
           BaseUrl.storage.write('token', 'out');
-          Get.offAllNamed('/signinemp');
+          Get.offAllNamed(Routes.signinemp);
           // BaseUrl.storage.erase();
         }
         Get.snackbar(
@@ -99,69 +123,44 @@ class SplashController extends GetxController {
       update();
     } else {
       permissions();
-      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
-      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     if (await Permission.camera.request().isGranted) {
       update();
     } else {
       permissions();
-      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
-      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
     if (await Permission.storage.request().isGranted) {
       update();
     } else {
       permissions();
-      // Get.snackbar("Error ", 'Kindly grant the location permission!'.toString(),
-      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
   }
 
-  @override
-  void onInit() {
-    HomeWidget.widgetClicked.listen((Uri? uri) => homeController.scan());
-    super.onInit();
+  // void updateAppWidget() async {
+  //   await HomeWidget.saveWidgetData<String>(
+  //       'clockin', BaseUrl.storage.read('clockin'));
+  //   await HomeWidget.saveWidgetData<String>(
+  //       'clockout', BaseUrl.storage.read('clockout'));
+  //   await HomeWidget.saveWidgetData<String>('clockin', clockin);
+  //   await HomeWidget.saveWidgetData<String>('clockout', clockout);
+  //   await HomeWidget.updateWidget(
+  //       name: 'AppWidgetProvider',
+  //       iOSName: 'AppWidgetProvider',
+  //       androidName: 'AppWidgetProvider');
+  // }
 
-    clockin = BaseUrl.storage.read('clockin');
-    clockout = BaseUrl.storage.read('clockout');
-
-    updateAppWidget();
-    updateAppWidget2();
-    this._registerOnFirebase();
-    this.getMessage();
-    if (Platform.isAndroid) {
-      permissions();
-    }
-    checks();
-    update();
-  }
-
-  void updateAppWidget() async {
-    await HomeWidget.saveWidgetData<String>(
-        'clockin', BaseUrl.storage.read('clockin'));
-    await HomeWidget.saveWidgetData<String>(
-        'clockout', BaseUrl.storage.read('clockout'));
-    await HomeWidget.saveWidgetData<String>('clockin', clockin);
-    await HomeWidget.saveWidgetData<String>('clockout', clockout);
-    await HomeWidget.updateWidget(
-        name: 'AppWidgetProvider',
-        iOSName: 'AppWidgetProvider',
-        androidName: 'AppWidgetProvider');
-  }
-
-  void updateAppWidget2() async {
-    await HomeWidget.updateWidget(
-        name: 'AppWidgetProvider2',
-        iOSName: 'AppWidgetProvider2',
-        androidName: 'AppWidgetProvider2');
-  }
+  // void updateAppWidget2() async {
+  //   await HomeWidget.updateWidget(
+  //       name: 'AppWidgetProvider2',
+  //       iOSName: 'AppWidgetProvider2',
+  //       androidName: 'AppWidgetProvider2');
+  // }
 
   checkUpdate() async {
     var response = await API().CheckUpdate();
     if (response.statusCode == 200) {
       // if (updates.value == true) {
-      Get.offAllNamed('/updatescreen', arguments: [
+      Get.offAllNamed(Routes.updatescreen, arguments: [
         response.data['response']['message'],
         response.data['response']['currentRelease'],
         response.data['response']['availableRelease'],
@@ -172,47 +171,33 @@ class SplashController extends GetxController {
       // }
 
     } else {
-      Get.snackbar("Error ", response.data['error'].toString(),
+      Get.snackbar("Check Update ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
   }
 
   checks() {
-    HomeWidget.widgetClicked.listen((Uri? uri) => homeController.scan());
-    Get.snackbar('Hello', "1");
+    // HomeWidget.widgetClicked.listen((Uri? uri) => homeController.scan());
+
     var tokenval = BaseUrl.storage.read("token");
     BaseUrl.storage1.read('seen') ?? false;
     print(tokenval);
-    Future.delayed(new Duration(milliseconds: 700), () {
-      // if (BaseUrl.storage.read('maintenance') == true) {
-      //   Get.offAllNamed('/maintaince');
-      // } else {
+    Future.delayed(new Duration(milliseconds: 2000), () {
       if (tokenval != "out") {
         if (tokenval != null) {
-          // if (BaseUrl.storage.read('clockincheck') != DateTime.now().day) {
-          //   BaseUrl.clockin = false;
-          // } else {
-          //   BaseUrl.clockin = true;
-          // }
-          // if (BaseUrl.storage.read('clockoutcheck') != DateTime.now().day) {
-          //   BaseUrl.clockout = false;
-          // } else {
-          //   BaseUrl.clockout = true;
-          // }
-          Get.offAllNamed('/home');
+          Get.offAllNamed(Routes.home);
         } else if (BaseUrl.storage1.read('seen') == true) {
-          Get.offAllNamed('/signinemp');
+          Get.offAllNamed(Routes.signinemp);
         } else {
           BaseUrl.storage1.write('seen', true);
-          Get.offAllNamed('/intro');
+          Get.offAllNamed(Routes.intro);
         }
       } else if (BaseUrl.storage1.read('seen') == true) {
-        Get.offAllNamed('/signinemp');
+        Get.offAllNamed(Routes.signinemp);
       } else {
         BaseUrl.storage1.write('seen', true);
-        Get.offAllNamed('/intro');
+        Get.offAllNamed(Routes.intro);
       }
-      // }
     });
   }
 
@@ -220,5 +205,6 @@ class SplashController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+    this.dispose();
   }
 }

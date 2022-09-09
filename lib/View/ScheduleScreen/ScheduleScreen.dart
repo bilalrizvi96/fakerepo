@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../../Component/ErrorLoading.dart';
 import '../../Model/CalendarModel.dart';
 
 class ScheduleScreen extends StatelessWidget {
@@ -150,7 +151,7 @@ class ScheduleScreen extends StatelessWidget {
                                     ? int.parse(_scheduleControllerontroller
                                         .holidayslist.value.last.date
                                         .toString()
-                                        .split('-')[2])
+                                        .split('-')[0])
                                     : 30,
                                 _scheduleControllerontroller
                                         .holidayslist.isNotEmpty
@@ -164,7 +165,8 @@ class ScheduleScreen extends StatelessWidget {
                                     ? int.parse(_scheduleControllerontroller
                                         .holidayslist.value.last.date
                                         .toString()
-                                        .split('-')[0])
+                                        .split('-')[2]
+                                        .split('T')[0])
                                     : 30,
                               ),
                               minDate: DateTime(
@@ -173,21 +175,24 @@ class ScheduleScreen extends StatelessWidget {
                                     ? int.parse(_scheduleControllerontroller
                                         .holidayslist.value.first.date
                                         .toString()
-                                        .split('-')[2])
+                                        .split('-')[0]
+                                        .split('T')[0])
                                     : 0,
                                 _scheduleControllerontroller
                                         .holidayslist.isNotEmpty
                                     ? int.parse(_scheduleControllerontroller
                                         .holidayslist.value.first.date
                                         .toString()
-                                        .split('-')[1])
+                                        .split('-')[1]
+                                        .split('T')[0])
                                     : 0,
                                 _scheduleControllerontroller
                                         .holidayslist.isNotEmpty
                                     ? int.parse(_scheduleControllerontroller
                                         .holidayslist.value.first.date
                                         .toString()
-                                        .split('-')[0])
+                                        .split('-')[2]
+                                        .split('T')[0])
                                     : 0,
                               ),
                               monthViewSettings: MonthViewSettings(
@@ -202,13 +207,7 @@ class ScheduleScreen extends StatelessWidget {
                         ],
                       ),
                     )
-                  : Center(
-                      child: Image.asset(
-                        "assets/1.gif",
-                        height: 200,
-                        width: 200,
-                      ),
-                    );
+                  : ErrorLoading(height: 200.0, width: 200.0);
             }),
       ),
     );

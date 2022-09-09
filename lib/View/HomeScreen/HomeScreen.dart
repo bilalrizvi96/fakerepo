@@ -9,14 +9,16 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
+import '../../Component/ErrorLoading.dart';
+import '../../Component/LifeCycleEvent Handler.dart';
 import '../../Component/SideMenu.dart';
-import '../../Controller/SummaryController.dart';
+import '../../Controller/ProfileController.dart';
+import '../../Routes/Routes.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
-
+  ProfileController profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -24,7 +26,6 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: SideMenu(),
-
       body: Container(
           width: width,
           height: height,
@@ -55,7 +56,6 @@ class HomeScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Column(
-
                         children: [
                           SizedBox(
                             height: height / 80,
@@ -111,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     BaseUrl.storage.write("token", "out");
-                                    Get.offAllNamed('/signinemp');
+                                    Get.offAllNamed(Routes.signinemp);
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
@@ -789,7 +789,7 @@ class HomeScreen extends StatelessWidget {
                                                             .read(
                                                                 "lastAttendanceRecordDate")
                                                             .toString()
-                                                            .split('/')[0];
+                                                            .split('-')[0];
 
                                                         if (homeController
                                                                 .clockindate2 ==
@@ -1018,13 +1018,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : Center(
-                                  child: Image.asset(
-                                    "assets/1.gif",
-                                    height: 200,
-                                    width: 200,
-                                  ),
-                                ),
+                              : ErrorLoading(height: 200.0, width: 200.0),
                         ],
                       ),
                     ),
@@ -1221,13 +1215,7 @@ class ReasonBottom extends StatelessWidget {
                         ),
                       ],
                     )
-                  : Center(
-                      child: Image.asset(
-                        "assets/1.gif",
-                        height: 200,
-                        width: 200,
-                      ),
-                    );
+                  : ErrorLoading(height: 200.0, width: 200.0);
             }),
       ),
     );

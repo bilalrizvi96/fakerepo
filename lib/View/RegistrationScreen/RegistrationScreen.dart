@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Component/ErrorLoading.dart';
+
 class RegistrationScreen extends StatelessWidget {
   RegistrationController registrationController =
       Get.put(RegistrationController());
@@ -13,7 +15,6 @@ class RegistrationScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-
       body: Container(
           width: width,
           height: height,
@@ -26,7 +27,6 @@ class RegistrationScreen extends StatelessWidget {
                     ? Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Stack(
-
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 40.0),
@@ -244,13 +244,7 @@ class RegistrationScreen extends StatelessWidget {
                           ],
                         ),
                       )
-                    : Center(
-                        child: Image.asset(
-                          "assets/1.gif",
-                          height: 500,
-                          width: 500,
-                        ),
-                      );
+                    : ErrorLoading(height: 500.0, width: 500.0);
               })),
     );
   }

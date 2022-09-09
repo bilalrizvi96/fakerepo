@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Routes/Routes.dart';
+
 class IntroScreen extends StatelessWidget {
   IntroController introController = Get.put(IntroController());
   @override
@@ -17,13 +19,11 @@ class IntroScreen extends StatelessWidget {
       body: GetBuilder(
           init: introController,
           builder: (_) {
-
             return Container(
                 width: width,
                 height: height,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-
                   child: Stack(
                     children: [
                       PageView(
@@ -206,7 +206,6 @@ class IntroScreen extends StatelessWidget {
                                       child: Stack(
                                         children: [
                                           Align(
-
                                               alignment: Alignment.bottomCenter,
                                               child: CachedNetworkImage(
                                                 imageUrl:
@@ -225,7 +224,6 @@ class IntroScreen extends StatelessWidget {
                                               //   fit: BoxFit.contain,
                                               // ),
                                               ),
-
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 100.0, left: 50),
@@ -252,7 +250,7 @@ class IntroScreen extends StatelessWidget {
                                               )),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.offAllNamed('/signinemp');
+                                              Get.offAllNamed(Routes.signinemp);
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.only(

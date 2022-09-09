@@ -6,7 +6,7 @@ class BaseUrl {
   static var token;
   static var empcode;
   static var helptype = '';
-  static var baseurl = "http://api.starmarketingonline.com/";
+  static var baseurl = "https://api.starmarketingonline.com/";
 
   static var version = '1.4.2';
   static var fcm_token = '';

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../Routes/Routes.dart';
+
 class RegistrationController extends GetxController {
   var employee_IdController = new TextEditingController();
   var emailController = new TextEditingController();
@@ -11,6 +13,14 @@ class RegistrationController extends GetxController {
   XFile? faceImage;
   final ImagePicker _picker = ImagePicker();
   var Loading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    Loading.value = false;
+    update();
+  }
+
   String? validators(var values) {
     if (values.isEmpty) {
       return "Please this field must be filled";
@@ -35,13 +45,6 @@ class RegistrationController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    Loading.value = false;
-    update();
-  }
-
   registration() async {
     BaseUrl.storage.write("empCode", employee_IdController.text.toString());
     if (registrationFormKey.currentState!.validate() &&
@@ -59,7 +62,7 @@ class RegistrationController extends GetxController {
         BaseUrl.storage.write('phone', response.data['data']['phone']);
         print(BaseUrl.storage.read('phone'));
         Get.toNamed(
-          '/facerule',
+          Routes.facerule,
         );
       } else {
         Loading.value = false;
@@ -77,7 +80,7 @@ class RegistrationController extends GetxController {
         files: faceImage,
       );
       if (response.statusCode == 200) {
-        Get.offNamed('/OTP');
+        Get.offNamed(Routes.OTP);
         Loading.value = false;
       } else {
         Get.snackbar("Error ", response.data['error'].toString(),
@@ -90,5 +93,12 @@ class RegistrationController extends GetxController {
           colorText: Colors.white, backgroundColor: Colors.red);
       Loading.value = false;
     }
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    this.dispose();
   }
 }

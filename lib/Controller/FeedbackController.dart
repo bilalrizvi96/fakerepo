@@ -16,6 +16,7 @@ class FeedbackController extends GetxController {
   var Loading = false.obs;
   final ImagePicker _picker = ImagePicker();
   var check = true;
+
   @override
   void onInit() {
     super.onInit();
@@ -131,6 +132,8 @@ class FeedbackController extends GetxController {
 
   @override
   void onClose() {
+    // TODO: implement onClose
     super.onClose();
+    this.dispose();
   }
 }

@@ -12,6 +12,16 @@ class OTPController extends GetxController {
   Timer? _timer;
   var start = 30.obs;
 
+  @override
+  void onInit() {
+    // resendOtp();
+    // AltSmsAutofill().unregisterListener();
+    super.onInit();
+    startTimer();
+    // initSmsListener();
+    // startTimer();
+  }
+
   submit() async {
     code = BaseUrl.storage.read("code");
 
@@ -66,16 +76,6 @@ class OTPController extends GetxController {
   //       _commingSms[37];
   // }
 
-  @override
-  void onInit() {
-    // resendOtp();
-    // AltSmsAutofill().unregisterListener();
-    super.onInit();
-    startTimer();
-    // initSmsListener();
-    // startTimer();
-  }
-
   void startTimer() {
     var oneSec = const Duration(milliseconds: 1500);
     _timer = new Timer.periodic(
@@ -105,5 +105,6 @@ class OTPController extends GetxController {
     _timer!.cancel();
     // AltSmsAutofill().unregisterListener();
     super.onClose();
+    this.dispose();
   }
 }

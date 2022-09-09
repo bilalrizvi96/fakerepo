@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Component/ErrorLoading.dart';
+
 class FaceIDRuleScreen extends StatelessWidget {
   RegistrationController registrationController =
       Get.put(RegistrationController());
@@ -15,7 +17,6 @@ class FaceIDRuleScreen extends StatelessWidget {
 
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-
       body: Container(
         height: height,
         width: width,
@@ -26,7 +27,6 @@ class FaceIDRuleScreen extends StatelessWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Stack(
-
                         children: [
                           Positioned(
                             width: width,
@@ -166,8 +166,8 @@ class FaceIDRuleScreen extends StatelessWidget {
                                         fit: BoxFit.contain,
                                         width: width / 4,
                                         height: height / 8,
-                                        placeholder: (context, url) =>
-                                            Center(child: CircularProgressIndicator()),
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       ),
@@ -184,8 +184,8 @@ class FaceIDRuleScreen extends StatelessWidget {
                                         fit: BoxFit.contain,
                                         width: width / 4,
                                         height: height / 8,
-                                        placeholder: (context, url) =>
-                                            Center(child: CircularProgressIndicator()),
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       ),
@@ -255,8 +255,8 @@ class FaceIDRuleScreen extends StatelessWidget {
                                             'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/brigthness.png',
                                         width: width / 4,
                                         height: height / 8,
-                                        placeholder: (context, url) =>
-                                            Center(child: CircularProgressIndicator()),
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       ),
@@ -276,8 +276,8 @@ class FaceIDRuleScreen extends StatelessWidget {
                                             'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/nohat.png',
                                         width: width / 4,
                                         height: height / 8,
-                                        placeholder: (context, url) =>
-                                            Center(child: CircularProgressIndicator()),
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       ),
@@ -334,13 +334,7 @@ class FaceIDRuleScreen extends StatelessWidget {
                         ],
                       ),
                     )
-                  : Center(
-                      child: Image.asset(
-                        "assets/1.gif",
-                        height: 500,
-                        width: 500,
-                      ),
-                    );
+                  : ErrorLoading(height: 200.0, width: 200.0);
             }),
       ),
     );

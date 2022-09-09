@@ -9,6 +9,14 @@ class FaqsController extends GetxController {
   var faqlist = [].obs;
   var supportrequestlist = [].obs;
   var Loading = false.obs;
+  @override
+  void onInit() {
+    super.onInit();
+    // if (faqlist.value.isEmpty) {
+    getHelpCenter();
+    getSupportRequest();
+    // }
+  }
 
   getHelpCenter() async {
     Loading.value = true;
@@ -23,7 +31,7 @@ class FaqsController extends GetxController {
       print(faqlist.value);
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['message'].toString(),
+      Get.snackbar("Help Center ", response.data['message'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
@@ -36,6 +44,8 @@ class FaqsController extends GetxController {
       Loading.value = false;
       response = await SupportRequestModel.fromJson(response.data);
       supportrequestlist.value = response.data;
+      print(supportrequestlist.value[0].message);
+      update();
     } else {
       Loading.value = false;
       // Get.snackbar("Error ", response.data['message'].toString(),
@@ -45,10 +55,9 @@ class FaqsController extends GetxController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    if (faqlist.value.isEmpty) {
-      getHelpCenter();
-    }
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    this.dispose();
   }
 }

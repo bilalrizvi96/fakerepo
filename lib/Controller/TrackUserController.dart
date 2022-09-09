@@ -31,6 +31,19 @@ class TrackUserController extends GetxController {
           bearing: 30,
           target: LatLng(24.9161647, 67.0653569))
       .obs;
+
+  init() {
+    staafflist = [];
+    dropdownValue.value = "Show All Staff";
+    getEmployee();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    // init();
+  }
+
   valueupdate(val) {
     dropdownValue.value = val;
     if (dropdownValue.value == "Show All Staff") {
@@ -79,7 +92,7 @@ class TrackUserController extends GetxController {
     update();
   }
 
-  Empmapupdate(lat, lng, zoom) async {
+  empmapupdate(lat, lng, zoom) async {
     controller!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       zoom: zoom,
       tilt: 0,
@@ -175,7 +188,7 @@ class TrackUserController extends GetxController {
     BaseUrl.storage.write('specificempname', name);
 
     var date = DateTime.now();
-    var outputFormat = DateFormat("dd-MM-yyyy");
+    var outputFormat = DateFormat("yyyy-MM-dd'T'00:mm:ss'");
     var outputDate = outputFormat.format(date);
 
     var response = await API().HistoryCheckPoints(
@@ -249,7 +262,7 @@ class TrackUserController extends GetxController {
                   }),
               onTap: () {
                 zoom.value = 22.0;
-                Empmapupdate(
+                empmapupdate(
                     double.parse(element.location.split(',')[0]),
                     double.parse(element.location.split(',')[1]),
                     zoom.value = 22.0);
@@ -266,21 +279,16 @@ class TrackUserController extends GetxController {
       update();
     } else {
       Loading.value = false;
-      Get.snackbar("Error ", response.data['error'].toString(),
+      Get.snackbar("Track User ", response.data['error'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
 
-  init() {
-    staafflist = [];
-    dropdownValue.value = "Show All Staff";
-    getEmployee();
-  }
-
   @override
-  void onInit() {
-    super.onInit();
-    // init();
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    this.dispose();
   }
 }

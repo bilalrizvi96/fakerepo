@@ -6,6 +6,12 @@ import '../API/API.dart';
 class MyPointController extends GetxController {
   var Loading = false.obs;
   var mypointlist = [].obs;
+  @override
+  void onInit() {
+    super.onInit();
+    myPoint();
+  }
+
   myPoint() async {
     Loading.value = true;
     mypointlist.value.clear();
@@ -22,8 +28,9 @@ class MyPointController extends GetxController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    myPoint();
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    this.dispose();
   }
 }
