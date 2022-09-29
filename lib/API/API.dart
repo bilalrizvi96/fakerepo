@@ -417,8 +417,52 @@ class API {
             headers: {Headers.acceptHeader: "application/json"}),
       );
       if (response.statusCode == 200) {
-        var status = response;
-        return status;
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'CheckIn');
+    }
+  }
+
+  Future OfflineCheckIn({var list}) async {
+    try {
+      var data = {'data': list};
+
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
+        BaseUrl.baseurl + 'checkings/offlineCheckings',
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        print(response);
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'CheckIn');
+    }
+  }
+
+  Future OfflineCheckPoint({var list}) async {
+    try {
+      var data = {'data': list};
+      print(data);
+      print("API data");
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
+        BaseUrl.baseurl + 'checkPoints/writeOfflineCheckpoints',
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        print(response);
+        return response;
       }
     } catch (e) {
       return onError(e, 'CheckIn');
@@ -431,8 +475,8 @@ class API {
         'location': latlng,
         "siteId": siteId,
         "date": date.toString(),
-        "forceAction": check
-        // "isCheckoutForget": false
+        "forceAction": check,
+        "isCheckoutForget": false
       };
       // print(data['checkpointAccess'].runtimeType);
       print("data");
@@ -462,24 +506,11 @@ class API {
         "date": BaseUrl.storage.read('dateForMissingCheckout'),
         "isCheckoutForget": true,
         "reason": reason,
-        "missedCheckoutDate": BaseUrl.storage
-                .read("lastAttendanceRecordDate")
-                .toString()
-                .replaceAll('/', '-')
-                .split('-')[2] +
-            "-" +
-            BaseUrl.storage
-                .read("lastAttendanceRecordDate")
-                .toString()
-                .replaceAll('/', '-')
-                .split('-')[1] +
-            "-" +
-            BaseUrl.storage
-                .read("lastAttendanceRecordDate")
-                .toString()
-                .replaceAll('/', '-')
-                .split('-')[0],
-        "points": BaseUrl.storage.read('points')
+        "missedCheckoutDate":
+            BaseUrl.storage.read("lastAttendanceRecordDate").toString(),
+
+        "points": 0
+        // BaseUrl.storage.read('points')
       };
       print(data);
       var dio = Dio();
@@ -647,7 +678,8 @@ class API {
     }
   }
 
-  Future CheckPoints({var latlng, var sitename, var note, var image}) async {
+  Future CheckPoints(
+      {var latlng, var sitename, var note, var image, var date}) async {
     var file;
     if (image != null) {
       Uint8List imagebytes = await image.readAsBytes();
@@ -661,6 +693,7 @@ class API {
         "siteName": sitename,
         "notes": note.toString().trim(),
         'image': file != '' ? file : '',
+        "date": date,
       };
       print(data);
       var dio = Dio();

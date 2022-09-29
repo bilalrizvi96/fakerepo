@@ -3,6 +3,7 @@ import 'package:attendencesystem/Model/PointsModel.dart';
 import 'package:attendencesystem/Model/SummaryAnalyticsModel.dart';
 import 'package:attendencesystem/Model/SummaryGuidelineModel.dart';
 import 'package:attendencesystem/Model/WeekModel.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class SummaryController extends GetxController
   var tabindex = 0.obs;
   var day, month, year;
   // var mindate;
-
+  var connection = true.obs;
   List months = [
     'JAN',
     'FEB',
@@ -58,7 +59,8 @@ class SummaryController extends GetxController
     day = BaseUrl.storage
         .read("firstAttendanceRecordDate")
         .toString()
-        .split('-')[2];
+        .split('-')[2]
+        .split('T')[0];
     month = BaseUrl.storage
         .read("firstAttendanceRecordDate")
         .toString()
@@ -82,6 +84,19 @@ class SummaryController extends GetxController
     super.onInit();
 
     init();
+    check();
+  }
+
+  check() async {
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        connection.value = true;
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+    });
   }
 
   summaryPdf() async {
@@ -218,7 +233,7 @@ class SummaryController extends GetxController
 
       if (todate.value.month == int.parse(month)) {
         summarydetaildata.value.removeWhere((item) =>
-            int.parse(item.mobileDate.toString().split('-')[2]) <
+            int.parse(item.mobileDate.toString().split('T')[2]) <
             int.parse(day));
       }
     } else {
@@ -248,6 +263,6 @@ class SummaryController extends GetxController
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,14 @@ class AddCheckPointScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
+    DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        _checkPointController.check();
+        // homeController.update();
+      }
+    });
+    _checkPointController.Loading.value = false;
+    _checkPointController.check();
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Container(
@@ -25,7 +33,6 @@ class AddCheckPointScreen extends StatelessWidget {
         width: width,
         color: Color(0xFFEBEFFF),
         child: GetBuilder(
-            // initState: _checkPointController.init(),
             init: _checkPointController,
             builder: (_) {
               return _checkPointController.Loading.value == false
@@ -309,8 +316,13 @@ class AddCheckPointScreen extends StatelessWidget {
                         Spacer(),
                         GestureDetector(
                           onTap: () {
+                            if (_checkPointController.connection == true) {
+                              _checkPointController.checkpoint();
+                            } else {
+                              _checkPointController.checkpoint_offline();
+                            }
                             // if (BaseUrl.storage.read("status") == true) {
-                            _checkPointController.checkpoint();
+
                             // } else {
                             //   Get.snackbar("Error ", 'Please Clock In first',
                             //       colorText: Colors.white,

@@ -23,7 +23,7 @@ class RegistrationController extends GetxController {
 
   String? validators(var values) {
     if (values.isEmpty) {
-      return "Please this field must be filled";
+      return "This field must be filled";
     }
     return null;
   }

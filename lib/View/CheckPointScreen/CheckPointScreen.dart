@@ -1,3 +1,4 @@
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,11 +14,18 @@ class CheckPointScreen extends StatelessWidget {
   CheckPointController _checkPointController = Get.put(CheckPointController());
   @override
   Widget build(BuildContext context) {
+    DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        _checkPointController.check();
+        _checkPointController.onInit();
+        _checkPointController.update();
+      }
+    });
+    _checkPointController.check();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-
       body: Container(
         height: height,
         color: Colors.white,
@@ -27,7 +35,6 @@ class CheckPointScreen extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
-
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

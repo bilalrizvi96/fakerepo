@@ -1,8 +1,10 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Controller/BottomNavigationController.dart';
 
 import 'package:attendencesystem/Controller/HomeController.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:delayed_display/delayed_display.dart';
 
 import 'package:dropdown_search/dropdown_search.dart';
@@ -19,8 +21,16 @@ import '../../Routes/Routes.dart';
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
   ProfileController profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
+    DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        homeController.check();
+        homeController.update();
+      }
+    });
+    homeController.check();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -70,9 +80,17 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 Builder(builder: (context) {
                                   return GestureDetector(
-                                    onTap: () {
-                                      Scaffold.of(context).openDrawer();
-                                    },
+                                    onTap: homeController.connection.value ==
+                                            true
+                                        ? () {
+                                            Scaffold.of(context).openDrawer();
+                                          }
+                                        : () {
+                                            Get.snackbar("Dashboard ",
+                                                "Disabled in offline feature",
+                                                colorText: Colors.white,
+                                                backgroundColor: Colors.red);
+                                          },
                                     child: Icon(
                                       Icons.menu,
                                       size: width / 16,
@@ -777,7 +795,9 @@ class HomeScreen extends StatelessWidget {
                                                     ),
                                                   ),
                                                   GestureDetector(
-                                                    onTap: () {
+                                                    onTap: () async {
+                                                      print(BaseUrl.storage.read(
+                                                          "lastAttendanceRecordDate"));
                                                       if (BaseUrl.storage
                                                               .read("status") ==
                                                           true) {
@@ -789,8 +809,10 @@ class HomeScreen extends StatelessWidget {
                                                             .read(
                                                                 "lastAttendanceRecordDate")
                                                             .toString()
-                                                            .split('-')[0];
-
+                                                            .split('T')[0]
+                                                            .split('-')[2];
+                                                        print(BaseUrl.storage.read(
+                                                            "lastAttendanceRecordDate"));
                                                         if (homeController
                                                                 .clockindate2 ==
                                                             int.parse(check)) {
@@ -798,13 +820,13 @@ class HomeScreen extends StatelessWidget {
                                                           homeController.Loading
                                                               .value = true;
                                                         } else {
-                                                          if (homeController
-                                                              .sitelist
-                                                              .isEmpty) {
-                                                            print('hello');
-                                                            homeController
-                                                                .getSites();
-                                                          }
+                                                          // if (homeController
+                                                          //     .sitelist
+                                                          //     .isEmpty) {
+                                                          //   print('hello');
+                                                          // await homeController
+                                                          //     .getSites();
+                                                          // }
 
                                                           Get.bottomSheet(
                                                               ReasonBottom(
@@ -1160,7 +1182,10 @@ class ReasonBottom extends StatelessWidget {
                               width: width / 9,
                             ),
                             Text(
-                              BaseUrl.storage.read("lastAttendanceRecordDate"),
+                              BaseUrl.storage
+                                  .read("lastAttendanceRecordDate")
+                                  .toString()
+                                  .split('T')[0],
                               style: Theme.of(context)
                                   .textTheme
                                   .caption!
@@ -1189,7 +1214,11 @@ class ReasonBottom extends StatelessWidget {
                         Center(
                           child: TextButton(
                               onPressed: () {
-                                _homeController.reasonCheckOut();
+                                if (_homeController.connection == true) {
+                                  _homeController.reasonCheckOut();
+                                } else {
+                                  _homeController.clockReason_offline();
+                                }
                               },
                               child: Container(
                                 width: width / 1.3,

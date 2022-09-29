@@ -5,6 +5,7 @@ import 'package:attendencesystem/API/Capitalize.dart';
 import 'package:attendencesystem/Model/EmployeeModel.dart';
 import 'package:attendencesystem/Model/HistoryCheckpointModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -31,7 +32,7 @@ class TrackUserController extends GetxController {
           bearing: 30,
           target: LatLng(24.9161647, 67.0653569))
       .obs;
-
+  var connection = true.obs;
   init() {
     staafflist = [];
     dropdownValue.value = "Show All Staff";
@@ -41,7 +42,21 @@ class TrackUserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    check();
     // init();
+  }
+
+  check() async {
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        Loading.value = false;
+        connection.value = true;
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+    });
   }
 
   valueupdate(val) {
@@ -289,6 +304,6 @@ class TrackUserController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

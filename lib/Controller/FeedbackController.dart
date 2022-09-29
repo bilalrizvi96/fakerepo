@@ -1,3 +1,4 @@
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,12 +17,13 @@ class FeedbackController extends GetxController {
   var Loading = false.obs;
   final ImagePicker _picker = ImagePicker();
   var check = true;
-
+  var connection = true.obs;
   @override
   void onInit() {
     super.onInit();
     Loading.value = false;
     print(check);
+    checks();
     if (BaseUrl.storage.read('name') != null) {
       namecontroller.text =
           BaseUrl.storage.read('name').toString().toUpperCase();
@@ -31,6 +33,19 @@ class FeedbackController extends GetxController {
       namecontroller.text = '';
       phonecontroller.text = '';
     }
+  }
+
+  checks() async {
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        Loading.value = false;
+        connection.value = true;
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+    });
   }
 
   submit(var form) async {
@@ -134,6 +149,6 @@ class FeedbackController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

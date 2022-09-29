@@ -76,7 +76,7 @@ class SignInEmployeeController extends GetxController {
 
   String? validators(var values) {
     if (values.isEmpty) {
-      return "Please this field must be filled";
+      return "This field must be filled";
     }
     return null;
   }
@@ -172,14 +172,11 @@ class SignInEmployeeController extends GetxController {
         BaseUrl.storage.write("empCode", response.user[0].empCode);
         BaseUrl.storage.write("name", response.user[0].name);
         BaseUrl.storage.write("lastAttendanceRecordDate",
-            response.user[0].lastAttendanceRecordDate.toString().split('T')[0]);
+            response.user[0].lastAttendanceRecordDate.toString());
         BaseUrl.storage.write("dateForMissingCheckout",
-            response.user[0].dateForMissingCheckout.toString().split('T')[0]);
-        BaseUrl.storage.write(
-            "firstAttendanceRecordDate",
-            response.user[0].firstAttendanceRecordDate
-                .toString()
-                .split('T')[0]);
+            response.user[0].dateForMissingCheckout.toString());
+        BaseUrl.storage.write("firstAttendanceRecordDate",
+            response.user[0].firstAttendanceRecordDate);
         print(BaseUrl.storage.read("firstAttendanceRecordDate"));
         print('bilal');
         // BaseUrl.storage.write("role", response.user[0].role);
@@ -256,6 +253,7 @@ class SignInEmployeeController extends GetxController {
       Loading.value = false;
     }
   }
+
   @override
   void onClose() {
     // TODO: implement onClose

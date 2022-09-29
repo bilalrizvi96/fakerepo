@@ -1,3 +1,4 @@
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,10 +7,25 @@ import '../API/BaseURl.dart';
 
 class ProfileController extends GetxController {
   var Loading = false.obs;
+  var connection = true.obs;
   @override
   void onInit() {
     super.onInit();
     profileData();
+    check();
+  }
+
+  check() async {
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        Loading.value = false;
+        connection.value = true;
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+    });
   }
 
   profileData() async {
@@ -45,6 +61,6 @@ class ProfileController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 // import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -61,10 +64,11 @@ class CheckPointController extends GetxController
   final colors = [DynamicColor().primarycolor, DynamicColor().primarycolor];
   Color? indicatorColor;
   var historyList = [].obs;
-  var clockindate2, check;
-  var connection = true.obs;
+  var clockindate2;
+  var checkpoint_check = false.obs;
   var status = false.obs;
-
+  var checkpointoffline_list = [].obs;
+  var connection = true.obs;
   @override
   void onInit() {
     tabController = TabController(length: 2, vsync: this, initialIndex: 0)
@@ -79,11 +83,12 @@ class CheckPointController extends GetxController
     Future.delayed(Duration(milliseconds: 200), () {
       mapupdate();
     });
-
+    check();
     day = BaseUrl.storage.read("firstAttendanceRecordDate").split('-')[2];
     month = BaseUrl.storage.read("firstAttendanceRecordDate").split('-')[1];
     year = BaseUrl.storage.read("firstAttendanceRecordDate").split('-')[0];
     clockindate2 = DateTime.now().day;
+    homeController.check();
 
     // check = BaseUrl.storage
     //     .read("lastAttendanceRecordDate")
@@ -98,23 +103,59 @@ class CheckPointController extends GetxController
     update();
   }
 
-  // connectionCheck() async {
-  //   await DataConnectionChecker().onStatusChange.listen((status) async {
-  //     if (status == DataConnectionStatus.connected) {
-  //       connection.value = true;
-  //       update();
-  //     } else {
-  //       connection.value = false;
-  //       update();
-  //     }
-  //   });
-  // }
+  check() async {
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        connection.value = true;
+        offline_data_send();
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+    });
+  }
+
+  void offline_data_send() async {
+    if (BaseUrl.storage.read('token') != null &&
+        BaseUrl.storage.read('token') != 'out') {
+      if (checkpoint_check.value == true) {
+        print('offline_data_send');
+        // checkpoint_check.value = false;
+        Loading.value = false;
+        var list = BaseUrl.storage.read("checkpoint_offline");
+        print(list);
+        print("list");
+        if (list != null) {
+          var response = await API().OfflineCheckPoint(list: list);
+          if (response.statusCode == 200) {
+            print('offline_CP_send');
+            BaseUrl.storage.write("checkpoint_offline", '');
+            checkpointoffline_list.value.clear();
+            checkpoint();
+            checkpoint_check.value = false;
+            // print('offile_send');
+            print(response.data);
+            // Get.snackbar(
+            //   "Send",
+            //   "offline send ",
+            // );
+          } else {
+            // Get.snackbar("Error", "offline failed ",
+            //     colorText: Colors.white, backgroundColor: Colors.red);
+          }
+        }
+      }
+    }
+    update();
+  }
 
   toDate(date) {
     todate.value = date;
     print(todate.value);
     if (todate.value == date) {
       Loading.value = true;
+
       historycheckpoint();
     }
     update();
@@ -158,8 +199,128 @@ class CheckPointController extends GetxController
   }
 
   checkpoint() async {
+    if (checkpoint_check.value == true) {
+      print('offline_checkpoint_send');
+      Loading.value = false;
+      if (BaseUrl.storage.read('token') != null &&
+          BaseUrl.storage.read('token') != 'out') {
+        var list = await BaseUrl.storage.read("offlineClockIn");
+        var response = await API().OfflineCheckIn(list: list);
+        if (response.statusCode == 200) {
+          BaseUrl.storage.write("offlineClockIn", null);
+          checkpoint_check.value == false;
+          update();
+          Get.snackbar(
+            "Send",
+            "offline send ",
+          );
+        } else {
+          Get.snackbar("Error", "offline failed ",
+              colorText: Colors.white, backgroundColor: Colors.red);
+        }
+      }
+      update();
+    } else {
+      if (connection.value == true) {
+        var date = DateTime.now();
+        var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        var outputDate = outputFormat.format(date);
+        FocusManager.instance.primaryFocus?.unfocus();
+        Loading.value = true;
+        update();
+        if (siteController.text.toString() != '') {
+          BaseUrl.storage
+              .write("sitecheckpoint", siteController.text.toString().trim());
+          BaseUrl.storage.write(
+              "latlngcheckpoint",
+              center.value.latitude.toString() +
+                  ',' +
+                  center.value.longitude.toString());
+
+          if (checkpointImage != null) {
+            if (BaseUrl.storage.read('checkOutMissing') == false) {
+              var response = await API().CheckPoints(
+                  sitename: siteController.text.toString().trim(),
+                  note: noteController.text.toString().trim(),
+                  image: checkpointImage,
+                  latlng: center.value.latitude.toString() +
+                      ',' +
+                      center.value.longitude.toString(),
+                  date: outputDate.toString());
+              if (response.statusCode == 201) {
+                siteController.clear();
+                noteController.clear();
+
+                checkpointImage = null;
+                if (checkboxvalue.value == true) {
+                  if (BaseUrl.storage.read("isCheckOutOn") == true) {
+                    status.value = true;
+                    Loading.value = false;
+                    // Get.back();
+                    if (homeController.connection.value == true) {
+                      homeController.clockout(check: true);
+                    } else {
+                      homeController.clockOut_offline(check: true);
+                    }
+
+                    // init();
+                  }
+
+                  homeController.clockindate2 = DateTime.now().day;
+                } else if (BaseUrl.storage.read("status") == false) {
+                  if (BaseUrl.storage.read("isCheckInOn") == true) {
+                    status.value = false;
+                    Loading.value = false;
+                    // Get.back();
+                    if (homeController.connection.value == true) {
+                      homeController.clockin(check: true);
+                    } else {
+                      homeController.clockIn_offline(check: true);
+                    }
+
+                    // init();
+                  }
+                }
+                historycheckpoint();
+                checkboxvalue.value = false;
+                Get.snackbar(
+                  "Checkpoints ",
+                  'Successfully Added',
+                );
+
+                // Get.back();
+              } else {
+                Loading.value = false;
+                Get.snackbar("Error ", response.data['error'].toString(),
+                    colorText: Colors.white, backgroundColor: Colors.red);
+              }
+            } else {
+              Loading.value = false;
+              Get.snackbar("Check Point ", "Please Do Previous Checkout",
+                  colorText: Colors.white, backgroundColor: Colors.red);
+            }
+          } else {
+            Loading.value = false;
+            Get.snackbar("Error ", "Please Capture Image",
+                colorText: Colors.white, backgroundColor: Colors.red);
+          }
+        } else {
+          Loading.value = false;
+          Get.snackbar("Error ", "Fill the required fields".toString(),
+              colorText: Colors.white, backgroundColor: Colors.red);
+        }
+      }
+    }
+    update();
+  }
+
+  checkpoint_offline() async {
+    var date = DateTime.now();
+    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    var outputDate = outputFormat.format(date);
     FocusManager.instance.primaryFocus?.unfocus();
     Loading.value = true;
+    var file;
     update();
     if (siteController.text.toString() != '') {
       BaseUrl.storage
@@ -172,36 +333,51 @@ class CheckPointController extends GetxController
 
       if (checkpointImage != null) {
         if (BaseUrl.storage.read('checkOutMissing') == false) {
-          var response = await API().CheckPoints(
-            sitename: siteController.text.toString().trim(),
-            note: noteController.text.toString().trim(),
-            image: checkpointImage,
-            latlng: center.value.latitude.toString() +
+          Uint8List imagebytes = await checkpointImage!.readAsBytes();
+          String base64string = base64.encode(imagebytes);
+          file = base64string.toString();
+          file.replaceAll('/', '');
+          Map data = {
+            'location': center.value.latitude.toString() +
                 ',' +
                 center.value.longitude.toString(),
-          );
-          if (response.statusCode == 201) {
-            siteController.clear();
-            noteController.clear();
-
-            checkpointImage = null;
-            if (checkboxvalue.value == true) {
-              if (BaseUrl.storage.read("isCheckOutOn") == true) {
-                status.value = true;
-                Loading.value = false;
-                // Get.back();
+            "siteName": siteController.text.toString().trim(),
+            "notes": noteController.text.toString().trim(),
+            'image': file != '' ? file : '',
+            "date": date,
+          };
+          checkpoint_check.value = true;
+          checkpointoffline_list.value.add(data);
+          BaseUrl.storage
+              .write('checkpoint_offline', checkpointoffline_list.value);
+          siteController.clear();
+          noteController.clear();
+          checkpointImage = null;
+          if (checkboxvalue.value == true) {
+            if (BaseUrl.storage.read("isCheckOutOn") == true) {
+              status.value = true;
+              Loading.value = false;
+              // Get.back();
+              if (homeController.connection.value == true) {
                 homeController.clockout(check: true);
-                // init();
+                this.onInit();
+              } else {
+                homeController.clockOut_offline(check: true);
+                this.onInit();
               }
-
-              homeController.clockindate2 = DateTime.now().day;
-            } else if (BaseUrl.storage.read("status") == false) {
-              if (BaseUrl.storage.read("isCheckInOn") == true) {
-                status.value = false;
-                Loading.value = false;
-                // Get.back();
+            }
+            homeController.clockindate2 = DateTime.now().day;
+          } else if (BaseUrl.storage.read("status") == false) {
+            if (BaseUrl.storage.read("isCheckInOn") == true) {
+              status.value = false;
+              Loading.value = false;
+              // Get.back();
+              if (homeController.connection.value == true) {
                 homeController.clockin(check: true);
-                // init();
+                this.onInit();
+              } else {
+                homeController.clockIn_offline(check: true);
+                this.onInit();
               }
             }
             historycheckpoint();
@@ -210,12 +386,6 @@ class CheckPointController extends GetxController
               "Checkpoints ",
               'Successfully Added',
             );
-
-            // Get.back();
-          } else {
-            Loading.value = false;
-            Get.snackbar("Error ", response.data['error'].toString(),
-                colorText: Colors.white, backgroundColor: Colors.red);
           }
         } else {
           Loading.value = false;
@@ -238,23 +408,27 @@ class CheckPointController extends GetxController
   historycheckpoint() async {
     Loading.value = true;
     historyList.value.clear();
-    // var date = todate.value;
+    if (connection.value == true) {
+      // var date = todate.value;
 
-    var outputFormat = DateFormat("yyyy-MM-dd'T'00:mm:ss'");
-    finaldate.value = outputFormat.format(todate.value);
-    update();
-    var response = await API().HistoryCheckPoints(
-        empcode: BaseUrl.storage.read('empCode'),
-        date: finaldate.value.toString(),
-        require: "myCheckPoints");
-    if (response.statusCode == 200) {
-      Loading.value = false;
-      response = HistoryCheckpointModel.fromJson(response.data);
-      historyList.value = response.data[0].checkPoints;
-      mainhistorylist.value = historyList.value;
-      print(mainhistorylist.value[0].image);
+      var outputFormat = DateFormat("yyyy-MM-dd'T'00:mm:ss'");
+      finaldate.value = outputFormat.format(todate.value);
+      update();
+      var response = await API().HistoryCheckPoints(
+          empcode: BaseUrl.storage.read('empCode'),
+          date: finaldate.value.toString(),
+          require: "myCheckPoints");
+      if (response.statusCode == 200) {
+        Loading.value = false;
+        response = HistoryCheckpointModel.fromJson(response.data);
+        historyList.value = response.data[0].checkPoints;
+        mainhistorylist.value = historyList.value;
+        print(mainhistorylist.value[0].image);
+      } else {
+        Loading.value = false;
+      }
     } else {
-      Loading.value = false;
+      historyList.value = BaseUrl.storage.read('checkpoint_offline');
     }
     update();
   }
@@ -434,6 +608,6 @@ class CheckPointController extends GetxController
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

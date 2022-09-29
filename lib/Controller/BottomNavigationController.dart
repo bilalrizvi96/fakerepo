@@ -97,7 +97,7 @@ class BottomNavigationController extends GetxController {
       BaseUrl.storage.write("isCheckOutOn", userdatalist['isClockOutOn']);
       BaseUrl.storage.write("isCheckInOn", userdatalist['isClockInOn']);
       print(userdatalist['isClockInOn']);
-      print('test1');
+
       BaseUrl.storage.write("clockin", userdatalist['clockIn']);
       BaseUrl.storage
           .write("welcomemessage", userdatalist['message']['message']);
@@ -183,7 +183,7 @@ class BottomNavigationController extends GetxController {
 
   void ItemIndex(index) {
     selectedIndex.value = index;
-    if (selectedIndex.value == 1) {
+    if (selectedIndex.value == 0) {
       this.dashboardData();
     } else if (selectedIndex.value == 1) {
       this._summaryController.onInit();
