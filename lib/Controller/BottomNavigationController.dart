@@ -185,6 +185,7 @@ class BottomNavigationController extends GetxController {
     selectedIndex.value = index;
     if (selectedIndex.value == 0) {
       this.dashboardData();
+
     } else if (selectedIndex.value == 1) {
       this._summaryController.onInit();
       _summaryController.init();

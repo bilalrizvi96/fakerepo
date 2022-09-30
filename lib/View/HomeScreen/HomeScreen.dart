@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/BottomNavigationController.dart';
@@ -820,6 +822,7 @@ class HomeScreen extends StatelessWidget {
                                                           homeController.Loading
                                                               .value = true;
                                                         } else {
+                                                          homeController.init();
                                                           // if (homeController
                                                           //     .sitelist
                                                           //     .isEmpty) {

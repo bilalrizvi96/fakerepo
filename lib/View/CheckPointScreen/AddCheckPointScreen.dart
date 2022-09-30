@@ -18,14 +18,14 @@ class AddCheckPointScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    DataConnectionChecker().onStatusChange.listen((status) async {
-      if (status == DataConnectionStatus.connected) {
-        _checkPointController.check();
-        // homeController.update();
-      }
-    });
-    _checkPointController.Loading.value = false;
-    _checkPointController.check();
+    // DataConnectionChecker().onStatusChange.listen((status) async {
+    //   if (status == DataConnectionStatus.connected) {
+    //     _checkPointController.check();
+    //     // homeController.update();
+    //   }
+    // });
+    // _checkPointController.Loading.value = false;
+    // _checkPointController.check();
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Container(
@@ -316,7 +316,8 @@ class AddCheckPointScreen extends StatelessWidget {
                         Spacer(),
                         GestureDetector(
                           onTap: () {
-                            if (_checkPointController.connection == true) {
+                            if (_checkPointController.connection.value ==
+                                true) {
                               _checkPointController.checkpoint();
                             } else {
                               _checkPointController.checkpoint_offline();

@@ -86,7 +86,7 @@ class MyPointScreen extends StatelessWidget {
                                         width: width,
                                         height: height,
                                         padding: EdgeInsets.only(
-                                            left: 20.0, top: 5, right: 20),
+                                            left: 20.0, right: 20),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 color: Colors.grey
@@ -105,7 +105,7 @@ class MyPointScreen extends StatelessWidget {
                                                             .start,
                                                     children: [
                                                       SizedBox(
-                                                        height: height / 20,
+                                                        height: height / 40,
                                                       ),
                                                       Text(
                                                         myPointController

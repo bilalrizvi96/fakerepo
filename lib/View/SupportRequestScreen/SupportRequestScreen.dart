@@ -165,7 +165,7 @@ class SupportRequestScreen extends StatelessWidget {
                                                       width: width / 60,
                                                     ),
                                                     Text(
-                                                      '${faqsController.supportrequestlist.value[index].date}',
+                                                      '${faqsController.supportrequestlist.value[index].date.toString().split('T')[0]}',
                                                       style: GoogleFonts.poppins(
                                                           color: DynamicColor()
                                                               .primarycolor,
@@ -184,7 +184,7 @@ class SupportRequestScreen extends StatelessWidget {
                                                           showDialog(
                                                               context: context,
                                                               barrierDismissible:
-                                                                  false,
+                                                                  true,
                                                               builder: (_) =>
                                                                   AlertDialog(
                                                                     actions: [

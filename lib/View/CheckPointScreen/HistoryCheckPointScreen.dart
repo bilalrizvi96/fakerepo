@@ -102,7 +102,9 @@ class HistoryCheckPointScreen extends StatelessWidget {
                                   minTime: DateTime(
                                       int.parse(_checkPointController.year),
                                       int.parse(_checkPointController.month),
-                                      int.parse(_checkPointController.day)),
+                                      int.parse(_checkPointController.day
+                                          .toString()
+                                          .split('T')[0])),
                                   maxTime: DateTime.now(),
                                   showTitleActions: true, onConfirm: (date) {
                                 _checkPointController.toDate(date);

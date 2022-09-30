@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../Component/DynamicColor.dart';
+import '../../Component/ErrorLoading.dart';
 import '../../Controller/CheckPointController.dart';
 import 'AddCheckPointScreen.dart';
 import 'HistoryCheckPointScreen.dart';
@@ -17,11 +18,15 @@ class CheckPointScreen extends StatelessWidget {
     DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
         _checkPointController.check();
-        _checkPointController.onInit();
-        _checkPointController.update();
+        // _checkPointController.onInit();
+        // _checkPointController.update();
       }
     });
+    _checkPointController.Loading.value = false;
     _checkPointController.check();
+    // _checkPointController.onInit();
+    _checkPointController.update();
+    //
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
@@ -91,7 +96,9 @@ class CheckPointScreen extends StatelessWidget {
                       child: TabBarView(
                         controller: _checkPointController.tabController,
                         children: <Widget>[
-                          AddCheckPointScreen(),
+                          _checkPointController.Loading.value == false
+                              ? AddCheckPointScreen()
+                              : ErrorLoading(height: 200.0, width: 200.0),
                           HistoryCheckPointScreen(),
                         ],
                       ),

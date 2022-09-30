@@ -66,9 +66,8 @@ class NotificationScreen extends StatelessWidget {
                       notificationController.notificationlist.value.isNotEmpty
                           ? Expanded(
                               child: ListView.builder(
-                                  itemCount: BaseUrl.storage
-                                      .read('notificationdata')
-                                      .length,
+                                  itemCount: notificationController
+                                      .notificationlist.value.length,
                                   shrinkWrap: true,
                                   itemBuilder: (_, index) {
                                     return Container(
@@ -136,7 +135,7 @@ class NotificationScreen extends StatelessWidget {
                                                     width: width / 60,
                                                   ),
                                                   Text(
-                                                    '${notificationController.notificationlist.value[index].date}',
+                                                    '${notificationController.notificationlist.value[index].date.toString().split('T')[0]}',
                                                     style: GoogleFonts.poppins(
                                                         color: DynamicColor()
                                                             .primarycolor,

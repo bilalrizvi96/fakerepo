@@ -56,6 +56,7 @@ class HomeController extends GetxController {
     'NOV',
     'DEC'
   ];
+  var data_check = false.obs;
   @override
   void onInit() {
     HomeWidget.widgetClicked.listen((Uri? uri) => scan());
@@ -72,6 +73,21 @@ class HomeController extends GetxController {
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
     getSites();
+    data_check.value = false;
+    update();
+    sitedatalist.value.clear();
+    sitedatalist.value = json.decode(BaseUrl.storage.read("sites_data"));
+    print(BaseUrl.storage.read("sites_data"));
+    var ssitelist = BaseUrl.storage.read("sites_name");
+    sitelist.clear();
+    for (var val in ssitelist) {
+      sitelist.add(val.toString());
+      sitelist.sort((a, b) {
+        return a.toLowerCase().compareTo(b.toLowerCase());
+      });
+      dropdownValue.value = sitelist.first;
+    }
+    print(sitelist);
     // if (BaseUrl.storage.read('token') != null ||
     //     BaseUrl.storage.read('token') != 'out') {
     //   HomeWidget.widgetClicked.listen((Uri? uri) => scan());
@@ -82,17 +98,23 @@ class HomeController extends GetxController {
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
         connection.value = true;
-        offline_data_send();
+        if (clockin_check.value == false) {
+          if (data_check.value == false) {
+            offline_data_send();
+          }
+        }
         update();
       } else {
         connection.value = false;
-        getSites();
+        // getSites();
         update();
       }
     });
   }
 
   void offline_data_send() async {
+    data_check.value = true;
+    update();
     if (BaseUrl.storage.read('token') != null &&
         BaseUrl.storage.read('token') != 'out') {
       //print(BaseUrl.storage.read("offlineClockIn"));
@@ -100,12 +122,14 @@ class HomeController extends GetxController {
       if (clockin_check.value == false) {
         print('offline_data_send');
         Loading.value = false;
+        clockin_check.value = true;
         var list = await BaseUrl.storage.read("offlineClockIn");
-        if (list != null) {
+        if (list != '') {
           var response = await API().OfflineCheckIn(list: list);
           if (response.statusCode == 200) {
             print('offline_data_send_api');
-            print(response.data);
+            clockinofflinelist.clear();
+            // print(response.data);
             BaseUrl.storage.write("offlineClockIn", '');
             clockin_check.value = true;
             clockinofflinelist.clear();
@@ -122,7 +146,7 @@ class HomeController extends GetxController {
           }
         }
       }
-      if (sitedatalist.value.isNotEmpty) {
+      if (sitedatalist.value.isEmpty) {
         getSites();
       }
     }
@@ -131,7 +155,7 @@ class HomeController extends GetxController {
 
   String? validators(var values) {
     if (values.isEmpty) {
-      return "Please this field must be filled";
+      return "Please fill this field";
     }
     return null;
   }
@@ -310,8 +334,8 @@ class HomeController extends GetxController {
         // }
       } else {
         Loading.value = false;
-        Get.snackbar("Error", "Location is empty kindly scan Qr",
-            colorText: Colors.white, backgroundColor: Colors.red);
+        // Get.snackbar("Error", "Location is empty kindly scan Qr",
+        //     colorText: Colors.white, backgroundColor: Colors.red);
       }
     }
 
@@ -376,8 +400,8 @@ class HomeController extends GetxController {
         }
       } else {
         Loading.value = false;
-        Get.snackbar("Error", "Location is empty kindly scan Qr",
-            colorText: Colors.white, backgroundColor: Colors.red);
+        // Get.snackbar("Error", "Location is empty kindly scan Qr",
+        //     colorText: Colors.white, backgroundColor: Colors.red);
       }
     }
 
@@ -438,7 +462,7 @@ class HomeController extends GetxController {
   }
 
   clockIn_offline({var check}) async {
-    Loading.value = true;
+    // Loading.value = true;
 
     update();
     var date = DateTime.now();
@@ -489,7 +513,14 @@ class HomeController extends GetxController {
         clockinofflinelist.value.add(data);
         BaseUrl.storage.write("offlineClockIn", clockinofflinelist.value);
         print(BaseUrl.storage.read("offlineClockIn"));
+
+        this.onInit();
+        update();
         break;
+      } else {
+        // Get.snackbar("Error", "Site not match",
+        //     colorText: Colors.white, backgroundColor: Colors.red);
+        // break;
       }
     }
     update();
@@ -535,6 +566,8 @@ class HomeController extends GetxController {
         clockinofflinelist.value.add(data);
         BaseUrl.storage.write("offlineClockIn", clockinofflinelist.value);
         print(BaseUrl.storage.read("offlineClockIn").length);
+
+        this.onInit();
         update();
         break;
       }
@@ -593,6 +626,7 @@ class HomeController extends GetxController {
             "Clock Out Successfully",
           );
           BaseUrl.storage.write("clockout", outputDate1.toString());
+          this.onInit();
           update();
           break;
         }

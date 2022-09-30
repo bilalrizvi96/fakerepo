@@ -680,6 +680,7 @@ class API {
 
   Future CheckPoints(
       {var latlng, var sitename, var note, var image, var date}) async {
+    print('hello');
     var file;
     if (image != null) {
       Uint8List imagebytes = await image.readAsBytes();
@@ -709,7 +710,7 @@ class API {
         }),
       );
       print(response);
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return response;
       }
     } catch (e) {

@@ -550,6 +550,7 @@ class MyProfileScreen extends StatelessWidget {
                                                           ' '
                                                       ? BaseUrl.storage
                                                           .read("hoursPerWeek")
+                                                          .toString()
                                                       : "First Name",
                                                   focusColor: DynamicColor()
                                                       .primarycolor,
