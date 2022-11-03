@@ -87,7 +87,7 @@ class FAQssubdetailScreen extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             print(index[indexs].form);
-                            index[indexs].form == 'false'
+                            index[indexs].form == false
                                 ? Get.to(
                                     () => FaqsAnsScreen(
                                           index: index[indexs],

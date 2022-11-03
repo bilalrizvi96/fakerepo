@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Controller/HomeController.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:data_connection_checker/data_connection_checker.dart';
 
@@ -23,12 +24,25 @@ class SplashController extends GetxController {
 
   FirebaseMessaging? _firebaseMessaging;
   LocationPermission? permission;
-  MaintenanceController _maintenanceController =
-      Get.put(MaintenanceController());
+  // MaintenanceController _maintenanceController =
+  //     Get.put(MaintenanceController());
+  var connection = true.obs;
 
   ///recent
   // var clockin = '00:00';
   // var clockout = '00:00';
+  check() async {
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        connection.value = true;
+
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+    });
+  }
 
   @override
   void onInit() {
@@ -43,6 +57,7 @@ class SplashController extends GetxController {
     // bottomNavigationController.dashboardData();
     this._registerOnFirebase();
     this.getMessage();
+    check();
     if (Platform.isAndroid) {
       permissions();
     }
@@ -83,7 +98,9 @@ class SplashController extends GetxController {
 
       if (notification != null) {
         if (notification.title.toString().trim() == 'Maintenance') {
-          _maintenanceController.checkMaintenance();
+          // _maintenanceController.checkMaintenance();
+          BaseUrl.storage.write('token', 'out');
+          Get.offAllNamed(Routes.maintaince);
         } else if (notification.title.toString().trim() == 'Update') {
           checkUpdate();
         } else if (notification.title.toString().trim() == 'Expire') {
@@ -102,7 +119,9 @@ class SplashController extends GetxController {
       print('Message clicked!');
       if (notification != null) {
         if (notification.title.toString().trim() == 'Maintenance') {
-          _maintenanceController.checkMaintenance();
+          // _maintenanceController.checkMaintenance();
+          BaseUrl.storage.write('token', 'out');
+          Get.offAllNamed(Routes.maintaince);
         } else if (notification.title.toString().trim() == 'Update') {
           checkUpdate();
         } else if (notification.title.toString().trim() == 'Expire') {
@@ -190,13 +209,21 @@ class SplashController extends GetxController {
           Get.offAllNamed(Routes.signinemp);
         } else {
           BaseUrl.storage1.write('seen', true);
-          Get.offAllNamed(Routes.intro);
+          if (connection.value == true) {
+            Get.offAllNamed(Routes.intro);
+          } else {
+            Get.offAllNamed(Routes.signinemp);
+          }
         }
       } else if (BaseUrl.storage1.read('seen') == true) {
         Get.offAllNamed(Routes.signinemp);
       } else {
         BaseUrl.storage1.write('seen', true);
-        Get.offAllNamed(Routes.intro);
+        if (connection.value == true) {
+          Get.offAllNamed(Routes.intro);
+        } else {
+          Get.offAllNamed(Routes.signinemp);
+        }
       }
     });
   }
@@ -205,6 +232,6 @@ class SplashController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

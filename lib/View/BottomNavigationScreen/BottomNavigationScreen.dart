@@ -13,11 +13,15 @@ class BottomNavigationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
-        bottomNavigationController.dashboardData();
+        bottomNavigationController.check();
+        // bottomNavigationController.dashboardData();
       }
     });
+    bottomNavigationController.check();
     return GetBuilder(
         init: bottomNavigationController,
         builder: (_) {
@@ -55,7 +59,30 @@ class BottomNavigationScreen extends StatelessWidget {
               },
               child: Scaffold(
                 key: bottomNavigationController.scaffoldKey,
-                drawer: SideMenu(),
+                drawer: bottomNavigationController.connection == true
+                    ? SideMenu()
+                    : Container(
+                        decoration: BoxDecoration(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Colors.white,
+                                  size: width / 15,
+                                )),
+                            SizedBox(
+                              height: height / 40,
+                            ),
+                            Image.asset('assets/nointernet.gif'),
+                          ],
+                        ),
+                      ),
                 bottomNavigationBar: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   selectedItemColor: DynamicColor().primarycolor,

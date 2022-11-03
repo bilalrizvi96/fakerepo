@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Model/PointsModel.dart';
 import 'package:attendencesystem/Model/SummaryAnalyticsModel.dart';
@@ -70,27 +72,37 @@ class SummaryController extends GetxController
         .toString()
         .split('-')[0];
     // mindate = DateFormat('dd-MM-y').parse(day + '-' + month + '-' + year);
+    if (connection == true) {}
+
+    summaryGuideline();
     summaryAnalytics();
     summaryDetails();
-    print(BaseUrl.storage.read("summaryguideline"));
-    if (summaryguidelinelist.isEmpty) {
-      summaryGuideline();
-    }
     update();
   }
 
   @override
   void onInit() {
     super.onInit();
-
-    init();
     check();
+    init();
   }
 
   check() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        connection.value = true;
+        update();
+      }
+    } on SocketException catch (_) {
+      connection.value = false;
+      update();
+    }
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
         connection.value = true;
+        update();
+
         update();
       } else {
         connection.value = false;
@@ -199,7 +211,7 @@ class SummaryController extends GetxController
         weeklist.value[3].selected = true;
         weekupdate.value = 3;
       }
-      BaseUrl.storage.write('points', summarydata.value[0].points);
+      // BaseUrl.storage.write('points', summarydata.value[0].points);
     } else {
       Loading.value = false;
 
@@ -225,6 +237,7 @@ class SummaryController extends GetxController
             : DateTime(todate.value.year, todate.value.month + 1, 0).day));
     print(start);
     print('bilal');
+
     var response = await API().Summarydetail(start: start, end: end);
     if (response.statusCode == 200) {
       Loading.value = false;

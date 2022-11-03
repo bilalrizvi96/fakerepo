@@ -66,7 +66,7 @@ class IntroScreen extends StatelessWidget {
                                               child:
                                                   CircularProgressIndicator())),
                                       errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+                                          Icon(Icons.image_not_supported_outlined),
                                     ),
                                     // Image.network(
                                     //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/intro1.png',
@@ -106,7 +106,7 @@ class IntroScreen extends StatelessWidget {
                                                             CircularProgressIndicator()),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        Icon(Icons.error),
+                                                        Icon(Icons.image_not_supported_outlined),
                                               )
                                               // Image.network(
                                               //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',
@@ -176,7 +176,7 @@ class IntroScreen extends StatelessWidget {
                                       placeholder: (context, url) => Center(
                                           child: CircularProgressIndicator()),
                                       errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+                                          Icon(Icons.image_not_supported_outlined),
                                     ),
 
                                     // Image.network(
@@ -217,7 +217,7 @@ class IntroScreen extends StatelessWidget {
                                                             CircularProgressIndicator()),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        Icon(Icons.error),
+                                                        Icon(Icons.image_not_supported_outlined),
                                               )
                                               // Image.network(
                                               //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/introbottom.png',

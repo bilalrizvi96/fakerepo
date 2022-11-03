@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/CheckPointController.dart';
 import 'package:attendencesystem/Controller/TrackUserController.dart';
@@ -5,6 +7,7 @@ import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
 import 'package:attendencesystem/View/HomeScreen/HomeScreen.dart';
 import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:attendencesystem/View/SummaryScreen/SummaryScreen.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 // import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +27,12 @@ class BottomNavigationController extends GetxController {
   var selectedIndex = 0.obs;
   var connection = true.obs;
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  MaintenanceController _maintenanceController =
-      Get.put(MaintenanceController());
+
   CheckPointController _checkPointController = Get.put(CheckPointController());
   SummaryController _summaryController = Get.put(SummaryController());
   TrackUserController _trackUserController = Get.put(TrackUserController());
-  var userdatalist;
+  HomeController _homeController = Get.put(HomeController());
+
   var widgetChildren = <Widget>[
     HomeScreen(),
     SummaryScreen(),
@@ -45,20 +48,43 @@ class BottomNavigationController extends GetxController {
             BaseUrl.storage.read("trackuseraccess") == false
         ? FeedbackScreen(
             check: true,
-            form: false,
+            form: true,
           )
         : BaseUrl.storage.read("checkpointaccess") == true
             ? CheckPointScreen()
-            : MyProfileScreen()
+            : MyProfileScreen(
+                check: true,
+              )
   ];
-
+  check() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        connection.value = true;
+        update();
+      }
+    } on SocketException catch (_) {
+      connection.value = false;
+      update();
+    }
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        connection.value = true;
+        update();
+      } else {
+        connection.value = false;
+        update();
+      }
+      update();
+    });
+  }
   // check() async {
   //   await DataConnectionChecker().onStatusChange.listen((status) async {
   //     if (status == DataConnectionStatus.connected) {
-  //       connection.value = true;
+  //       connection = true;
   //       update();
   //     } else {
-  //       connection.value = false;
+  //       connection = false;
   //       update();
   //     }
   //   });
@@ -75,58 +101,13 @@ class BottomNavigationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (BaseUrl.storage.read('token') != "out" ||
-        BaseUrl.storage.read('token') != null) {
-      dashboardData();
-      print('dashboard');
-    }
-    print('bilal');
-    print(BaseUrl.storage.read("firstAttendanceRecordDate"));
+    // if (BaseUrl.storage.read('token') != "out" ||
+    //     BaseUrl.storage.read('token') != null) {
+    //   // dashboardData();
+    //   print('dashboard');
+    // }
+    check();
     popups();
-  }
-
-  dashboardData() async {
-    var response = await API().DashboardData();
-    if (response.statusCode == 200) {
-      userdatalist = response.data['data'][0];
-      BaseUrl.storage
-          .write("totalAbsent", userdatalist['absent_days'].toString());
-      BaseUrl.storage
-          .write("totalPresent", userdatalist['present_days'].toString());
-      BaseUrl.storage.write("status", userdatalist['status']);
-      BaseUrl.storage.write("isCheckOutOn", userdatalist['isClockOutOn']);
-      BaseUrl.storage.write("isCheckInOn", userdatalist['isClockInOn']);
-      print(userdatalist['isClockInOn']);
-
-      BaseUrl.storage.write("clockin", userdatalist['clockIn']);
-      BaseUrl.storage
-          .write("welcomemessage", userdatalist['message']['message']);
-      BaseUrl.storage.write("welcometitle", userdatalist['message']['title']);
-      BaseUrl.storage.write("clockout", userdatalist['clockOut']);
-      BaseUrl.storage.write("ismessage", userdatalist['isMessageAvailable']);
-      BaseUrl.storage.write("popupimage", userdatalist['message']['imageUrl']);
-      BaseUrl.storage.write(
-          "maintenance", userdatalist['maintenanceObject']['underMaintenance']);
-      BaseUrl.storage.write("checkOutMissing", userdatalist['clockOutMissing']);
-      if (userdatalist['version']['updateAvailability'] == true) {
-        BaseUrl.storage.write("token", 'out');
-        Get.offAllNamed(Routes.updatescreen, arguments: [
-          userdatalist['version']['message'],
-          userdatalist['version']['currentRelease'],
-          userdatalist['version']['availableRelease'],
-          userdatalist['version']['link'],
-        ]);
-        print(BaseUrl.storage.read("dateForMissingCheckout"));
-      } else if (userdatalist['maintenanceObject']['underMaintenance'] ==
-          true) {
-        _maintenanceController.checkMaintenance();
-      }
-    } else {
-      Get.snackbar("Dashboard ", response.data['error'].toString(),
-          colorText: Colors.white, backgroundColor: Colors.red);
-    }
-
-    update();
   }
 
   popups() {
@@ -184,7 +165,9 @@ class BottomNavigationController extends GetxController {
   void ItemIndex(index) {
     selectedIndex.value = index;
     if (selectedIndex.value == 0) {
-      this.dashboardData();
+      _homeController.onInit();
+      update();
+      // this.dashboardData();
 
     } else if (selectedIndex.value == 1) {
       this._summaryController.onInit();

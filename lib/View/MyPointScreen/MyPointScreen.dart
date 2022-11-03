@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Component/ErrorLoading.dart';
+import '../../Component/NoInternet.dart';
 import '../SummaryScreen/Guideline.dart';
 import '../SummaryScreen/SummaryScreen.dart';
 
@@ -15,6 +16,7 @@ class MyPointScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MyPointController myPointController = Get.put(MyPointController());
+    myPointController.check();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -73,134 +75,154 @@ class MyPointScreen extends StatelessWidget {
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(8.0),
                                   topLeft: Radius.circular(8.0))),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: height / 6,
-                              ),
-                              myPointController.Loading.value == false
-                                  ? Expanded(
-                                      child: Container(
-                                        width: width,
-                                        height: height,
-                                        padding: EdgeInsets.only(
-                                            left: 20.0, right: 20),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.grey
-                                                    .withOpacity(0.60)),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
-                                        child: myPointController
-                                                .mypointlist.value.isNotEmpty
-                                            ? ListView.builder(
-                                                itemCount: myPointController
-                                                    .mypointlist.value.length,
-                                                itemBuilder: (_, index) {
-                                                  return Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: height / 40,
-                                                      ),
-                                                      Text(
-                                                        myPointController
-                                                                .mypointlist
-                                                                .value
-                                                                .isNotEmpty
-                                                            ? '${myPointController.mypointlist.value[index].date}'
-                                                            : '',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w200,
-                                                                fontSize:
-                                                                    width / 35),
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Text(
+                          child: myPointController.connection.value == true
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: height / 6,
+                                    ),
+                                    myPointController.Loading.value == false
+                                        ? Expanded(
+                                            child: Container(
+                                              width: width,
+                                              height: height,
+                                              padding: EdgeInsets.only(
+                                                  left: 20.0, right: 20),
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.60)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                              child:
+                                                  myPointController.mypointlist
+                                                          .value.isNotEmpty
+                                                      ? ListView.builder(
+                                                          itemCount:
                                                               myPointController
-                                                                      .mypointlist
-                                                                      .value
-                                                                      .isNotEmpty
-                                                                  ? '${myPointController.mypointlist.value[index].walletTitle}'
-                                                                  : '',
+                                                                  .mypointlist
+                                                                  .value
+                                                                  .length,
+                                                          itemBuilder:
+                                                              (_, index) {
+                                                            return Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                SizedBox(
+                                                                  height:
+                                                                      height /
+                                                                          40,
+                                                                ),
+                                                                Text(
+                                                                  myPointController
+                                                                          .mypointlist
+                                                                          .value
+                                                                          .isNotEmpty
+                                                                      ? '${myPointController.mypointlist.value[index].date.toString().split('T')[0]}'
+                                                                      : '',
+                                                                  style: GoogleFonts.poppins(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w200,
+                                                                      fontSize:
+                                                                          width /
+                                                                              35),
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child:
+                                                                          Text(
+                                                                        myPointController.mypointlist.value.isNotEmpty
+                                                                            ? '${myPointController.mypointlist.value[index].walletTitle}'
+                                                                            : '',
+                                                                        style: GoogleFonts.poppins(
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontWeight: FontWeight.w600,
+                                                                            fontSize: width / 26),
+                                                                      ),
+                                                                    ),
+                                                                    Spacer(),
+                                                                    Text(
+                                                                      myPointController
+                                                                              .mypointlist
+                                                                              .value
+                                                                              .isNotEmpty
+                                                                          ? '${myPointController.mypointlist.value[index].points}'
+                                                                          : '',
+                                                                      style: GoogleFonts.poppins(
+                                                                          color: Color(int.parse(myPointController
+                                                                              .mypointlist
+                                                                              .value[
+                                                                                  index]
+                                                                              .color)),
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize:
+                                                                              width / 22),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Divider(),
+                                                              ],
+                                                            );
+                                                          })
+                                                      : Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            SizedBox(
+                                                              height:
+                                                                  height / 15,
+                                                            ),
+                                                            Image.asset(
+                                                                'assets/nodatafound.png'),
+                                                            // Spacer(),
+                                                            Text(
+                                                              "No Data Found",
                                                               style: GoogleFonts.poppins(
                                                                   color: Colors
-                                                                      .black,
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.50),
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
                                                                   fontSize:
                                                                       width /
-                                                                          26),
+                                                                          22),
                                                             ),
-                                                          ),
-                                                          Spacer(),
-                                                          Text(
-                                                            myPointController
-                                                                    .mypointlist
-                                                                    .value
-                                                                    .isNotEmpty
-                                                                ? '${myPointController.mypointlist.value[index].points}'
-                                                                : '',
-                                                            style: GoogleFonts.poppins(
-                                                                color: Color(int.parse(
-                                                                    myPointController
-                                                                        .mypointlist
-                                                                        .value[
-                                                                            index]
-                                                                        .color)),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize:
-                                                                    width / 22),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Divider(),
-                                                    ],
-                                                  );
-                                                })
-                                            : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    height: height / 15,
-                                                  ),
-                                                  Image.asset(
-                                                      'assets/nodatafound.png'),
-                                                  // Spacer(),
-                                                  Text(
-                                                    "No Data Found",
-                                                    style: GoogleFonts.poppins(
-                                                        color: Colors.black
-                                                            .withOpacity(0.50),
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: width / 22),
-                                                  ),
-                                                  // Spacer(),
-                                                ],
-                                              ),
-                                      ),
-                                    )
-                                  : ErrorLoading(height: 200.0, width: 200.0),
-                            ],
-                          ),
+                                                            // Spacer(),
+                                                          ],
+                                                        ),
+                                            ),
+                                          )
+                                        : ErrorLoading(
+                                            height: 200.0, width: 200.0),
+                                  ],
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: height / 5,
+                                    ),
+                                    NoInternet(height: height, width: width),
+                                  ],
+                                ),
                         )
                       ],
                     ),
@@ -370,19 +392,23 @@ class MyPointScreen extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 GestureDetector(
-                                  onTap: () {
-                                    Get.bottomSheet(
-                                        InformationBottom(
-                                            height: height, width: width),
-                                        elevation: 20.0,
-                                        enableDrag: false,
-                                        backgroundColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.0),
-                                          topRight: Radius.circular(10.0),
-                                        )));
-                                  },
+                                  onTap: myPointController.connection.value ==
+                                          true
+                                      ? () {
+                                          Get.bottomSheet(
+                                              InformationBottom(
+                                                  height: height, width: width),
+                                              elevation: 20.0,
+                                              enableDrag: false,
+                                              backgroundColor: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                topLeft: Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                              )));
+                                        }
+                                      : () {},
                                   child: Icon(
                                     Icons.help_outline,
                                     size: width / 15,

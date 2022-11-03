@@ -18,6 +18,7 @@ class CheckPointScreen extends StatelessWidget {
     DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
         _checkPointController.check();
+        _checkPointController.update();
         // _checkPointController.onInit();
         // _checkPointController.update();
       }

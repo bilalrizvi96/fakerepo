@@ -214,7 +214,7 @@ class SupportRequestScreen extends StatelessWidget {
                                                                         errorWidget: (context,
                                                                                 url,
                                                                                 error) =>
-                                                                            Icon(Icons.error),
+                                                                            Icon(Icons.image_not_supported_outlined),
                                                                       )
                                                                       // Image.network(
                                                                       //     faqsController

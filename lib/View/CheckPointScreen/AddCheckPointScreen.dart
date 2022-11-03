@@ -179,12 +179,26 @@ class AddCheckPointScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 35.0),
                           child: Align(
                               alignment: Alignment.topLeft,
-                              child: Text(
-                                'Site Name',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: width / 30,
-                                    color: DynamicColor().black),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Site Name',
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: width / 30,
+                                        color: DynamicColor().black),
+                                  ),
+                                  Text(
+                                    ' *',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .caption!
+                                        .copyWith(
+                                            color: Colors.red,
+                                            fontSize: width / 22,
+                                            fontWeight: FontWeight.w900),
+                                  ),
+                                ],
                               )),
                         ),
                         SizedBox(
@@ -316,11 +330,12 @@ class AddCheckPointScreen extends StatelessWidget {
                         Spacer(),
                         GestureDetector(
                           onTap: () {
-                            if (_checkPointController.connection.value ==
-                                true) {
-                              _checkPointController.checkpoint();
+                            if (_checkPointController.connection == true) {
+                              if (!Get.isSnackbarOpen)
+                                _checkPointController.checkpoint();
                             } else {
-                              _checkPointController.checkpoint_offline();
+                              if (!Get.isSnackbarOpen)
+                                _checkPointController.checkpoint_offline();
                             }
                             // if (BaseUrl.storage.read("status") == true) {
 

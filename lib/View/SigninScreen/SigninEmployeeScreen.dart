@@ -1,8 +1,10 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
+import 'package:attendencesystem/Component/NoInternet.dart';
 import 'package:attendencesystem/Controller/SignInEmployeeController.dart';
 import 'package:attendencesystem/View/FeedbackScreen/FeedbackScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,11 +19,15 @@ import '../../Routes/Routes.dart';
 class SiginEmployeeScreen extends StatelessWidget {
   SignInEmployeeController signinController =
       Get.put(SignInEmployeeController());
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
+    signinController.check();
+    DataConnectionChecker().onStatusChange.listen((status) async {
+      signinController.check();
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: GetBuilder(
@@ -100,7 +106,56 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                         .empcodeController,
                                                     validator: signinController
                                                         .validators,
-
+                                                    onTap: () {
+                                                      if (signinController
+                                                              .connection
+                                                              .value ==
+                                                          false) {
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                        if (Get.isBottomSheetOpen ==
+                                                            false)
+                                                          WidgetsBinding
+                                                              .instance!
+                                                              .addPostFrameCallback(
+                                                                  (duration) async {
+                                                            return Get
+                                                                .bottomSheet(
+                                                              Container(
+                                                                height: 700,
+                                                                alignment: Alignment
+                                                                    .bottomCenter,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  borderRadius: BorderRadius.only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              20.0),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              20.0)),
+                                                                  // image: DecorationImage(
+                                                                  //   image: NetworkImage(image),
+                                                                  //   fit: BoxFit.cover,
+                                                                  // )
+                                                                ),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                                child: NoInternet(
+                                                                    height:
+                                                                        height,
+                                                                    width:
+                                                                        width),
+                                                              ),
+                                                            );
+                                                          });
+                                                      }
+                                                    },
                                                     readOnly: signinController
                                                         .read.value,
                                                     cursorColor: DynamicColor()
@@ -152,7 +207,84 @@ class SiginEmployeeScreen extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              signinController.checkOption();
+                                              // signinController.check();
+                                              // if (signinController
+                                              //         .connection ==
+                                              //     true) {
+                                              //   signinController.checkOption();
+                                              // } else {
+                                              //   WidgetsBinding.instance!
+                                              //       .addPostFrameCallback(
+                                              //           (duration) async {
+                                              //     return Get.bottomSheet(
+                                              //       Container(
+                                              //         height: 700,
+                                              //         alignment: Alignment
+                                              //             .bottomCenter,
+                                              //         decoration: BoxDecoration(
+                                              //           color: Colors.white,
+                                              //           borderRadius:
+                                              //               BorderRadius.only(
+                                              //                   topLeft: Radius
+                                              //                       .circular(
+                                              //                           20.0),
+                                              //                   topRight: Radius
+                                              //                       .circular(
+                                              //                           20.0)),
+                                              //           // image: DecorationImage(
+                                              //           //   image: NetworkImage(image),
+                                              //           //   fit: BoxFit.cover,
+                                              //           // )
+                                              //         ),
+                                              //         padding:
+                                              //             const EdgeInsets.all(
+                                              //                 8.0),
+                                              //         child: Column(
+                                              //           crossAxisAlignment:
+                                              //               CrossAxisAlignment
+                                              //                   .center,
+                                              //           mainAxisAlignment:
+                                              //               MainAxisAlignment
+                                              //                   .end,
+                                              //           children: [
+                                              //             Text(
+                                              //               "",
+                                              //               style: GoogleFonts.poppins(
+                                              //                   color: Color(
+                                              //                       0xFFEE696A),
+                                              //                   fontWeight:
+                                              //                       FontWeight
+                                              //                           .bold,
+                                              //                   fontSize: 25),
+                                              //             ),
+                                              //             SizedBox(
+                                              //               height: 20,
+                                              //             ),
+                                              //             Padding(
+                                              //               padding:
+                                              //                   const EdgeInsets
+                                              //                       .all(8.0),
+                                              //               child: Text(
+                                              //                 '',
+                                              //                 textAlign:
+                                              //                     TextAlign
+                                              //                         .center,
+                                              //                 style: GoogleFonts.poppins(
+                                              //                     fontWeight:
+                                              //                         FontWeight
+                                              //                             .w500,
+                                              //                     fontSize: 12),
+                                              //               ),
+                                              //             ),
+                                              //             SizedBox(
+                                              //               height: 50,
+                                              //             ),
+                                              //           ],
+                                              //         ),
+                                              //       ),
+                                              //     );
+                                              //   });
+                                              // }
                                             },
                                             child: Container(
                                                 width: width / 3.1,
@@ -172,9 +304,10 @@ class SiginEmployeeScreen extends StatelessWidget {
                                                       Center(
                                                           child:
                                                               CircularProgressIndicator()),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          Icon(Icons.error),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      Icon(Icons
+                                                          .image_not_supported_outlined),
                                                 )
                                                 // Image.network(
                                                 //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/face.png',
@@ -189,7 +322,9 @@ class SiginEmployeeScreen extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              signinController.siginbtn();
+                                              if (!Get.isSnackbarOpen) {
+                                                signinController.siginbtn();
+                                              }
                                             },
                                             child: Container(
                                               width: width / 1.2,
@@ -215,7 +350,49 @@ class SiginEmployeeScreen extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.toNamed(Routes.registration);
+                                              signinController.check();
+                                              if (signinController
+                                                      .connection.value ==
+                                                  true) {
+                                                Get.toNamed(
+                                                    Routes.registration);
+                                              } else {
+                                                WidgetsBinding.instance!
+                                                    .addPostFrameCallback(
+                                                        (duration) async {
+                                                  if (Get.isBottomSheetOpen ==
+                                                      false)
+                                                    return Get.bottomSheet(
+                                                      Container(
+                                                        height: 700,
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          20.0)),
+                                                          // image: DecorationImage(
+                                                          //   image: NetworkImage(image),
+                                                          //   fit: BoxFit.cover,
+                                                          // )
+                                                        ),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: NoInternet(
+                                                            height: height,
+                                                            width: width),
+                                                      ),
+                                                    );
+                                                });
+                                              }
                                             },
                                             child: Container(
                                               width: width / 1.2,
@@ -312,7 +489,49 @@ class SiginEmployeeScreen extends StatelessWidget {
                                               elevation: 5.0,
                                               hoverElevation: 20,
                                               onPressed: () {
-                                                signinController.checkOption();
+                                                signinController.check();
+                                                if (signinController
+                                                        .connection.value ==
+                                                    true) {
+                                                  signinController
+                                                      .checkOption();
+                                                } else {
+                                                  WidgetsBinding.instance!
+                                                      .addPostFrameCallback(
+                                                          (duration) async {
+                                                    Get.back();
+                                                    if (Get.isBottomSheetOpen ==
+                                                        false)
+                                                      return Get.bottomSheet(
+                                                        Container(
+                                                          height: 700,
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius: BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        20.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        20.0)),
+                                                            // image: DecorationImage(
+                                                            //   image: NetworkImage(image),
+                                                            //   fit: BoxFit.cover,
+                                                            // )
+                                                          ),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: NoInternet(
+                                                              height: height,
+                                                              width: width),
+                                                        ),
+                                                      );
+                                                  });
+                                                }
                                               },
                                               child: Icon(
                                                   Icons.arrow_forward_ios)),

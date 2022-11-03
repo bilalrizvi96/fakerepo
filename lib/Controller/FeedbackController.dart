@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,16 +38,50 @@ class FeedbackController extends GetxController {
   }
 
   checks() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        connection.value = true;
+
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+          update();
+        });
+        // Loading.value = false;
+
+      }
+    } on SocketException catch (_) {
+      connection.value = false;
+      Loading.value = true;
+      Future.delayed(new Duration(milliseconds: 2000), () {
+        Loading.value = false;
+
+        update();
+      });
+      update();
+    }
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
-        Loading.value = false;
         connection.value = true;
+
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+          update();
+        });
+
         update();
       } else {
         connection.value = false;
+        Loading.value = true;
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+
+          update();
+        });
         update();
       }
     });
+    update();
   }
 
   submit(var form) async {

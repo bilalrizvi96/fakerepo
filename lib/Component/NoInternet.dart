@@ -20,7 +20,10 @@ class NoInternet extends StatelessWidget {
         // SizedBox(
         //   height: height / 15,
         // ),
-        Image.asset('assets/nodatafound.png'),
+        Image.asset('assets/nointernet.gif'),
+        SizedBox(
+          height: height / 30,
+        ),
         // Spacer(),
         Text(
           "No Internet Connection",

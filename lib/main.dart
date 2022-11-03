@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:io';
 
 import 'package:attendencesystem/API/BaseURl.dart';
@@ -13,7 +14,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:home_widget/home_widget.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message,
-    {BuildContext? context}) async {
+    {BuildContext context}) async {
   await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
 }
@@ -40,7 +41,7 @@ Future<void> main() async {
   if (Platform.isAndroid) {
     await GetStorage.init();
     WidgetsFlutterBinding.ensureInitialized();
-    GestureBinding.instance!.resamplingEnabled = true;
+    GestureBinding.instance.resamplingEnabled = true;
     // HomeWidget.registerBackgroundCallback(backgroundCallback);
     await Firebase.initializeApp(
         options: const FirebaseOptions(
@@ -98,7 +99,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

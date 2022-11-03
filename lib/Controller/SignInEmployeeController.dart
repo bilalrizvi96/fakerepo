@@ -6,6 +6,7 @@ import 'package:attendencesystem/API/API.dart';
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Controller/SummaryController.dart';
 import 'package:attendencesystem/Model/LoginModel.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 // import 'package:device_info_plus/device_info_plus.dart';
 
@@ -31,7 +32,7 @@ class SignInEmployeeController extends GetxController {
   String? imageBase64;
   var loginFormKey = GlobalKey<FormState>();
   var read = false.obs;
-
+  var connection = true.obs;
   @override
   void onInit() {
     super.onInit();
@@ -48,6 +49,53 @@ class SignInEmployeeController extends GetxController {
 
     ///recent
     // sitelist = BaseUrl.storage.read('sitesdata');
+  }
+
+  check() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        connection.value = true;
+
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+          update();
+        });
+        // Loading.value = false;
+
+      }
+    } on SocketException catch (_) {
+      connection.value = false;
+      Loading.value = true;
+      Future.delayed(new Duration(milliseconds: 2000), () {
+        Loading.value = false;
+
+        update();
+      });
+      update();
+    }
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        connection.value = true;
+
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+          update();
+        });
+
+        update();
+      } else {
+        connection.value = false;
+        Loading.value = true;
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+
+          update();
+        });
+        update();
+      }
+    });
+    update();
   }
 
   empcodeUpdate() {
@@ -104,6 +152,7 @@ class SignInEmployeeController extends GetxController {
         loginFormKey.currentState!.validate()) {
       Get.snackbar("Log In", "Kindly scan your face",
           colorText: Colors.white, backgroundColor: Colors.red);
+      ScaffoldMessenger.of(Get.context!).removeCurrentSnackBar();
     }
   }
 
@@ -123,6 +172,8 @@ class SignInEmployeeController extends GetxController {
 
   sigin() async {
     if (faceImage != null) {
+      Loading.value = true;
+      update();
       randomss();
       var info, devicename;
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -151,6 +202,7 @@ class SignInEmployeeController extends GetxController {
 
       if (response.statusCode == 200) {
         Loading.value = false;
+        update();
         response = await LoginModel.fromJson(response.data);
 
         // userdatalist = response.user;
@@ -179,69 +231,7 @@ class SignInEmployeeController extends GetxController {
             response.user[0].firstAttendanceRecordDate);
         print(BaseUrl.storage.read("firstAttendanceRecordDate"));
         print('bilal');
-        // BaseUrl.storage.write("role", response.user[0].role);
-        // BaseUrl.storage.write("region", response.user[0].region);
-
-        // BaseUrl.storage
-        //     .write("totalAbsent", response.user[0].absentDays.toString());
-        // BaseUrl.storage
-        //     .write("totalPresent", response.user[0].presentDays.toString());
-        // BaseUrl.storage.write("status", response.user[0].status);
-        // BaseUrl.storage.write("isCheckOutOn", response.user[0].isCheckOutOn);
-        // BaseUrl.storage.write("isCheckInOn", response.user[0].isCheckInOn);
-        // BaseUrl.storage.write("starttime", response.user[0].startTiming);
-        // BaseUrl.storage.write("endTiming", response.user[0].endTiming);
-        // BaseUrl.storage.write("hoursPerWeek", response.user[0].hoursPerWeek);
-        // // BaseUrl.storage.write("offDay", response.user[0].offDay);
-        // BaseUrl.storage.write("phoneNo", response.user[0].phoneNo);
-        // BaseUrl.storage.write("eMail", response.user[0].eMail);
-        // BaseUrl.storage.write("address", response.user[0].address);
-        // BaseUrl.storage.write("designation", response.user[0].designation);
-        // BaseUrl.storage.write("shiftTiming", response.user[0].shiftType);
-        // BaseUrl.storage.write("clockin", response.user[0].checkIn);
-        // BaseUrl.storage.write("points", response.user[0].points);
-
-        // BaseUrl.storage
-        //     .write("welcomemessage", response.user[0].message.message);
-        // BaseUrl.storage.write("welcometitle", response.user[0].message.title);
-        // BaseUrl.storage.write("clockout", response.user[0].checkOut);
-        // BaseUrl.storage.write("firstAttendanceRecordDate",
-        //     response.user[0].firstAttendanceRecordDate);
-        // BaseUrl.storage.write("ismessage", response.user[0].isMessageAvailable);
-        // BaseUrl.storage.write("popupimage", response.user[0].message.imageUrl);
-        // BaseUrl.storage.write(
-        //     "maintenance", userdatalist[0].maintenanceObject.underMaintenance);
-        //
-        // BaseUrl.storage.write("firstAttendanceRecordDate",
-        //     response.user[0].firstAttendanceRecordDate);
-        // BaseUrl.storage
-        //     .write("checkOutMissing", response.user[0].checkOutMissing);
-        // BaseUrl.storage.write("lastAttendanceRecordDate",
-        //     response.user[0].lastAttendanceRecordDate);
-        // BaseUrl.storage.write(
-        //     "dateForMissingCheckout", response.user[0].dateForMissingCheckout);
-        // print(BaseUrl.storage.read('trackuseraccess'));
-
-        // if (userdatalist.isNotEmpty) {
-        //   if (userdatalist[0].version.updateAvailability == true) {
-        //     BaseUrl.storage.write("token", 'out');
-        //     Get.offAllNamed('/updatescreen', arguments: [
-        //       userdatalist[0].version.message,
-        //       userdatalist[0].version.currentRelease,
-        //       userdatalist[0].version.availableRelease,
-        //       userdatalist[0].version.link,
-        //     ]);
-        //   } else if (userdatalist[0].maintenanceObject.underMaintenance ==
-        //       true) {
-        //     _maintenanceController.checkMaintenance();
-        //   } else {
-        // if(BaseUrl.storage.read('key')!=empcodeController.text.toString()){
-        //
-        // }
-
-        Get.offAllNamed(Routes.home);
-        // }
-        // }
+        Get.offAndToNamed(Routes.home);
       } else {
         Loading.value = false;
 
@@ -250,7 +240,9 @@ class SignInEmployeeController extends GetxController {
       }
     } else {
       Get.snackbar("Log In", "Kindly scan your face");
+
       Loading.value = false;
+      // ScaffoldMessenger.of(Get.context!).clearSnackBars();
     }
   }
 
@@ -258,7 +250,6 @@ class SignInEmployeeController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
   }
   // faceverification() async {
   //   if (faceImage != null) {

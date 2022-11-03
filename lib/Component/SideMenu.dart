@@ -1,6 +1,7 @@
 import 'package:attendencesystem/API/BaseURl.dart';
 import 'package:attendencesystem/Component/DynamicColor.dart';
 import 'package:attendencesystem/Controller/HomeController.dart';
+import 'package:attendencesystem/View/MyProfileScreen/MyProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -52,7 +53,12 @@ class SideMenu extends StatelessWidget {
                     color: DynamicColor().primarycolor),
                 press: () async {
                   Get.back();
-                  Get.toNamed(Routes.profile);
+                  Get.to(
+                      () => MyProfileScreen(
+                            check: false,
+                          ),
+                      transition: Transition.rightToLeft,
+                      curve: Curves.easeInQuart);
                 },
               ),
             DrawerListTile(
@@ -80,8 +86,8 @@ class SideMenu extends StatelessWidget {
                   Get.back();
                   Get.to(
                       () => FeedbackScreen(
-                            check: true,
-                            form: false,
+                            check: false,
+                            form: true,
                           ),
                       transition: Transition.rightToLeft,
                       curve: Curves.easeInQuart);

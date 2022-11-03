@@ -99,6 +99,6 @@ class RegistrationController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

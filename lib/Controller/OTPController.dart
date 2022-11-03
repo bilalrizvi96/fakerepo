@@ -105,6 +105,6 @@ class OTPController extends GetxController {
     _timer!.cancel();
     // AltSmsAutofill().unregisterListener();
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

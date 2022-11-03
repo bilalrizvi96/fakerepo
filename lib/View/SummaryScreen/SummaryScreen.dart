@@ -28,6 +28,7 @@ class SummaryScreen extends StatelessWidget {
   SummaryController summaryController = Get.put(SummaryController());
   @override
   Widget build(BuildContext context) {
+
     summaryController.check();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -45,7 +46,7 @@ class SummaryScreen extends StatelessWidget {
           child: GetBuilder(
               init: summaryController,
               builder: (_) {
-                return summaryController.connection == true
+                return summaryController.connection.value == true
                     ? SingleChildScrollView(
                         physics: NeverScrollableScrollPhysics(),
                         child: Padding(
@@ -167,9 +168,10 @@ class SummaryScreen extends StatelessWidget {
                                               placeholder: (context, url) => Center(
                                                   child:
                                                       CircularProgressIndicator()),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Icon(Icons.error),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Icon(Icons
+                                                      .image_not_supported_outlined),
                                             ),
                                             // Image.network(
                                             //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',

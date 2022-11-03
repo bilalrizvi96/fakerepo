@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:attendencesystem/API/BaseURl.dart';
@@ -36,6 +37,7 @@ class TrackUserController extends GetxController {
   init() {
     staafflist = [];
     dropdownValue.value = "Show All Staff";
+
     getEmployee();
   }
 
@@ -47,6 +49,16 @@ class TrackUserController extends GetxController {
   }
 
   check() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        connection.value = true;
+        update();
+      }
+    } on SocketException catch (_) {
+      connection.value = false;
+      update();
+    }
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
         Loading.value = false;
@@ -268,7 +280,7 @@ class TrackUserController extends GetxController {
                               placeholder: (context, url) =>
                                   Center(child: CircularProgressIndicator()),
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                  Icon(Icons.image_not_supported_outlined),
                             )
                             // Image.network(element.image, fit: BoxFit.cover)
                           ],

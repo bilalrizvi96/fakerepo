@@ -13,6 +13,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../../Component/ErrorLoading.dart';
 import '../../Component/LifeCycleEvent Handler.dart';
@@ -26,26 +27,54 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    homeController.check();
+
+    // homeController.clockoutCheck(width, height);
     DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
         homeController.check();
+
         homeController.update();
       }
     });
-    homeController.check();
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      drawer: SideMenu(),
-      body: Container(
-          width: width,
-          height: height,
-          color: Colors.white30,
-          child: GetBuilder(
-              init: homeController,
-              builder: (_) {
-                return Stack(
+
+    return GetBuilder(
+        init: homeController,
+        builder: (_) {
+          print(homeController.connection.value);
+          return Scaffold(
+            backgroundColor: Colors.white,
+            drawer: homeController.connection.value == true
+                ? SideMenu()
+                : Container(
+                    decoration: BoxDecoration(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                              size: width / 15,
+                            )),
+                        SizedBox(
+                          height: height / 40,
+                        ),
+                        Image.asset('assets/nointernet.gif'),
+                      ],
+                    ),
+                  ),
+            body: Container(
+                width: width,
+                height: height,
+                color: Colors.white30,
+                child: Stack(
                   children: [
                     Container(
                       width: width,
@@ -75,76 +104,148 @@ class HomeScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(
                                 right: 22.0, left: 22.0, top: 22.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: width / 80,
-                                ),
-                                Builder(builder: (context) {
-                                  return GestureDetector(
-                                    onTap: homeController.connection.value ==
-                                            true
-                                        ? () {
+                            child: homeController.connection == true
+                                ? Row(
+                                    children: [
+                                      SizedBox(
+                                        width: width / 80,
+                                      ),
+                                      // if ()
+                                      Builder(builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
                                             Scaffold.of(context).openDrawer();
-                                          }
-                                        : () {
-                                            Get.snackbar("Dashboard ",
-                                                "Disabled in offline feature",
-                                                colorText: Colors.white,
-                                                backgroundColor: Colors.red);
                                           },
-                                    child: Icon(
-                                      Icons.menu,
-                                      size: width / 16,
-                                      color: DynamicColor().titletextcolor,
-                                    ),
-                                  );
-                                }),
-                                SizedBox(
-                                  width: width / 50,
-                                ),
-                                Text(
-                                  'Dashboard',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: width / 16),
-                                ),
-                                Spacer(),
-                                // BaseUrl.storage.read("checkpointaccess") !=
-                                //         false
-                                //     ? GestureDetector(
-                                //         onTap: () {
-                                //           Get.toNamed('/checkpoint');
-                                //         },
-                                //         child: Padding(
-                                //           padding: const EdgeInsets.only(
-                                //               right: 6.0, left: 10.0),
-                                //           child: Icon(
-                                //             Icons.location_on_outlined,
-                                //             size: width / 16,
-                                //             color: DynamicColor().primarycolor,
-                                //           ),
-                                //         ),
-                                //       )
-                                //     : Column(),
+                                          // : () {
+                                          //     Get.snackbar("Dashboard ",
+                                          //         "Disabled in offline feature",
+                                          //         colorText: Colors.white,
+                                          //         backgroundColor: Colors.red);
+                                          //   },
+                                          child: Icon(
+                                            Icons.menu,
+                                            size: width / 16,
+                                            color:
+                                                DynamicColor().titletextcolor,
+                                          ),
+                                        );
+                                      }),
+                                      SizedBox(
+                                        width: width / 50,
+                                      ),
+                                      Text(
+                                        'Dashboard',
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: width / 16),
+                                      ),
+                                      Spacer(),
+                                      // BaseUrl.storage.read("checkpointaccess") !=
+                                      //         false
+                                      //     ? GestureDetector(
+                                      //         onTap: () {
+                                      //           Get.toNamed('/checkpoint');
+                                      //         },
+                                      //         child: Padding(
+                                      //           padding: const EdgeInsets.only(
+                                      //               right: 6.0, left: 10.0),
+                                      //           child: Icon(
+                                      //             Icons.location_on_outlined,
+                                      //             size: width / 16,
+                                      //             color: DynamicColor().primarycolor,
+                                      //           ),
+                                      //         ),
+                                      //       )
+                                      //     : Column(),
+                                      if (homeController.connection.value ==
+                                          true)
+                                        GestureDetector(
+                                          onTap: () {
+                                            BaseUrl.storage
+                                                .write("token", "out");
+                                            Get.offAllNamed(Routes.signinemp);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 2.0, left: 10.0),
+                                            child: Icon(
+                                              Icons.logout,
+                                              size: width / 16,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  )
+                                : Row(
+                                    children: [
+                                      SizedBox(
+                                        width: width / 80,
+                                      ),
+                                      // if ()
+                                      // Builder(builder: (context) {
+                                      //   return GestureDetector(
+                                      //     onTap:() {
+                                      //       Scaffold.of(context).openDrawer();
+                                      //     },
+                                      //     // : () {
+                                      //     //     Get.snackbar("Dashboard ",
+                                      //     //         "Disabled in offline feature",
+                                      //     //         colorText: Colors.white,
+                                      //     //         backgroundColor: Colors.red);
+                                      //     //   },
+                                      //     child: Icon(
+                                      //       Icons.menu,
+                                      //       size: width / 16,
+                                      //       color: DynamicColor().titletextcolor,
+                                      //     ),
+                                      //   );
+                                      // }),
+                                      SizedBox(
+                                        width: width / 50,
+                                      ),
+                                      Text(
+                                        'Dashboard',
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: width / 16),
+                                      ),
+                                      Spacer(),
+                                      // BaseUrl.storage.read("checkpointaccess") !=
+                                      //         false
+                                      //     ? GestureDetector(
+                                      //         onTap: () {
+                                      //           Get.toNamed('/checkpoint');
+                                      //         },
+                                      //         child: Padding(
+                                      //           padding: const EdgeInsets.only(
+                                      //               right: 6.0, left: 10.0),
+                                      //           child: Icon(
+                                      //             Icons.location_on_outlined,
+                                      //             size: width / 16,
+                                      //             color: DynamicColor().primarycolor,
+                                      //           ),
+                                      //         ),
+                                      //       )
+                                      //     : Column(),
 
-                                GestureDetector(
-                                  onTap: () {
-                                    BaseUrl.storage.write("token", "out");
-                                    Get.offAllNamed(Routes.signinemp);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 2.0, left: 10.0),
-                                    child: Icon(
-                                      Icons.logout,
-                                      size: width / 16,
-                                      color: Colors.red,
-                                    ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          BaseUrl.storage.write("token", "out");
+                                          Get.offAllNamed(Routes.signinemp);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 2.0, left: 10.0),
+                                          child: Icon(
+                                            Icons.logout,
+                                            size: width / 16,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
                           ),
                           SizedBox(
                             height: height / 50,
@@ -183,8 +284,8 @@ class HomeScreen extends StatelessWidget {
                                     height: height / 22,
                                     placeholder: (context, url) => Center(
                                         child: CircularProgressIndicator()),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
+                                    errorWidget: (context, url, error) => Icon(
+                                        Icons.image_not_supported_outlined),
                                   ),
                                   // Image.network(
                                   //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/summarycalendar.png',
@@ -358,7 +459,8 @@ class HomeScreen extends StatelessWidget {
                                       placeholder: (context, url) => Center(
                                           child: CircularProgressIndicator()),
                                       errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+                                          Icon(Icons
+                                              .image_not_supported_outlined),
                                     ),
                                     // Image.network(
                                     //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/presenticon.png',
@@ -444,7 +546,8 @@ class HomeScreen extends StatelessWidget {
                                       placeholder: (context, url) => Center(
                                           child: CircularProgressIndicator()),
                                       errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
+                                          Icon(Icons
+                                              .image_not_supported_outlined),
                                     ),
                                     // Image.network(
                                     //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/absenticon.png',
@@ -486,6 +589,80 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           Spacer(),
+                          DelayedDisplay(
+                            fadeIn: true,
+                            fadingDuration: Duration(milliseconds: 400),
+                            child: Container(
+                              width: width / 1.15,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: width / 50,
+                                  ),
+                                  Container(
+                                    width: width / 6,
+                                    height: height / 35,
+                                    decoration: BoxDecoration(
+                                      color: DynamicColor().primarycolor,
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                            width: 15,
+                                            height: 15,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              color: DynamicColor().white,
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                            ),
+                                            child: Text(
+                                              "!",
+                                              style: TextStyle(
+                                                  color: DynamicColor()
+                                                      .primarycolor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: width / 35),
+                                            )),
+                                        SizedBox(
+                                          width: width / 50,
+                                        ),
+                                        Text(
+                                          "Note",
+                                          style: TextStyle(
+                                              color: DynamicColor().white,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: width / 32),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: width / 50,
+                                  ),
+                                  Text(
+                                    "Avoid Multiple Check-ins",
+                                    style: TextStyle(
+                                        color: DynamicColor()
+                                            .black
+                                            .withOpacity(0.41),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: width / 30),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                           homeController.Loading.value == false
                               ? DelayedDisplay(
                                   fadeIn: true,
@@ -503,539 +680,472 @@ class HomeScreen extends StatelessWidget {
                                         SizedBox(
                                           width: width / 15,
                                         ),
-                                        BaseUrl.storage.read("isCheckInOn") ==
-                                                true
-                                            ? Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Spacer(),
-                                                  DelayedDisplay(
-                                                    fadeIn: true,
-                                                    fadingDuration: Duration(
-                                                        milliseconds: 1200),
-                                                    child: Container(
-                                                      width: width / 2.5,
-                                                      height: height / 25,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          color: BaseUrl.storage
-                                                                      .read(
-                                                                          "status") ==
-                                                                  false
-                                                              ? Color(
-                                                                  0xFF85A0F8)
-                                                              : Colors.grey
-                                                                  .withOpacity(
-                                                                      0.50),
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          5.0),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          5.0))),
-                                                      child: Text(
-                                                        'Clock In',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontSize:
-                                                                    width / 25,
-                                                                color:
-                                                                    DynamicColor()
-                                                                        .white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
+                                        // BaseUrl.storage.read("isCheckInOn") ==
+                                        //         true
+                                        //     ?
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Spacer(),
+                                            DelayedDisplay(
+                                              fadeIn: true,
+                                              fadingDuration:
+                                                  Duration(milliseconds: 1200),
+                                              child: Container(
+                                                width: width / 2.5,
+                                                height: height / 25,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: BaseUrl.storage.read(
+                                                                "status") ==
+                                                            false
+                                                        ? Color(0xFF85A0F8)
+                                                        : Colors.grey
+                                                            .withOpacity(0.50),
+                                                    borderRadius: BorderRadius
+                                                        .only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    5.0),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    5.0))),
+                                                child: Text(
+                                                  'Clock In',
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: width / 25,
+                                                      color:
+                                                          DynamicColor().white),
+                                                ),
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: BaseUrl.storage
+                                                          .read("status") ==
+                                                      false
+                                                  ? () {
                                                       if (BaseUrl.storage
                                                               .read("status") ==
                                                           false) {
                                                         homeController.Loading
                                                             .value = true;
-                                                        homeController.scan();
+                                                        if (!Get.isSnackbarOpen)
+                                                          homeController.scan();
                                                       }
 
                                                       // homeController.valcheck.value='clockin';
                                                       // homeController.clockin();
-                                                    },
-                                                    child: DelayedDisplay(
-                                                      fadeIn: true,
-                                                      fadingDuration: Duration(
-                                                          milliseconds: 1200),
-                                                      child: Container(
-                                                        width: width / 2.5,
-                                                        height: height / 6,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.only(
-                                                                bottomRight:
-                                                                    Radius.circular(
-                                                                        5.0),
-                                                                bottomLeft:
-                                                                    Radius.circular(
-                                                                        5.0)),
-                                                            border: Border.all(
-                                                                color: BaseUrl.storage.read("status") == false
-                                                                    ? Color(0xFF85A0F8)
-                                                                        .withOpacity(
-                                                                            0.48)
-                                                                    : Colors.grey
-                                                                        .withOpacity(
-                                                                            0.1)),
-                                                            color: BaseUrl.storage.read("status") == false
-                                                                ? Color(0xFFBBD7F5FF)
-                                                                    .withOpacity(0.10)
-                                                                : Color(0xFFEAEAEAFF).withOpacity(0.1)),
-                                                        child: Center(
-                                                          child: BaseUrl.storage
-                                                                      .read(
-                                                                          "status") ==
-                                                                  false
-                                                              ? CachedNetworkImage(
-                                                                  imageUrl:
-                                                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
-                                                                  height:
-                                                                      height /
-                                                                          12,
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      Center(
-                                                                          child:
-                                                                              CircularProgressIndicator()),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Icon(Icons
-                                                                          .error),
-                                                                )
-                                                              // Image.network(
-                                                              //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
-                                                              //         height:
-                                                              //             height /
-                                                              //                 12,
-                                                              //       )
-                                                              : CachedNetworkImage(
-                                                                  imageUrl:
-                                                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
-                                                                  height:
-                                                                      height /
-                                                                          12,
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      Center(
-                                                                          child:
-                                                                              CircularProgressIndicator()),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Icon(Icons
-                                                                          .error),
-                                                                )
-                                                          // Image.network(
-                                                          //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
-                                                          //         height:
-                                                          //             height /
-                                                          //                 12,
-                                                          //       )
-                                                          ,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Spacer(),
-                                                ],
-                                              )
-                                            : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Spacer(),
-                                                  DelayedDisplay(
-                                                    fadeIn: true,
-                                                    fadingDuration: Duration(
-                                                        milliseconds: 1200),
-                                                    child: Container(
-                                                      width: width / 2.5,
-                                                      height: height / 25,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.grey
-                                                              .withOpacity(
-                                                                  0.50),
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          5.0),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          5.0))),
-                                                      child: Text(
-                                                        'Clock In',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontSize:
-                                                                    width / 25,
-                                                                color:
-                                                                    DynamicColor()
-                                                                        .white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DelayedDisplay(
-                                                    fadeIn: true,
-                                                    fadingDuration: Duration(
-                                                        milliseconds: 1200),
-                                                    child: Container(
-                                                      width: width / 2.5,
-                                                      height: height / 6,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  bottomRight:
-                                                                      Radius.circular(
-                                                                          5.0),
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          5.0)),
-                                                          border: Border.all(
-                                                              color: Colors.grey
+                                                    }
+                                                  : () {},
+                                              child: DelayedDisplay(
+                                                fadeIn: true,
+                                                fadingDuration: Duration(
+                                                    milliseconds: 1200),
+                                                child: Container(
+                                                  width: width / 2.5,
+                                                  height: height / 6,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.only(
+                                                          bottomRight: Radius.circular(
+                                                              5.0),
+                                                          bottomLeft: Radius.circular(
+                                                              5.0)),
+                                                      border: Border.all(
+                                                          color: BaseUrl.storage.read("status") == false
+                                                              ? Color(0xFF85A0F8)
                                                                   .withOpacity(
-                                                                      0.1)),
-                                                          color: Color(
-                                                                  0xFFEAEAEAFF)
-                                                              .withOpacity(0.1)),
-                                                      child: Center(
-                                                          child:
-                                                              CachedNetworkImage(
-                                                        imageUrl:
-                                                            'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
-                                                        height: height / 12,
-                                                        placeholder: (context,
-                                                                url) =>
-                                                            Center(
-                                                                child:
-                                                                    CircularProgressIndicator()),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Icon(Icons.error),
-                                                      )
-                                                          // Image.network(
-                                                          //                                           ,
-                                                          //                                           height: height / 12,
-                                                          //                                         ),
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Spacer(),
-                                                ],
-                                              ),
-                                        Spacer(),
-                                        BaseUrl.storage.read("isCheckOutOn") ==
-                                                true
-                                            ? Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Spacer(),
-                                                  DelayedDisplay(
-                                                    fadeIn: true,
-                                                    fadingDuration: Duration(
-                                                        milliseconds: 1200),
-                                                    child: Container(
-                                                      width: width / 2.5,
-                                                      height: height / 25,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          color: BaseUrl.storage
-                                                                      .read(
-                                                                          "status") ==
-                                                                  true
-                                                              ? Color(
-                                                                  0xFFEE6969)
+                                                                      0.48)
                                                               : Colors.grey
                                                                   .withOpacity(
-                                                                      0.50),
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          5.0),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          5.0))),
-                                                      child: Text(
-                                                        'Clock Out',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontSize:
-                                                                    width / 25,
-                                                                color:
-                                                                    DynamicColor()
-                                                                        .white),
-                                                      ),
-                                                    ),
+                                                                      0.1)),
+                                                      color: BaseUrl.storage.read("status") == false
+                                                          ? Color(0xFFBBD7F5FF)
+                                                              .withOpacity(0.10)
+                                                          : Color(0xFFEAEAEAFF)
+                                                              .withOpacity(0.1)),
+                                                  child: Center(
+                                                    child: BaseUrl.storage.read(
+                                                                "status") ==
+                                                            false
+                                                        ? CachedNetworkImage(
+                                                            imageUrl:
+                                                                'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
+                                                            height: height / 12,
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Center(
+                                                                    child:
+                                                                        CircularProgressIndicator()),
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                Icon(Icons
+                                                                    .image_not_supported_outlined),
+                                                          )
+                                                        // Image.network(
+                                                        //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockIn.png',
+                                                        //         height:
+                                                        //             height /
+                                                        //                 12,
+                                                        //       )
+                                                        : CachedNetworkImage(
+                                                            imageUrl:
+                                                                'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                                            height: height / 12,
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Center(
+                                                                    child:
+                                                                        CircularProgressIndicator()),
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                Icon(Icons
+                                                                    .image_not_supported_outlined),
+                                                          )
+                                                    // Image.network(
+                                                    //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                                    //         height:
+                                                    //             height /
+                                                    //                 12,
+                                                    //       )
+                                                    ,
                                                   ),
-                                                  GestureDetector(
-                                                    onTap: () async {
+                                                ),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                          ],
+                                        ),
+                                        // : Column(
+                                        //     crossAxisAlignment:
+                                        //         CrossAxisAlignment.center,
+                                        //     mainAxisAlignment:
+                                        //         MainAxisAlignment.center,
+                                        //     children: [
+                                        //       Spacer(),
+                                        //       DelayedDisplay(
+                                        //         fadeIn: true,
+                                        //         fadingDuration: Duration(
+                                        //             milliseconds: 1200),
+                                        //         child: Container(
+                                        //           width: width / 2.5,
+                                        //           height: height / 25,
+                                        //           alignment:
+                                        //               Alignment.center,
+                                        //           decoration: BoxDecoration(
+                                        //               color: Colors.grey
+                                        //                   .withOpacity(
+                                        //                       0.50),
+                                        //               borderRadius:
+                                        //                   BorderRadius.only(
+                                        //                       topLeft: Radius
+                                        //                           .circular(
+                                        //                               5.0),
+                                        //                       topRight: Radius
+                                        //                           .circular(
+                                        //                               5.0))),
+                                        //           child: Text(
+                                        //             'Clock In',
+                                        //             style:
+                                        //                 GoogleFonts.poppins(
+                                        //                     fontWeight:
+                                        //                         FontWeight
+                                        //                             .w400,
+                                        //                     fontSize:
+                                        //                         width / 25,
+                                        //                     color:
+                                        //                         DynamicColor()
+                                        //                             .white),
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //       DelayedDisplay(
+                                        //         fadeIn: true,
+                                        //         fadingDuration: Duration(
+                                        //             milliseconds: 1200),
+                                        //         child: Container(
+                                        //           width: width / 2.5,
+                                        //           height: height / 6,
+                                        //           decoration: BoxDecoration(
+                                        //               borderRadius:
+                                        //                   BorderRadius.only(
+                                        //                       bottomRight:
+                                        //                           Radius.circular(
+                                        //                               5.0),
+                                        //                       bottomLeft: Radius
+                                        //                           .circular(
+                                        //                               5.0)),
+                                        //               border: Border.all(
+                                        //                   color: Colors.grey
+                                        //                       .withOpacity(
+                                        //                           0.1)),
+                                        //               color: Color(
+                                        //                       0xFFEAEAEAFF)
+                                        //                   .withOpacity(0.1)),
+                                        //           child: Center(
+                                        //               child:
+                                        //                   CachedNetworkImage(
+                                        //             imageUrl:
+                                        //                 'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockInGray.png',
+                                        //             height: height / 12,
+                                        //             placeholder: (context,
+                                        //                     url) =>
+                                        //                 Center(
+                                        //                     child:
+                                        //                         CircularProgressIndicator()),
+                                        //             errorWidget: (context,
+                                        //                     url, error) =>
+                                        //                 Icon(Icons.image_not_supported_outlined),
+                                        //           )
+                                        //               // Image.network(
+                                        //               //                                           ,
+                                        //               //                                           height: height / 12,
+                                        //               //                                         ),
+                                        //               ),
+                                        //         ),
+                                        //       ),
+                                        //       Spacer(),
+                                        //     ],
+                                        //   ),
+                                        Spacer(),
+                                        // BaseUrl.storage.read("isCheckOutOn") ==
+                                        //         true
+                                        //     ?
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Spacer(),
+                                            DelayedDisplay(
+                                              fadeIn: true,
+                                              fadingDuration:
+                                                  Duration(milliseconds: 1200),
+                                              child: Container(
+                                                width: width / 2.5,
+                                                height: height / 25,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: BaseUrl.storage.read(
+                                                                "status") ==
+                                                            true
+                                                        ? Color(0xFFEE6969)
+                                                        : Colors.grey
+                                                            .withOpacity(0.50),
+                                                    borderRadius: BorderRadius
+                                                        .only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    5.0),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    5.0))),
+                                                child: Text(
+                                                  'Clock Out',
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: width / 25,
+                                                      color:
+                                                          DynamicColor().white),
+                                                ),
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: BaseUrl.storage
+                                                          .read("status") ==
+                                                      true
+                                                  ? () {
                                                       print(BaseUrl.storage.read(
                                                           "lastAttendanceRecordDate"));
-                                                      if (BaseUrl.storage
-                                                              .read("status") ==
-                                                          true) {
+                                                      if (!Get.isSnackbarOpen)
                                                         homeController
-                                                                .clockindate2 =
-                                                            DateTime.now().day;
-                                                        var check = BaseUrl
-                                                            .storage
-                                                            .read(
-                                                                "lastAttendanceRecordDate")
-                                                            .toString()
-                                                            .split('T')[0]
-                                                            .split('-')[2];
-                                                        print(BaseUrl.storage.read(
-                                                            "lastAttendanceRecordDate"));
-                                                        if (homeController
-                                                                .clockindate2 ==
-                                                            int.parse(check)) {
-                                                          homeController.scan();
-                                                          homeController.Loading
-                                                              .value = true;
-                                                        } else {
-                                                          homeController.init();
-                                                          // if (homeController
-                                                          //     .sitelist
-                                                          //     .isEmpty) {
-                                                          //   print('hello');
-                                                          // await homeController
-                                                          //     .getSites();
-                                                          // }
+                                                            .clockoutCheck(
+                                                                width, height);
+                                                    }
+                                                  : () {},
+                                              child: DelayedDisplay(
+                                                fadeIn: true,
+                                                fadingDuration: Duration(
+                                                    milliseconds: 1200),
+                                                child: Container(
+                                                  width: width / 2.5,
+                                                  height: height / 6,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.only(
+                                                          bottomLeft: Radius.circular(
+                                                              5.0),
+                                                          bottomRight: Radius.circular(
+                                                              5.0)),
+                                                      border: Border.all(
+                                                          color: BaseUrl.storage.read("status") == true
+                                                              ? Color(0xFFEE6969)
+                                                                  .withOpacity(
+                                                                      0.46)
+                                                              : Colors.grey
+                                                                  .withOpacity(
+                                                                      0.1)),
+                                                      color: BaseUrl.storage.read("status") == true
+                                                          ? Color(0xFFFAC5C5)
+                                                              .withOpacity(0.10)
+                                                          : Color(0xFFEAEAEAFF)
+                                                              .withOpacity(0.1)),
+                                                  child: Center(
+                                                    child: BaseUrl.storage.read(
+                                                                "status") ==
+                                                            true
+                                                        ? CachedNetworkImage(
+                                                            imageUrl:
+                                                                'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
+                                                            height: height / 12,
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Center(
+                                                                    child:
+                                                                        CircularProgressIndicator()),
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                Icon(Icons
+                                                                    .image_not_supported_outlined),
+                                                          )
 
-                                                          Get.bottomSheet(
-                                                              ReasonBottom(
-                                                                width: width,
-                                                                height: height,
-                                                              ),
-                                                              elevation: 20.0,
-                                                              enableDrag: false,
-                                                              backgroundColor:
-                                                                  Colors.white,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius
-                                                                              .only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        15.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        15.0),
-                                                              )));
-                                                        }
-                                                      }
-                                                    },
-                                                    child: DelayedDisplay(
-                                                      fadeIn: true,
-                                                      fadingDuration: Duration(
-                                                          milliseconds: 1200),
-                                                      child: Container(
-                                                        width: width / 2.5,
-                                                        height: height / 6,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.only(
-                                                                bottomLeft:
-                                                                    Radius.circular(
-                                                                        5.0),
-                                                                bottomRight:
-                                                                    Radius.circular(
-                                                                        5.0)),
-                                                            border: Border.all(
-                                                                color: BaseUrl.storage.read("status") == true
-                                                                    ? Color(0xFFEE6969)
-                                                                        .withOpacity(
-                                                                            0.46)
-                                                                    : Colors.grey
-                                                                        .withOpacity(
-                                                                            0.1)),
-                                                            color: BaseUrl.storage.read("status") == true
-                                                                ? Color(0xFFFAC5C5)
-                                                                    .withOpacity(0.10)
-                                                                : Color(0xFFEAEAEAFF).withOpacity(0.1)),
-                                                        child: Center(
-                                                          child: BaseUrl.storage
-                                                                      .read(
-                                                                          "status") ==
-                                                                  true
-                                                              ? CachedNetworkImage(
-                                                                  imageUrl:
-                                                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
-                                                                  height:
-                                                                      height /
-                                                                          12,
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      Center(
-                                                                          child:
-                                                                              CircularProgressIndicator()),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Icon(Icons
-                                                                          .error),
-                                                                )
-
-                                                              // Image.network(
-                                                              //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
-                                                              //         height:
-                                                              //             height /
-                                                              //                 12,
-                                                              //       )
-                                                              : CachedNetworkImage(
-                                                                  imageUrl:
-                                                                      'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
-                                                                  height:
-                                                                      height /
-                                                                          12,
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      Center(
-                                                                          child:
-                                                                              CircularProgressIndicator()),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Icon(Icons
-                                                                          .error),
-                                                                ),
-                                                          // Image.network(
-                                                          //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
-                                                          //         height:
-                                                          //             height /
-                                                          //                 12,
-                                                          //       ),
-                                                        ),
-                                                      ),
-                                                    ),
+                                                        // Image.network(
+                                                        //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockout.png',
+                                                        //         height:
+                                                        //             height /
+                                                        //                 12,
+                                                        //       )
+                                                        : CachedNetworkImage(
+                                                            imageUrl:
+                                                                'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                                            height: height / 12,
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Center(
+                                                                    child:
+                                                                        CircularProgressIndicator()),
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                Icon(Icons
+                                                                    .image_not_supported_outlined),
+                                                          ),
+                                                    // Image.network(
+                                                    //         'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                                    //         height:
+                                                    //             height /
+                                                    //                 12,
+                                                    //       ),
                                                   ),
-                                                  Spacer(),
-                                                ],
-                                              )
-                                            : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Spacer(),
-                                                  DelayedDisplay(
-                                                    fadeIn: true,
-                                                    fadingDuration: Duration(
-                                                        milliseconds: 1200),
-                                                    child: Container(
-                                                      width: width / 2.5,
-                                                      height: height / 25,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.grey
-                                                              .withOpacity(
-                                                                  0.50),
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          5.0),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          5.0))),
-                                                      child: Text(
-                                                        'Clock Out',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontSize:
-                                                                    width / 25,
-                                                                color:
-                                                                    DynamicColor()
-                                                                        .white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () async {},
-                                                    child: DelayedDisplay(
-                                                      fadeIn: true,
-                                                      fadingDuration: Duration(
-                                                          milliseconds: 1200),
-                                                      child: Container(
-                                                        width: width / 2.5,
-                                                        height: height / 6,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        5.0),
-                                                                bottomRight:
-                                                                    Radius.circular(
-                                                                        5.0)),
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .withOpacity(
-                                                                        0.1)),
-                                                            color: Color(
-                                                                    0xFFEAEAEAFF)
-                                                                .withOpacity(
-                                                                    0.1)),
-                                                        child: Center(
-                                                            child:
-                                                                CachedNetworkImage(
-                                                          imageUrl:
-                                                              'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
-                                                          height: height / 12,
-                                                          placeholder: (context,
-                                                                  url) =>
-                                                              Center(
-                                                                  child:
-                                                                      CircularProgressIndicator()),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons.error),
-                                                        )
-                                                            // Image.network(
-                                                            //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
-                                                            //   height: height / 12,
-                                                            // ),
-                                                            ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Spacer(),
-                                                ],
+                                                ),
                                               ),
+                                            ),
+                                            Spacer(),
+                                          ],
+                                        ),
+                                        // : Column(
+                                        //     crossAxisAlignment:
+                                        //         CrossAxisAlignment.center,
+                                        //     mainAxisAlignment:
+                                        //         MainAxisAlignment.center,
+                                        //     children: [
+                                        //       Spacer(),
+                                        //       DelayedDisplay(
+                                        //         fadeIn: true,
+                                        //         fadingDuration: Duration(
+                                        //             milliseconds: 1200),
+                                        //         child: Container(
+                                        //           width: width / 2.5,
+                                        //           height: height / 25,
+                                        //           alignment:
+                                        //               Alignment.center,
+                                        //           decoration: BoxDecoration(
+                                        //               color: Colors.grey
+                                        //                   .withOpacity(
+                                        //                       0.50),
+                                        //               borderRadius:
+                                        //                   BorderRadius.only(
+                                        //                       topLeft: Radius
+                                        //                           .circular(
+                                        //                               5.0),
+                                        //                       topRight: Radius
+                                        //                           .circular(
+                                        //                               5.0))),
+                                        //           child: Text(
+                                        //             'Clock Out',
+                                        //             style:
+                                        //                 GoogleFonts.poppins(
+                                        //                     fontWeight:
+                                        //                         FontWeight
+                                        //                             .w400,
+                                        //                     fontSize:
+                                        //                         width / 25,
+                                        //                     color:
+                                        //                         DynamicColor()
+                                        //                             .white),
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //       GestureDetector(
+                                        //         onTap: () async {},
+                                        //         child: DelayedDisplay(
+                                        //           fadeIn: true,
+                                        //           fadingDuration: Duration(
+                                        //               milliseconds: 1200),
+                                        //           child: Container(
+                                        //             width: width / 2.5,
+                                        //             height: height / 6,
+                                        //             decoration: BoxDecoration(
+                                        //                 borderRadius: BorderRadius.only(
+                                        //                     bottomLeft: Radius
+                                        //                         .circular(
+                                        //                             5.0),
+                                        //                     bottomRight:
+                                        //                         Radius.circular(
+                                        //                             5.0)),
+                                        //                 border: Border.all(
+                                        //                     color: Colors
+                                        //                         .grey
+                                        //                         .withOpacity(
+                                        //                             0.1)),
+                                        //                 color: Color(
+                                        //                         0xFFEAEAEAFF)
+                                        //                     .withOpacity(
+                                        //                         0.1)),
+                                        //             child: Center(
+                                        //                 child:
+                                        //                     CachedNetworkImage(
+                                        //               imageUrl:
+                                        //                   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                        //               height: height / 12,
+                                        //               placeholder: (context,
+                                        //                       url) =>
+                                        //                   Center(
+                                        //                       child:
+                                        //                           CircularProgressIndicator()),
+                                        //               errorWidget: (context,
+                                        //                       url, error) =>
+                                        //                   Icon(Icons.image_not_supported_outlined),
+                                        //             )
+                                        //                 // Image.network(
+                                        //                 //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/clockOutGray.png',
+                                        //                 //   height: height / 12,
+                                        //                 // ),
+                                        //                 ),
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //       Spacer(),
+                                        //     ],
+                                        //   ),
                                         SizedBox(
                                           width: width / 12,
                                         ),
@@ -1048,9 +1158,9 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                );
-              })),
-    );
+                )),
+          );
+        });
   }
 }
 
@@ -1198,29 +1308,56 @@ class ReasonBottom extends StatelessWidget {
                                       fontWeight: FontWeight.w500),
                             ),
                             Spacer(),
-                            Text(
-                              BaseUrl.storage.read("endTiming"),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(
-                                      color: Colors.black,
-                                      fontSize: width / 25,
-                                      fontWeight: FontWeight.w500),
+                            GestureDetector(
+                              onTap: () async {
+                                _homeController.selectTime();
+                                // TimeOfDay? picktime =await showTimePicker(context: context, initialTime: initialTime)
+                              },
+                              child: Container(
+                                width: 80,
+                                height: 27,
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(3.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.35),
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                child: Text(
+                                  DateFormat.jm()
+                                      .format(DateTime.parse(BaseUrl.storage
+                                              .read("lastAttendanceRecordDate")
+                                              .toString()
+                                              .split('T')[0] +
+                                          "T" +
+                                          _homeController.initalTime
+                                              .toString()))
+                                      .toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption!
+                                      .copyWith(
+                                          color: Colors.black,
+                                          fontSize: width / 25,
+                                          fontWeight: FontWeight.w500),
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: width / 9,
                             ),
                           ],
                         ),
-                        Spacer(),
+                        SizedBox(
+                          height: height / 50,
+                        ),
                         Center(
                           child: TextButton(
                               onPressed: () {
-                                if (_homeController.connection == true) {
-                                  _homeController.reasonCheckOut();
+                                if (_homeController.connection.value == true) {
+                                  if (!Get.isSnackbarOpen)
+                                    _homeController.reasonCheckOut();
                                 } else {
-                                  _homeController.clockReason_offline();
+                                  if (!Get.isSnackbarOpen)
+                                    _homeController.clockReason_offline();
                                 }
                               },
                               child: Container(
@@ -1241,9 +1378,6 @@ class ReasonBottom extends StatelessWidget {
                                           fontWeight: FontWeight.w600),
                                 ),
                               )),
-                        ),
-                        SizedBox(
-                          height: height / 80,
                         ),
                       ],
                     )

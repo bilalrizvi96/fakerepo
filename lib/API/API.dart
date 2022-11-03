@@ -398,32 +398,6 @@ class API {
   //   }
   // }
 
-  Future CheckIn({var latlng, var siteId, var date, var check}) async {
-    try {
-      Map data = {
-        'location': latlng,
-        "siteId": siteId,
-        "date": date.toString(),
-        "forceAction": check
-      };
-
-      var dio = Dio();
-      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
-      final response = await dio.post(
-        BaseUrl.baseurl + 'checkings/start',
-        data: data,
-        options: Options(
-            contentType: Headers.formUrlEncodedContentType,
-            headers: {Headers.acceptHeader: "application/json"}),
-      );
-      if (response.statusCode == 200) {
-        return response;
-      }
-    } catch (e) {
-      return onError(e, 'CheckIn');
-    }
-  }
-
   Future OfflineCheckIn({var list}) async {
     try {
       var data = {'data': list};
@@ -469,6 +443,32 @@ class API {
     }
   }
 
+  Future CheckIn({var latlng, var siteId, var date, var check}) async {
+    try {
+      Map data = {
+        'location': latlng,
+        "siteId": siteId,
+        "date": date.toString(),
+        "forceAction": check
+      };
+
+      var dio = Dio();
+      dio.options.headers['Authorization'] = BaseUrl.storage.read('token');
+      final response = await dio.post(
+        BaseUrl.baseurl + 'checkings/start',
+        data: data,
+        options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            headers: {Headers.acceptHeader: "application/json"}),
+      );
+      if (response.statusCode == 200) {
+        return response;
+      }
+    } catch (e) {
+      return onError(e, 'CheckIn');
+    }
+  }
+
   Future CheckOut({var latlng, var siteId, var date, var check}) async {
     try {
       Map data = {
@@ -476,7 +476,9 @@ class API {
         "siteId": siteId,
         "date": date.toString(),
         "forceAction": check,
-        "isCheckoutForget": false
+        "isCheckoutForget": false,
+        "lastclockindate":
+            BaseUrl.storage.read("lastAttendanceRecordDate").toString()
       };
       // print(data['checkpointAccess'].runtimeType);
       print("data");
@@ -506,10 +508,10 @@ class API {
         "date": BaseUrl.storage.read('dateForMissingCheckout'),
         "isCheckoutForget": true,
         "reason": reason,
-        "missedCheckoutDate":
+        "lastclockindate":
             BaseUrl.storage.read("lastAttendanceRecordDate").toString(),
 
-        "points": 0
+        "points": BaseUrl.storage.read('points')
         // BaseUrl.storage.read('points')
       };
       print(data);
@@ -688,6 +690,7 @@ class API {
       file = base64string.toString();
       file.replaceAll('/', '');
     }
+    print(file);
     try {
       Map data = {
         'location': latlng,
@@ -739,6 +742,7 @@ class API {
         return response;
       }
     } catch (e) {
+      print(e);
       return onError(e, 'HistoryCheckPoints');
     }
   }

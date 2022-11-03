@@ -89,7 +89,7 @@ class FAQsDetailScreen extends StatelessWidget {
                               : () {
                                   // print(index[indexs].form);
                                   // print(index[indexs].answer);
-                                  index[indexs].form == 'false'
+                                  index[indexs].form == false
                                       ? index[indexs].answer != ''
                                           ? Get.to(
                                               () => FaqsAnsScreen(

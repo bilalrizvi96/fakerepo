@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:attendencesystem/API/Capitalize.dart';
 import 'package:attendencesystem/Model/HolidayModel.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -16,11 +19,39 @@ class ScheduleController extends GetxController {
   var nigth = ''.obs;
   var off = ''.obs;
   var holiday = ''.obs;
-
+  var connection = true.obs;
   @override
   void onInit() {
     super.onInit();
+    check();
     getDataSource();
+  }
+
+  check() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        connection.value = true;
+        Loading.value = false;
+        update();
+      }
+    } on SocketException catch (_) {
+      connection.value = false;
+      Loading.value = false;
+      update();
+    }
+    await DataConnectionChecker().onStatusChange.listen((status) async {
+      if (status == DataConnectionStatus.connected) {
+        Loading.value = false;
+        connection.value = true;
+
+        update();
+      } else {
+        Loading.value = false;
+        connection.value = false;
+        update();
+      }
+    });
   }
 
   List<Meeting> getDataSource() {
@@ -77,6 +108,6 @@ class ScheduleController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    this.dispose();
+    // this.dispose();
   }
 }

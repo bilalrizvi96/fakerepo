@@ -16,6 +16,7 @@ class TrackUserScreen extends StatelessWidget {
   CheckPointController _checkPointController = Get.put(CheckPointController());
   @override
   Widget build(BuildContext context) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     trackUserController.check();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -23,11 +24,12 @@ class TrackUserScreen extends StatelessWidget {
       body: Container(
         width: width,
         height: height,
+        color: Colors.white,
         child: GetBuilder(
             // initState: trackUserController.init(),
             init: trackUserController,
             builder: (_) {
-              return trackUserController.connection.value == true
+              return trackUserController.connection == true
                   ? trackUserController.Loading.value == false
                       ? Padding(
                           padding: const EdgeInsets.only(top: 20.0),
@@ -135,7 +137,12 @@ class TrackUserScreen extends StatelessWidget {
                           ),
                         )
                       : ErrorLoading(height: 200.0, width: 200.0)
-                  : NoInternet(height: height, width: width);
+                  : Center(
+                      child: Padding(
+                      padding:
+                          EdgeInsets.only(right: 20.0, left: 22.0, top: 40),
+                      child: NoInternet(height: height, width: width),
+                    ));
             }),
       ),
     );

@@ -19,6 +19,7 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     SummaryController _summaryController = Get.put(SummaryController());
     return Padding(
       padding: EdgeInsets.only(

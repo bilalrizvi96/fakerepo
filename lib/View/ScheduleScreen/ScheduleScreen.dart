@@ -1,3 +1,4 @@
+import 'package:attendencesystem/Component/NoInternet.dart';
 import 'package:attendencesystem/Controller/ScheduleController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class ScheduleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    _scheduleControllerontroller.check();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -139,71 +141,81 @@ class ScheduleScreen extends StatelessWidget {
                           SizedBox(
                             height: height / 40,
                           ),
-                          Container(
-                            height: height / 1.5,
-                            child: SfCalendar(
-                              view: CalendarView.month,
-                              dataSource: MeetingDataSource(
-                                  _scheduleControllerontroller.getDataSource()),
-                              maxDate: DateTime(
-                                _scheduleControllerontroller
-                                        .holidayslist.isNotEmpty
-                                    ? int.parse(_scheduleControllerontroller
-                                        .holidayslist.value.last.date
-                                        .toString()
-                                        .split('-')[0])
-                                    : 30,
-                                _scheduleControllerontroller
-                                        .holidayslist.isNotEmpty
-                                    ? int.parse(_scheduleControllerontroller
-                                        .holidayslist.value.last.date
-                                        .toString()
-                                        .split('-')[1])
-                                    : 30,
-                                _scheduleControllerontroller
-                                        .holidayslist.isNotEmpty
-                                    ? int.parse(_scheduleControllerontroller
-                                        .holidayslist.value.last.date
-                                        .toString()
-                                        .split('-')[2]
-                                        .split('T')[0])
-                                    : 30,
-                              ),
-                              minDate: DateTime(
-                                _scheduleControllerontroller
-                                        .holidayslist.isNotEmpty
-                                    ? int.parse(_scheduleControllerontroller
-                                        .holidayslist.value.first.date
-                                        .toString()
-                                        .split('-')[0]
-                                        .split('T')[0])
-                                    : 0,
-                                _scheduleControllerontroller
-                                        .holidayslist.isNotEmpty
-                                    ? int.parse(_scheduleControllerontroller
-                                        .holidayslist.value.first.date
-                                        .toString()
-                                        .split('-')[1]
-                                        .split('T')[0])
-                                    : 0,
-                                _scheduleControllerontroller
-                                        .holidayslist.isNotEmpty
-                                    ? int.parse(_scheduleControllerontroller
-                                        .holidayslist.value.first.date
-                                        .toString()
-                                        .split('-')[2]
-                                        .split('T')[0])
-                                    : 0,
-                              ),
-                              monthViewSettings: MonthViewSettings(
-                                  agendaItemHeight:
-                                      MediaQuery.of(context).size.height,
-                                  // showTrailingAndLeadingDates: true,
-                                  // appointmentDisplayCount: 2,
-                                  appointmentDisplayMode:
-                                      MonthAppointmentDisplayMode.appointment),
-                            ),
-                          ),
+                          _scheduleControllerontroller.connection.value == true
+                              ? Container(
+                                  height: height / 1.5,
+                                  child: SfCalendar(
+                                    view: CalendarView.month,
+                                    dataSource: MeetingDataSource(
+                                        _scheduleControllerontroller
+                                            .getDataSource()),
+                                    maxDate: DateTime(
+                                      _scheduleControllerontroller
+                                              .holidayslist.isNotEmpty
+                                          ? int.parse(
+                                              _scheduleControllerontroller
+                                                  .holidayslist.value.last.date
+                                                  .toString()
+                                                  .split('-')[0])
+                                          : 30,
+                                      _scheduleControllerontroller
+                                              .holidayslist.isNotEmpty
+                                          ? int.parse(
+                                              _scheduleControllerontroller
+                                                  .holidayslist.value.last.date
+                                                  .toString()
+                                                  .split('-')[1])
+                                          : 30,
+                                      _scheduleControllerontroller
+                                              .holidayslist.isNotEmpty
+                                          ? int.parse(
+                                              _scheduleControllerontroller
+                                                  .holidayslist.value.last.date
+                                                  .toString()
+                                                  .split('-')[2]
+                                                  .split('T')[0])
+                                          : 30,
+                                    ),
+                                    minDate: DateTime(
+                                      _scheduleControllerontroller
+                                              .holidayslist.isNotEmpty
+                                          ? int.parse(
+                                              _scheduleControllerontroller
+                                                  .holidayslist.value.first.date
+                                                  .toString()
+                                                  .split('-')[0]
+                                                  .split('T')[0])
+                                          : 0,
+                                      _scheduleControllerontroller
+                                              .holidayslist.isNotEmpty
+                                          ? int.parse(
+                                              _scheduleControllerontroller
+                                                  .holidayslist.value.first.date
+                                                  .toString()
+                                                  .split('-')[1]
+                                                  .split('T')[0])
+                                          : 0,
+                                      _scheduleControllerontroller
+                                              .holidayslist.isNotEmpty
+                                          ? int.parse(
+                                              _scheduleControllerontroller
+                                                  .holidayslist.value.first.date
+                                                  .toString()
+                                                  .split('-')[2]
+                                                  .split('T')[0])
+                                          : 0,
+                                    ),
+                                    monthViewSettings: MonthViewSettings(
+                                        agendaItemHeight:
+                                            MediaQuery.of(context).size.height,
+                                        // showTrailingAndLeadingDates: true,
+                                        // appointmentDisplayCount: 2,
+                                        appointmentDisplayMode:
+                                            MonthAppointmentDisplayMode
+                                                .appointment),
+                                  ),
+                                )
+                              : NoInternet(height: height / 1.2, width: width),
                         ],
                       ),
                     )

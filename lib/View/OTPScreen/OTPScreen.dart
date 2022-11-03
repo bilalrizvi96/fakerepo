@@ -17,7 +17,6 @@ class OTPScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-
       resizeToAvoidBottomInset: true,
       body: GetBuilder(
           init: otpController,
@@ -27,7 +26,6 @@ class OTPScreen extends StatelessWidget {
                 width: width,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-
                   child: Stack(
                     children: [
                       Positioned(
@@ -55,7 +53,7 @@ class OTPScreen extends StatelessWidget {
                             placeholder: (context, url) =>
                                 Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                Icon(Icons.image_not_supported_outlined),
                           ),
                           // Image.network(
                           //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/otpbg.png',
@@ -77,7 +75,7 @@ class OTPScreen extends StatelessWidget {
                           placeholder: (context, url) =>
                               Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                              Icon(Icons.image_not_supported_outlined),
                         ),
                         // Image.network(
                         //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/OTPphone.png',

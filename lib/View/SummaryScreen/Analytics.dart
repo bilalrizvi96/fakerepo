@@ -100,7 +100,7 @@ class Analytics extends StatelessWidget {
                               placeholder: (context, url) =>
                                   Center(child: CircularProgressIndicator()),
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                  Icon(Icons.image_not_supported_outlined),
                             )
                           // Image.network(
                           //         _summaryController
@@ -224,7 +224,7 @@ class Analytics extends StatelessWidget {
                                   maximum: _summaryController
                                           .summarydata.value.isNotEmpty
                                       ? double.parse(_summaryController
-                                          .summarydata.value[0].casualLeaves
+                                          .summarydata.value[0].annualLeaves
                                           .toString())
                                       : 20,
                                   startAngle: width / 1.5,

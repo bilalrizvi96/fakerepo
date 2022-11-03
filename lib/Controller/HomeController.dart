@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:attendencesystem/Model/SitesModel.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_widget/home_widget.dart';
@@ -19,7 +21,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 
+import '../Routes/Routes.dart';
+import '../View/HomeScreen/HomeScreen.dart';
+import 'MaintenanceController.dart';
+
 class HomeController extends GetxController {
+  // MaintenanceController _maintenanceController =
+  //     Get.put(MaintenanceController());
   var selectedyear = DateTime.now().year.obs;
   var selectedmonth = DateTime.now().month.obs;
   var current = "".obs;
@@ -56,27 +64,32 @@ class HomeController extends GetxController {
     'NOV',
     'DEC'
   ];
+  var userdatalist;
   var data_check = false.obs;
+  var selectedTime;
+  var initalTime;
+  var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
   @override
   void onInit() {
-    HomeWidget.widgetClicked.listen((Uri? uri) => scan());
     super.onInit();
-    init();
     check();
-    // getSites();
+    init();
+    print(connection.value);
+    print("connection");
+    initalTime = BaseUrl.storage.read("endTiming");
   }
 
   init() async {
     Loading.value = false;
+    update();
     current.value =
         months[selectedmonth.value - 1] + "-" + selectedyear.value.toString();
     var nam = BaseUrl.storage.read('name').toString().split(' ');
     name = nam[0].toString();
-    getSites();
     data_check.value = false;
-    update();
     sitedatalist.value.clear();
-    sitedatalist.value = json.decode(BaseUrl.storage.read("sites_data"));
+
     print(BaseUrl.storage.read("sites_data"));
     var ssitelist = BaseUrl.storage.read("sites_name");
     sitelist.clear();
@@ -87,7 +100,23 @@ class HomeController extends GetxController {
       });
       dropdownValue.value = sitelist.first;
     }
-    print(sitelist);
+    if (connection.value == true) {}
+
+    if (BaseUrl.storage.read('token') != null ||
+        BaseUrl.storage.read('token') != 'out') {
+      // if (connection.value == true) {
+      print('dashboardin');
+      dashboardData();
+      getSites();
+
+      // } else {
+      //   print('dashboardout');
+      //   BaseUrl.storage.write("token", "out");
+      //   Get.offNamed("/signinemp");
+      // }
+    }
+    sitedatalist.value = json.decode(BaseUrl.storage.read("sites_data"));
+    update();
     // if (BaseUrl.storage.read('token') != null ||
     //     BaseUrl.storage.read('token') != 'out') {
     //   HomeWidget.widgetClicked.listen((Uri? uri) => scan());
@@ -95,26 +124,161 @@ class HomeController extends GetxController {
   }
 
   check() async {
-    await DataConnectionChecker().onStatusChange.listen((status) async {
-      if (status == DataConnectionStatus.connected) {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         connection.value = true;
+        print("connection");
+        connection.value = true;
+        Loading.value = true;
+        update();
+        // dashboardData();
+        // getSites();
         if (clockin_check.value == false) {
           if (data_check.value == false) {
             offline_data_send();
+            dashboardData();
+            getSites();
           }
         }
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+          update();
+        });
+
+        print("connection");
+      }
+    } on SocketException catch (_) {
+      connection.value = false;
+      Loading.value = true;
+      update();
+      Future.delayed(new Duration(milliseconds: 2000), () {
+        Loading.value = false;
+        if (BaseUrl.storage.read("status") == null ||
+            BaseUrl.storage.read("status") == 'null' ||
+            sitedatalist.isEmpty) {
+          print('dashboardin');
+          BaseUrl.storage.write("token", "out");
+          Get.offAndToNamed("/signinemp");
+          update();
+        }
         update();
+      });
+      print("connection");
+    }
+
+    await DataConnectionChecker().onStatusChange.listen((status) {
+      // print(status);
+      // print("connection");
+      if (status == DataConnectionStatus.connected) {
+        connection.value = true;
+        update();
+        //
+        Loading.value = true;
+        update();
+
+        if (clockin_check.value == false) {
+          if (data_check.value == false) {
+            offline_data_send();
+            dashboardData();
+            getSites();
+          }
+        }
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+          update();
+        });
       } else {
+        Loading.value = true;
+        update();
+        Future.delayed(new Duration(milliseconds: 2000), () {
+          Loading.value = false;
+          if (BaseUrl.storage.read("status") == null ||
+              BaseUrl.storage.read("status") == 'null' ||
+              sitedatalist.isEmpty) {
+            print('dashboardin');
+            BaseUrl.storage.write("token", "out");
+            Get.offNamed("/signinemp");
+          }
+          update();
+        });
         connection.value = false;
-        // getSites();
         update();
       }
+
+      update();
     });
+
+    print("connection");
+    update();
+  }
+
+  clockoutCheck(width, height) {
+    var date = DateTime.now();
+    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    var clockindate2 = outputFormat.format(date);
+
+    // if (BaseUrl.storage.read("status") == true) {
+    // var check = BaseUrl.storage
+    //     .read("lastAttendanceRecordDate")
+    //     .toString()
+    //     .split('T')[0]
+    //     .split('-')[2];
+    // print(BaseUrl.storage.read("lastAttendanceRecordDate"));
+
+    var difference = DateTime.parse(clockindate2).difference(
+        DateTime.parse(BaseUrl.storage.read("lastAttendanceRecordDate")));
+    print(int.parse(difference.toString().split(':')[0]));
+
+    print('difference');
+
+    if (int.parse(difference.toString().split(':')[0]).abs() < 16) {
+      scan();
+      Loading.value = true;
+    } else {
+      // init();
+      Get.bottomSheet(
+          ReasonBottom(
+            width: width,
+            height: height,
+          ),
+          elevation: 20.0,
+          enableDrag: false,
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0),
+            topRight: Radius.circular(15.0),
+          )));
+    }
+    // }
+  }
+
+  Future<void> selectTime() async {
+    // var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    DatePicker.showTime12hPicker(Get.context!,
+        theme: DatePickerTheme(
+          containerHeight: 210.0,
+        ),
+        showTitleActions: true, onConfirm: (time) {
+      print('confirm $time');
+      selectedTime = time;
+      initalTime =
+          outputFormat.format(selectedTime).split('T')[1].split(':')[0] +
+              ":" +
+              outputFormat.format(selectedTime).split('T')[1].split(':')[1];
+      print(BaseUrl.storage.read("lastAttendanceRecordDate"));
+      print(BaseUrl.storage.read("endTiming"));
+      update();
+    }, currentTime: DateTime.now(), locale: LocaleType.en);
+
+    update();
   }
 
   void offline_data_send() async {
     data_check.value = true;
     update();
+    // print(BaseUrl.storage.read("offlineClockIn").length);
     if (BaseUrl.storage.read('token') != null &&
         BaseUrl.storage.read('token') != 'out') {
       //print(BaseUrl.storage.read("offlineClockIn"));
@@ -135,6 +299,7 @@ class HomeController extends GetxController {
             clockinofflinelist.clear();
             print('offile_send');
             print(response.data);
+            init();
             // Get.snackbar(
             //   "Send",
             //   "offline send ",
@@ -158,6 +323,55 @@ class HomeController extends GetxController {
       return "Please fill this field";
     }
     return null;
+  }
+
+  dashboardData() async {
+    Loading.value = false;
+    var response = await API().DashboardData();
+    if (response.statusCode == 200) {
+      userdatalist = response.data['data'][0];
+      BaseUrl.storage
+          .write("totalAbsent", userdatalist['absent_days'].toString());
+      BaseUrl.storage
+          .write("totalPresent", userdatalist['present_days'].toString());
+      BaseUrl.storage.write("status", userdatalist['status']);
+      // BaseUrl.storage.write("isCheckOutOn", userdatalist['isClockOutOn']);
+      // BaseUrl.storage.write("isCheckInOn", userdatalist['isClockInOn']);
+      // print(userdatalist['isClockInOn']);
+      BaseUrl.storage.write("points", userdatalist['points']);
+      BaseUrl.storage.write("clockin", userdatalist['clockIn']);
+      BaseUrl.storage
+          .write("welcomemessage", userdatalist['message']['message']);
+      BaseUrl.storage.write("welcometitle", userdatalist['message']['title']);
+      BaseUrl.storage.write("clockout", userdatalist['clockOut']);
+      BaseUrl.storage.write("ismessage", userdatalist['isMessageAvailable']);
+      BaseUrl.storage.write("popupimage", userdatalist['message']['imageUrl']);
+      BaseUrl.storage.write(
+          "maintenance", userdatalist['maintenanceObject']['underMaintenance']);
+      BaseUrl.storage.write("checkOutMissing", userdatalist['clockOutMissing']);
+      var scheduling = userdatalist['scheduling']['schedule'];
+      BaseUrl.storage.write("scheduling", scheduling);
+      if (userdatalist['version']['updateAvailability'] == true) {
+        BaseUrl.storage.write("token", 'out');
+        Get.offAllNamed(Routes.updatescreen, arguments: [
+          userdatalist['version']['message'],
+          userdatalist['version']['currentRelease'],
+          userdatalist['version']['availableRelease'],
+          userdatalist['version']['link'],
+        ]);
+        print(BaseUrl.storage.read("dateForMissingCheckout"));
+      } else if (userdatalist['maintenanceObject']['underMaintenance'] ==
+          true) {
+        // _maintenanceController.checkMaintenance();
+        BaseUrl.storage.write('token', 'out');
+        Get.offAllNamed(Routes.maintaince);
+      }
+    } else {
+      Get.snackbar("Dashboard ", response.data['message'].toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+
+    update();
   }
 
   valueupdate(val) {
@@ -256,8 +470,8 @@ class HomeController extends GetxController {
         }
       } else {
         Loading.value = false;
-        Get.snackbar("Attendance", "Location is empty kindly scan again",
-            colorText: Colors.white, backgroundColor: Colors.red);
+        // Get.snackbar("Attendance", "Location is empty kindly scan again",
+        //     colorText: Colors.white, backgroundColor: Colors.red);
       }
       update();
     } on PlatformException catch (e) {
@@ -280,63 +494,62 @@ class HomeController extends GetxController {
     // Loading.value = true;
     // update();
     var date = DateTime.now();
-    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    // var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
     await CurrentLocation();
 
-    if (BaseUrl.storage.read("isCheckInOn") == true) {
-      if (check == false
-          ? sites.value != ""
-          : BaseUrl.storage.read("sitecheckpoint") != null) {
-        // if (connection.value == true) {
-        var response = await API().CheckIn(
-            latlng: check == false
-                ? center.value.latitude.toString() +
-                    "," +
-                    center.value.longitude.toString()
-                : BaseUrl.storage.read("latlngcheckpoint"),
-            siteId: check == false
-                ? sites.value.toString()
-                : BaseUrl.storage.read("sitecheckpoint"),
-            check: check,
-            date: outputDate);
-        if (response.statusCode == 200) {
-          Loading.value = false;
-          BaseUrl.storage.write("ismessage", false);
-          // BaseUrl.clockin = true;
-          BaseUrl.storage.write("isCheckInOn", false);
-          BaseUrl.storage.write('clockincheck', date.day);
-          print(BaseUrl.storage.read('clockincheck'));
-          BaseUrl.storage.write("clockin", outputDate1.toString());
-          BaseUrl.storage.write("clockout", "00:00");
-          BaseUrl.storage.write("status", true);
+    // if (BaseUrl.storage.read("isCheckInOn") == true) {
+    if (check == false
+        ? sites.value != ""
+        : BaseUrl.storage.read("sitecheckpoint") != null) {
+      // if (connection == true) {
+      var response = await API().CheckIn(
+          latlng: check == false
+              ? center.value.latitude.toString() +
+                  "," +
+                  center.value.longitude.toString()
+              : BaseUrl.storage.read("latlngcheckpoint"),
+          siteId: check == false
+              ? sites.value.toString()
+              : BaseUrl.storage.read("sitecheckpoint"),
+          check: check,
+          date: outputDate);
+      if (response.statusCode == 200) {
+        Loading.value = false;
+        BaseUrl.storage.write("ismessage", false);
+        // BaseUrl.clockin = true;
+        // BaseUrl.storage.write("isCheckInOn", false);
+        BaseUrl.storage.write('clockincheck', date.day);
+        print(BaseUrl.storage.read('clockincheck'));
+        BaseUrl.storage.write("clockin", outputDate1.toString());
+        BaseUrl.storage.write("clockout", "00:00");
+        BaseUrl.storage.write("status", true);
+        BaseUrl.storage.write("lastAttendanceRecordDate", outputDate);
+        var day = outputDate.toString().split('T')[0] +
+            "T" +
+            BaseUrl.storage
+                .read("dateForMissingCheckout")
+                .toString()
+                .split('T')[1];
+        BaseUrl.storage.write("dateForMissingCheckout", day);
+        print(BaseUrl.storage.read("dateForMissingCheckout"));
 
-          var day = outputDate.toString().split('T')[0] +
-              "T" +
-              BaseUrl.storage
-                  .read("dateForMissingCheckout")
-                  .toString()
-                  .split('T')[1];
+        update();
 
-          BaseUrl.storage.write("dateForMissingCheckout", day);
-          print(BaseUrl.storage.read("dateForMissingCheckout"));
-
-          update();
-
-          Get.snackbar("Attendance", "Clock In Successfully");
-        } else {
-          Loading.value = false;
-          Get.snackbar("Error ", response.data['error'].toString(),
-              colorText: Colors.white, backgroundColor: Colors.red);
-        }
-        // }
+        Get.snackbar("Attendance", "Clock In Successfully");
       } else {
         Loading.value = false;
-        // Get.snackbar("Error", "Location is empty kindly scan Qr",
-        //     colorText: Colors.white, backgroundColor: Colors.red);
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
+      // }
+    } else {
+      Loading.value = false;
+      // Get.snackbar("Error", "Location is empty kindly scan Qr",
+      //     colorText: Colors.white, backgroundColor: Colors.red);
+      // }
     }
 
     update();
@@ -344,71 +557,74 @@ class HomeController extends GetxController {
 
   clockout({var check}) async {
     var date = DateTime.now();
-    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    // var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
 
-    if (BaseUrl.storage.read("isCheckOutOn") == true) {
-      await CurrentLocation();
+    // if (BaseUrl.storage.read("isCheckOutOn") == true) {
+    await CurrentLocation();
 
-      if (check == false
-          ? sites.value != ""
-          : BaseUrl.storage.read("sitecheckpoint") != null) {
-        var response = await API().CheckOut(
-            latlng: check == false
-                ? center.value.latitude.toString() +
-                    "," +
-                    center.value.longitude.toString()
-                : BaseUrl.storage.read("latlngcheckpoint"),
-            siteId: check == false
-                ? sites.value.toString().trim()
-                : BaseUrl.storage.read("sitecheckpoint").toString(),
-            date: outputDate,
-            check: check);
-        if (response.statusCode == 200) {
-          print('bilal');
-          Loading.value = false;
-          popups(
-              image: response.data['data'][0]['messages'][0]['imageUrl'],
-              title: response.data['data'][0]['messages'][0]['title'],
-              message: response.data['data'][0]['messages'][0]['message'],
-              isMessageAvailable: response.data['data'][0]
-                  ['isMessageAvailable']);
-          // var dates = DateTime.now().day.toString() +
-          //     "/" +
-          //     DateTime.now().month.toString() +
-          //     "/" +
-          //     DateTime.now().year.toString();
-          // BaseUrl.storage.write("lastAttendanceRecordDate", dates);
-          BaseUrl.storage.write("status", false);
+    if (check == false
+        ? sites.value != ""
+        : BaseUrl.storage.read("sitecheckpoint") != null) {
+      var response = await API().CheckOut(
+          latlng: check == false
+              ? center.value.latitude.toString() +
+                  "," +
+                  center.value.longitude.toString()
+              : BaseUrl.storage.read("latlngcheckpoint"),
+          siteId: check == false
+              ? sites.value.toString().trim()
+              : BaseUrl.storage.read("sitecheckpoint").toString(),
+          date: outputDate,
+          check: check);
+      if (response.statusCode == 200) {
+        print('bilal');
+        Loading.value = false;
+        popups(
+            image: response.data['data'][0]['messages'][0]['imageUrl'],
+            title: response.data['data'][0]['messages'][0]['title'],
+            message: response.data['data'][0]['messages'][0]['message'],
+            isMessageAvailable: response.data['data'][0]['isMessageAvailable']);
+        // var dates = DateTime.now().day.toString() +
+        //     "/" +
+        //     DateTime.now().month.toString() +
+        //     "/" +
+        //     DateTime.now().year.toString();
+        // BaseUrl.storage.write("lastAttendanceRecordDate", dates);
+        BaseUrl.storage.write("lastAttendanceRecordDate", outputDate);
+        BaseUrl.storage.write("status", false);
 
-          // BaseUrl.clockout = true;
-          BaseUrl.storage.write("isCheckOutOn", false);
-          BaseUrl.storage.write('clockoutcheck', date.day);
-          print(BaseUrl.storage.read('clockoutcheck'));
-          BaseUrl.storage.write("clockout", outputDate1.toString());
+        // BaseUrl.clockout = true;
+        // BaseUrl.storage.write("isCheckOutOn", false);
+        BaseUrl.storage.write('clockoutcheck', date.day);
+        print(BaseUrl.storage.read('clockoutcheck'));
+        BaseUrl.storage.write("clockout", outputDate1.toString());
 
-          Get.snackbar(
-            "Attendance ",
-            "Clock Out Successfully",
-          );
-        } else {
-          Loading.value = false;
-          Get.snackbar("Error ", response.data['error'].toString(),
-              colorText: Colors.white, backgroundColor: Colors.red);
-        }
+        Get.snackbar(
+          "Attendance ",
+          "Clock Out Successfully",
+        );
       } else {
         Loading.value = false;
-        // Get.snackbar("Error", "Location is empty kindly scan Qr",
-        //     colorText: Colors.white, backgroundColor: Colors.red);
+        Get.snackbar("Error ", response.data['error'].toString(),
+            colorText: Colors.white, backgroundColor: Colors.red);
       }
+    } else {
+      Loading.value = false;
+      // Get.snackbar("Error", "Location is empty kindly scan Qr",
+      //     colorText: Colors.white, backgroundColor: Colors.red);
     }
+    // }
 
     update();
   }
 
   reasonCheckOut() async {
+    BaseUrl.storage
+        .write("lastAttendanceRecordDate", outputFormat.format(selectedTime));
+    BaseUrl.storage.write("endTiming", initalTime);
     Loading.value = true;
     update();
     var date = DateTime.now();
@@ -436,11 +652,11 @@ class HomeController extends GetxController {
         Get.back();
         BaseUrl.storage.write('checkOutMissing', false);
         BaseUrl.storage.write("status", false);
-        BaseUrl.storage.write("isCheckInOn", true);
+        // BaseUrl.storage.write("isCheckInOn", true);
         Get.back();
         Loading.value = false;
         reasoncontroller.clear();
-        BaseUrl.storage.write("clockout", outputDate1.toString());
+        // BaseUrl.storage.write("clockout", outputDate1.toString());
 
         Get.back();
         Get.snackbar(
@@ -462,11 +678,12 @@ class HomeController extends GetxController {
   }
 
   clockIn_offline({var check}) async {
+    var error = false;
     // Loading.value = true;
-
+    Loading.value = false;
     update();
     var date = DateTime.now();
-    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    // var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
@@ -490,10 +707,10 @@ class HomeController extends GetxController {
           "date": outputDate,
           "forceAction": check
         };
-        clockin_check.value == false;
+        clockin_check.value = false;
         print(data);
         BaseUrl.storage.write("ismessage", false);
-        BaseUrl.storage.write("isCheckInOn", false);
+        // BaseUrl.storage.write("isCheckInOn", false);
         BaseUrl.storage.write('clockincheck', date.day);
         print(BaseUrl.storage.read('clockincheck'));
         BaseUrl.storage.write("clockin", outputDate1.toString());
@@ -512,16 +729,18 @@ class HomeController extends GetxController {
         print(BaseUrl.storage.read("dateForMissingCheckout"));
         clockinofflinelist.value.add(data);
         BaseUrl.storage.write("offlineClockIn", clockinofflinelist.value);
-        print(BaseUrl.storage.read("offlineClockIn"));
-
         this.onInit();
+        error = false;
         update();
         break;
       } else {
-        // Get.snackbar("Error", "Site not match",
-        //     colorText: Colors.white, backgroundColor: Colors.red);
-        // break;
+        error = true;
+        update();
       }
+    }
+    if (error == true) {
+      Get.snackbar("Error ", 'Your are not present on site',
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
   }
@@ -529,8 +748,9 @@ class HomeController extends GetxController {
   clockOut_offline({var check}) async {
     Loading.value = true;
     update();
+    var error = false;
     var date = DateTime.now();
-    var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    // var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     var outputDate = outputFormat.format(date);
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
@@ -554,37 +774,62 @@ class HomeController extends GetxController {
               : BaseUrl.storage.read("sitecheckpoint"),
           "date": outputDate,
           "forceAction": check,
+          "lastclockindate":
+              BaseUrl.storage.read("lastAttendanceRecordDate").toString(),
           "isCheckoutForget": false
         };
-        print(data);
         clockin_check.value = false;
         BaseUrl.storage.write("status", false);
-        BaseUrl.storage.write("isCheckOutOn", false);
+        // BaseUrl.storage.write("isCheckOutOn", false);
         BaseUrl.storage.write('clockoutcheck', date.day);
         print(BaseUrl.storage.read('clockoutcheck'));
         BaseUrl.storage.write("clockout", outputDate1.toString());
+        // print(date.toString().split(' ')[1].toString().split(':')[0]);
+        // print(int.parse(
+        //         BaseUrl.storage.read("clockout").toString().split(':')[0]) +
+        //     12);
+        // print('bilal');
+        // if (data.toString().split(' ')[0].toString().split(':')[0] ==
+        //     int.parse(
+        //             BaseUrl.storage.read("clockout").toString().split(':')[0]) +
+        //         12) {}
         clockinofflinelist.value.add(data);
         BaseUrl.storage.write("offlineClockIn", clockinofflinelist.value);
-        print(BaseUrl.storage.read("offlineClockIn").length);
-
         this.onInit();
+        error = false;
         update();
         break;
+      } else {
+        error = true;
+        update();
       }
-      update();
     }
+    if (error == true) {
+      Get.snackbar("Error ", 'Your are not present on site',
+          colorText: Colors.white, backgroundColor: Colors.red);
+    }
+    update();
   }
 
   clockReason_offline() async {
-    Loading.value = true;
+    BaseUrl.storage
+        .write("lastAttendanceRecordDate", outputFormat.format(selectedTime));
+    BaseUrl.storage.write(
+        "endTiming",
+        outputFormat.format(selectedTime).split('T')[1].split(':')[0] +
+            ":" +
+            outputFormat.format(selectedTime).split('T')[1].split(':')[1]);
+    Loading.value = false;
     update();
+    // Loading.value = true;
+    // update();
     var latlng;
     var date = DateTime.now();
     var outputFormat1 = DateFormat('hh:mm a');
     var outputDate1 = outputFormat1.format(date);
     print(sitedatalist.value);
     print('offline');
-    Loading.value = false;
+
     for (var val in sitedatalist.value) {
       if (dropdownValue.value != "") {
         sitedatalist.value.forEach((element) async {
@@ -605,21 +850,21 @@ class HomeController extends GetxController {
             "date": BaseUrl.storage.read("lastAttendanceRecordDate").toString(),
             "isCheckoutForget": true,
             "reason": reasoncontroller.text.toString().trim(),
-            "missedCheckoutDate":
+            "lastclockindate":
                 BaseUrl.storage.read("lastAttendanceRecordDate").toString(),
-            "points": 0
+            "points": BaseUrl.storage.read('points')
           };
           clockin_check.value = false;
           print(data);
           print("data");
           BaseUrl.storage.write('checkOutMissing', false);
           BaseUrl.storage.write("status", false);
-          BaseUrl.storage.write("isCheckInOn", true);
+          // BaseUrl.storage.write("isCheckInOn", true);
           clockinofflinelist.value.add(data);
           BaseUrl.storage.write("offlineClockIn", clockinofflinelist.value);
           Loading.value = false;
           reasoncontroller.clear();
-          BaseUrl.storage.write("clockout", outputDate1.toString());
+          // BaseUrl.storage.write("clockout", outputDate1.toString());
           print('local_data_reason');
           Get.snackbar(
             "Attendance ",
@@ -633,9 +878,12 @@ class HomeController extends GetxController {
         update();
       }
     }
+    update();
   }
 
   getSites() async {
+    Loading.value = true;
+    update();
     // sitedatalist.value = json.decode(BaseUrl.storage.read("sites_data"));
     // print(sitedatalist.value);
     // print('sitedatalist.value');
@@ -645,7 +893,6 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         sitelist.clear();
         sitedatalist.clear();
-        Loading.value = false;
         response = await SitesModel.fromJson(response.data);
         sitedatalist.value = response.data;
         BaseUrl.storage
@@ -662,8 +909,9 @@ class HomeController extends GetxController {
           print(BaseUrl.storage.read("sites_name"));
         }
         dropdownValue.value = sitelist.first;
-      } else {
         Loading.value = false;
+      } else {
+        // Loading.value = false;
         Get.snackbar("Sites ", response.data['message'].toString(),
             colorText: Colors.white, backgroundColor: Colors.red);
       }

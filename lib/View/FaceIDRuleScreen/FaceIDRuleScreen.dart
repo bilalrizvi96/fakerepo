@@ -169,7 +169,8 @@ class FaceIDRuleScreen extends StatelessWidget {
                                         placeholder: (context, url) => Center(
                                             child: CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            Icon(Icons
+                                                .image_not_supported_outlined),
                                       ),
                                       // Image.network(
                                       //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/facemask.png',
@@ -187,7 +188,8 @@ class FaceIDRuleScreen extends StatelessWidget {
                                         placeholder: (context, url) => Center(
                                             child: CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            Icon(Icons
+                                                .image_not_supported_outlined),
                                       ),
                                       // Image.network(
                                       //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/sunglasses.png',
@@ -258,7 +260,8 @@ class FaceIDRuleScreen extends StatelessWidget {
                                         placeholder: (context, url) => Center(
                                             child: CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            Icon(Icons
+                                                .image_not_supported_outlined),
                                       ),
                                       // Image.network(
                                       //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/brigthness.png',
@@ -279,7 +282,8 @@ class FaceIDRuleScreen extends StatelessWidget {
                                         placeholder: (context, url) => Center(
                                             child: CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
+                                            Icon(Icons
+                                                .image_not_supported_outlined),
                                       ),
                                       // Image.network(
                                       //   'https://attandence-bucket.s3.us-east-2.amazonaws.com/attandenceAppAssests/nohat.png',

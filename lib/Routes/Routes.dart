@@ -33,7 +33,7 @@ class Routes {
   static var maintaince = '/maintaince';
   static var checkpoint = '/checkpoint';
   static var trackuser = '/trackuser';
-  static var profile = '/profile';
+  // static var profile = '/profile';
   static var updatescreen = '/updatescreen';
   static var faqs = '/faqs';
   static var mypoints = '/mypoints';
@@ -92,11 +92,11 @@ class Routes {
         page: () => TrackUserScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
-    GetPage(
-        name: profile,
-        page: () => MyProfileScreen(),
-        transition: Transition.rightToLeft,
-        curve: Curves.easeInQuart),
+    // GetPage(
+    //     name: profile,
+    //     page: () => MyProfileScreen(),
+    //     transition: Transition.rightToLeft,
+    //     curve: Curves.easeInQuart),
     GetPage(
         name: updatescreen,
         page: () => UpdateScreen(),
@@ -113,7 +113,7 @@ class Routes {
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),
     GetPage(
-        name: "/notification",
+        name: notification,
         page: () => NotificationScreen(),
         transition: Transition.rightToLeft,
         curve: Curves.easeInQuart),

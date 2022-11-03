@@ -13,6 +13,10 @@ import '../../Controller/ProfileController.dart';
 import '../../Routes/Routes.dart';
 
 class MyProfileScreen extends StatelessWidget {
+  var check;
+  MyProfileScreen({
+    this.check,
+  });
   ProfileController profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
@@ -42,6 +46,17 @@ class MyProfileScreen extends StatelessWidget {
                                             top: 8.0, left: 20, bottom: 8.0),
                                         child: Row(
                                           children: [
+                                            if (check == false)
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Get.back();
+                                                },
+                                                child: Icon(
+                                                  Icons.arrow_back_ios,
+                                                  size: width / 16,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
                                             SizedBox(
                                               width: width / 50,
                                             ),
@@ -110,7 +125,7 @@ class MyProfileScreen extends StatelessWidget {
                                                             CircularProgressIndicator()),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        Icon(Icons.error),
+                                                        Icon(Icons.image_not_supported_outlined),
                                               )
 
                                               // Image.network(
@@ -799,8 +814,27 @@ class MyProfileScreen extends StatelessWidget {
                                       ),
                                     ],
                                   )
-                                : NoInternet(height: height, width: width)
-                            : ErrorLoading(height: 300.0, width: 300.0);
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: height / 5,
+                                      ),
+                                      NoInternet(height: height, width: width),
+                                    ],
+                                  )
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: height / 5,
+                                  ),
+                                  ErrorLoading(height: 300.0, width: 300.0),
+                                ],
+                              );
                       }),
                 ],
               ),
