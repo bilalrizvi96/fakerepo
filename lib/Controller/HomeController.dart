@@ -8,7 +8,6 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:home_widget/home_widget.dart';
 
 import '../API/BaseURl.dart';
 import 'package:attendencesystem/API/API.dart';
@@ -78,6 +77,7 @@ class HomeController extends GetxController {
     print(connection.value);
     print("connection");
     initalTime = BaseUrl.storage.read("endTiming");
+    print('initalTime ${initalTime.toString()}');
   }
 
   init() async {
@@ -106,6 +106,7 @@ class HomeController extends GetxController {
         BaseUrl.storage.read('token') != 'out') {
       // if (connection.value == true) {
       print('dashboardin');
+      print(BaseUrl.storage.read("checkpoint_offlines"));
       dashboardData();
       getSites();
 
@@ -116,6 +117,7 @@ class HomeController extends GetxController {
       // }
     }
     sitedatalist.value = json.decode(BaseUrl.storage.read("sites_data"));
+    dropdownValue.value = sitelist.first;
     update();
     // if (BaseUrl.storage.read('token') != null ||
     //     BaseUrl.storage.read('token') != 'out') {
@@ -267,11 +269,20 @@ class HomeController extends GetxController {
           outputFormat.format(selectedTime).split('T')[1].split(':')[0] +
               ":" +
               outputFormat.format(selectedTime).split('T')[1].split(':')[1];
-      print(BaseUrl.storage.read("lastAttendanceRecordDate"));
-      print(BaseUrl.storage.read("endTiming"));
+      // print(BaseUrl.storage.read("lastAttendanceRecordDate"));
+      // print(BaseUrl.storage.read("endTiming"));
       update();
     }, currentTime: DateTime.now(), locale: LocaleType.en);
-
+    if (selectedTime != null) {
+      // BaseUrl.storage
+      //     .write("lastAttendanceRecordDate", outputFormat.format(selectedTime));
+      BaseUrl.storage.write("endTiming", initalTime);
+    }
+    // print(
+    //     'lastAttendanceRecordDate ${BaseUrl.storage.read("lastAttendanceRecordDate")}');
+    // print(
+    //     'dateForMissingCheckout ${BaseUrl.storage.read('dateForMissingCheckout').toString().split('T')[1]}');
+    // print('selectedTime ${outputFormat.format(selectedTime).split('T')[1]}');
     update();
   }
 
@@ -622,17 +633,13 @@ class HomeController extends GetxController {
   }
 
   reasonCheckOut() async {
-    BaseUrl.storage
-        .write("lastAttendanceRecordDate", outputFormat.format(selectedTime));
-    BaseUrl.storage.write("endTiming", initalTime);
     Loading.value = true;
     update();
-    var date = DateTime.now();
+
     // var outputFormat = DateFormat(
     //     "${BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[2] + "-" + BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[1] + "-" + BaseUrl.storage.read("lastAttendanceRecordDate").toString().replaceAll('/', '-').split('-')[0]}'T'${BaseUrl.storage.read("endTiming").toString().split(' ')[0]}:ss.SSS'Z'");
     // var outputDate = outputFormat.format(date);
-    var outputFormat1 = DateFormat('hh:mm a');
-    var outputDate1 = outputFormat1.format(date);
+
     var latlng;
     if (dropdownValue.value != "") {
       sitedatalist.value.forEach((element) async {
@@ -647,7 +654,13 @@ class HomeController extends GetxController {
               latlng.split(',')[1].toString(),
           siteId: dropdownValue.value.toString(),
           reason: reasoncontroller.text.toString().trim(),
-          date: BaseUrl.storage.read("lastAttendanceRecordDate").toString());
+          date: BaseUrl.storage
+                  .read("lastAttendanceRecordDate")
+                  .toString()
+                  .split('T')[0] +
+              'T' +
+              initalTime +
+              ':00.000+05:00');
       if (response.statusCode == 200) {
         Get.back();
         BaseUrl.storage.write('checkOutMissing', false);
@@ -812,21 +825,10 @@ class HomeController extends GetxController {
   }
 
   clockReason_offline() async {
-    BaseUrl.storage
-        .write("lastAttendanceRecordDate", outputFormat.format(selectedTime));
-    BaseUrl.storage.write(
-        "endTiming",
-        outputFormat.format(selectedTime).split('T')[1].split(':')[0] +
-            ":" +
-            outputFormat.format(selectedTime).split('T')[1].split(':')[1]);
     Loading.value = false;
     update();
-    // Loading.value = true;
-    // update();
+
     var latlng;
-    var date = DateTime.now();
-    var outputFormat1 = DateFormat('hh:mm a');
-    var outputDate1 = outputFormat1.format(date);
     print(sitedatalist.value);
     print('offline');
 
@@ -847,7 +849,13 @@ class HomeController extends GetxController {
                 "," +
                 latlng.split(',')[1].toString(),
             "siteId": dropdownValue.value.toString(),
-            "date": BaseUrl.storage.read("lastAttendanceRecordDate").toString(),
+            "date": BaseUrl.storage
+                    .read("lastAttendanceRecordDate")
+                    .toString()
+                    .split('T')[0] +
+                'T' +
+                initalTime +
+                ':00.000+05:00',
             "isCheckoutForget": true,
             "reason": reasoncontroller.text.toString().trim(),
             "lastclockindate":
@@ -870,7 +878,7 @@ class HomeController extends GetxController {
             "Attendance ",
             "Clock Out Successfully",
           );
-          BaseUrl.storage.write("clockout", outputDate1.toString());
+          // BaseUrl.storage.write("clockout", outputDate1.toString());
           this.onInit();
           update();
           break;

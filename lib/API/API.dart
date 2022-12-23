@@ -47,7 +47,7 @@ class API {
         "ip": ip,
         "model": model,
         "name": devicename,
-        // "image": file,
+        "img": file,
         "cache": false
       });
 
@@ -505,7 +505,7 @@ class API {
       Map data = {
         "location": latlng,
         "siteId": siteId,
-        "date": BaseUrl.storage.read('dateForMissingCheckout'),
+        "date": date,
         "isCheckoutForget": true,
         "reason": reason,
         "lastclockindate":

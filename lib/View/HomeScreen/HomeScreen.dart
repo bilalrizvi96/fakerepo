@@ -157,24 +157,22 @@ class HomeScreen extends StatelessWidget {
                                       //         ),
                                       //       )
                                       //     : Column(),
-                                      if (homeController.connection.value ==
-                                          true)
-                                        GestureDetector(
-                                          onTap: () {
-                                            BaseUrl.storage
-                                                .write("token", "out");
-                                            Get.offAllNamed(Routes.signinemp);
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 2.0, left: 10.0),
-                                            child: Icon(
-                                              Icons.logout,
-                                              size: width / 16,
-                                              color: Colors.red,
-                                            ),
+
+                                      GestureDetector(
+                                        onTap: () {
+                                          BaseUrl.storage.write("token", "out");
+                                          Get.offAllNamed(Routes.signinemp);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 2.0, left: 10.0),
+                                          child: Icon(
+                                            Icons.logout,
+                                            size: width / 16,
+                                            color: Colors.red,
                                           ),
                                         ),
+                                      ),
                                     ],
                                   )
                                 : Row(
@@ -211,39 +209,6 @@ class HomeScreen extends StatelessWidget {
                                             fontSize: width / 16),
                                       ),
                                       Spacer(),
-                                      // BaseUrl.storage.read("checkpointaccess") !=
-                                      //         false
-                                      //     ? GestureDetector(
-                                      //         onTap: () {
-                                      //           Get.toNamed('/checkpoint');
-                                      //         },
-                                      //         child: Padding(
-                                      //           padding: const EdgeInsets.only(
-                                      //               right: 6.0, left: 10.0),
-                                      //           child: Icon(
-                                      //             Icons.location_on_outlined,
-                                      //             size: width / 16,
-                                      //             color: DynamicColor().primarycolor,
-                                      //           ),
-                                      //         ),
-                                      //       )
-                                      //     : Column(),
-
-                                      GestureDetector(
-                                        onTap: () {
-                                          BaseUrl.storage.write("token", "out");
-                                          Get.offAllNamed(Routes.signinemp);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 2.0, left: 10.0),
-                                          child: Icon(
-                                            Icons.logout,
-                                            size: width / 16,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ),
                                     ],
                                   ),
                           ),

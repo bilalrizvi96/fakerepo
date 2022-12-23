@@ -32,6 +32,7 @@ class CheckPointScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         height: height,
         color: Colors.white,

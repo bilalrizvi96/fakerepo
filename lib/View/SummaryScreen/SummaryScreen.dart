@@ -28,7 +28,6 @@ class SummaryScreen extends StatelessWidget {
   SummaryController summaryController = Get.put(SummaryController());
   @override
   Widget build(BuildContext context) {
-
     summaryController.check();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;

@@ -72,11 +72,12 @@ class SummaryController extends GetxController
         .toString()
         .split('-')[0];
     // mindate = DateFormat('dd-MM-y').parse(day + '-' + month + '-' + year);
-    if (connection == true) {}
+    if (connection == true) {
+      summaryGuideline();
+      summaryAnalytics();
+      summaryDetails();
+    }
 
-    summaryGuideline();
-    summaryAnalytics();
-    summaryDetails();
     update();
   }
 
@@ -92,6 +93,10 @@ class SummaryController extends GetxController
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         connection.value = true;
+        if (summarydata.value.isEmpty) {
+          init();
+        }
+
         update();
       }
     } on SocketException catch (_) {
@@ -101,7 +106,6 @@ class SummaryController extends GetxController
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
         connection.value = true;
-        update();
 
         update();
       } else {
@@ -142,8 +146,10 @@ class SummaryController extends GetxController
       Loading.value = true;
       selectedmonths.value =
           months[todate.value.month - 1] + "-" + todate.value.year.toString();
-      summaryAnalytics();
-      summaryDetails();
+      if (selectedmonths.value != '') {
+        summaryAnalytics();
+        summaryDetails();
+      }
     }
     update();
   }

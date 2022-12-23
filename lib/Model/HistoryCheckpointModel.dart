@@ -75,6 +75,7 @@ class CheckPoint {
     this.location,
     this.notes,
     this.time,
+    this.date,
   });
 
   var image;
@@ -82,6 +83,7 @@ class CheckPoint {
   var location;
   var notes;
   var time;
+  var date;
 
   factory CheckPoint.fromJson(Map<String, dynamic> json) => CheckPoint(
         image: json["image"],
@@ -89,6 +91,7 @@ class CheckPoint {
         location: json["location"],
         notes: json["notes"],
         time: json["time"],
+        date: json["date"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -97,5 +100,6 @@ class CheckPoint {
         "location": location,
         "notes": notes,
         "time": time,
+        "date": date,
       };
 }
