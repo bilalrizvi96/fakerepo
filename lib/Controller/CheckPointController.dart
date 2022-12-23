@@ -68,7 +68,7 @@ class CheckPointController extends GetxController
   var checkpoint_check = false.obs;
   var status = false.obs;
   var checkpointoffline_list = [].obs;
-  var connection = true.obs;
+  final connection = true.obs;
   var data_check = false.obs;
   @override
   void onInit() {
@@ -81,7 +81,9 @@ class CheckPointController extends GetxController
     CurrentLocation();
 
     super.onInit();
+
     check();
+
     // connectionCheck();
     Future.delayed(Duration(milliseconds: 200), () {
       mapupdate();
@@ -97,8 +99,15 @@ class CheckPointController extends GetxController
     data_check.value = false;
     if (connection.value == true) {
       historycheckpoint();
+    } else {
+      if (BaseUrl.storage.read("checkpoint_offlines") != "") {
+        historyList.value =
+            json.decode(BaseUrl.storage.read("checkpoint_offlines"));
+        print(historyList.value);
+        print(json.decode(BaseUrl.storage.read("checkpoint_offlines")));
+        print("historyList.value");
+      }
     }
-
     update();
   }
 
@@ -113,31 +122,45 @@ class CheckPointController extends GetxController
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         Loading.value = false;
         connection.value = true;
+        // historyList.value.clear();
         if (checkpoint_check.value == true) {
           if (data_check.value == false) {
             offline_data_send();
+            historycheckpoint();
           }
         }
+
         update();
       }
     } on SocketException catch (_) {
       Loading.value = false;
       connection.value = false;
+      historyList.clear();
+      if (BaseUrl.storage.read("checkpoint_offlines") != "") {
+        historyList.value =
+            json.decode(BaseUrl.storage.read("checkpoint_offlines"));
+        print(historyList.value);
+        print(json.decode(BaseUrl.storage.read("checkpoint_offlines")));
+        print("historyList.value");
+      }
       update();
     }
     await DataConnectionChecker().onStatusChange.listen((status) async {
       if (status == DataConnectionStatus.connected) {
         Loading.value = false;
         connection.value = true;
+
         if (checkpoint_check.value == true) {
           if (data_check.value == false) {
             offline_data_send();
+            historyList.value.clear();
           }
         }
         update();
       } else {
         Loading.value = false;
         connection.value = false;
+        historyList.clear();
         update();
       }
     });
@@ -152,14 +175,15 @@ class CheckPointController extends GetxController
         print('offline_data_send');
         checkpoint_check.value = false;
 
-        var list = BaseUrl.storage.read("checkpoint_offline");
+        var list = json.decode(BaseUrl.storage.read("checkpoint_offlines"));
         print(list);
         print("list");
         if (list != '') {
           var response = await API().OfflineCheckPoint(list: list);
           if (response.statusCode == 200) {
             print('offline_CP_send');
-            BaseUrl.storage.write("checkpoint_offline", '');
+            historyList.value.clear();
+            BaseUrl.storage.write("checkpoint_offlines", '');
             checkpointoffline_list.value.clear();
             offline_data_attendance_send();
             checkpoint_check.value = false;
@@ -270,79 +294,79 @@ class CheckPointController extends GetxController
               center.value.longitude.toString());
 
       if (checkpointImage != null) {
-        if (BaseUrl.storage.read('checkOutMissing') == false) {
-          var response = await API().CheckPoints(
-              sitename: siteController.text.toString().trim(),
-              note: noteController.text.toString().trim(),
-              image: checkpointImage,
-              latlng: center.value.latitude.toString() +
-                  ',' +
-                  center.value.longitude.toString(),
-              date: outputDate.toString());
-          if (response.statusCode == 200) {
-            siteController.clear();
-            noteController.clear();
-            // this.onInit();
-            checkpointImage = null;
-            if (checkboxvalue.value == true) {
-              // if (BaseUrl.storage.read("isCheckOutOn") == true) {
-              status.value = true;
-              Loading.value = false;
-              // Get.back();
-              if (homeController.connection.value == true) {
-                homeController.clockout(check: true);
-                BaseUrl.storage.write("status", false);
-                update();
-                this.onInit();
-              } else {
-                homeController.clockOut_offline(check: true);
-                BaseUrl.storage.write("status", false);
-                update();
-                this.onInit();
-              }
-              // }
-
-              homeController.clockindate2 = DateTime.now().day;
-            } else if (BaseUrl.storage.read("status") == false) {
-              // if (BaseUrl.storage.read("isCheckInOn") == true) {
-              status.value = false;
-              Loading.value = false;
-              // Get.back();
-              if (homeController.connection.value == true) {
-                homeController.clockin(check: true);
-                BaseUrl.storage.write("status", true);
-                this.onInit();
-              } else {
-                homeController.clockIn_offline(check: true);
-                BaseUrl.storage.write("status", true);
-                update();
-                this.onInit();
-                // }
-              }
-              checkboxvalue.value = false;
-              update();
-            }
-
-            if (connection.value == true) {
-              historycheckpoint();
-            }
-
-            Get.snackbar(
-              "Checkpoints ",
-              'Successfully Added',
-            );
-
-            // Get.back();
-          } else {
+        // if (BaseUrl.storage.read('checkOutMissing') == false) {
+        var response = await API().CheckPoints(
+            sitename: siteController.text.toString().trim(),
+            note: noteController.text.toString().trim(),
+            image: checkpointImage,
+            latlng: center.value.latitude.toString() +
+                ',' +
+                center.value.longitude.toString(),
+            date: outputDate.toString());
+        if (response.statusCode == 200) {
+          siteController.clear();
+          noteController.clear();
+          // this.onInit();
+          checkpointImage = null;
+          if (checkboxvalue.value == true) {
+            // if (BaseUrl.storage.read("isCheckOutOn") == true) {
+            status.value = true;
             Loading.value = false;
-            Get.snackbar("Error ", response.data['error'].toString(),
-                colorText: Colors.white, backgroundColor: Colors.red);
+            // Get.back();
+            if (homeController.connection.value == true) {
+              homeController.clockout(check: true);
+              BaseUrl.storage.write("status", false);
+              update();
+              this.onInit();
+            } else {
+              homeController.clockOut_offline(check: true);
+              BaseUrl.storage.write("status", false);
+              update();
+              this.onInit();
+            }
+            // }
+
+            homeController.clockindate2 = DateTime.now().day;
+          } else if (BaseUrl.storage.read("status") == false) {
+            // if (BaseUrl.storage.read("isCheckInOn") == true) {
+            status.value = false;
+            Loading.value = false;
+            // Get.back();
+            if (homeController.connection.value == true) {
+              homeController.clockin(check: true);
+              BaseUrl.storage.write("status", true);
+              this.onInit();
+            } else {
+              homeController.clockIn_offline(check: true);
+              BaseUrl.storage.write("status", true);
+              update();
+              this.onInit();
+              // }
+            }
+            checkboxvalue.value = false;
+            update();
           }
+
+          if (connection.value == true) {
+            historycheckpoint();
+          }
+
+          Get.snackbar(
+            "Checkpoints ",
+            'Successfully Added',
+          );
+
+          // Get.back();
         } else {
           Loading.value = false;
-          Get.snackbar("Check Point ", "Please Do Previous Checkout",
+          Get.snackbar("Error ", response.data['error'].toString(),
               colorText: Colors.white, backgroundColor: Colors.red);
         }
+        // } else {
+        //   Loading.value = false;
+        //   Get.snackbar("Check Point ", "Please Do Previous Checkout",
+        //       colorText: Colors.white, backgroundColor: Colors.red);
+        // }
       } else {
         Loading.value = false;
         Get.snackbar("Error ", "Please Capture Image",
@@ -379,68 +403,71 @@ class CheckPointController extends GetxController
               center.value.longitude.toString());
 
       if (checkpointImage != null) {
-        if (BaseUrl.storage.read('checkOutMissing') == false) {
-          Uint8List imagebytes = await checkpointImage!.readAsBytes();
-          String base64string = base64.encode(imagebytes);
-          file = base64string.toString();
-          file.replaceAll('/', '');
-          Map data = {
-            'location': center.value.latitude.toString() +
-                ',' +
-                center.value.longitude.toString(),
-            "siteName": siteController.text.toString().trim(),
-            "notes": noteController.text.toString().trim(),
-            'image': file != '' ? file : '',
-            "date": date,
-          };
-          data_check.value = false;
+        // if (BaseUrl.storage.read('checkOutMissing') == false) {
+        Uint8List imagebytes = await checkpointImage!.readAsBytes();
+        String base64string = base64.encode(imagebytes);
+        file = base64string.toString();
+        file.replaceAll('/', '');
+        Map data = {
+          'location': center.value.latitude.toString() +
+              ',' +
+              center.value.longitude.toString(),
+          "siteName": siteController.text.toString().trim(),
+          "notes": noteController.text.toString().trim(),
+          'image': file != '' ? file : '',
+          "date": date.toString(),
+        };
+        data_check.value = false;
+        Loading.value = false;
+        checkpoint_check.value = true;
+
+        siteController.clear();
+        noteController.clear();
+        checkpointImage = null;
+        checkpointoffline_list.value.add(data);
+        BaseUrl.storage.write("checkpoint_offlines",
+            await json.encode(checkpointoffline_list.value));
+        historyList.value =
+            json.decode(BaseUrl.storage.read('checkpoint_offlines'));
+        if (checkboxvalue.value == true) {
+          // if (BaseUrl.storage.read("isCheckOutOn") == true) {
+          status.value = true;
           Loading.value = false;
-          checkpoint_check.value = true;
-          checkpointoffline_list.value.add(data);
-          BaseUrl.storage
-              .write('checkpoint_offline', checkpointoffline_list.value);
-          siteController.clear();
-          noteController.clear();
-          checkpointImage = null;
-          if (checkboxvalue.value == true) {
-            // if (BaseUrl.storage.read("isCheckOutOn") == true) {
-            status.value = true;
-            Loading.value = false;
-            // Get.back();
-            if (homeController.connection.value == true) {
-              homeController.clockout(check: true);
-              this.onInit();
-            } else {
-              homeController.clockOut_offline(check: true);
-              this.onInit();
-            }
-            // }
-            homeController.clockindate2 = DateTime.now().day;
-          } else if (BaseUrl.storage.read("status") == false) {
-            // if (BaseUrl.storage.read("isCheckInOn") == true) {
-            status.value = false;
-            Loading.value = false;
-            // Get.back();
-            if (homeController.connection.value == true) {
-              homeController.clockin(check: true);
-              this.onInit();
-            } else {
-              homeController.clockIn_offline(check: true);
-              this.onInit();
-            }
-            // }
-            // historycheckpoint();
-            checkboxvalue.value = false;
+          // Get.back();
+          if (homeController.connection.value == true) {
+            homeController.clockout(check: true);
+            this.onInit();
+          } else {
+            homeController.clockOut_offline(check: true);
+            this.onInit();
           }
-          Get.snackbar(
-            "Checkpoints ",
-            'Successfully Added',
-          );
-        } else {
+          // }
+          homeController.clockindate2 = DateTime.now().day;
+        } else if (BaseUrl.storage.read("status") == false) {
+          // if (BaseUrl.storage.read("isCheckInOn") == true) {
+          status.value = false;
           Loading.value = false;
-          Get.snackbar("Check Point ", "Please Do Previous Checkout",
-              colorText: Colors.white, backgroundColor: Colors.red);
+          // Get.back();
+          if (homeController.connection.value == true) {
+            homeController.clockin(check: true);
+            this.onInit();
+          } else {
+            homeController.clockIn_offline(check: true);
+            this.onInit();
+          }
+          // }
+          // historycheckpoint();
+          checkboxvalue.value = false;
         }
+        Get.snackbar(
+          "Checkpoints ",
+          'Successfully Added',
+        );
+        // } else {
+        //   Loading.value = false;
+        //   Get.snackbar("Check Point ", "Please Do Previous Checkout",
+        //       colorText: Colors.white, backgroundColor: Colors.red);
+        // }
       } else {
         Loading.value = false;
         Get.snackbar("Error ", "Please Capture Image",
@@ -457,10 +484,10 @@ class CheckPointController extends GetxController
   historycheckpoint() async {
     historyList.value.clear();
     if (connection.value == true) {
-      // var date = todate.value;
+      var date = todate.value;
       Loading.value = true;
       var outputFormat = DateFormat("yyyy-MM-dd'T'00:mm:ss'");
-      finaldate.value = outputFormat.format(todate.value);
+      finaldate.value = outputFormat.format(date);
       update();
       var response = await API().HistoryCheckPoints(
           empcode: BaseUrl.storage.read('empCode'),
@@ -471,6 +498,7 @@ class CheckPointController extends GetxController
         response = HistoryCheckpointModel.fromJson(response.data);
         historyList.value = response.data[0].checkPoints;
         mainhistorylist.value = historyList.value;
+
         print(mainhistorylist.value[0].image);
       } else {
         Loading.value = false;
@@ -501,7 +529,7 @@ class CheckPointController extends GetxController
         throw 'Could not launch $urls';
       }
     } else {
-      Get.snackbar("Check Point Pdf ", response.data['error'].toString(),
+      Get.snackbar("Check Point Pdf ", response.data['message'].toString(),
           colorText: Colors.white, backgroundColor: Colors.red);
     }
     update();
@@ -532,8 +560,8 @@ class CheckPointController extends GetxController
   //   siteController.text = "${addresses[1].addressLine.camelCase}";
   // }
 
-  mapdialog(index, context, width, height) {
-    showHistoryPinsOnMap(index);
+  mapdialog(index, context, width, height, connection) {
+    showHistoryPinsOnMap(index, connection);
     return showDialog(
         context: context,
         barrierDismissible: true,
@@ -616,9 +644,11 @@ class CheckPointController extends GetxController
     update();
   }
 
-  void showHistoryPinsOnMap(index) {
+  void showHistoryPinsOnMap(index, connection) {
     historymarkers.clear();
-    var latlong = historyList.value[index].location.split(",");
+    var latlong = connection == true
+        ? historyList.value[index].location.split(",")
+        : historyList.value[index]['location'].split(",");
     double latitude = double.parse(latlong[0]);
     double longitude = double.parse(latlong[1]);
     var pinPosition = LatLng(
