@@ -20,10 +20,9 @@ class Analytics extends StatelessWidget {
 
   final double width;
   final double height;
-
+  SummaryController _summaryController = Get.put(SummaryController());
   @override
   Widget build(BuildContext context) {
-    SummaryController _summaryController = Get.put(SummaryController());
     return Padding(
       padding: EdgeInsets.only(
         right: 5.0,
